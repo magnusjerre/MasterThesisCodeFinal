@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<screenDecorator:DecoratorModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:screenDecorator="no.hal.screenDecorator">
+  <decorators xsi:type="screenDecorator:WidgetDecorator">
+    <actions xsi:type="screenDecorator:ScriptAction" script="comment = ${commentField}"/>
+    <widget xsi:type="model:Button" href="screen2.screen#12"/>
+  </decorators>
+  <decorators xsi:type="screenDecorator:StoryboardDecorator">
+    <model href="toduka.ecore#//toduka"/>
+    <storyboard href="toduka.story#/"/>
+  </decorators>
+  <decorators xsi:type="screenDecorator:WidgetContainerDecorator">
+    <model href="screen2.ecore#//screen2"/>
+    <widgetContainer xsi:type="model:Screen" href="screen2.screen#/"/>
+  </decorators>
+  <decorators xsi:type="screenDecorator:WidgetDecorator">
+    <viewRules stateFeatureValue="true" viewProperty="text" viewPropertyValue="Redig&#xe9;r">
+      <stateFeature href="screen2.ecore#//screen2/isEdit"/>
+      <viewPropertyType href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </viewRules>
+    <viewRules stateFeatureValue="false" viewProperty="text" viewPropertyValue="Cancel">
+      <stateFeature href="screen2.ecore#//screen2/isEdit"/>
+      <viewPropertyType href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </viewRules>
+    <widget xsi:type="model:Button" href="screen2.screen#9"/>
+  </decorators>
+  <decorators xsi:type="screenDecorator:WidgetDecorator">
+    <actions xsi:type="screenDecorator:ScriptAction" script="isEdit = true"/>
+    <widget xsi:type="model:Button" href="screen2.screen#4"/>
+  </decorators>
+</screenDecorator:DecoratorModel>
