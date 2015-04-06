@@ -49,7 +49,8 @@ import com.wireframesketcher.model.RadioButton
 enum DecoratorModelType {
 	DATA,
 	ACTION,
-	STYLE
+	STYLE,
+	CONTEXT
 }
 
 enum LayoutStyle {
