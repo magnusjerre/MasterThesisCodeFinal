@@ -7,5 +7,7 @@ Export-Package: application
 Require-Bundle: com.wireframesketcher.model;bundle-version="4.2.3",
  org.eclipse.xtend.lib;bundle-version="2.5.2",
  org.eclipse.emf.common,
- org.junit
+ org.junit,
+ org.eclipse.ocl;bundle-version="3.4.2",
+ org.eclipse.ocl.ecore;bundle-version="3.3.100"
 Import-Package: org.eclipse.core.runtime
