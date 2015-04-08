@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ASCII"?>
+<jerre.moviedb:Database
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jerre.moviedb="http://jerre.moviedb"
+    xsi:schemaLocation="http://jerre.moviedb moviedb.ecore">
+  <allActors
+      name="Sam Rockwell"
+      birthdate="1968-11-05T00:00:00.000+0100"
+      biography="Sam Rockwell was born on November 5, 1968, in San Mateo, California, the child of two actors, Pete Rockwell and Penny Hess. The family moved to New York when he was two years old, living first in the Bronx and later in Manhattan. When Sam was five years old, his parents split up, at which point he and his father moved to San Francisco, where he ..."
+      movies="//@allMovies.0 //@allMovies.1"/>
+  <allActors
+      name="Kevin Spacey"
+      birthdate="1959-07-26T00:00:00.000+0200"
+      biography="As enigmatic as he is talented, Kevin Spacey has always kept the details of his private life closely guarded. As he explained in a 1998 interview with the London Evening Standard, &quot;the less you know about me, the easier it is to convince you that I am that character on screen. It allows an audience to come into a movie theatre and believe I am.."
+      movies="//@allMovies.0"/>
+  <allActors
+      name="Lena Headey"
+      birthdate="1973-10-03T00:00:00.000+0100"
+      biography="Lena Headey is a British actress, she was born in Bermuda, to parents from Yorkshire, England, where she was also raised. She is the daughter of Sue and John Headey, a police officer. Headey is best known for her appearances in The Brothers Grimm (2005), Possession (2002), and The Remains of the Day (1993). Headey stars as Queen Gorgo, a heroic ..."
+      movies="//@allMovies.2 //@allMovies.3"/>
+  <allActors
+      name="Eva Green"
+      birthdate="1980-06-06T00:00:00.000+0200"
+      biography="Eva Ga&#xeb;lle Green was born on July 5, 1980, in Paris, France. She has a sororal twin sister. Her father, Walter Green, is a dentist who appeared in the 1966 film Au hasard Balthazar (1966). Her mother, Marl&#xe8;ne Jobert, is an actress turned children's book writer. Eva's mother was born in Algeria, of Sephardi Jewish heritage (during that time, ..."
+      movies="//@allMovies.3 //@allMovies.4"/>
+  <allActors
+      name="Gerard Butler"
+      birthdate="1969-11-13T00:00:00.000+0100"
+      biography="Gerard Butler was born in Paisley, Scotland, to Margaret and Edward Butler, a bookmaker. His family is of Irish origin. Gerard spent some of his youth in Canada, but was mostly raised, along with his older brother and sister, in his hometown of Paisley. His parents divorced when he was a child, and he and his siblings were raised primarily by ..."
+      movies="//@allMovies.2"/>
+  <allActors
+      name="Kate Beckinsale"
+      birthdate="1973-06-26T00:00:00.000+0100"
+      biography="Kate Beckinsale was born on 26 July 1973 in England, and has resided in London for most of her life. Her mother is Judy Loe, who has appeared in a number of British dramas and sitcoms and continues to work as an actress, predominantly in British television productions. Her father was Richard Beckinsale, born in Nottingham, England. He starred in a..."
+      movies="//@allMovies.5 //@allMovies.6"/>
+  <allActors
+      name="Hugh Jackman"
+      birthdate="1968-10-12T00:00:00.000+0100"
+      biography="Hugh Jackman was born in Sydney, New South Wales, to Grace McNeil (Greenwood) and Christopher John Jackman, an accountant. He is the youngest of five children. His parents, both English, moved to Australia shortly before his birth. He also has Greek (from a great-grandfather) and Scottish (from a grandmother) ancestry. Jackman has a communications ..."
+      movies="//@allMovies.6"/>
+  <allMovies
+      title="Moon"
+      runtime="97"
+      synopsis="Astronaut Sam Bell has a quintessentially personal encounter toward the end of his three-year stint on the Moon, where he, working alongside his computer, GERTY, sends back to Earth parcels of a resource that has helped diminish our planet's power problems."
+      actors="//@allActors.0 //@allActors.1"/>
+  <allMovies
+      title="The Hitchhiker's Guide to the Galaxy"
+      runtime="109"
+      synopsis="Mere seconds before the Earth is to be demolished by an alien construction crew, journeyman Arthur Dent is swept off the planet by his friend Ford Prefect, a researcher penning a new edition of &quot;The Hitchhiker's Guide to the Galaxy.&quot;"
+      actors="//@allActors.0"/>
+  <allMovies
+      title="300"
+      runtime="117"
+      synopsis="King Leonidas and a force of 300 men fight the Persians at Thermopylae in 480 B.C"
+      actors="//@allActors.2 //@allActors.4"/>
+  <allMovies
+      title="300: Rise of an Empire"
+      runtime="102"
+      synopsis="Greek general Themistokles leads the charge against invading Persian forces led by mortal-turned-god Xerxes and Artemisia, vengeful commander of the Persian navy."
+      actors="//@allActors.2 //@allActors.3"/>
+  <allMovies
+      title="Casino Royale"
+      runtime="144"
+      synopsis="Armed with a licence to kill, Secret Agent James Bond sets out on his first mission as 007 and must defeat a weapons dealer in a high stakes game of poker at Casino Royale, but things are not what they seem."
+      actors="//@allActors.3"/>
+  <allMovies
+      title="Underworld"
+      runtime="121"
+      synopsis="Selene, a beautiful vampire warrior, entrenched in a war between the vampire and werewolf races. Although she is aligned with the vampires, she falls in love with Michael, a human who is sought by werewolves for unknown reasons."
+      actors="//@allActors.5"/>
+  <allMovies
+      title="Van Helsing"
+      runtime="131"
+      synopsis="The notorious monster hunter is sent to Transylvania to stop Count Dracula who is using Dr. Frankenstein's research and a werewolf for some sinister purpose."
+      actors="//@allActors.5 //@allActors.6"/>
+</jerre.moviedb:Database>
