@@ -1,5 +1,8 @@
 package datagenerator;
 
+import java.util.LinkedHashSet;
+
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -12,6 +15,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl.EObjectInputStream;
+import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
@@ -47,10 +51,11 @@ public class RunDataGenerator {
 		String location = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi";
 		String[] context = {"rContext = " + location};
 		cg.generateDecoratorFile(context);
-		cg.generateDecoratorFile(new String[]{"other = rContext.allActors->select(name = \'Lena Headey\')->asSequence()->at(1)"});
-		EObject rootContext = cg.rootContexts.get(0);
-		EObject instance = (EObject) rootContext.eGet(rootContext.eClass().getEStructuralFeature("context"));	//Denne har JEG definert i ecore-filen til å være en listen, ikke ett spesifikt objekt
-		Object allActors = OCLHandler.parseOCLStatement(cg.resourceSet, instance, "allActors");
+		cg.generateDecoratorFile(new String[]{"actor = rContext.allActors->select(name = 'Lena Headey')->asSequence()->at(1)"});
+		cg.generateDecoratorFile(new String[]{"movies = actor.movies"});
+		cg.generateDecoratorFile(new String[]{"movies = rContext.allMovies"});
+		cg.generatePaths();
+		
 		System.out.println("cake");
 	}
 	
