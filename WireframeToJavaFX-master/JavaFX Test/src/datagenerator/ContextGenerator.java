@@ -31,8 +31,8 @@ public class ContextGenerator {
 	//EMF
 	ResourceSet resourceSet;
 	Resource ecoreResource;
-	EPackageImpl contextPackage;
-	EFactory contextFactory;
+	EPackageImpl dataPackage;
+	EFactory dataFactory;
 	EClass contextClass, contextsForScreen;
 	EStructuralFeature nameFeature, contextFeature, isRootFeature, statementFeature, specificStatementFeature, allContextsFeature;
 	
@@ -57,10 +57,10 @@ public class ContextGenerator {
 		URI existingInstanceUri = URI.createFileURI(pathToEcore);
 		
 		ecoreResource = resourceSet.getResource(existingInstanceUri, true);
-		contextPackage = (EPackageImpl)ecoreResource.getContents().get(0);
-		contextFactory = contextPackage.getEFactoryInstance();
-		contextClass = (EClass)contextPackage.getEClassifier("Context");
-		contextsForScreen = (EClass) contextPackage.getEClassifier("DataForScreen");
+		dataPackage = (EPackageImpl)ecoreResource.getContents().get(0);
+		dataFactory = dataPackage.getEFactoryInstance();
+		contextClass = (EClass)dataPackage.getEClassifier("Context");
+		contextsForScreen = (EClass) dataPackage.getEClassifier("DataForScreen");
 		nameFeature = contextClass.getEStructuralFeature("name");
 		contextFeature = contextClass.getEStructuralFeature("rootContext");
 		isRootFeature = contextClass.getEStructuralFeature("isRoot");
@@ -79,7 +79,7 @@ public class ContextGenerator {
 			String name = splitted[0].trim();
 			String specificStatement = splitted[1].trim();
 
-			EObject contextObject = contextFactory.create(contextClass);
+			EObject contextObject = dataFactory.create(contextClass);
 			contextObject.eSet(nameFeature, name);
 			contextObject.eSet(specificStatementFeature, specificStatement);
 			contextObject.eSet(isRootFeature, false);
@@ -213,7 +213,7 @@ public class ContextGenerator {
 	public void saveXMI(String filename, String absFolderLocation) {
 
 		//Create and fill the new instance with the contexts
-		EObject newContextsForScreen = contextFactory.create(contextsForScreen);
+		EObject newContextsForScreen = dataFactory.create(contextsForScreen);
 		
 		@SuppressWarnings("unchecked")	//Defined as an EList in Context.ecore by me
 		EList<EObject> allContexts = (EList<EObject>) newContextsForScreen.eGet(allContextsFeature);
