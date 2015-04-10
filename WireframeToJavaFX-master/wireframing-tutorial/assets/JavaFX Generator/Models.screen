@@ -20,6 +20,11 @@
       <font/>
     </widgets>
   </widgets>
+  <widgets xsi:type="model:WidgetGroup" id="6" x="672" y="56" measuredWidth="97" measuredHeight="81" name="Assignment">
+    <widgets xsi:type="model:Note" id="7" width="97" height="81" text="Assignment" measuredWidth="97" measuredHeight="81" background="#9900ff">
+      <font/>
+    </widgets>
+  </widgets>
   <hRuler/>
   <vRuler/>
   <font size="12px"/>

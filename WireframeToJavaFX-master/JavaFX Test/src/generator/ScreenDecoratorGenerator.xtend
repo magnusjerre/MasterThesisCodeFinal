@@ -51,6 +51,8 @@ class ScreenDecoratorGenerator {
 				modelType = DecoratorModelType.STYLE
 			case uri.endsWith("Models.screen#Context"):
 				modelType = DecoratorModelType.CONTEXT
+			case uri.endsWith("Models.screen#Assignment"):
+				modelType = DecoratorModelType.ASSIGNMENT
 		}
 		return modelType
 	}
@@ -74,7 +76,12 @@ class ScreenDecoratorGenerator {
 			case DecoratorModelType.ACTION : instance.generateDecoratorAction(dataStrings, master, masterMap)
 			case DecoratorModelType.STYLE : instance.generateDecoratorStyle(dataStrings, master, masterMap)
 			case DecoratorModelType.CONTEXT : instance.generateDecoratorContext(dataStrings, master, masterMap)
+			case DecoratorModelType.ASSIGNMENT : instance.generateDecoratorAssignment(dataStrings, master, masterMap)
 		}
+	}
+	
+	def generateDecoratorAssignment(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
 	def generateDecoratorContext(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
