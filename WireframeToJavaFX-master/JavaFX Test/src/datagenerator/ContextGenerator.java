@@ -46,7 +46,7 @@ public class ContextGenerator {
 
 	private void loadContextEcoreDefinition() {
 		
-		String pathToEcore = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/Context.ecore";
+		String pathToEcore = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/Data.ecore";
 		
 		resourceSet = new ResourceSetImpl();
 		resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
@@ -60,7 +60,7 @@ public class ContextGenerator {
 		contextPackage = (EPackageImpl)ecoreResource.getContents().get(0);
 		contextFactory = contextPackage.getEFactoryInstance();
 		contextClass = (EClass)contextPackage.getEClassifier("Context");
-		contextsForScreen = (EClass) contextPackage.getEClassifier("ContextsForScreen");
+		contextsForScreen = (EClass) contextPackage.getEClassifier("DataForScreen");
 		nameFeature = contextClass.getEStructuralFeature("name");
 		contextFeature = contextClass.getEStructuralFeature("rootContext");
 		isRootFeature = contextClass.getEStructuralFeature("isRoot");
