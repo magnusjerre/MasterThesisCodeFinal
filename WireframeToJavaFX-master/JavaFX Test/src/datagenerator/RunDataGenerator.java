@@ -1,5 +1,6 @@
 package datagenerator;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import org.eclipse.emf.common.util.EList;
@@ -21,31 +22,8 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 public class RunDataGenerator {
-	
-	//EMF
-	public ResourceSet resourceSet;
-	public Resource ecoreResource;
-	public EObject instanceRoot;
-	
-	public RunDataGenerator() {
-		loadContextEcoreDefinition();
-	}
 
 	public static void main(String[] args) {
-		
-	/*
-		RunDataGenerator rdg = new RunDataGenerator();
-		String query1 = "allActors->select(name = 'Lena Headey')->asSequence()->at(1)";
-//		String query1 = "allMovies->select(title = '300')->asSequence()->at(1)";
-//		Object result = OCLHandler.parseOCLStatement(rdg.resourceSet, rdg.instanceRoot, query);
-		EObject tempResult = (EObject) OCLHandler.parseOCLStatement(rdg.resourceSet, rdg.instanceRoot, query1);
-		String query2 = "birthdate";
-		Object out = OCLHandler.parseOCLStatement(rdg.resourceSet, tempResult, query2);
-		int a = 1;
-		String s = "cqk";
-		System.out.println("cake");
-		
-	*/
 		
 		ContextGenerator cg = new ContextGenerator();
 		String location = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi";
@@ -55,25 +33,18 @@ public class RunDataGenerator {
 		cg.generateDecorator(new String[]{"movies = actor.movies"});
 		cg.generateDecorator(new String[]{"movies = rContext.allMovies"});
 		cg.generatePaths();
-		cg.saveXMI("cake.xmi", "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/");
+		//cg.saveXMI("cake.xmi", "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/");
+		
+		ArrayList<EObject> allContexts = new ArrayList<>();
+		allContexts.addAll(cg.rootContexts);
+		allContexts.addAll(cg.contexts);
+		AssignmentGenerator ag = new AssignmentGenerator(allContexts);
+		ag.generateDecorator(new String[]{"movies->at(1)"}, 1);
+		ag.generateDecorator(new String[]{"actor.name", "@Cake"}, 2);
+		ag.generatePaths();
 		
 		System.out.println("cake");
-	}
-	
-	
-	private void loadContextEcoreDefinition() {
-		String pathToEcore = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi";
 		
-		resourceSet = new ResourceSetImpl();
-		resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
-		
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-		
-		URI existingInstanceUri = URI.createFileURI(pathToEcore);
-		
-		ecoreResource = resourceSet.getResource(existingInstanceUri, true);
-		instanceRoot = ecoreResource.getContents().get(0);
 	}
 
 }
