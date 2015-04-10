@@ -1,6 +1,7 @@
 package datagenerator;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import javafx.util.Pair;
 
@@ -150,7 +151,7 @@ public class AssignmentGenerator {
 			}
 		}
 		
-		return null;
+		throw new NoSuchElementException(String.format("Context named \"%s\" doesn't exist. \"%s\" might be misspelled.", name, name));
 		
 	}
 

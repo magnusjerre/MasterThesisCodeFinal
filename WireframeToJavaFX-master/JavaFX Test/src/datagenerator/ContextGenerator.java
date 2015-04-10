@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import javafx.util.Pair;
 
@@ -126,8 +127,12 @@ public class ContextGenerator {
 	
 	private boolean isRootContextName(String name) {
 		
-		EObject result = getContextNamed(name, rootContexts);
-		return result != null ? true : false;
+		try {
+			getContextNamed(name, rootContexts);
+			return true;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
 		
 	}
 	
@@ -171,7 +176,7 @@ public class ContextGenerator {
 			}
 		}
 		
-		return null;
+		throw new NoSuchElementException(String.format("Context named \"%s\" doesn't exist. \"%s\" might be misspelled.", name, name));
 		
 	}
 	
@@ -210,6 +215,7 @@ public class ContextGenerator {
 		//Create and fill the new instance with the contexts
 		EObject newContextsForScreen = contextFactory.create(contextsForScreen);
 		
+		@SuppressWarnings("unchecked")	//Defined as an EList in Context.ecore by me
 		EList<EObject> allContexts = (EList<EObject>) newContextsForScreen.eGet(allContextsFeature);
 		for (EObject eObject : rootContexts) {
 			allContexts.add(eObject);
