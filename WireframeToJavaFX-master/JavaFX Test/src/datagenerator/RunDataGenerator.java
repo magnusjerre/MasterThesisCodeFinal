@@ -50,10 +50,10 @@ public class RunDataGenerator {
 		ContextGenerator cg = new ContextGenerator();
 		String location = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi";
 		String[] context = {"rContext = " + location};
-		cg.generateDecoratorFile(context);
-		cg.generateDecoratorFile(new String[]{"actor = rContext.allActors->select(name = 'Lena Headey')->asSequence()->at(1)"});
-		cg.generateDecoratorFile(new String[]{"movies = actor.movies"});
-		cg.generateDecoratorFile(new String[]{"movies = rContext.allMovies"});
+		cg.generateDecorator(context);
+		cg.generateDecorator(new String[]{"actor = rContext.allActors->select(name = 'Lena Headey')->asSequence()->at(1)"});
+		cg.generateDecorator(new String[]{"movies = actor.movies"});
+		cg.generateDecorator(new String[]{"movies = rContext.allMovies"});
 		cg.generatePaths();
 		
 		System.out.println("cake");

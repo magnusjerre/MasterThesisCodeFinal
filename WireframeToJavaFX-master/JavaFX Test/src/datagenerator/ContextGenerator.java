@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javafx.util.Pair;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -18,8 +17,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
-import com.sun.xml.internal.ws.encoding.RootOnlyCodec;
-
 public class ContextGenerator {
 	
 	public ArrayList<EObject> contexts;
@@ -31,7 +28,7 @@ public class ContextGenerator {
 	EPackageImpl contextPackage;
 	EFactory contextFactory;
 	EClass contextClass;
-	EStructuralFeature contextNameFeature, rootContextFeature, isRootFeature, contextStatementFeature, contextSpecificStatementFeature;
+	EStructuralFeature nameFeature, contextFeature, isRootFeature, statementFeature, specificStatementFeature;
 	
 	public ContextGenerator() {
 		
@@ -42,6 +39,7 @@ public class ContextGenerator {
 	}
 
 	private void loadContextEcoreDefinition() {
+		
 		String pathToEcore = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/Context.ecore";
 		
 		resourceSet = new ResourceSetImpl();
@@ -56,15 +54,18 @@ public class ContextGenerator {
 		contextPackage = (EPackageImpl)ecoreResource.getContents().get(0);
 		contextFactory = contextPackage.getEFactoryInstance();
 		contextClass = (EClass)contextPackage.getEClassifier("Context");
-		contextNameFeature = contextClass.getEStructuralFeature("name");
-		rootContextFeature = contextClass.getEStructuralFeature("rootContext");
+		nameFeature = contextClass.getEStructuralFeature("name");
+		contextFeature = contextClass.getEStructuralFeature("rootContext");
 		isRootFeature = contextClass.getEStructuralFeature("isRoot");
-		contextStatementFeature = contextClass.getEStructuralFeature("statement");
-		contextSpecificStatementFeature = contextClass.getEStructuralFeature("specificStatement");
+		statementFeature = contextClass.getEStructuralFeature("statement");
+		specificStatementFeature = contextClass.getEStructuralFeature("specificStatement");
+		
 	}
 	
-	public void generateDecoratorFile(String[] strings) {
+	public void generateDecorator(String[] strings) {
+		
 		for (int i = 0; i < strings.length; i++) {
+			
 			String line = strings[i];
 
 			String[] splitted = line.split(" = ", 2);
@@ -72,27 +73,32 @@ public class ContextGenerator {
 			String specificStatement = splitted[1].trim();
 
 			EObject contextObject = contextFactory.create(contextClass);
-			contextObject.eSet(contextNameFeature, name);
-			contextObject.eSet(contextSpecificStatementFeature, specificStatement);
+			contextObject.eSet(nameFeature, name);
+			contextObject.eSet(specificStatementFeature, specificStatement);
 			contextObject.eSet(isRootFeature, false);
 
 			if (isContextRoot(line)) {	
 				EObject rootContext = loadRootObjectForXmi(specificStatement);
 				contextObject.eSet(isRootFeature, true);
-				contextObject.eSet(rootContextFeature, rootContext);
-				contextObject.eSet(contextStatementFeature, specificStatement);
+				contextObject.eSet(contextFeature, rootContext);
+				contextObject.eSet(statementFeature, specificStatement);
 				rootContexts.add(contextObject);
 			} else {
 				contexts.add(contextObject);
 			}
+			
 		}
+		
 	}
 	
-	public Pair<String, EObject> generateContextPath(String statement) {
+	private Pair<String, EObject> generateContextPath(String statement) {
+		
 		statement = statement.trim();
 		String parentName = getParentName(statement);
 		EObject root = null;
+		
 		while (parentName != null) {
+			
 			statement = statement.replace(parentName, "");
 			
 			if (isRootContextName(parentName)) {
@@ -102,15 +108,17 @@ public class ContextGenerator {
 			} else {
 				//Statement should now not show any data regarding the parent
 				EObject parent = getContextNamed(parentName, contexts);
-				statement = ((String) parent.eGet(contextSpecificStatementFeature)) + statement;
+				statement = ((String) parent.eGet(specificStatementFeature)) + statement;
 				parentName = getParentName(statement);
-			}			
+			}
+			
 		}
 		
 		return new Pair<String, EObject>(statement, root);
+		
 	}
 	
-	public boolean isRootContextName(String name) {
+	private boolean isRootContextName(String name) {
 		
 		EObject result = getContextNamed(name, rootContexts);
 		return result != null ? true : false;
@@ -118,7 +126,8 @@ public class ContextGenerator {
 	}
 	
 	
-	public String getParentName(String statement) {
+	private String getParentName(String statement) {
+		
 		statement = statement.trim();
 		
 		int posOfDot = statement.indexOf('.');
@@ -130,6 +139,7 @@ public class ContextGenerator {
 		} else {
 			return statement.substring(0, minPos);
 		}
+		
 	}
 	
 	private int min(int a, int b) {
@@ -144,12 +154,13 @@ public class ContextGenerator {
 			return a;
 		
 		return a < b ? a : b;
+		
 	}
 	
 	private EObject getContextNamed(String name, ArrayList<EObject> list) {
 		
 		for (EObject eObject : list) {
-			String eName = (String) eObject.eGet(contextNameFeature);
+			String eName = (String) eObject.eGet(nameFeature);
 			if (name.equals(eName)) {				
 				return eObject;
 			}
@@ -160,39 +171,13 @@ public class ContextGenerator {
 	}
 	
 	public void generatePaths() {
-		for (EObject eObject : contexts) {
-			Pair<String, EObject> pair = generateContextPath((String) eObject.eGet(contextSpecificStatementFeature));
-			eObject.eSet(contextStatementFeature, pair.getKey());
-			eObject.eSet(rootContextFeature, pair.getValue());
-		}
-	}
-	public void generateNonRootContexts(){
-		for (int i = 0; i < contexts.size(); i++) {
-			EObject contextObject = contexts.get(i);
-			EObject contextValue = (EObject) contextObject.eGet(rootContextFeature);
-			if (contextValue == null) {	//the values for the context has not been set
-				EObject parentContext = getParentContext("parent");
-				//Parse ocl statement
-			}
-		}
-	}
-	
-	private EObject getParentContext(String string) {
-		for (EObject eObject : rootContexts) {
-			String name = (String) eObject.eGet(contextNameFeature); 
-			if (name.equalsIgnoreCase(string)) {
-				return eObject;
-			}
-		}
 		
 		for (EObject eObject : contexts) {
-			String name = (String) eObject.eGet(contextNameFeature); 
-			if (name.equalsIgnoreCase(string)) {
-				return eObject;
-			}
+			Pair<String, EObject> pair = generateContextPath((String) eObject.eGet(specificStatementFeature));
+			eObject.eSet(statementFeature, pair.getKey());
+			eObject.eSet(contextFeature, pair.getValue());
 		}
 		
-		return null;
 	}
 
 	private EObject loadRootObjectForXmi(String xmiLocation) {
@@ -209,8 +194,10 @@ public class ContextGenerator {
 		return instanceResource.getContents().get(0);
 	}
 	
-	private boolean isContextRoot(String string) {
-		return string.contains("= /");
+	private boolean isContextRoot(String string) { 
+		
+		return string.contains("= /"); 
+		
 	}
 
 }
