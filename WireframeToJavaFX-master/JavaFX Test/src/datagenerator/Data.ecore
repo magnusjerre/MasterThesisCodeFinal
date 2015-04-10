@@ -11,6 +11,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="DataForScreen">
     <eStructuralFeatures xsi:type="ecore:EReference" name="allContexts" upperBound="-1"
         eType="#//Context" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allAssignments" upperBound="-1"
+        eType="#//Assignment" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="statement" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

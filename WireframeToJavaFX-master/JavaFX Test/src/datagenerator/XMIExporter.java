@@ -30,7 +30,7 @@ public class XMIExporter {
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
 	EClass dataForScreenClass;
-	EStructuralFeature allContextsFeature;
+	EStructuralFeature allContextsFeature, allAssignmentsFeature;
 	
 	public XMIExporter() {
 		
@@ -50,6 +50,7 @@ public class XMIExporter {
 		
 		dataForScreenClass = (EClass) dataPackage.getEClassifier("DataForScreen");
 		allContextsFeature = dataForScreenClass.getEStructuralFeature("allContexts");
+		allAssignmentsFeature = dataForScreenClass.getEStructuralFeature("allAssignments");
 		
 	}
 	
@@ -66,7 +67,7 @@ public class XMIExporter {
 		//Create and fill the new instance with the contexts
 		EObject newContextsForScreen = dataFactory.create(dataForScreenClass);
 		
-		@SuppressWarnings("unchecked")	//Defined as an EList in Context.ecore by me, therefore safe to suppress warning
+		@SuppressWarnings("unchecked")	//Defined as an EList in Data.ecore by me, therefore safe to suppress warning
 		EList<EObject> allContexts = (EList<EObject>) newContextsForScreen.eGet(allContextsFeature);
 		for (EObject eObject : contextGenerator.rootContexts) {
 			allContexts.add(eObject);
@@ -74,6 +75,12 @@ public class XMIExporter {
 		
 		for (EObject eObject : contextGenerator.contexts) {
 			allContexts.add(eObject);
+		}
+		
+		@SuppressWarnings("unchecked")	//Defined as an EList in Data.ecore by me, therefore safe to suppress warning
+		EList<EObject> allAssignments = (EList<EObject>) newContextsForScreen.eGet(allAssignmentsFeature);
+		for (EObject eObject : assignmentGenerator.assignments) {
+			allAssignments.add(eObject);
 		}
 		
 		//Create the xmi and fill with the new instance
