@@ -1,9 +1,13 @@
 package datagenerator;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.util.Pair;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -14,6 +18,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
@@ -27,8 +32,8 @@ public class ContextGenerator {
 	Resource ecoreResource;
 	EPackageImpl contextPackage;
 	EFactory contextFactory;
-	EClass contextClass;
-	EStructuralFeature nameFeature, contextFeature, isRootFeature, statementFeature, specificStatementFeature;
+	EClass contextClass, contextsForScreen;
+	EStructuralFeature nameFeature, contextFeature, isRootFeature, statementFeature, specificStatementFeature, allContextsFeature;
 	
 	public ContextGenerator() {
 		
@@ -54,12 +59,13 @@ public class ContextGenerator {
 		contextPackage = (EPackageImpl)ecoreResource.getContents().get(0);
 		contextFactory = contextPackage.getEFactoryInstance();
 		contextClass = (EClass)contextPackage.getEClassifier("Context");
+		contextsForScreen = (EClass) contextPackage.getEClassifier("ContextsForScreen");
 		nameFeature = contextClass.getEStructuralFeature("name");
 		contextFeature = contextClass.getEStructuralFeature("rootContext");
 		isRootFeature = contextClass.getEStructuralFeature("isRoot");
 		statementFeature = contextClass.getEStructuralFeature("statement");
 		specificStatementFeature = contextClass.getEStructuralFeature("specificStatement");
-		
+		allContextsFeature = contextsForScreen.getEStructuralFeature("allContexts");
 	}
 	
 	public void generateDecorator(String[] strings) {
@@ -124,7 +130,6 @@ public class ContextGenerator {
 		return result != null ? true : false;
 		
 	}
-	
 	
 	private String getParentName(String statement) {
 		
@@ -200,4 +205,38 @@ public class ContextGenerator {
 		
 	}
 
+	public void saveXMI(String filename, String absFolderLocation) {
+
+		//Create and fill the new instance with the contexts
+		EObject newContextsForScreen = contextFactory.create(contextsForScreen);
+		
+		EList<EObject> allContexts = (EList<EObject>) newContextsForScreen.eGet(allContextsFeature);
+		for (EObject eObject : rootContexts) {
+			allContexts.add(eObject);
+		}
+		
+		for (EObject eObject : contexts) {
+			allContexts.add(eObject);
+		}
+		
+		//Create the xmi and fill with the new instance
+		URI newInstanceUri = URI.createFileURI(absFolderLocation + filename);
+		
+		Resource newInstanceResource = resourceSet.createResource(newInstanceUri);
+		newInstanceResource.getContents().add(newContextsForScreen);
+		
+		try {
+			
+			Map<String, Boolean> options = new HashMap<String, Boolean>();
+			options.put(XMIResource.OPTION_SCHEMA_LOCATION, true);
+			newInstanceResource.save(options);
+			
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			
+		}
+		
+	}
+	
 }

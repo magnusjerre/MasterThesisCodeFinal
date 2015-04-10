@@ -55,6 +55,7 @@ public class RunDataGenerator {
 		cg.generateDecorator(new String[]{"movies = actor.movies"});
 		cg.generateDecorator(new String[]{"movies = rContext.allMovies"});
 		cg.generatePaths();
+		cg.saveXMI("cake.xmi", "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/");
 		
 		System.out.println("cake");
 	}
