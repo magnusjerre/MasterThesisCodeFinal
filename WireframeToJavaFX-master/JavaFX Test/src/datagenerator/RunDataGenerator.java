@@ -26,6 +26,10 @@ public class RunDataGenerator {
 		ag.generateDecorator(new String[]{"actor.name", "@Cake"}, 2);
 		ag.generatePaths();
 		
+		XMIExporter exporter = new XMIExporter();
+		exporter.setGenerators(ag, cg);
+		exporter.exportXMI("cake.xmi", "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/");
+		
 		System.out.println("cake");
 		
 	}
