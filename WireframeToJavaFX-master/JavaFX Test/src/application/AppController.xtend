@@ -200,8 +200,7 @@ class AppController extends Application {
 			}
 		]
 		
-		val aHandler = new AssignmentHandler
-		aHandler.AssignValues(getRoot, Constants.FXML_DIRECTORY + fileName + ".xmi")
+		AssignmentHandler.AssignValues(getRoot, Constants.FXML_DIRECTORY + fileName + ".xmi")
 
 		stage.setScene(scene)
 		stage.show()

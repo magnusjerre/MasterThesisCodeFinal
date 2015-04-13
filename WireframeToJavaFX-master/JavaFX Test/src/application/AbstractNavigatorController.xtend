@@ -831,8 +831,7 @@ abstract class AbstractNavigatorController {
 			
 			nextScreen.evaluateRulesForScreen
 			
-		val aHandler = new AssignmentHandler
-		aHandler.AssignValues(appController.getRoot, Constants.FXML_DIRECTORY + nextScreen + ".xmi")
+		AssignmentHandler.AssignValues(appController.getRoot, Constants.FXML_DIRECTORY + nextScreen + ".xmi")
 	
 		stage.setScene(scene);
 		stage.show();
