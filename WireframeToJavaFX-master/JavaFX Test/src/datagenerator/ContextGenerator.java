@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 public class ContextGenerator {
 	
+	private static ContextGenerator instance = null;
+	
 	public ArrayList<EObject> contexts;
 	public ArrayList<EObject> rootContexts;
 	
@@ -31,14 +33,40 @@ public class ContextGenerator {
 	EClass contextClass;
 	EStructuralFeature nameFeature, contextFeature, isRootFeature, statementFeature, specificStatementFeature;
 	
-	public ContextGenerator() {
+	public static ContextGenerator getInstance() {
+		
+		if (instance == null)
+			instance = new ContextGenerator();
+		
+		return instance;
+		
+	}
+	
+	private ContextGenerator() {
 		
 		contexts = new ArrayList<>();
 		rootContexts = new ArrayList<>();
 		
 		loadContextEcoreDefinition();
+		
 	}
 
+	public void clear() {
+		
+		contexts.clear();
+		rootContexts.clear();
+		
+	}
+	
+	public ArrayList<EObject> getAllContexts() {
+		
+		ArrayList<EObject> allContexts = new ArrayList<EObject>();
+		allContexts.addAll(rootContexts);
+		allContexts.addAll(contexts);
+		return allContexts;
+		
+	}
+	
 	private void loadContextEcoreDefinition() {
 		
 		String pathToEcore = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/Data.ecore";

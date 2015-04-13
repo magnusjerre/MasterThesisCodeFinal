@@ -84,6 +84,9 @@ public class XMIExporter {
 		}
 		
 		//Create the xmi and fill with the new instance
+		filename = filename.trim();
+		if (!filename.endsWith(".xmi"))
+			filename = filename + ".xmi";
 		URI newInstanceUri = URI.createFileURI(absFolderLocation + filename);
 		
 		Resource newInstanceResource = resourceSet.createResource(newInstanceUri);

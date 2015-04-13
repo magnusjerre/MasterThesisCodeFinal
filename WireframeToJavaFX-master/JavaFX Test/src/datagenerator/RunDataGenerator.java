@@ -8,7 +8,7 @@ public class RunDataGenerator {
 
 	public static void main(String[] args) {
 		
-		ContextGenerator cg = new ContextGenerator();
+		ContextGenerator cg = ContextGenerator.getInstance();
 		String location = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi";
 		String[] context = {"rContext = " + location};
 		cg.generateDecorator(context);
@@ -21,7 +21,8 @@ public class RunDataGenerator {
 		ArrayList<EObject> allContexts = new ArrayList<>();
 		allContexts.addAll(cg.rootContexts);
 		allContexts.addAll(cg.contexts);
-		AssignmentGenerator ag = new AssignmentGenerator(allContexts);
+		AssignmentGenerator ag = AssignmentGenerator.getInstance();
+		ag.setContext(cg.getAllContexts());
 		ag.generateDecorator(new String[]{"movies->at(1)"}, 1);
 		ag.generateDecorator(new String[]{"actor.name", "@Cake"}, 2);
 		ag.generatePaths();

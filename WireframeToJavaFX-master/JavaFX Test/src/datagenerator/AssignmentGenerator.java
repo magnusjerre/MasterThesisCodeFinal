@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 public class AssignmentGenerator {
 	
+	private static AssignmentGenerator instance = null;
+	
 	public ArrayList<EObject> assignments;
 	public ArrayList<EObject> contexts;
 	
@@ -31,12 +33,36 @@ public class AssignmentGenerator {
 	EClass assignmentClass;
 	EStructuralFeature statementFeature, specificStatementFeature, rootContextFeature, layoutIDFeature;
 	
-	public AssignmentGenerator(ArrayList<EObject> contexts) {
+	public static AssignmentGenerator getInstance() {
+		
+		if (instance == null)
+			instance = new AssignmentGenerator();
+		
+		return instance;
+		
+	}
+	
+	private AssignmentGenerator() {
 		
 		assignments = new ArrayList<EObject>();
-		this.contexts = contexts;
+		contexts = new ArrayList<EObject>();
 		
 		loadAssignmentDefinition();
+		
+	}
+	
+	public void setContext(ArrayList<EObject> contexts) {
+		
+		this.contexts = contexts;
+		
+	}
+	
+	public void clear() {
+		
+		contexts = new ArrayList<EObject>();
+		
+		assignments.clear();
+		
 	}
 	
 	private void loadAssignmentDefinition() {
