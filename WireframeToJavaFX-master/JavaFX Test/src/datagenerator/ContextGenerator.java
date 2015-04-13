@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
+import application.Constants;
+
 public class ContextGenerator {
 	
 	private static ContextGenerator instance = null;
@@ -69,7 +71,7 @@ public class ContextGenerator {
 	
 	private void loadContextEcoreDefinition() {
 		
-		String pathToEcore = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/Data.ecore";
+		String pathToEcore = Constants.DATAGENERATOR_DIRECTORY + "Data.ecore";
 		
 		resourceSet = new ResourceSetImpl();
 		resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);

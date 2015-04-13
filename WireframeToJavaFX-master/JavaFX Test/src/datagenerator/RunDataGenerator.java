@@ -4,19 +4,20 @@ import java.util.ArrayList;
 
 import org.eclipse.emf.ecore.EObject;
 
+import application.Constants;
+
 public class RunDataGenerator {
 
 	public static void main(String[] args) {
 		
 		ContextGenerator cg = ContextGenerator.getInstance();
-		String location = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi";
+		String location = Constants.DATAGENERATOR_DIRECTORY + "moviedb.xmi";
 		String[] context = {"rContext = " + location};
 		cg.generateDecorator(context);
 		cg.generateDecorator(new String[]{"actor = rContext.allActors->select(name = 'Lena Headey')->asSequence()->at(1)"});
 		cg.generateDecorator(new String[]{"movies = actor.movies"});
 		cg.generateDecorator(new String[]{"movies = rContext.allMovies"});
 		cg.generatePaths();
-		//cg.saveXMI("cake.xmi", "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/");
 		
 		ArrayList<EObject> allContexts = new ArrayList<>();
 		allContexts.addAll(cg.rootContexts);
@@ -29,7 +30,7 @@ public class RunDataGenerator {
 		
 		XMIExporter exporter = new XMIExporter();
 		exporter.setGenerators(ag, cg);
-		exporter.exportXMI("cake.xmi", "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/");
+		exporter.exportXMI("cake.xmi", Constants.DATAGENERATOR_DIRECTORY);
 		
 		System.out.println("cake");
 		

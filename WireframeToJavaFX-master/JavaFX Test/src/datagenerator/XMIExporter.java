@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
+import application.Constants;
+
 public class XMIExporter {
 	
 	AssignmentGenerator assignmentGenerator;
@@ -34,7 +36,7 @@ public class XMIExporter {
 	
 	public XMIExporter() {
 		
-		String pathToEcore = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/Data.ecore";
+		String pathToEcore = Constants.DATAGENERATOR_DIRECTORY + "Data.ecore";
 		
 		resourceSet = new ResourceSetImpl();
 		resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
