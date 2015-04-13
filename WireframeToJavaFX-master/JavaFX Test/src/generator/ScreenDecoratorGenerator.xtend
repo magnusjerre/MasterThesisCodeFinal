@@ -83,7 +83,7 @@ class ScreenDecoratorGenerator {
 	}
 	
 	def generateDecoratorAssignment(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		AssignmentGenerator.getInstance.generateDecorator(strings, 1);	//1 should be replaced with actual id of widget to modify
+		AssignmentGenerator.getInstance.generateDecorator(strings, map.get(master).value.id.intValue);	//1 should be replaced with actual id of widget to modify
 	}
 	
 	def generateDecoratorContext(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
