@@ -3,4 +3,7 @@
   <panels id="VAdFkLRfCXHNXFLD2styInVow00=" x="75" y="75">
     <screen href="firstscreen.screen#/"/>
   </panels>
+  <panels id="w4i8yKt_bZRNTsEOYjxPmw5eNWw=" x="375" y="75">
+    <screen href="secondscreen.screen#/"/>
+  </panels>
 </story:Storyboard>
