@@ -1,3 +1,4 @@
 /bin/
 /src/application/*.fxml
 /src/application/ScreenNavigatorController*
+/src/application/*.xmi
