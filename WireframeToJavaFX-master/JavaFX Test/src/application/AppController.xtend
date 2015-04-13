@@ -18,6 +18,7 @@ import org.apache.commons.io.FilenameUtils
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.util.EcoreUtil
 import com.wireframesketcher.model.story.Storyboard
+import datagenerator.AssignmentHandler
 
 /**
  * 
@@ -198,6 +199,9 @@ class AppController extends Application {
 				it.invoke(finalConstructor, resource)
 			}
 		]
+		
+		val aHandler = new AssignmentHandler
+		aHandler.AssignValues(getRoot, Constants.FXML_DIRECTORY + fileName + ".xmi")
 
 		stage.setScene(scene)
 		stage.show()

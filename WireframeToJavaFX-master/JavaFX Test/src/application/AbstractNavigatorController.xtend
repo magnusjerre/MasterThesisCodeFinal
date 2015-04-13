@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.resource.Resource
 import java.util.regex.Pattern
+import datagenerator.AssignmentHandler
 
 /** Used to indicate if the methods <code>getPropertyForNode()</code> or 
  * <code>setPropertyForNode()</code> was successful in invoking the property.
@@ -829,6 +830,9 @@ abstract class AbstractNavigatorController {
 			}
 			
 			nextScreen.evaluateRulesForScreen
+			
+		val aHandler = new AssignmentHandler
+		aHandler.AssignValues(appController.getRoot, Constants.FXML_DIRECTORY + nextScreen + ".xmi")
 	
 		stage.setScene(scene);
 		stage.show();
