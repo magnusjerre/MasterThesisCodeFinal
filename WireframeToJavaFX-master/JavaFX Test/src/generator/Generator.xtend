@@ -1324,7 +1324,7 @@ class Generator {
 					
 					val xmiExpoter = new XMIExporter
 					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance)
-					xmiExpoter.exportXMI(name, "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/")
+					xmiExpoter.exportXMI(name, "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/application/")
 					
 				} 
 			]
