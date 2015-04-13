@@ -24,6 +24,7 @@
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="5" x="160" y="72" width="105" height="33" measuredWidth="105" measuredHeight="33"/>
+  <widgets xsi:type="model:Image" id="6" x="104" y="97" measuredWidth="32" measuredHeight="32" src="pixelart.png"/>
   <hRuler>
     <guides position="251"/>
   </hRuler>

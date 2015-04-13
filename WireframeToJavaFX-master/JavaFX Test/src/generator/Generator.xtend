@@ -726,9 +726,17 @@ class Generator {
 		/** Image */
 		// TODO: finn resource mappa til Start.screen sånn at man kan bruke "src" til å hente ut den samme bildefila
 		//println(widget.src)
-		val path = widget.src.path
+		var path = widget.src.path
 		val index = path.lastIndexOf("/");
 		val fileName = path.substring(index + 1);
+		val file = new File(Constants.FXML_DIRECTORY + "/" + fileName)	
+		
+		if (file.exists) {	//Use current directory (src/application)
+			path = fileName
+		} else {	//Use Wireframesketcher project directory as resource
+			path = "../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/" + fileName	
+		}
+		val relativeImageLocation = path
 
 		if (builder.layoutType == LayoutStyle.AnchorPane) {
 
@@ -743,7 +751,7 @@ class Generator {
 				it += "fitWidth" -> widget.measuredWidth;
 				(it += "image" ) => [
 					(it += "Image") => [
-						it += "url" -> "@" + fileName
+						it += "url" -> "@" + relativeImageLocation
 					]
 				]
 			]
@@ -772,7 +780,7 @@ class Generator {
 				it += "GridPane.rowSpan" -> rowSpan;
 				(it += "image" ) => [
 					(it += "Image") => [
-						it += "url" -> "@" + fileName
+						it += "url" -> "@" + relativeImageLocation
 					]
 				]
 			]
