@@ -1,1 +1,3 @@
 /bin/
+/src/application/*.fxml
+/src/application/ScreenNavigatorController*
