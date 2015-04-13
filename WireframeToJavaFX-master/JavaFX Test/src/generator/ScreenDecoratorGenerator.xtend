@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
+import datagenerator.ContextGenerator
+import datagenerator.AssignmentGenerator
 
 /** A singleton class that parse and generate screendecorator models */
 class ScreenDecoratorGenerator {
@@ -49,9 +51,9 @@ class ScreenDecoratorGenerator {
 				modelType = DecoratorModelType.ACTION
 			case uri.endsWith("Models.screen#Styles)"):
 				modelType = DecoratorModelType.STYLE
-			case uri.endsWith("Models.screen#Context"):
+			case uri.endsWith("Models.screen#Context)"):
 				modelType = DecoratorModelType.CONTEXT
-			case uri.endsWith("Models.screen#Assignment"):
+			case uri.endsWith("Models.screen#Assignment)"):
 				modelType = DecoratorModelType.ASSIGNMENT
 		}
 		return modelType
@@ -81,11 +83,11 @@ class ScreenDecoratorGenerator {
 	}
 	
 	def generateDecoratorAssignment(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		ContextGenerator.getInstance.generateDecorator(strings);
 	}
 	
 	def generateDecoratorContext(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		AssignmentGenerator.getInstance.generateDecorator(strings, 1);	//1 should be replaced with actual id of widget to modify
 	}
 
 	def void generateDataModel(String[] dataString, Master master, HashMap<Master, Pair<Arrow, Widget>> masterMap) {
