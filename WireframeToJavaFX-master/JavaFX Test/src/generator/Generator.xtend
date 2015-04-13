@@ -729,12 +729,14 @@ class Generator {
 		var path = widget.src.path
 		val index = path.lastIndexOf("/");
 		val fileName = path.substring(index + 1);
-		val file = new File(Constants.FXML_DIRECTORY + "/" + fileName)	
 		
-		if (file.exists) {	//Use current directory (src/application)
+		if (new File(Constants.FXML_DIRECTORY + "/" + fileName).exists) {	//Use current directory (src/application)
 			path = fileName
-		} else {	//Use Wireframesketcher project directory as resource
+		} else if (new File("../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/" + fileName).exists){
+			//Use Wireframesketcher project directory as resource
 			path = "../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/" + fileName	
+		} else {	//look for image folder inside project
+			path = "../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/images/" + fileName
 		}
 		val relativeImageLocation = path
 

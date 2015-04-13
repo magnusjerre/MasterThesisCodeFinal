@@ -7,6 +7,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="biography" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="movies" upperBound="-1"
         eType="#//Movie"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="portrait" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Movie">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -14,6 +15,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="synopsis" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="actors" upperBound="-1"
         eType="#//Actor"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="poster" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Database">
     <eStructuralFeatures xsi:type="ecore:EReference" name="allActors" upperBound="-1"
