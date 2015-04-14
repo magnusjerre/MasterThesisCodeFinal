@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import datagenerator.ContextGenerator
 import datagenerator.AssignmentGenerator
+import datagenerator.TypeGenerator
 
 /** A singleton class that parse and generate screendecorator models */
 class ScreenDecoratorGenerator {
@@ -86,11 +87,11 @@ class ScreenDecoratorGenerator {
 	}
 	
 	def generateDecoratorType(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		//TODO: auto-generated method stub
+		TypeGenerator.getInstance.generateDecorator(strings, master, map)
 	}
 	
 	def generateDecoratorAssignment(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		AssignmentGenerator.getInstance.generateDecorator(strings, map.get(master).value.id.intValue);	//1 should be replaced with actual id of widget to modify
+		AssignmentGenerator.getInstance.generateDecorator(strings, master, map)
 	}
 	
 	def generateDecoratorContext(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {

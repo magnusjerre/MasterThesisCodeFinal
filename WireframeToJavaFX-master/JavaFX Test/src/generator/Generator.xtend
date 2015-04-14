@@ -43,6 +43,7 @@ import com.wireframesketcher.model.RadioButton
 import datagenerator.ContextGenerator
 import datagenerator.AssignmentGenerator
 import datagenerator.XMIExporter
+import datagenerator.TypeGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -1325,16 +1326,18 @@ class Generator {
 					println("Generating FXML for " + name)
 					
 					ContextGenerator.getInstance.clear
+					TypeGenerator.getInstance.clear
 					AssignmentGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
 					
 					ContextGenerator.getInstance.generatePaths
+					TypeGenerator.getInstance.setupAssignmentReferences
 					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
 					AssignmentGenerator.getInstance.generatePaths
 					
 					val xmiExpoter = new XMIExporter
-					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance)
+					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance, TypeGenerator.getInstance)
 					xmiExpoter.exportXMI(name, Constants.FXML_DIRECTORY)
 					
 				} 

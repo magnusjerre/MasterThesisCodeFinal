@@ -25,6 +25,7 @@ public class XMIExporter {
 	
 	AssignmentGenerator assignmentGenerator;
 	ContextGenerator contextGenerator;
+	TypeGenerator typeGenerator;
 	
 	//EMF
 	ResourceSet resourceSet;
@@ -32,7 +33,7 @@ public class XMIExporter {
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
 	EClass dataForScreenClass;
-	EStructuralFeature allContextsFeature, allAssignmentsFeature;
+	EStructuralFeature allContextsFeature, allAssignmentsFeature, allTypesFeature;
 	
 	public XMIExporter() {
 		
@@ -53,18 +54,21 @@ public class XMIExporter {
 		dataForScreenClass = (EClass) dataPackage.getEClassifier("DataForScreen");
 		allContextsFeature = dataForScreenClass.getEStructuralFeature("allContexts");
 		allAssignmentsFeature = dataForScreenClass.getEStructuralFeature("allAssignments");
+		allTypesFeature = dataForScreenClass.getEStructuralFeature("allTypes");
 		
 	}
 	
-	public void setGenerators(AssignmentGenerator ag, ContextGenerator cg) {
+	public void setGenerators(AssignmentGenerator ag, ContextGenerator cg, TypeGenerator tg) {
 		assignmentGenerator = ag;
 		contextGenerator = cg;
+		typeGenerator = tg;
 	}
 	
 	public void exportXMI(String filename, String absFolderLocation) {
 		
 		if (contextGenerator == null) throw new NullPointerException("Context generator not set for XMIExporter.");
 		if (assignmentGenerator == null) throw new NullPointerException("Assignment generator not set for XMIExporter.");
+		if (typeGenerator == null) throw new NullPointerException("Type generator not set for XMIExporter.");
 
 		//Create and fill the new instance with the contexts
 		EObject newContextsForScreen = dataFactory.create(dataForScreenClass);
@@ -83,6 +87,12 @@ public class XMIExporter {
 		EList<EObject> allAssignments = (EList<EObject>) newContextsForScreen.eGet(allAssignmentsFeature);
 		for (EObject eObject : assignmentGenerator.assignments) {
 			allAssignments.add(eObject);
+		}
+		
+		@SuppressWarnings("unchecked")
+		EList<EObject> allTypes = (EList<EObject>) newContextsForScreen.eGet(allTypesFeature);
+		for (EObject eObject : typeGenerator.types) {
+			allTypes.add(eObject);
 		}
 		
 		//Create the xmi and fill with the new instance

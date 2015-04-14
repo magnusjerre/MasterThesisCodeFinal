@@ -36,7 +36,7 @@ public class DataUtils {
 	//Assignment class features are prefixed with an s
 	EStructuralFeature aStatementFeature, aSpecificStatementFeature, aRootContextFeature, aLayoutIDFeature, aUseType, aPartOf;
 	//DataForScreen class features are prefixed with a d
-	EStructuralFeature dAllContextsFeature, dAllAssignmentsFeature;
+	EStructuralFeature dAllContextsFeature, dAllAssignmentsFeature, dAllTypesFeature;
 	//Type class features are prefixed with a t
 	EStructuralFeature tNameFeature, tAssignmentsFeature, tTypesFeature;
 	
@@ -76,6 +76,7 @@ public class DataUtils {
 		dataForScreenClass = (EClass) dataPackage.getEClassifier("DataForScreen");
 		dAllContextsFeature = dataForScreenClass.getEStructuralFeature("allContexts");
 		dAllAssignmentsFeature = dataForScreenClass.getEStructuralFeature("allAssignments");
+		dAllTypesFeature = dataForScreenClass.getEStructuralFeature("allTypes");
 		
 		//Type
 		typeClass = (EClass) dataPackage.getEClassifier("Type");
