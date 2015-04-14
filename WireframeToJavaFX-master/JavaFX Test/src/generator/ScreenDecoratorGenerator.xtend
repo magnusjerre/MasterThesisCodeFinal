@@ -86,7 +86,7 @@ class ScreenDecoratorGenerator {
 	}
 	
 	def generateDecoratorType(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		//TODO: auto-generated method stub
 	}
 	
 	def generateDecoratorAssignment(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {

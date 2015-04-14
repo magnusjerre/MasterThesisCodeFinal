@@ -30,13 +30,15 @@ public class DataUtils {
 	Resource dataResource;
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
-	EClass contextClass, assignmentClass, dataForScreenClass;
+	EClass contextClass, assignmentClass, dataForScreenClass, typeClass;
 	//Context class features are prefixed with a c
 	EStructuralFeature cNameFeature, cContextFeature, cIsRootFeature, cStatementFeature, cSpecificStatementFeature;
 	//Assignment class features are prefixed with an s
-	EStructuralFeature aStatementFeature, aSpecificStatementFeature, aRootContextFeature, aLayoutIDFeature;
+	EStructuralFeature aStatementFeature, aSpecificStatementFeature, aRootContextFeature, aLayoutIDFeature, aUseType, aPartOf;
 	//DataForScreen class features are prefixed with a d
 	EStructuralFeature dAllContextsFeature, dAllAssignmentsFeature;
+	//Type class features are prefixed with a t
+	EStructuralFeature tNameFeature, tAssignmentsFeature, tTypesFeature;
 	
 	private DataUtils() {
 		
@@ -67,11 +69,19 @@ public class DataUtils {
 		aSpecificStatementFeature = assignmentClass.getEStructuralFeature("specificStatement");
 		aRootContextFeature = assignmentClass.getEStructuralFeature("rootContext");
 		aLayoutIDFeature = assignmentClass.getEStructuralFeature("layoutID");
+		aUseType = assignmentClass.getEStructuralFeature("useType");
+		aPartOf = assignmentClass.getEStructuralFeature("partOf");
 		
 		//DataForContext
 		dataForScreenClass = (EClass) dataPackage.getEClassifier("DataForScreen");
 		dAllContextsFeature = dataForScreenClass.getEStructuralFeature("allContexts");
 		dAllAssignmentsFeature = dataForScreenClass.getEStructuralFeature("allAssignments");
+		
+		//Type
+		typeClass = (EClass) dataPackage.getEClassifier("Type");
+		tNameFeature = typeClass.getEStructuralFeature("name");
+		tAssignmentsFeature = typeClass.getEStructuralFeature("assignments");
+		tTypesFeature = typeClass.getEStructuralFeature("types");
 		
 	}
 	

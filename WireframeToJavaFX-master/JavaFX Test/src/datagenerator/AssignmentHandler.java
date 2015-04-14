@@ -8,7 +8,6 @@ import java.util.Date;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
@@ -40,15 +39,17 @@ public class AssignmentHandler {
 			
 			
 			EObject rootContextForAssignment = (EObject) eObject.eGet(utils.aRootContextFeature);
-			String locationOfRootXmi = (String) rootContextForAssignment.eGet(utils.cStatementFeature);
-			EObject dataInstance = DataUtils.getRootObjectForXmi(locationOfRootXmi);
-			
-			Object result = OCLHandler.parseOCLStatement(
-					utils.dataResource.getResourceSet(), 
-					dataInstance, 
-					(String) eObject.eGet(utils.aStatementFeature));
-			
-			handleResultCorrectly(root, id, result);
+			if (rootContextForAssignment != null) {	//Temporary solution, means that the assignment is not part of a type
+				String locationOfRootXmi = (String) rootContextForAssignment.eGet(utils.cStatementFeature);
+				EObject dataInstance = DataUtils.getRootObjectForXmi(locationOfRootXmi);
+				
+				Object result = OCLHandler.parseOCLStatement(
+						utils.dataResource.getResourceSet(), 
+						dataInstance, 
+						(String) eObject.eGet(utils.aStatementFeature));
+				
+				handleResultCorrectly(root, id, result);
+			}
 			
 		}
 		

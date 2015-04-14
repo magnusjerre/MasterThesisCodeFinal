@@ -81,6 +81,10 @@ public class AssignmentGenerator {
 		
 		statement = statement.trim();
 		String parentName = DataUtils.getParentName(statement);
+		if (parentName.equals("")) {
+			return new Pair<String, EObject>("", null);
+		}
+		
 		statement = statement.replace(parentName, "");
 		
 		EObject parent = utils.getContextNamed(parentName, contexts);
