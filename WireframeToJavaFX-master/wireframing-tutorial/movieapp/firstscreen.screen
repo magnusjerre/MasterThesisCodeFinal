@@ -1,35 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
-  <widgets xsi:type="model:Label" id="1" x="72" y="56" text="This is the label" measuredWidth="96" measuredHeight="23" link="secondscreen.screen">
-    <font/>
-  </widgets>
-  <widgets xsi:type="model:Master" id="2" x="264" y="8" measuredWidth="865" measuredHeight="33">
+  <widgets xsi:type="model:Master" id="2" x="952" y="168" measuredWidth="865" measuredHeight="33">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
     <overrides>
       <widgets ref="5" width="865" height="33" text="db = /Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi"/>
     </overrides>
   </widgets>
-  <widgets xsi:type="model:Master" id="3" x="264" y="96" width="129" measuredWidth="129" measuredHeight="33">
+  <widgets xsi:type="model:Master" id="3" x="520" y="20" measuredWidth="129" measuredHeight="33">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
     <overrides>
       <widgets ref="7" width="129" height="33" text="actress.portrait"/>
     </overrides>
   </widgets>
-  <widgets xsi:type="model:Master" id="4" x="264" y="48" width="457" measuredWidth="457" measuredHeight="31">
+  <widgets xsi:type="model:Master" id="4" x="952" y="208" measuredWidth="457" measuredHeight="31">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
     <overrides>
-      <widgets ref="5" width="457" height="31" text="actress = db.allActors->select(name = 'Sam Rockwell')->asSequence()->at(1)">
+      <widgets ref="5" width="457" height="31" text="actress = db.allActors->select(name = 'Eva Green')->asSequence()->at(1)">
         <attributes key="textAlignment" value="Left"/>
       </widgets>
     </overrides>
   </widgets>
-  <widgets xsi:type="model:Image" id="6" x="24" y="88" measuredWidth="214" measuredHeight="317" src="images/evagreen.jpg"/>
-  <widgets xsi:type="model:Arrow" id="5" x="135" y="112" width="130" height="8" measuredWidth="130" measuredHeight="8" foreground="#999999"/>
+  <widgets xsi:type="model:Image" id="6" x="16" y="20" width="129" height="189" measuredWidth="129" measuredHeight="189" src="images/evagreen.jpg"/>
+  <widgets xsi:type="model:Arrow" id="5" x="144" y="40" width="377" height="8" measuredWidth="377" measuredHeight="8" foreground="#999999"/>
+  <widgets xsi:type="model:HLine" id="7" x="16" y="234" width="369" measuredWidth="369" measuredHeight="6"/>
+  <widgets xsi:type="model:Master" id="8" x="520" y="62" measuredWidth="129" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="129" height="33" text="actress.name"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="9" x="338" y="64" width="183" height="9" measuredWidth="183" measuredHeight="9" foreground="#999999"/>
+  <widgets xsi:type="model:Label" id="11" x="160" y="40" text="Actress name" measuredWidth="201" measuredHeight="46">
+    <font size="32px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="12" x="160" y="92" text="birthdate" measuredWidth="104" measuredHeight="36">
+    <font size="24px" italic="true"/>
+  </widgets>
+  <widgets xsi:type="model:TextArea" id="14" x="160" y="131" width="217" height="78" text="biography" measuredWidth="217" measuredHeight="78">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="15" x="520" y="104" measuredWidth="129" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="129" height="33" text="actress.birthdate"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="16" x="520" y="146" measuredWidth="129" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="129" height="33" text="actress.biography"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="17" x="263" y="112" width="258" height="8" measuredWidth="258" measuredHeight="8" foreground="#999999"/>
+  <widgets xsi:type="model:Arrow" id="18" x="376" y="168" width="145" height="8" measuredWidth="145" measuredHeight="8" foreground="#999999"/>
+  <widgets xsi:type="model:Image" id="19" x="16" y="248" width="81" height="121" measuredWidth="81" measuredHeight="121" src="images/300riseofanempire.jpg"/>
+  <widgets xsi:type="model:Label" id="20" x="120" y="256" text="Movie title" measuredWidth="152" measuredHeight="46">
+    <font size="32px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="21" x="120" y="308" width="41" text="137" measuredWidth="41" measuredHeight="26">
+    <font size="16px" italic="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="23" x="154" y="308" width="65" text="mins" measuredWidth="65" measuredHeight="26">
+    <font size="16px" italic="true"/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="24" x="952" y="256" width="585" measuredWidth="585" measuredHeight="31">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="585" height="31" text="movie = actress.movies->select(title = '300: Rise of an Empire')->asSequence()->at(1)">
+        <attributes key="textAlignment" value="Left"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="25" x="512" y="262" measuredWidth="129" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="129" height="33" text="movie.title"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="26" x="512" y="304" measuredWidth="129" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="129" height="33" text="movie.runtime"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="27" x="512" y="346" measuredWidth="129" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="129" height="33" text="movie.synopsis"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="28" x="8" y="424" measuredWidth="129" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="129" height="33" text="movie.poster"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="29" x="263" y="286" width="250" height="8" measuredWidth="250" measuredHeight="8" foreground="#999999"/>
+  <widgets xsi:type="model:Arrow" id="30" x="144" y="320" width="369" height="8" measuredWidth="369" measuredHeight="8" foreground="#999999"/>
+  <widgets xsi:type="model:Arrow" id="32" x="64" y="368" width="8" height="57" measuredWidth="8" measuredHeight="57" foreground="#999999"/>
+  <widgets xsi:type="model:TextArea" id="33" x="120" y="346" width="265" text="synopsis" measuredWidth="265" measuredHeight="23">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="31" x="184" y="360" width="329" height="8" measuredWidth="329" measuredHeight="8" foreground="#999999"/>
   <hRuler>
-    <guides position="1152"/>
+    <guides position="401"/>
   </hRuler>
   <vRuler>
-    <guides position="854"/>
+    <guides position="402"/>
   </vRuler>
   <font size="12px"/>
 </model:Screen>

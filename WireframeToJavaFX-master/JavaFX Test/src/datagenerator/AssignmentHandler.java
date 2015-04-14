@@ -1,6 +1,9 @@
 package datagenerator;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -38,7 +41,7 @@ public class AssignmentHandler {
 			String locationOfRootXmi = (String) rootContextForAssignment.eGet(utils.cStatementFeature);
 			EObject dataInstance = DataUtils.getRootObjectForXmi(locationOfRootXmi);
 			
-			Object result = (String) OCLHandler.parseOCLStatement(
+			Object result = OCLHandler.parseOCLStatement(
 					utils.dataResource.getResourceSet(), 
 					dataInstance, 
 					(String) eObject.eGet(utils.aStatementFeature));
@@ -53,15 +56,37 @@ public class AssignmentHandler {
 		Node node = root.lookup(id);
 		
 		if (node instanceof Label) {
-			((Label) node).setText(result.toString());
+			((Label) node).setText(getStringRepresentation(result));
 		} else if (node instanceof TextInputControl) {
-			((TextInputControl) node).setText(result.toString());
+			((TextInputControl) node).setText(getStringRepresentation(result));
 		} else if (node instanceof ImageView) {
 			String fileName = result.toString().substring(result.toString().lastIndexOf("/") + 1, result.toString().length());
 			File imageFile = fileLocation(fileName);
 			String uri = imageFile.toURI().toString();
 			((ImageView) node).setImage(new Image(uri));
 		}
+	}
+	
+	private static String getStringRepresentation(Object object) {
+		
+		if (object instanceof String) {
+			return object.toString();
+		}
+		
+		if (object instanceof Integer) {
+			return Integer.toString((Integer) object);
+		}
+		
+		if (object instanceof Double) {
+			return Double.toString((Double) object);
+		}
+		
+		if (object instanceof Date) {
+			DateFormat df = new SimpleDateFormat();
+			return df.format((Date) object);
+		}
+		
+		return null;
 	}
 	
 	private static File fileLocation(String fileName) {
