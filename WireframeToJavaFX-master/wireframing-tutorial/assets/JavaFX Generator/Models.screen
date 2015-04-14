@@ -25,6 +25,11 @@
       <font/>
     </widgets>
   </widgets>
+  <widgets xsi:type="model:WidgetGroup" id="8" x="64" y="192" measuredWidth="97" measuredHeight="81" name="Type">
+    <widgets xsi:type="model:Note" id="9" width="97" height="81" text="Type" measuredWidth="97" measuredHeight="81" background="#ff9900">
+      <font/>
+    </widgets>
+  </widgets>
   <hRuler/>
   <vRuler/>
   <font size="12px"/>

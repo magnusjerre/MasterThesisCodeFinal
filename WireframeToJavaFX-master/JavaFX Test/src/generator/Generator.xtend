@@ -54,7 +54,8 @@ enum DecoratorModelType {
 	ACTION,
 	STYLE,
 	CONTEXT,
-	ASSIGNMENT
+	ASSIGNMENT,
+	TYPE
 }
 
 enum LayoutStyle {
