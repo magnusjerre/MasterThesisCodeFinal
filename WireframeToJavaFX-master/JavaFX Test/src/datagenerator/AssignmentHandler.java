@@ -8,6 +8,8 @@ import java.util.Date;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -58,6 +60,9 @@ public class AssignmentHandler {
 		if (node instanceof Label) {
 			((Label) node).setText(getStringRepresentation(result));
 		} else if (node instanceof TextInputControl) {
+			if (node instanceof TextArea) {
+				((TextArea) node).setWrapText(true);
+			}
 			((TextInputControl) node).setText(getStringRepresentation(result));
 		} else if (node instanceof ImageView) {
 			String fileName = result.toString().substring(result.toString().lastIndexOf("/") + 1, result.toString().length());
