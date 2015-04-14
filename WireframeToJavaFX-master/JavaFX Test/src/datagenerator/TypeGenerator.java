@@ -48,8 +48,6 @@ public class TypeGenerator {
 	
 	public void clear() {
 		
-		assignments = new ArrayList<EObject>();
-		assignmentsAsMaster = new ArrayList<Master>();
 		masterMap = null;
 		types.clear();
 		typesAsMaster.clear();
@@ -81,7 +79,7 @@ public class TypeGenerator {
 		
 		for (EObject assignment : assignments) {
 			
-			if (isTypeAssignment(assignment)) {
+			if (AssignmentGenerator.getInstance().isTypeAssignment(assignment)) {
 				EObject type = getTypeAssignmentBelongsTo(assignment);
 				setupConnection(assignment, type);
 			}
@@ -222,17 +220,6 @@ public class TypeGenerator {
 		
 	}
 	
-	private boolean isTypeAssignment(EObject eObject) {
-		
-		Pair<Arrow, Widget> pair = getPairForAssignment(eObject);
-		if (pair.getValue() instanceof WidgetGroup) {
-			return true;	//temporary
-		}
-		
-		return false;
-		
-	}
-	
 	private class Point {
 		
 		public final int x, y;
@@ -246,6 +233,21 @@ public class TypeGenerator {
 		public String toString() {
 			return String.format("{x: , y: }", x, y);
 		}
+	}
+	
+	protected EObject findTypeNamed(String name) {
+		
+		for (EObject type : types) {
+			
+			String typeName = (String) type.eGet(utils.tNameFeature);
+			if (typeName.equals(name)) {
+				return type;
+			}
+			
+		}
+		
+		throw new RuntimeException(String.format("Couldn't find Type with name %s", name));
+		
 	}
 	
 }

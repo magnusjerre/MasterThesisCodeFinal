@@ -23,6 +23,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="layoutID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="useType" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="partOf" eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="useTypeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Type">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

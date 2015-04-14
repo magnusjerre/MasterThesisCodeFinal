@@ -48,7 +48,6 @@ public class AssignmentGenerator {
 	
 	public void clear() {
 		
-		contexts = new ArrayList<EObject>();
 		masterMap = null;
 		assignments.clear();
 		assignmentsAsMaster.clear();
@@ -61,40 +60,84 @@ public class AssignmentGenerator {
 			masterMap = map;
 		}
 		
-		if (strings.length > 1)
-			return;
-		
-		for (int i = 0; i < strings.length; i++) {
-			
-			String specificStatement = strings[i].trim();
-
-			EObject assignmentObject = utils.dataFactory.create(utils.assignmentClass);
-			assignmentObject.eSet(utils.aSpecificStatementFeature, specificStatement);
-			assignmentObject.eSet(utils.aLayoutIDFeature, map.get(master).getValue().getId().intValue());
-			//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
-			
-			assignments.add(assignmentObject);
-			assignmentsAsMaster.add(master);
-
+		if (strings.length < 1 || strings.length > 2) {
+			throw new RuntimeException("The decorator is not well formed, it contains either too many or too few lines.\n"
+					+ "The Assignment decorator allows either one or two lines.");
 		}
+		
+		EObject assignmentObject = utils.dataFactory.create(utils.assignmentClass);
+		String specificStatement = strings[0].trim();
+		assignmentObject.eSet(utils.aSpecificStatementFeature, specificStatement);
+		assignmentObject.eSet(utils.aLayoutIDFeature, map.get(master).getValue().getId().intValue());
+		if (strings.length == 2) {
+			assignmentObject.eSet(utils.aUseTypeName, strings[1].trim());
+		}
+		
+		//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
+		
+		assignments.add(assignmentObject);
+		assignmentsAsMaster.add(master);
 		
 	}
 	
+	
+	
 	public void generatePaths() {
+		
+		generateNormalPaths();
+		generateUsingTypePaths();
+		generatePartOfTypePaths();
+		
+	}
+
+	private void generateNormalPaths() {
 		
 		for (EObject assignment : assignments) {
 			
-			if (isTypeAssignment(assignment)) {
-				assignment.eSet(utils.aStatementFeature, assignment.eGet(utils.aSpecificStatementFeature));
-				assignment.eSet(utils.aRootContextFeature, null);
-			} else {
+			if (!isTypeAssignment(assignment)) {
 				Pair<String, EObject> pair = generateContextPath((String) assignment.eGet(utils.aSpecificStatementFeature));
 				assignment.eSet(utils.aStatementFeature, pair.getKey());
 				assignment.eSet(utils.aRootContextFeature, pair.getValue());
 			}
 			
+		}
+		
+	}
+	
+	private void generateUsingTypePaths() {
+		
+		for (EObject assignment : assignments) {
+			
+			if (usesType(assignment)) {
+				String useTypeName = (String) assignment.eGet(utils.aUseTypeName);
+				EObject useType = TypeGenerator.getInstance().findTypeNamed(useTypeName);
+				assignment.eSet(utils.aUseType, useType);
+			}
 			
 		}
+		
+	}
+	
+	private void generatePartOfTypePaths() {
+		
+		for (EObject assignment : assignments) {
+			
+			if (isTypeAssignment(assignment)) {
+				EObject type = (EObject) assignment.eGet(utils.aPartOf);
+				EObject typeUser = findAssignmentUsingType(type);
+				String typeUserStatement = (String) typeUser.eGet(utils.aStatementFeature);
+				String specificStatement = (String) assignment.eGet(utils.aSpecificStatementFeature);
+				assignment.eSet(utils.aStatementFeature,  typeUserStatement + specificStatement);
+				assignment.eSet(utils.aRootContextFeature, typeUser.eGet(utils.aRootContextFeature));
+			}
+			
+		}
+		
+	}
+
+	private boolean usesType(EObject assignment) {
+		
+		return assignment.eGet(utils.aUseTypeName) != null;
 		
 	}
 
@@ -128,15 +171,32 @@ public class AssignmentGenerator {
 		
 	}
 	
-	private boolean isTypeAssignment(EObject eObject) {
+	protected boolean isTypeAssignment(EObject eObject) {
 		
 		Pair<Arrow, Widget> pair = getPairForAssignment(eObject);
 		if (pair.getValue() instanceof WidgetGroup) {
-			return true;	//temporary
+			if (eObject.eGet(utils.aUseTypeName) == null) {
+				return true;
+			}
 		}
 		
 		return false;
 		
 	}
 
+	private EObject findAssignmentUsingType(EObject type) {
+		
+		for (EObject assignment : assignments) {
+			
+			EObject assignmentUsingType = (EObject) assignment.eGet(utils.aUseType);
+			if (type == assignmentUsingType) {
+				return assignment;
+			}
+			
+		}
+		
+		throw new RuntimeException(String.format("Couldn't find the assignment using type: %s", type.eGet(utils.tNameFeature)));
+		
+	}
+	
 }
