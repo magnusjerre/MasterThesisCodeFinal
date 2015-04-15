@@ -95,6 +95,12 @@ public class TypeGenerator {
 		assignment.eSet(utils.aPartOf, type);
 		assignment.eSet(utils.aLayoutIDFeature, getElementAssigned(assignment));
 		
+		String assignmentUsesTypeNamed = (String) assignment.eGet(utils.aUseTypeName);
+		if (assignmentUsesTypeNamed != null) {
+			EObject typeToUse = findTypeNamed(assignmentUsesTypeNamed);
+			((EList<EObject>)type.eGet(utils.tTypesFeature)).add(typeToUse);
+		}
+		
 	}
 	
 	private int getElementAssigned(EObject assignment) {
@@ -248,6 +254,16 @@ public class TypeGenerator {
 		}
 		
 		throw new RuntimeException(String.format("Couldn't find Type with name %s", name));
+		
+	}
+	
+	protected boolean isPartOfType(EObject assignment) {
+		
+		if (getTypeMasterForAssignment(assignment) == null) {
+			return false;
+		}
+		
+		return true;
 		
 	}
 	

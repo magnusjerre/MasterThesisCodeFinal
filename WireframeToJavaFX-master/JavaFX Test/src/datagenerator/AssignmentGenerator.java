@@ -173,14 +173,7 @@ public class AssignmentGenerator {
 	
 	protected boolean isTypeAssignment(EObject eObject) {
 		
-		Pair<Arrow, Widget> pair = getPairForAssignment(eObject);
-		if (pair.getValue() instanceof WidgetGroup) {
-			if (eObject.eGet(utils.aUseTypeName) == null) {
-				return true;
-			}
-		}
-		
-		return false;
+		return TypeGenerator.getInstance().isPartOfType(eObject);
 		
 	}
 
