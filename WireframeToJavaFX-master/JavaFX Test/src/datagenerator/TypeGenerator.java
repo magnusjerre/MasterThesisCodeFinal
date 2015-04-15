@@ -77,6 +77,10 @@ public class TypeGenerator {
 	
 	public void setupAssignmentReferences() {
 		
+		if (types.size() == 0) {
+			return;
+		}
+		
 		for (EObject assignment : assignments) {
 			
 			if (AssignmentGenerator.getInstance().isTypeAssignment(assignment)) {
@@ -161,11 +165,7 @@ public class TypeGenerator {
 		for (Widget widget : widgetGroup.getWidgets()) {
 			
 			if (pointIsInsideRectangle(arrowHead, widget.getX() + offset.x, widget.getY() + offset.y, widget.getMeasuredWidth(), widget.getMeasuredHeight())) {
-				if (widget instanceof WidgetGroup) {
-					return getWigetForArrowHead(arrowHead, (WidgetGroup) widget, new Point(widget.getX(), widget.getY()));
-				} else {
-					return widget;
-				}
+				return widget;
 			}
 			
 		}
@@ -208,6 +208,10 @@ public class TypeGenerator {
 	}
 	
 	private Master getTypeMasterForAssignment(EObject assignment) {
+		
+		if (masterMap == null) {
+			return null;
+		}
 		
 		int pos = assignments.indexOf(assignment);
 		Master assignmentMaster = assignmentsAsMaster.get(pos);
