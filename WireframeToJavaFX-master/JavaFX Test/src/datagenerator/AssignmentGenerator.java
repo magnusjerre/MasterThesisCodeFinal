@@ -8,17 +8,15 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 import com.wireframesketcher.model.Arrow;
 import com.wireframesketcher.model.Master;
-import com.wireframesketcher.model.Position;
 import com.wireframesketcher.model.Widget;
-import com.wireframesketcher.model.WidgetGroup;
 
 public class AssignmentGenerator {
 	
 	private static AssignmentGenerator instance = null;
 	private DataUtils utils;
 	
-	public ArrayList<EObject> assignments;
-	public ArrayList<Master> assignmentsAsMaster;
+	
+	public DoubleList<EObject, Master> assignments;
 	public ArrayList<EObject> contexts;
 	
 	public HashMap<Master, Pair<Arrow, Widget>> masterMap = null;
@@ -35,8 +33,7 @@ public class AssignmentGenerator {
 	private AssignmentGenerator() {
 		
 		utils = DataUtils.getInstance();
-		assignments = new ArrayList<EObject>();
-		assignmentsAsMaster = new ArrayList<Master>();
+		assignments = new DoubleList<EObject, Master>();
 		contexts = new ArrayList<EObject>();
 		
 	}
@@ -51,7 +48,6 @@ public class AssignmentGenerator {
 		
 		masterMap = null;
 		assignments.clear();
-		assignmentsAsMaster.clear();
 		
 	}
 	
@@ -67,17 +63,19 @@ public class AssignmentGenerator {
 		}
 		
 		EObject assignmentObject = utils.dataFactory.create(utils.assignmentClass);
+		
 		String specificStatement = strings[0].trim();
 		assignmentObject.eSet(utils.aSpecificStatementFeature, specificStatement);
+		
 		if (strings.length == 2) {
 			assignmentObject.eSet(utils.aUseTypeName, strings[1].trim());
 		}
-		assignmentObject.eSet(utils.aLayoutIDFeature, getId(assignmentObject, map.get(master)));
+		
+		assignmentObject.eSet(utils.aLayoutIDFeature, getLayoutId(assignmentObject, map.get(master)));
 		
 		//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
 		
-		assignments.add(assignmentObject);
-		assignmentsAsMaster.add(master);
+		assignments.add(assignmentObject, master);
 		
 	}
 
@@ -91,9 +89,9 @@ public class AssignmentGenerator {
 
 	private void generateNormalPaths() {
 		
-		for (EObject assignment : assignments) {
+		for (EObject assignment : assignments.getElementsIterable()) {
 			
-			if (!isTypeAssignment(assignment)) {
+			if (!isAssignmentPartOfType(assignment)) {
 				Pair<String, EObject> pair = generateContextPath((String) assignment.eGet(utils.aSpecificStatementFeature));
 				assignment.eSet(utils.aStatementFeature, pair.getKey());
 				assignment.eSet(utils.aRootContextFeature, pair.getValue());
@@ -105,9 +103,9 @@ public class AssignmentGenerator {
 	
 	private void generateUsingTypePaths() {
 		
-		for (EObject assignment : assignments) {
+		for (EObject assignment : assignments.getElementsIterable()) {
 			
-			if (usesType(assignment)) {
+			if (isAssignmentUsingType(assignment)) {
 				String useTypeName = (String) assignment.eGet(utils.aUseTypeName);
 				EObject useType = TypeGenerator.getInstance().findTypeNamed(useTypeName);
 				assignment.eSet(utils.aUseType, useType);
@@ -119,20 +117,14 @@ public class AssignmentGenerator {
 	
 	private void generatePartOfTypePaths() {
 		
-		for (EObject assignment : assignments) {
+		for (EObject assignment : assignments.getElementsIterable()) {
 			
-			if (isTypeAssignment(assignment)) {
+			if (isAssignmentPartOfType(assignment)) {
 				String specificStatement = (String) assignment.eGet(utils.aSpecificStatementFeature);
 				assignment.eSet(utils.aStatementFeature,  specificStatement);
 			}
 			
 		}
-		
-	}
-
-	private boolean usesType(EObject assignment) {
-		
-		return assignment.eGet(utils.aUseTypeName) != null;
 		
 	}
 
@@ -154,211 +146,13 @@ public class AssignmentGenerator {
 		
 	}
 	
-	private Pair<Arrow, Widget> getPairForAssignment(EObject assignment) {
-		return getPairForEObject(assignment, assignments, assignmentsAsMaster);
-	}
-	
-	private Pair<Arrow, Widget> getPairForEObject(EObject eObject, ArrayList<EObject> eList, ArrayList<Master> masterList) {
+	private int getLayoutId(EObject assignmentObject, Pair<Arrow, Widget> pair) {
 		
-		int pos = eList.indexOf(eObject);
-		Master master = masterList.get(pos);
-		return masterMap.get(master);
-		
-	}
-	
-	protected boolean isTypeAssignment(EObject eObject) {
-		
-		return TypeGenerator.getInstance().isPartOfType(eObject);
-		
-	}
-
-	private EObject findAssignmentUsingType(EObject type) {
-		
-		for (EObject assignment : assignments) {
-			
-			EObject assignmentUsingType = (EObject) assignment.eGet(utils.aUseType);
-			if (type == assignmentUsingType) {
-				return assignment;
-			}
-			
-		}
-		
-		throw new RuntimeException(String.format("Couldn't find the assignment using type: %s", type.eGet(utils.tNameFeature)));
-		
-	}
-	
-	private int getId(EObject assignmentObject, Pair<Arrow, Widget> pair) {
-		
-		if (isAssignmentPlain(assignmentObject)) {
-			return getDeepestWidget(pair.getKey(), pair.getValue()).getId().intValue();
-		} else if (isAssignmentUsingType(assignmentObject)){
+		if (isAssignmentUsingType(assignmentObject)) {
 			return pair.getValue().getId().intValue();
 		} else {
-			return getShallowestWidget(pair.getKey(), pair.getValue()).getId().intValue();
+			return WidgetUtils.getDeepestWidget(pair.getKey(), pair.getValue()).getId().intValue();
 		}
-		
-	}
-	
-	private Widget getShallowestWidget(Arrow arrow, Widget widget) {
-		
-		if (isNotWidgetGroup(widget)) {
-			return widget;
-		}
-		
-		Point arrowHead = getArrowHeadPosition(arrow);
-		WidgetGroup widgetGroup = (WidgetGroup) widget;
-		Point offset = new Point(widgetGroup.getX(), widgetGroup.getY());
-		for (Widget w : widgetGroup.getWidgets()) {
-			
-			int x = w.getX() + offset.x;
-			int y = w.getY() + offset.y;
-			if (pointIsInsideRectangle(arrowHead, x, y, w.getMeasuredWidth(), w.getMeasuredHeight())) {
-				return w;
-			}
-		}
-		
-		throw new RuntimeException("Didn't find a match for the arrow location");
-		
-	}
-	
-	private Widget getDeepestWidget(Arrow arrow, Widget widget) {
-		
-		Point arrowHead = getArrowHeadPosition(arrow);
-		return getDeepestWidget(arrowHead, widget, new Point(widget.getX(), widget.getY()));
-		
-	}
-	
-	private Widget getDeepestWidget(Point arrowHead, Widget widget, Point offset) {
-		
-		if (isNotWidgetGroup(widget)) {
-			return widget;
-		}
-		
-		WidgetGroup widgetGroup = (WidgetGroup) widget;
-		Widget output = null;
-		for (Widget w : widgetGroup.getWidgets()) {
-			
-			int x = w.getX() + offset.x;
-			int y = w.getY() + offset.y;
-			if (pointIsInsideRectangle(arrowHead, x, y, w.getMeasuredWidth(), w.getMeasuredHeight())) {
-				output = w;
-				break;
-			}
-			
-		}
-		
-		if (isNotWidgetGroup(output)) {
-			return output;
-		}
-		
-		offset = new Point(offset.x + output.getX(), offset.y + output.getY());
-		return getDeepestWidget(arrowHead, output, offset);
-		
-		
-	}
-	
-	private boolean isNotWidgetGroup(Widget widget) {
-		return !(widget instanceof WidgetGroup);
-	}
-	
-	private Widget getWidgetPointedToByArrow(Arrow arrow, WidgetGroup widgetGroup) {
-		
-		Point arrowHead = getArrowHeadPosition(arrow);
-		return getWidgetForArrowHead(arrowHead, widgetGroup, new Point(widgetGroup.getX(),widgetGroup.getY()));
-			
-	}
-	
-	private Point getArrowHeadPosition(Arrow arrow) {
-		
-		if (arrow.isLeft() == arrow.isRight()) {
-			throw new RuntimeException("There is an error with the arrow. It's either not pointing, or it's pointing both ways.");
-		}
-		
-		//Topmost and Leftmost point of line
-		int x = arrow.getX();
-		int y = arrow.getY();
-		
-		if (arrow.isRight() && arrow.getDirection() == Position.BOTTOM){
-			x += arrow.getMeasuredWidth();
-		} else if (arrow.isRight()){
-			x += arrow.getMeasuredWidth();
-			y += arrow.getMeasuredHeight();
-		} else if (arrow.getDirection() == Position.BOTTOM){
-			y += arrow.getMeasuredHeight();
-		}
-		
-		return new Point(x,y);
-		
-	}
-	
-	private Widget getWidgetForArrowHead(Point arrowHead, WidgetGroup widgetGroup, Point offset) {
-		
-		for (Widget widget : widgetGroup.getWidgets()) {
-			
-			int x = widget.getX() + offset.x;
-			int y = widget.getY() + offset.y;
-			if (pointIsInsideRectangle(arrowHead, x, y, widget.getMeasuredWidth(), widget.getMeasuredHeight())) {
-				return widget;
-			}
-			
-		}
-		
-		throw new RuntimeException("No widget found for arrow head position.");
-		
-	}
-	
-	private boolean pointIsInsideRectangle(Point point, int left, int top, int width, int height) {
-		
-		int right = left + width;
-		int bottom = top + height;
-		
-		if (point.x < left) {
-			return false;
-		}
-		
-		if (point.x > right) {
-			return false;
-		}
-		
-		if (point.y < top) {
-			return false;
-		}
-		
-		if (point.y > bottom) {
-			return false;
-		}
-		
-		return true;
-		
-	}
-	
-	private class Point {
-		
-		public final int x, y;
-		
-		public Point(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-		
-		@Override
-		public String toString() {
-			return String.format("{x: %d , y: %d }", x, y);
-		}
-	}
-	
-	
-	private static boolean isAssignmentPlain(EObject eObject) {
-		
-		if (isAssignmentPartOfType(eObject)) {
-			return false;
-		}
-		
-		if (isAssignmentUsingType(eObject)) {
-			return false;
-		}
-		
-		return true;
 		
 	}
 	
@@ -369,10 +163,16 @@ public class AssignmentGenerator {
 		
 	}
 	
-	private static boolean isAssignmentPartOfType(EObject eObject) {
+	/**
+	 * Only useable after all types for the screen file have been processed.
+	 * @param eObject
+	 * @return
+	 */
+	protected static boolean isAssignmentPartOfType(EObject eObject) {
 		
 		EObject partOfType = (EObject) eObject.eGet(DataUtils.getInstance().aPartOf);
 		return partOfType != null;
 		
 	}
+	
 }

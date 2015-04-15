@@ -85,13 +85,13 @@ public class XMIExporter {
 		
 		@SuppressWarnings("unchecked")	//Defined as an EList in Data.ecore by me, therefore safe to suppress warning
 		EList<EObject> allAssignments = (EList<EObject>) newContextsForScreen.eGet(allAssignmentsFeature);
-		for (EObject eObject : assignmentGenerator.assignments) {
+		for (EObject eObject : assignmentGenerator.assignments.getElementsIterable()) {
 			allAssignments.add(eObject);
 		}
 		
 		@SuppressWarnings("unchecked")
 		EList<EObject> allTypes = (EList<EObject>) newContextsForScreen.eGet(allTypesFeature);
-		for (EObject eObject : typeGenerator.types) {
+		for (EObject eObject : typeGenerator.list.getElementsIterable()) {
 			allTypes.add(eObject);
 		}
 		
