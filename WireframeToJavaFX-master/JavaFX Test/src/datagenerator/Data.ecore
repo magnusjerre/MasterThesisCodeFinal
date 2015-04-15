@@ -24,6 +24,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="useType" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="partOf" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="useTypeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="widget" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Type">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -31,5 +32,6 @@
         eType="#//Assignment"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
         eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="widget" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
   </eClassifiers>
 </ecore:EPackage>

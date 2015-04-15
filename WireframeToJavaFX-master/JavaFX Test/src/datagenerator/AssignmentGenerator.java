@@ -72,6 +72,7 @@ public class AssignmentGenerator {
 		}
 		
 		assignmentObject.eSet(utils.aLayoutIDFeature, getLayoutId(assignmentObject, map.get(master)));
+		assignmentObject.eSet(utils.aWidgetFeature, getCorrectWidget(assignmentObject, masterMap.get(master)));
 		
 		//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
 		
@@ -152,6 +153,16 @@ public class AssignmentGenerator {
 			return pair.getValue().getId().intValue();
 		} else {
 			return WidgetUtils.getDeepestWidget(pair.getKey(), pair.getValue()).getId().intValue();
+		}
+		
+	}
+	
+	private Widget getCorrectWidget(EObject assignmentObject, Pair<Arrow, Widget> pair) {
+		
+		if (isAssignmentUsingType(assignmentObject)) {
+			return pair.getValue();
+		} else {
+			return WidgetUtils.getDeepestWidget(pair.getKey(), pair.getValue());
 		}
 		
 	}
