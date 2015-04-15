@@ -18,6 +18,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
+import com.wireframesketcher.model.Widget;
+import com.wireframesketcher.model.WidgetGroup;
+
 import application.Constants;
 
 public class AssignmentHandler {
@@ -39,7 +42,7 @@ public class AssignmentHandler {
 			
 			if (isAssignmentPlain(eObject)) {
 				handlePlainAssignment(root, eObject, id);
-			} else if (isAssignmentUsingType(eObject)) {
+			} else if (isAssignmentUsingType(eObject) && !isAssignmentPartOfType(eObject)) {
 				handleAssignmentUsingType(root, eObject, id);
 			}
 			
@@ -156,12 +159,76 @@ public class AssignmentHandler {
 		
 		DataUtils utils = DataUtils.getInstance();
 		
-		EObject type = (EObject) assignment.eGet(utils.aPartOf);
-		EList<EObject> subTypes = (EList<EObject>) type.eGet(utils.tTypesFeature);
+		Widget assignmentWidget = (Widget) assignment.eGet(utils.aWidgetFeature);
 		
-		//TODO: Implement this part
+		EObject type = (EObject) assignment.eGet(utils.aUseType);
+		Widget typeWidget = (Widget) type.eGet(utils.tWidgetFeature);
+		
+		//Start with the simple case were there is no type in type
+		
+		EList<EObject> typeAssignments = (EList<EObject>) type.eGet(utils.tAssignmentsFeature);
+		for (EObject typeAssignment : typeAssignments) {
+			
+			Widget tAWidget = (Widget) typeAssignment.eGet(utils.aWidgetFeature);
+			
+			int fxmlLayoutId = getCorrespondingId(tAWidget, typeWidget, assignmentWidget);
+
+			String statementFromTypeAssignment = (String) typeAssignment.eGet(utils.aStatementFeature);
+			String entireStatement = (String) assignment.eGet(utils.aStatementFeature) + statementFromTypeAssignment;
+			
+			EObject rootContextForAssignment = (EObject) assignment.eGet(utils.aRootContextFeature);
+			if (rootContextForAssignment != null) {	//Temporary solution, means that the assignment is not part of a type
+				String locationOfRootXmi = (String) rootContextForAssignment.eGet(utils.cStatementFeature);
+				EObject dataInstance = DataUtils.getRootObjectForXmi(locationOfRootXmi);
+				
+				Object result = OCLHandler.parseOCLStatement(
+						utils.dataResource.getResourceSet(), 
+						dataInstance, 
+						entireStatement);
+			
+				handleResultCorrectly(root, "#" + fxmlLayoutId, result);
+			}
+			
+		}
 		
 		
+		
+		
+	}
+	
+	private static int getCorrespondingId(Widget tAWidget, Widget typeWidget, Widget assignmentWidget) {
+		
+		WidgetGroup typeWidgetGroup = (WidgetGroup) typeWidget;
+		
+		int counter = 0, numberInLine = -1;
+		
+		for (Widget w : typeWidgetGroup.getWidgets()) {
+			
+			if (tAWidget.equals(w)) {
+				numberInLine = counter;
+			} 
+			
+			counter++;
+			
+		}
+		
+		Widget correctWidget = null;
+		WidgetGroup assignmentWidgetGroup = (WidgetGroup) assignmentWidget;
+		
+		for (int i = 0; i < assignmentWidgetGroup.getWidgets().size(); i++) {
+			
+			if (i == numberInLine) {
+				correctWidget = assignmentWidgetGroup.getWidgets().get(i);
+			}
+			
+		}
+		
+		if (correctWidget == null) {
+			throw new RuntimeException("Whoa! Somehow didn't find the correct widget for the type");
+		}
+		
+		
+		return correctWidget.getId().intValue();
 		
 	}
 	
