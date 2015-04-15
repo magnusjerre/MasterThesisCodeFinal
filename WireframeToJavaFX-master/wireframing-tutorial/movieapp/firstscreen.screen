@@ -98,7 +98,7 @@
   <widgets xsi:type="model:Arrow" id="29" x="263" y="286" width="250" height="8" measuredWidth="250" measuredHeight="8" foreground="#999999"/>
   <widgets xsi:type="model:Arrow" id="30" x="144" y="320" width="369" height="8" measuredWidth="369" measuredHeight="8" foreground="#999999"/>
   <widgets xsi:type="model:Arrow" id="32" x="64" y="368" width="8" height="57" measuredWidth="8" measuredHeight="57" foreground="#999999"/>
-  <widgets xsi:type="model:TextArea" id="33" x="120" y="346" width="265" text="synopsis" measuredWidth="265" measuredHeight="23">
+  <widgets xsi:type="model:TextArea" id="33" x="120" y="346" width="265" text="synopsis" measuredWidth="265" measuredHeight="31">
     <font/>
   </widgets>
   <widgets xsi:type="model:Arrow" id="31" x="184" y="360" width="329" height="8" measuredWidth="329" measuredHeight="8" foreground="#999999"/>
