@@ -22,7 +22,7 @@ import application.Constants;
 
 public class AssignmentHandler {
 	
-	public static void AssignValues(Parent root, String xmiFileLocation) {
+	public static void assignValues(Parent root, String xmiFileLocation) {
 		
 		DataUtils utils = DataUtils.getInstance();
 		
@@ -37,20 +37,31 @@ public class AssignmentHandler {
 			int layoutId = (int) eObject.eGet(utils.aLayoutIDFeature);
 			String id = "#" + layoutId;
 			
-			
-			EObject rootContextForAssignment = (EObject) eObject.eGet(utils.aRootContextFeature);
-			if (rootContextForAssignment != null) {	//Temporary solution, means that the assignment is not part of a type
-				String locationOfRootXmi = (String) rootContextForAssignment.eGet(utils.cStatementFeature);
-				EObject dataInstance = DataUtils.getRootObjectForXmi(locationOfRootXmi);
-				
-				Object result = OCLHandler.parseOCLStatement(
-						utils.dataResource.getResourceSet(), 
-						dataInstance, 
-						(String) eObject.eGet(utils.aStatementFeature));
-				
-				handleResultCorrectly(root, id, result);
+			if (isAssignmentPlain(eObject)) {
+				handlePlainAssignment(root, eObject, id);
+			} else if (isAssignmentUsingType(eObject)) {
+				handleAssignmentUsingType(root, eObject, id);
 			}
 			
+		}
+		
+	}
+	
+	private static void handlePlainAssignment(Parent root, EObject eObject, String id) {
+		
+		DataUtils utils = DataUtils.getInstance();
+		
+		EObject rootContextForAssignment = (EObject) eObject.eGet(utils.aRootContextFeature);
+		if (rootContextForAssignment != null) {	//Temporary solution, means that the assignment is not part of a type
+			String locationOfRootXmi = (String) rootContextForAssignment.eGet(utils.cStatementFeature);
+			EObject dataInstance = DataUtils.getRootObjectForXmi(locationOfRootXmi);
+			
+			Object result = OCLHandler.parseOCLStatement(
+					utils.dataResource.getResourceSet(), 
+					dataInstance, 
+					(String) eObject.eGet(utils.aStatementFeature));
+			
+			handleResultCorrectly(root, id, result);
 		}
 		
 	}
@@ -113,4 +124,46 @@ public class AssignmentHandler {
 		
 	}
 
+	private static boolean isAssignmentPlain(EObject eObject) {
+		
+		if (isAssignmentPartOfType(eObject)) {
+			return false;
+		}
+		
+		if (isAssignmentUsingType(eObject)) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	private static boolean isAssignmentUsingType(EObject eObject) {
+		
+		EObject usesType = (EObject) eObject.eGet(DataUtils.getInstance().aUseType);
+		return usesType != null;
+		
+	}
+	
+	private static boolean isAssignmentPartOfType(EObject eObject) {
+		
+		EObject partOfType = (EObject) eObject.eGet(DataUtils.getInstance().aPartOf);
+		return partOfType != null;
+		
+	}
+	
+	private static void handleAssignmentUsingType(Parent root, EObject assignment, String id) {
+		
+		DataUtils utils = DataUtils.getInstance();
+		
+		EObject type = (EObject) assignment.eGet(utils.aPartOf);
+		EList<EObject> subTypes = (EList<EObject>) type.eGet(utils.tTypesFeature);
+		
+		//TODO: Implement this part
+		
+		
+		
+	}
+	
+	
 }

@@ -8,6 +8,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 import com.wireframesketcher.model.Arrow;
 import com.wireframesketcher.model.Master;
+import com.wireframesketcher.model.Position;
 import com.wireframesketcher.model.Widget;
 import com.wireframesketcher.model.WidgetGroup;
 
@@ -68,7 +69,7 @@ public class AssignmentGenerator {
 		EObject assignmentObject = utils.dataFactory.create(utils.assignmentClass);
 		String specificStatement = strings[0].trim();
 		assignmentObject.eSet(utils.aSpecificStatementFeature, specificStatement);
-		assignmentObject.eSet(utils.aLayoutIDFeature, map.get(master).getValue().getId().intValue());
+		assignmentObject.eSet(utils.aLayoutIDFeature, getId(assignmentObject, map.get(master)));
 		if (strings.length == 2) {
 			assignmentObject.eSet(utils.aUseTypeName, strings[1].trim());
 		}
@@ -79,9 +80,7 @@ public class AssignmentGenerator {
 		assignmentsAsMaster.add(master);
 		
 	}
-	
-	
-	
+
 	public void generatePaths() {
 		
 		generateNormalPaths();
@@ -188,4 +187,177 @@ public class AssignmentGenerator {
 		
 	}
 	
+	private int getId(EObject assignmentObject, Pair<Arrow, Widget> pair) {
+		
+		if (isAssignmentPlain(assignmentObject)) {
+			return getDeepestWidget(pair.getKey(), pair.getValue()).getId().intValue();
+//			if (pair.getValue() instanceof WidgetGroup) {
+//				//Go deep
+//			} else { //use current widget
+//				return pair.getValue().getId().intValue();
+//			}
+		} else {
+			//Only go one step down
+		}
+		if (pair.getValue() instanceof WidgetGroup) {
+			return getWidgetPointedToByArrow(pair.getKey(), (WidgetGroup) pair.getValue()).getId().intValue();
+		} else {
+			return pair.getValue().getId().intValue();
+		}
+	}
+	
+	private Widget getDeepestWidget(Arrow arrow, Widget widget) {
+		
+		Point arrowHead = getArrowHeadPosition(arrow);
+		return getDeepestWidget(arrowHead, widget, new Point(widget.getX(), widget.getY()));
+		
+	}
+	
+	private Widget getDeepestWidget(Point arrowHead, Widget widget, Point offset) {
+		
+		if (isNotWidgetGroup(widget)) {
+			return widget;
+		}
+		
+		WidgetGroup widgetGroup = (WidgetGroup) widget;
+		Widget output = null;
+		for (Widget w : widgetGroup.getWidgets()) {
+			
+			int x = w.getX() + offset.x;
+			int y = w.getY() + offset.y;
+			if (pointIsInsideRectangle(arrowHead, x, y, w.getMeasuredWidth(), w.getMeasuredHeight())) {
+				output = w;
+				break;
+			}
+			
+		}
+		
+		if (isNotWidgetGroup(output)) {
+			return output;
+		}
+		
+		offset = new Point(offset.x + output.getX(), offset.y + output.getY());
+		return getDeepestWidget(arrowHead, output, offset);
+		
+		
+	}
+	
+	private boolean isNotWidgetGroup(Widget widget) {
+		return !(widget instanceof WidgetGroup);
+	}
+	
+	private Widget getWidgetPointedToByArrow(Arrow arrow, WidgetGroup widgetGroup) {
+		
+		Point arrowHead = getArrowHeadPosition(arrow);
+		return getWidgetForArrowHead(arrowHead, widgetGroup, new Point(widgetGroup.getX(),widgetGroup.getY()));
+			
+	}
+	
+	private Point getArrowHeadPosition(Arrow arrow) {
+		
+		if (arrow.isLeft() == arrow.isRight()) {
+			throw new RuntimeException("There is an error with the arrow. It's either not pointing, or it's pointing both ways.");
+		}
+		
+		//Topmost and Leftmost point of line
+		int x = arrow.getX();
+		int y = arrow.getY();
+		
+		if (arrow.isRight() && arrow.getDirection() == Position.BOTTOM){
+			x += arrow.getMeasuredWidth();
+		} else if (arrow.isRight()){
+			x += arrow.getMeasuredWidth();
+			y += arrow.getMeasuredHeight();
+		} else if (arrow.getDirection() == Position.BOTTOM){
+			y += arrow.getMeasuredHeight();
+		}
+		
+		return new Point(x,y);
+		
+	}
+	
+	private Widget getWidgetForArrowHead(Point arrowHead, WidgetGroup widgetGroup, Point offset) {
+		
+		for (Widget widget : widgetGroup.getWidgets()) {
+			
+			int x = widget.getX() + offset.x;
+			int y = widget.getY() + offset.y;
+			if (pointIsInsideRectangle(arrowHead, x, y, widget.getMeasuredWidth(), widget.getMeasuredHeight())) {
+				return widget;
+			}
+			
+		}
+		
+		throw new RuntimeException("No widget found for arrow head position.");
+		
+	}
+	
+	private boolean pointIsInsideRectangle(Point point, int left, int top, int width, int height) {
+		
+		int right = left + width;
+		int bottom = top + height;
+		
+		if (point.x < left) {
+			return false;
+		}
+		
+		if (point.x > right) {
+			return false;
+		}
+		
+		if (point.y < top) {
+			return false;
+		}
+		
+		if (point.y > bottom) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	private class Point {
+		
+		public final int x, y;
+		
+		public Point(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+		
+		@Override
+		public String toString() {
+			return String.format("{x: %d , y: %d }", x, y);
+		}
+	}
+	
+	
+	private static boolean isAssignmentPlain(EObject eObject) {
+		
+		if (isAssignmentPartOfType(eObject)) {
+			return false;
+		}
+		
+		if (isAssignmentUsingType(eObject)) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	private static boolean isAssignmentUsingType(EObject eObject) {
+		
+		EObject usesType = (EObject) eObject.eGet(DataUtils.getInstance().aUseType);
+		return usesType != null;
+		
+	}
+	
+	private static boolean isAssignmentPartOfType(EObject eObject) {
+		
+		EObject partOfType = (EObject) eObject.eGet(DataUtils.getInstance().aPartOf);
+		return partOfType != null;
+		
+	}
 }
