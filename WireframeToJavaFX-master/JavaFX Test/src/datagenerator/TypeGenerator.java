@@ -102,6 +102,7 @@ public class TypeGenerator {
 		Pair<Arrow, Widget> assignmentPair = getPairForAssignment(assignment);
 		Arrow arrow = assignmentPair.getKey();
 		WidgetGroup widgetGroup = (WidgetGroup) assignmentPair.getValue();
+		System.out.println(assignment.eGet(utils.aSpecificStatementFeature));
 		Widget finalWidget = getWidgetPointedToByArrow(arrow, widgetGroup);
 		
 		return finalWidget.getId().intValue();
@@ -123,6 +124,7 @@ public class TypeGenerator {
 	private Widget getWidgetPointedToByArrow(Arrow arrow, WidgetGroup widgetGroup) {
 		
 		Point arrowHead = getArrowHeadPosition(arrow);
+		System.out.println("arrow.position.bottom: " + arrow.getDirection());
 		return getWigetForArrowHead(arrowHead, widgetGroup, new Point(widgetGroup.getX(),widgetGroup.getY()));
 			
 	}
@@ -133,19 +135,20 @@ public class TypeGenerator {
 			throw new RuntimeException("There is an error with the arrow. It's either not pointing, or it's pointing both ways.");
 		}
 		
-		if (arrow.isLeft()) {
-			return new Point(arrow.getX(), arrow.getY());
-		} else {
-			if (arrow.getDirection() == Position.BOTTOM) {
-				int x = arrow.getX() + arrow.getMeasuredWidth();
-				int y = arrow.getY() + arrow.getMeasuredHeight();
-				return new Point (x, y);
-			} else {
-				int x = arrow.getX() + arrow.getMeasuredWidth();
-				int y = arrow.getY() - arrow.getMeasuredHeight();
-				return new Point(x, y);
-			}
+		//Topmost and Leftmost point of line
+		int x = arrow.getX();
+		int y = arrow.getY();
+		
+		if (arrow.isRight() && arrow.getDirection() == Position.BOTTOM){
+			x += arrow.getMeasuredWidth();
+		} else if (arrow.isRight()){
+			x += arrow.getMeasuredWidth();
+			y += arrow.getMeasuredHeight();
+		} else if (arrow.getDirection() == Position.BOTTOM){
+			y += arrow.getMeasuredHeight();
 		}
+		
+		return new Point(x,y);
 		
 	}
 	
