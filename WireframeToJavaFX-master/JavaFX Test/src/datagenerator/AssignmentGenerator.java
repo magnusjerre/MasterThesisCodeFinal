@@ -69,10 +69,10 @@ public class AssignmentGenerator {
 		EObject assignmentObject = utils.dataFactory.create(utils.assignmentClass);
 		String specificStatement = strings[0].trim();
 		assignmentObject.eSet(utils.aSpecificStatementFeature, specificStatement);
-		assignmentObject.eSet(utils.aLayoutIDFeature, getId(assignmentObject, map.get(master)));
 		if (strings.length == 2) {
 			assignmentObject.eSet(utils.aUseTypeName, strings[1].trim());
 		}
+		assignmentObject.eSet(utils.aLayoutIDFeature, getId(assignmentObject, map.get(master)));
 		
 		//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
 		
@@ -191,19 +191,34 @@ public class AssignmentGenerator {
 		
 		if (isAssignmentPlain(assignmentObject)) {
 			return getDeepestWidget(pair.getKey(), pair.getValue()).getId().intValue();
-//			if (pair.getValue() instanceof WidgetGroup) {
-//				//Go deep
-//			} else { //use current widget
-//				return pair.getValue().getId().intValue();
-//			}
-		} else {
-			//Only go one step down
-		}
-		if (pair.getValue() instanceof WidgetGroup) {
-			return getWidgetPointedToByArrow(pair.getKey(), (WidgetGroup) pair.getValue()).getId().intValue();
-		} else {
+		} else if (isAssignmentUsingType(assignmentObject)){
 			return pair.getValue().getId().intValue();
+		} else {
+			return getShallowestWidget(pair.getKey(), pair.getValue()).getId().intValue();
 		}
+		
+	}
+	
+	private Widget getShallowestWidget(Arrow arrow, Widget widget) {
+		
+		if (isNotWidgetGroup(widget)) {
+			return widget;
+		}
+		
+		Point arrowHead = getArrowHeadPosition(arrow);
+		WidgetGroup widgetGroup = (WidgetGroup) widget;
+		Point offset = new Point(widgetGroup.getX(), widgetGroup.getY());
+		for (Widget w : widgetGroup.getWidgets()) {
+			
+			int x = w.getX() + offset.x;
+			int y = w.getY() + offset.y;
+			if (pointIsInsideRectangle(arrowHead, x, y, w.getMeasuredWidth(), w.getMeasuredHeight())) {
+				return w;
+			}
+		}
+		
+		throw new RuntimeException("Didn't find a match for the arrow location");
+		
 	}
 	
 	private Widget getDeepestWidget(Arrow arrow, Widget widget) {
@@ -349,7 +364,7 @@ public class AssignmentGenerator {
 	
 	private static boolean isAssignmentUsingType(EObject eObject) {
 		
-		EObject usesType = (EObject) eObject.eGet(DataUtils.getInstance().aUseType);
+		String usesType = (String) eObject.eGet(DataUtils.getInstance().aUseTypeName);
 		return usesType != null;
 		
 	}
