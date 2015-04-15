@@ -123,12 +123,8 @@ public class AssignmentGenerator {
 		for (EObject assignment : assignments) {
 			
 			if (isTypeAssignment(assignment)) {
-				EObject type = (EObject) assignment.eGet(utils.aPartOf);
-				EObject typeUser = findAssignmentUsingType(type);
-				String typeUserStatement = (String) typeUser.eGet(utils.aStatementFeature);
 				String specificStatement = (String) assignment.eGet(utils.aSpecificStatementFeature);
-				assignment.eSet(utils.aStatementFeature,  typeUserStatement + specificStatement);
-				assignment.eSet(utils.aRootContextFeature, typeUser.eGet(utils.aRootContextFeature));
+				assignment.eSet(utils.aStatementFeature,  specificStatement);
 			}
 			
 		}
