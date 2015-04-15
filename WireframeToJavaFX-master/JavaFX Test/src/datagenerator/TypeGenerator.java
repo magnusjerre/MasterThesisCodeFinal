@@ -102,7 +102,6 @@ public class TypeGenerator {
 		Pair<Arrow, Widget> assignmentPair = getPairForAssignment(assignment);
 		Arrow arrow = assignmentPair.getKey();
 		WidgetGroup widgetGroup = (WidgetGroup) assignmentPair.getValue();
-		System.out.println(assignment.eGet(utils.aSpecificStatementFeature));
 		Widget finalWidget = getWidgetPointedToByArrow(arrow, widgetGroup);
 		
 		return finalWidget.getId().intValue();
@@ -124,7 +123,6 @@ public class TypeGenerator {
 	private Widget getWidgetPointedToByArrow(Arrow arrow, WidgetGroup widgetGroup) {
 		
 		Point arrowHead = getArrowHeadPosition(arrow);
-		System.out.println("arrow.position.bottom: " + arrow.getDirection());
 		return getWigetForArrowHead(arrowHead, widgetGroup, new Point(widgetGroup.getX(),widgetGroup.getY()));
 			
 	}
