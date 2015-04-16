@@ -68,7 +68,7 @@ public class AssignmentGenerator {
 		assignmentObject.eSet(utils.aSpecificStatementFeature, specificStatement);
 		
 		if (strings.length == 2) {
-			assignmentObject.eSet(utils.aUsingTypeNamed, strings[1].trim());
+			assignmentObject.eSet(utils.aUsingTypeNamedFeature, strings[1].trim());
 		}
 		
 		assignmentObject.eSet(utils.aWidgetFeature, getCorrectWidget(assignmentObject, masterMap.get(master)));
@@ -106,7 +106,7 @@ public class AssignmentGenerator {
 		for (EObject assignment : assignments.getElementsIterable()) {
 			
 			if (isAssignmentUsingType(assignment)) {
-				String useTypeName = (String) assignment.eGet(utils.aUsingTypeNamed);
+				String useTypeName = (String) assignment.eGet(utils.aUsingTypeNamedFeature);
 				EObject useType = TypeGenerator.getInstance().findTypeNamed(useTypeName);
 				assignment.eSet(utils.aUsingTypeFeature, useType);
 			}
@@ -168,7 +168,7 @@ public class AssignmentGenerator {
 	
 	private static boolean isAssignmentUsingType(EObject eObject) {
 		
-		String usesType = (String) eObject.eGet(DataUtils.getInstance().aUsingTypeNamed);
+		String usesType = (String) eObject.eGet(DataUtils.getInstance().aUsingTypeNamedFeature);
 		return usesType != null;
 		
 	}
@@ -180,7 +180,7 @@ public class AssignmentGenerator {
 	 */
 	protected static boolean isAssignmentPartOfType(EObject eObject) {
 		
-		EObject partOfType = (EObject) eObject.eGet(DataUtils.getInstance().aPartOf);
+		EObject partOfType = (EObject) eObject.eGet(DataUtils.getInstance().aPartOfTypeFeature);
 		return partOfType != null;
 		
 	}

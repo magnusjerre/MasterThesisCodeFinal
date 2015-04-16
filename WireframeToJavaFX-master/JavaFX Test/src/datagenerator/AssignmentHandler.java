@@ -148,7 +148,7 @@ public class AssignmentHandler {
 	
 	private static boolean isAssignmentPartOfType(EObject eObject) {
 		
-		EObject partOfType = (EObject) eObject.eGet(utils.aPartOf);
+		EObject partOfType = (EObject) eObject.eGet(utils.aPartOfTypeFeature);
 		return partOfType != null;
 		
 	}
