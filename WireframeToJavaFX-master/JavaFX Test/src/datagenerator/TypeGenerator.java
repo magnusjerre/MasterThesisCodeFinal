@@ -87,7 +87,6 @@ public class TypeGenerator {
 
 		((EList<EObject>)type.eGet(utils.tAssignmentsFeature)).add(assignment);
 		assignment.eSet(utils.aPartOf, type);
-		assignment.eSet(utils.aLayoutIDFeature, getLayoutIdForAssignment(assignment));
 		assignment.eSet(utils.aWidgetFeature, getCorrectWidget(assignment));
 		
 		String assignmentUsesTypeNamed = (String) assignment.eGet(utils.aUseTypeName);

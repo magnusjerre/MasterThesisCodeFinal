@@ -36,7 +36,8 @@ public class AssignmentHandler {
 		EList<EObject> allAssignments = (EList<EObject>) screenDataInstanceRoot.eGet(utils.dAllAssignmentsFeature);
 		for (EObject eObject : allAssignments) {
 			
-			int layoutId = (int) eObject.eGet(utils.aLayoutIDFeature);
+			Widget widget = (Widget) eObject.eGet(utils.aWidgetFeature);
+			int layoutId = widget.getId().intValue();
 			String id = "#" + layoutId;
 			
 			if (isAssignmentPlain(eObject)) {
