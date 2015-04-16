@@ -30,13 +30,15 @@ public class DataUtils {
 	Resource dataResource;
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
-	EClass contextClass, assignmentClass, dataForScreenClass;
+	EClass contextClass, assignmentClass, dataForScreenClass, typeClass;
 	//Context class features are prefixed with a c
 	EStructuralFeature cNameFeature, cContextFeature, cIsRootFeature, cStatementFeature, cSpecificStatementFeature;
 	//Assignment class features are prefixed with an s
-	EStructuralFeature aStatementFeature, aSpecificStatementFeature, aRootContextFeature, aLayoutIDFeature;
+	EStructuralFeature aStatementFeature, aSpecificStatementFeature, aRootContextFeature, aUsingTypeFeature, aUsingTypeNamedFeature, aPartOfTypeFeature, aWidgetFeature;
 	//DataForScreen class features are prefixed with a d
-	EStructuralFeature dAllContextsFeature, dAllAssignmentsFeature;
+	EStructuralFeature dAllContextsFeature, dAllAssignmentsFeature, dAllTypesFeature;
+	//Type class features are prefixed with a t
+	EStructuralFeature tNameFeature, tAssignmentsFeature, tTypesFeature, tWidgetFeature;
 	
 	private DataUtils() {
 		
@@ -66,12 +68,23 @@ public class DataUtils {
 		aStatementFeature = assignmentClass.getEStructuralFeature("statement");
 		aSpecificStatementFeature = assignmentClass.getEStructuralFeature("specificStatement");
 		aRootContextFeature = assignmentClass.getEStructuralFeature("rootContext");
-		aLayoutIDFeature = assignmentClass.getEStructuralFeature("layoutID");
+		aUsingTypeFeature = assignmentClass.getEStructuralFeature("usingType");
+		aUsingTypeNamedFeature = assignmentClass.getEStructuralFeature("usingTypeNamed");
+		aPartOfTypeFeature = assignmentClass.getEStructuralFeature("partOfType");
+		aWidgetFeature = assignmentClass.getEStructuralFeature("widget");
 		
 		//DataForContext
 		dataForScreenClass = (EClass) dataPackage.getEClassifier("DataForScreen");
 		dAllContextsFeature = dataForScreenClass.getEStructuralFeature("allContexts");
 		dAllAssignmentsFeature = dataForScreenClass.getEStructuralFeature("allAssignments");
+		dAllTypesFeature = dataForScreenClass.getEStructuralFeature("allTypes");
+		
+		//Type
+		typeClass = (EClass) dataPackage.getEClassifier("Type");
+		tNameFeature = typeClass.getEStructuralFeature("name");
+		tAssignmentsFeature = typeClass.getEStructuralFeature("assignments");
+		tTypesFeature = typeClass.getEStructuralFeature("types");
+		tWidgetFeature = typeClass.getEStructuralFeature("widget");
 		
 	}
 	

@@ -8,7 +8,6 @@ import java.util.Date;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
@@ -21,11 +20,13 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import application.Constants;
 
+import com.wireframesketcher.model.Widget;
+
 public class AssignmentHandler {
 	
-	public static void AssignValues(Parent root, String xmiFileLocation) {
-		
-		DataUtils utils = DataUtils.getInstance();
+	private static DataUtils utils = DataUtils.getInstance();
+	
+	public static void assignValues(Parent root, String xmiFileLocation) {
 		
 		URI exisitingInstanceUri = URI.createFileURI(xmiFileLocation);
 		Resource instanceResource = utils.dataResource.getResourceSet().getResource(exisitingInstanceUri, true);
@@ -35,11 +36,24 @@ public class AssignmentHandler {
 		EList<EObject> allAssignments = (EList<EObject>) screenDataInstanceRoot.eGet(utils.dAllAssignmentsFeature);
 		for (EObject eObject : allAssignments) {
 			
-			int layoutId = (int) eObject.eGet(utils.aLayoutIDFeature);
+			Widget widget = (Widget) eObject.eGet(utils.aWidgetFeature);
+			int layoutId = widget.getId().intValue();
 			String id = "#" + layoutId;
 			
+			if (isAssignmentPlain(eObject)) {
+				handlePlainAssignment(root, eObject, id);
+			} else if (isAssignmentUsingType(eObject) && !isAssignmentPartOfType(eObject)) {
+				handleAssignmentUsingType(root, eObject);
+			}
 			
-			EObject rootContextForAssignment = (EObject) eObject.eGet(utils.aRootContextFeature);
+		}
+		
+	}
+	
+	private static void handlePlainAssignment(Parent root, EObject eObject, String id) {
+		
+		EObject rootContextForAssignment = (EObject) eObject.eGet(utils.aRootContextFeature);
+		if (rootContextForAssignment != null) {	//Temporary solution, means that the assignment is not part of a type
 			String locationOfRootXmi = (String) rootContextForAssignment.eGet(utils.cStatementFeature);
 			EObject dataInstance = DataUtils.getRootObjectForXmi(locationOfRootXmi);
 			
@@ -49,7 +63,6 @@ public class AssignmentHandler {
 					(String) eObject.eGet(utils.aStatementFeature));
 			
 			handleResultCorrectly(root, id, result);
-			
 		}
 		
 	}
@@ -112,4 +125,97 @@ public class AssignmentHandler {
 		
 	}
 
+	private static boolean isAssignmentPlain(EObject eObject) {
+		
+		if (isAssignmentPartOfType(eObject)) {
+			return false;
+		}
+		
+		if (isAssignmentUsingType(eObject)) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	private static boolean isAssignmentUsingType(EObject eObject) {
+		
+		EObject usesType = (EObject) eObject.eGet(utils.aUsingTypeFeature);
+		return usesType != null;
+		
+	}
+	
+	private static boolean isAssignmentPartOfType(EObject eObject) {
+		
+		EObject partOfType = (EObject) eObject.eGet(utils.aPartOfTypeFeature);
+		return partOfType != null;
+		
+	}
+	
+	private static void handleAssignmentUsingType(Parent root, EObject mainAssignment) {
+		
+		Widget mainAssignmentWidget = (Widget) mainAssignment.eGet(utils.aWidgetFeature);
+		String statementSoFar = (String) mainAssignment.eGet(utils.aStatementFeature);
+		
+		EObject typeForMainAssignment = (EObject) mainAssignment.eGet(utils.aUsingTypeFeature);
+		Widget typeWidget = (Widget) typeForMainAssignment.eGet(utils.tWidgetFeature);
+		
+		@SuppressWarnings("unchecked")
+		EList<EObject> assignmentsForType = (EList<EObject>) typeForMainAssignment.eGet(utils.tAssignmentsFeature);
+		for (EObject subAssignment : assignmentsForType) {
+			
+			Widget saWidget = (Widget) subAssignment.eGet(utils.aWidgetFeature);
+			Widget corrWidgetInMainAssignment = WidgetUtils.getCorrespondingWidget(saWidget, typeWidget, mainAssignmentWidget);
+			
+			handleAssignmentRecursively(root, mainAssignment, subAssignment, corrWidgetInMainAssignment, statementSoFar);
+			
+		}
+			
+		
+	}
+	
+	private static void handleAssignmentRecursively(Parent root, EObject mainAssignment, EObject currentAssignment, Widget corrWidgetInMainAssignment, String statementSoFar) {
+		
+		if (isAssignmentUsingType(currentAssignment)) {
+			
+			EObject typeForCurrent = (EObject) currentAssignment.eGet(utils.aUsingTypeFeature);
+			Widget widgetForCurrent = (Widget) typeForCurrent.eGet(utils.tWidgetFeature);
+			statementSoFar += (String) currentAssignment.eGet(utils.aStatementFeature);
+			
+			@SuppressWarnings("unchecked")
+			EList<EObject> assignmentsForType = (EList<EObject>) typeForCurrent.eGet(utils.tAssignmentsFeature);
+			for (EObject subAssignment : assignmentsForType) {
+				
+				Widget saWidget = (Widget) subAssignment.eGet(utils.aWidgetFeature);
+				Widget corrWidget = WidgetUtils.getCorrespondingWidget(saWidget, widgetForCurrent, corrWidgetInMainAssignment);
+				
+				handleAssignmentRecursively(root, mainAssignment, subAssignment, corrWidget, statementSoFar);
+				
+			}
+			
+		} else {	//Simple type, a.k.a base case
+			
+			String finalStatement = statementSoFar + (String) currentAssignment.eGet(utils.aStatementFeature);
+			String layoutId = "#" + corrWidgetInMainAssignment.getId().intValue();
+			
+			EObject rootContextForAssignment = (EObject) mainAssignment.eGet(utils.aRootContextFeature);
+			if (rootContextForAssignment != null) {	//Temporary solution, means that the assignment is not part of a type
+				String locationOfRootXmi = (String) rootContextForAssignment.eGet(utils.cStatementFeature);
+				EObject dataInstance = DataUtils.getRootObjectForXmi(locationOfRootXmi);
+				
+				Object result = OCLHandler.parseOCLStatement(
+						utils.dataResource.getResourceSet(), 
+						dataInstance, 
+						finalStatement);
+			
+				handleResultCorrectly(root, layoutId, result);
+			}
+			
+			
+		}
+		
+		
+	}
+	
 }

@@ -24,12 +24,12 @@ public class RunDataGenerator {
 		allContexts.addAll(cg.contexts);
 		AssignmentGenerator ag = AssignmentGenerator.getInstance();
 		ag.setContext(cg.getAllContexts());
-		ag.generateDecorator(new String[]{"movies->at(1)"}, 1);
-		ag.generateDecorator(new String[]{"actor.name", "@Cake"}, 2);
+//		ag.generateDecorator(new String[]{"movies->at(1)"}, 1);
+//		ag.generateDecorator(new String[]{"actor.name", "@Cake"}, 2);
 		ag.generatePaths();
 		
 		XMIExporter exporter = new XMIExporter();
-		exporter.setGenerators(ag, cg);
+		exporter.setGenerators(ag, cg, TypeGenerator.getInstance());
 		exporter.exportXMI("cake.xmi", Constants.DATAGENERATOR_DIRECTORY);
 		
 		System.out.println("cake");
