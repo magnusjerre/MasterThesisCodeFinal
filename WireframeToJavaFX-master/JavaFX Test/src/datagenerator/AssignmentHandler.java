@@ -141,7 +141,7 @@ public class AssignmentHandler {
 	
 	private static boolean isAssignmentUsingType(EObject eObject) {
 		
-		EObject usesType = (EObject) eObject.eGet(utils.aUseType);
+		EObject usesType = (EObject) eObject.eGet(utils.aUsingTypeFeature);
 		return usesType != null;
 		
 	}
@@ -158,7 +158,7 @@ public class AssignmentHandler {
 		Widget mainAssignmentWidget = (Widget) mainAssignment.eGet(utils.aWidgetFeature);
 		String statementSoFar = (String) mainAssignment.eGet(utils.aStatementFeature);
 		
-		EObject typeForMainAssignment = (EObject) mainAssignment.eGet(utils.aUseType);
+		EObject typeForMainAssignment = (EObject) mainAssignment.eGet(utils.aUsingTypeFeature);
 		Widget typeWidget = (Widget) typeForMainAssignment.eGet(utils.tWidgetFeature);
 		
 		@SuppressWarnings("unchecked")
@@ -179,7 +179,7 @@ public class AssignmentHandler {
 		
 		if (isAssignmentUsingType(currentAssignment)) {
 			
-			EObject typeForCurrent = (EObject) currentAssignment.eGet(utils.aUseType);
+			EObject typeForCurrent = (EObject) currentAssignment.eGet(utils.aUsingTypeFeature);
 			Widget widgetForCurrent = (Widget) typeForCurrent.eGet(utils.tWidgetFeature);
 			statementSoFar += (String) currentAssignment.eGet(utils.aStatementFeature);
 			

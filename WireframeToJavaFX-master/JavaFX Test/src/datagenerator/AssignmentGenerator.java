@@ -108,7 +108,7 @@ public class AssignmentGenerator {
 			if (isAssignmentUsingType(assignment)) {
 				String useTypeName = (String) assignment.eGet(utils.aUseTypeName);
 				EObject useType = TypeGenerator.getInstance().findTypeNamed(useTypeName);
-				assignment.eSet(utils.aUseType, useType);
+				assignment.eSet(utils.aUsingTypeFeature, useType);
 			}
 			
 		}

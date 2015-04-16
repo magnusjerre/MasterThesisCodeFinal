@@ -34,7 +34,7 @@ public class DataUtils {
 	//Context class features are prefixed with a c
 	EStructuralFeature cNameFeature, cContextFeature, cIsRootFeature, cStatementFeature, cSpecificStatementFeature;
 	//Assignment class features are prefixed with an s
-	EStructuralFeature aStatementFeature, aSpecificStatementFeature, aRootContextFeature, aUseType, aUseTypeName, aPartOf, aWidgetFeature;
+	EStructuralFeature aStatementFeature, aSpecificStatementFeature, aRootContextFeature, aUsingTypeFeature, aUseTypeName, aPartOf, aWidgetFeature;
 	//DataForScreen class features are prefixed with a d
 	EStructuralFeature dAllContextsFeature, dAllAssignmentsFeature, dAllTypesFeature;
 	//Type class features are prefixed with a t
@@ -68,7 +68,7 @@ public class DataUtils {
 		aStatementFeature = assignmentClass.getEStructuralFeature("statement");
 		aSpecificStatementFeature = assignmentClass.getEStructuralFeature("specificStatement");
 		aRootContextFeature = assignmentClass.getEStructuralFeature("rootContext");
-		aUseType = assignmentClass.getEStructuralFeature("useType");
+		aUsingTypeFeature = assignmentClass.getEStructuralFeature("usingType");
 		aUseTypeName = assignmentClass.getEStructuralFeature("useTypeName");
 		aPartOf = assignmentClass.getEStructuralFeature("partOf");
 		aWidgetFeature = assignmentClass.getEStructuralFeature("widget");
