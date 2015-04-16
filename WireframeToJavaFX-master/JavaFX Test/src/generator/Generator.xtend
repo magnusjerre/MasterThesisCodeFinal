@@ -1147,8 +1147,8 @@ class Generator {
 
 			val id = widget.id;
 			(builder += "Separator") => [
-				it += "layoutX" -> widget.x
-				it += "layoutY" -> widget.y
+				it += "layoutX" -> widget.x + offsetX
+				it += "layoutY" -> widget.y + offsetY
 				it += "prefWidth" -> widget.measuredWidth
 				it += "id" -> id
 			]
