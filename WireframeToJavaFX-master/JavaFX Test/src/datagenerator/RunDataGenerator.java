@@ -28,11 +28,11 @@ public class RunDataGenerator {
 //		ag.generateDecorator(new String[]{"actor.name", "@Cake"}, 2);
 		ag.generatePaths();
 		
-		XMIExporter exporter = new XMIExporter();
-		exporter.setGenerators(ag, cg, TypeGenerator.getInstance());
-		exporter.exportXMI("cake.xmi", Constants.DATAGENERATOR_DIRECTORY);
-		
-		System.out.println("cake");
+//		XMIExporter exporter = new XMIExporter();
+//		exporter.setGenerators(ag, cg, TypeGenerator.getInstance());
+//		exporter.exportXMI("cake.xmi", Constants.DATAGENERATOR_DIRECTORY);
+//		
+//		System.out.println("cake");
 		
 	}
 

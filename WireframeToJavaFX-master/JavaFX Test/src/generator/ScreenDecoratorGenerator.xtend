@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import datagenerator.ContextGenerator
 import datagenerator.AssignmentGenerator
 import datagenerator.TypeGenerator
+import datagenerator.Context2Generator
 
 /** A singleton class that parse and generate screendecorator models */
 class ScreenDecoratorGenerator {
@@ -95,7 +96,7 @@ class ScreenDecoratorGenerator {
 	}
 	
 	def generateDecoratorContext(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		ContextGenerator.getInstance.generateDecorator(strings);
+		Context2Generator.getInstance.generateDecorator(strings);
 	}
 
 	def void generateDataModel(String[] dataString, Master master, HashMap<Master, Pair<Arrow, Widget>> masterMap) {

@@ -27,10 +27,10 @@ public class DataUtils {
 	private static DataUtils instance = null;
 	
 	//EMF
-	Resource dataResource;
+	protected Resource dataResource;
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
-	EClass contextClass, assignmentClass, dataForScreenClass, typeClass;
+	EClass contextClass, context2Class, assignmentClass, dataForScreenClass, typeClass;
 	//Context class features are prefixed with a c
 	EStructuralFeature cNameFeature, cContextFeature, cIsRootFeature, cStatementFeature, cSpecificStatementFeature;
 	//Assignment class features are prefixed with an s
@@ -39,6 +39,8 @@ public class DataUtils {
 	EStructuralFeature dAllContextsFeature, dAllAssignmentsFeature, dAllTypesFeature;
 	//Type class features are prefixed with a t
 	EStructuralFeature tNameFeature, tAssignmentsFeature, tTypesFeature, tWidgetFeature;
+	//Context2 class features are prefixed with a c
+	EStructuralFeature c2NameFeature, c2StatementFeature, c2DataFeature;
 	
 	private DataUtils() {
 		
@@ -86,6 +88,12 @@ public class DataUtils {
 		tTypesFeature = typeClass.getEStructuralFeature("types");
 		tWidgetFeature = typeClass.getEStructuralFeature("widget");
 		
+		//Context2
+		context2Class = (EClass) dataPackage.getEClassifierGen("Context2");
+		c2NameFeature = context2Class.getEStructuralFeature("name");
+		c2StatementFeature = context2Class.getEStructuralFeature("statement");
+		c2DataFeature = context2Class.getEStructuralFeature("data");
+		
 	}
 	
 	public static DataUtils getInstance() {
@@ -106,7 +114,7 @@ public class DataUtils {
 	protected EObject getContextNamed(String name, ArrayList<EObject> list) {
 		
 		for (EObject eObject : list) {
-			String eName = (String) eObject.eGet(cNameFeature);
+			String eName = (String) eObject.eGet(c2NameFeature);
 			if (name.equals(eName)) {				
 				return eObject;
 			}

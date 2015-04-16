@@ -45,6 +45,7 @@ import datagenerator.AssignmentGenerator
 import datagenerator.XMIExporter
 import datagenerator.TypeGenerator
 import com.wireframesketcher.model.WidgetGroup
+import datagenerator.Context2Generator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -1350,19 +1351,19 @@ class Generator {
 					val name = FilenameUtils.getBaseName(path) 
 					println("Generating FXML for " + name)
 					
-					ContextGenerator.getInstance.clear
+					Context2Generator.getInstance.clear
 					TypeGenerator.getInstance.clear
 					AssignmentGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
 					
-					ContextGenerator.getInstance.generatePaths
-					TypeGenerator.getInstance.setupAssignmentReferences
-					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
-					AssignmentGenerator.getInstance.generatePaths
+					Context2Generator.getInstance.generatePaths
+//					TypeGenerator.getInstance.setupAssignmentReferences
+//					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
+//					AssignmentGenerator.getInstance.generatePaths
 					
 					val xmiExpoter = new XMIExporter
-					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance, TypeGenerator.getInstance)
+					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, Context2Generator.getInstance, TypeGenerator.getInstance)
 					xmiExpoter.exportXMI(name, Constants.FXML_DIRECTORY)
 					
 				} 

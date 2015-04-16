@@ -108,6 +108,22 @@
     <font/>
   </widgets>
   <widgets xsi:type="model:Arrow" id="31" x="184" y="360" width="329" height="8" measuredWidth="329" measuredHeight="8" foreground="#999999"/>
+  <widgets xsi:type="model:Master" id="37" x="952" y="305" measuredWidth="585" measuredHeight="31">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="585" height="31" text="allActorsContext = db.allActors">
+        <attributes key="textAlignment" value="Left"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="38" x="952" y="354" measuredWidth="585" measuredHeight="31">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="585" height="31" text="sam = allActorsContext->at(1)">
+        <attributes key="textAlignment" value="Left"/>
+      </widgets>
+    </overrides>
+  </widgets>
   <hRuler>
     <guides position="401"/>
   </hRuler>
