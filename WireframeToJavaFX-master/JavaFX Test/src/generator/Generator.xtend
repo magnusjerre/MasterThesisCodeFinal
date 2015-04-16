@@ -747,17 +747,23 @@ class Generator {
 		/** Image */
 		// TODO: finn resource mappa til Start.screen sånn at man kan bruke "src" til å hente ut den samme bildefila
 		//println(widget.src)
-		var path = widget.src.path
-		val index = path.lastIndexOf("/");
-		val fileName = path.substring(index + 1);
+		var path = ""
+		var fileName = "default.jpg"
+		if (widget.src != null) {
+			path = widget.src.path
+			val index = path.lastIndexOf("/");
+			fileName = path.substring(index + 1);
+		}
 		
-		if (new File(Constants.FXML_DIRECTORY + "/" + fileName).exists) {	//Use current directory (src/application)
+		if (new File(Constants.FXML_DIRECTORY + fileName).exists) {	//Use current directory (src/application)
 			path = fileName
 		} else if (new File("../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/" + fileName).exists){
 			//Use Wireframesketcher project directory as resource
 			path = "../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/" + fileName	
-		} else {	//look for image folder inside project
+		} else if (new File("../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/images/" + fileName).exists) {	//look for image folder inside project
 			path = "../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/images/" + fileName
+		} else {
+			path = "default.jpg"
 		}
 		val relativeImageLocation = path
 
