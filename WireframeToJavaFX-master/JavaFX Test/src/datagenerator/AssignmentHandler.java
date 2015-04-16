@@ -43,7 +43,8 @@ public class AssignmentHandler {
 			if (isAssignmentPlain(eObject)) {
 				handlePlainAssignment(root, eObject, id);
 			} else if (isAssignmentUsingType(eObject) && !isAssignmentPartOfType(eObject)) {
-				handleAssignmentUsingType(root, eObject, id);
+//				handleAssignmentUsingType(root, eObject, id);
+				handleAssignmentUsingTypeInType(root, eObject, "");
 			}
 			
 		}
@@ -191,12 +192,79 @@ public class AssignmentHandler {
 			
 		}
 		
+	}
+	
+	private static void handleAssignmentUsingTypeInType(Parent root, EObject mainAssignment, String statementSoFar) {
 		
+		DataUtils utils = DataUtils.getInstance();
+			
+		Widget mainAssignmentWidget = (Widget) mainAssignment.eGet(utils.aWidgetFeature);
+		statementSoFar = (String) mainAssignment.eGet(utils.aStatementFeature);
+		
+		EObject typeForMainAssignment = (EObject) mainAssignment.eGet(utils.aUseType);
+		Widget typeWidget = (Widget) typeForMainAssignment.eGet(utils.tWidgetFeature);
+		EList<EObject> assignmentsForType = (EList<EObject>) typeForMainAssignment.eGet(utils.tAssignmentsFeature);
+		for (EObject subAssignment : assignmentsForType) {
+			
+			Widget saWidget = (Widget) subAssignment.eGet(utils.aWidgetFeature);
+			Widget corrWidgetInMainAssignment = getCorrespondingWidget(saWidget, typeWidget, mainAssignmentWidget);
+			
+			handleAssignmentFurther(root, mainAssignment, subAssignment, corrWidgetInMainAssignment, statementSoFar);
+			
+		}
+			
+		
+	}
+	
+	private static void handleAssignmentFurther(Parent root, EObject mainAssignment, EObject currentAssignment, Widget corrWidgetInMainAssignment, String statementSoFar) {
+		
+		DataUtils utils = DataUtils.getInstance();
+		
+		if (isAssignmentUsingType(currentAssignment)) {	//Type in type
+			
+			EObject typeForCurrent = (EObject) currentAssignment.eGet(utils.aUseType);
+			Widget widgetForCurrent = (Widget) typeForCurrent.eGet(utils.tWidgetFeature);
+			statementSoFar += (String) currentAssignment.eGet(utils.aStatementFeature);
+			
+			@SuppressWarnings("unchecked")
+			EList<EObject> assignmentsForType = (EList<EObject>) typeForCurrent.eGet(utils.tAssignmentsFeature);
+			for (EObject subAssignment : assignmentsForType) {
+				
+				Widget saWidget = (Widget) subAssignment.eGet(utils.aWidgetFeature);
+				Widget corrWidget = getCorrespondingWidget(saWidget, widgetForCurrent, corrWidgetInMainAssignment);
+				
+				handleAssignmentFurther(root, mainAssignment, subAssignment, corrWidget, statementSoFar);
+				
+			}
+			
+			
+			
+		} else {	//Simple type
+			
+			String finalStatement = statementSoFar + (String) currentAssignment.eGet(utils.aStatementFeature);
+			String layoutId = "#" + corrWidgetInMainAssignment.getId().intValue();
+			
+			EObject rootContextForAssignment = (EObject) mainAssignment.eGet(utils.aRootContextFeature);
+			if (rootContextForAssignment != null) {	//Temporary solution, means that the assignment is not part of a type
+				String locationOfRootXmi = (String) rootContextForAssignment.eGet(utils.cStatementFeature);
+				EObject dataInstance = DataUtils.getRootObjectForXmi(locationOfRootXmi);
+				
+				Object result = OCLHandler.parseOCLStatement(
+						utils.dataResource.getResourceSet(), 
+						dataInstance, 
+						finalStatement);
+			
+				handleResultCorrectly(root, layoutId, result);
+			}
+			
+			
+		}
 		
 		
 	}
 	
-	private static int getCorrespondingId(Widget tAWidget, Widget typeWidget, Widget assignmentWidget) {
+	
+	private static Widget getCorrespondingWidget(Widget tAWidget, Widget typeWidget, Widget assignmentWidget) {
 		
 		WidgetGroup typeWidgetGroup = (WidgetGroup) typeWidget;
 		
@@ -228,7 +296,13 @@ public class AssignmentHandler {
 		}
 		
 		
-		return correctWidget.getId().intValue();
+		return correctWidget;
+		
+	}
+	
+	private static int getCorrespondingId(Widget tAWidget, Widget typeWidget, Widget assignmentWidget) {
+		
+		return getCorrespondingWidget(tAWidget, typeWidget, assignmentWidget).getId().intValue();
 		
 	}
 	
