@@ -176,5 +176,41 @@ public class WidgetUtils {
 			return String.format("{x: %d , y: %d }", x, y);
 		}
 	}
+	
+	protected static Widget getCorrespondingWidget(Widget tAWidget, Widget typeWidget, Widget assignmentWidget) {
+		
+		WidgetGroup typeWidgetGroup = (WidgetGroup) typeWidget;
+		
+		int counter = 0, numberInLine = -1;
+		
+		for (Widget w : typeWidgetGroup.getWidgets()) {
+			
+			if (tAWidget.equals(w)) {
+				numberInLine = counter;
+			} 
+			
+			counter++;
+			
+		}
+		
+		Widget correctWidget = null;
+		WidgetGroup assignmentWidgetGroup = (WidgetGroup) assignmentWidget;
+		
+		for (int i = 0; i < assignmentWidgetGroup.getWidgets().size(); i++) {
+			
+			if (i == numberInLine) {
+				correctWidget = assignmentWidgetGroup.getWidgets().get(i);
+			}
+			
+		}
+		
+		if (correctWidget == null) {
+			throw new RuntimeException("Whoa! Somehow didn't find the correct widget for the type");
+		}
+		
+		
+		return correctWidget;
+		
+	}
 
 }

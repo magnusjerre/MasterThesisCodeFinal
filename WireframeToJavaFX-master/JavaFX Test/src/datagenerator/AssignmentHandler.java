@@ -18,16 +18,15 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
-import com.wireframesketcher.model.Widget;
-import com.wireframesketcher.model.WidgetGroup;
-
 import application.Constants;
+
+import com.wireframesketcher.model.Widget;
 
 public class AssignmentHandler {
 	
+	private static DataUtils utils = DataUtils.getInstance();
+	
 	public static void assignValues(Parent root, String xmiFileLocation) {
-		
-		DataUtils utils = DataUtils.getInstance();
 		
 		URI exisitingInstanceUri = URI.createFileURI(xmiFileLocation);
 		Resource instanceResource = utils.dataResource.getResourceSet().getResource(exisitingInstanceUri, true);
@@ -43,8 +42,7 @@ public class AssignmentHandler {
 			if (isAssignmentPlain(eObject)) {
 				handlePlainAssignment(root, eObject, id);
 			} else if (isAssignmentUsingType(eObject) && !isAssignmentPartOfType(eObject)) {
-//				handleAssignmentUsingType(root, eObject, id);
-				handleAssignmentUsingTypeInType(root, eObject, "");
+				handleAssignmentUsingType(root, eObject);
 			}
 			
 		}
@@ -52,8 +50,6 @@ public class AssignmentHandler {
 	}
 	
 	private static void handlePlainAssignment(Parent root, EObject eObject, String id) {
-		
-		DataUtils utils = DataUtils.getInstance();
 		
 		EObject rootContextForAssignment = (EObject) eObject.eGet(utils.aRootContextFeature);
 		if (rootContextForAssignment != null) {	//Temporary solution, means that the assignment is not part of a type
@@ -144,83 +140,43 @@ public class AssignmentHandler {
 	
 	private static boolean isAssignmentUsingType(EObject eObject) {
 		
-		EObject usesType = (EObject) eObject.eGet(DataUtils.getInstance().aUseType);
+		EObject usesType = (EObject) eObject.eGet(utils.aUseType);
 		return usesType != null;
 		
 	}
 	
 	private static boolean isAssignmentPartOfType(EObject eObject) {
 		
-		EObject partOfType = (EObject) eObject.eGet(DataUtils.getInstance().aPartOf);
+		EObject partOfType = (EObject) eObject.eGet(utils.aPartOf);
 		return partOfType != null;
 		
 	}
 	
-	private static void handleAssignmentUsingType(Parent root, EObject assignment, String id) {
+	private static void handleAssignmentUsingType(Parent root, EObject mainAssignment) {
 		
-		DataUtils utils = DataUtils.getInstance();
-		
-		Widget assignmentWidget = (Widget) assignment.eGet(utils.aWidgetFeature);
-		
-		EObject type = (EObject) assignment.eGet(utils.aUseType);
-		Widget typeWidget = (Widget) type.eGet(utils.tWidgetFeature);
-		
-		//Start with the simple case were there is no type in type
-		
-		EList<EObject> typeAssignments = (EList<EObject>) type.eGet(utils.tAssignmentsFeature);
-		for (EObject typeAssignment : typeAssignments) {
-			
-			Widget tAWidget = (Widget) typeAssignment.eGet(utils.aWidgetFeature);
-			
-			int fxmlLayoutId = getCorrespondingId(tAWidget, typeWidget, assignmentWidget);
-
-			String statementFromTypeAssignment = (String) typeAssignment.eGet(utils.aStatementFeature);
-			String entireStatement = (String) assignment.eGet(utils.aStatementFeature) + statementFromTypeAssignment;
-			
-			EObject rootContextForAssignment = (EObject) assignment.eGet(utils.aRootContextFeature);
-			if (rootContextForAssignment != null) {	//Temporary solution, means that the assignment is not part of a type
-				String locationOfRootXmi = (String) rootContextForAssignment.eGet(utils.cStatementFeature);
-				EObject dataInstance = DataUtils.getRootObjectForXmi(locationOfRootXmi);
-				
-				Object result = OCLHandler.parseOCLStatement(
-						utils.dataResource.getResourceSet(), 
-						dataInstance, 
-						entireStatement);
-			
-				handleResultCorrectly(root, "#" + fxmlLayoutId, result);
-			}
-			
-		}
-		
-	}
-	
-	private static void handleAssignmentUsingTypeInType(Parent root, EObject mainAssignment, String statementSoFar) {
-		
-		DataUtils utils = DataUtils.getInstance();
-			
 		Widget mainAssignmentWidget = (Widget) mainAssignment.eGet(utils.aWidgetFeature);
-		statementSoFar = (String) mainAssignment.eGet(utils.aStatementFeature);
+		String statementSoFar = (String) mainAssignment.eGet(utils.aStatementFeature);
 		
 		EObject typeForMainAssignment = (EObject) mainAssignment.eGet(utils.aUseType);
 		Widget typeWidget = (Widget) typeForMainAssignment.eGet(utils.tWidgetFeature);
+		
+		@SuppressWarnings("unchecked")
 		EList<EObject> assignmentsForType = (EList<EObject>) typeForMainAssignment.eGet(utils.tAssignmentsFeature);
 		for (EObject subAssignment : assignmentsForType) {
 			
 			Widget saWidget = (Widget) subAssignment.eGet(utils.aWidgetFeature);
-			Widget corrWidgetInMainAssignment = getCorrespondingWidget(saWidget, typeWidget, mainAssignmentWidget);
+			Widget corrWidgetInMainAssignment = WidgetUtils.getCorrespondingWidget(saWidget, typeWidget, mainAssignmentWidget);
 			
-			handleAssignmentFurther(root, mainAssignment, subAssignment, corrWidgetInMainAssignment, statementSoFar);
+			handleAssignmentRecursively(root, mainAssignment, subAssignment, corrWidgetInMainAssignment, statementSoFar);
 			
 		}
 			
 		
 	}
 	
-	private static void handleAssignmentFurther(Parent root, EObject mainAssignment, EObject currentAssignment, Widget corrWidgetInMainAssignment, String statementSoFar) {
+	private static void handleAssignmentRecursively(Parent root, EObject mainAssignment, EObject currentAssignment, Widget corrWidgetInMainAssignment, String statementSoFar) {
 		
-		DataUtils utils = DataUtils.getInstance();
-		
-		if (isAssignmentUsingType(currentAssignment)) {	//Type in type
+		if (isAssignmentUsingType(currentAssignment)) {
 			
 			EObject typeForCurrent = (EObject) currentAssignment.eGet(utils.aUseType);
 			Widget widgetForCurrent = (Widget) typeForCurrent.eGet(utils.tWidgetFeature);
@@ -231,15 +187,13 @@ public class AssignmentHandler {
 			for (EObject subAssignment : assignmentsForType) {
 				
 				Widget saWidget = (Widget) subAssignment.eGet(utils.aWidgetFeature);
-				Widget corrWidget = getCorrespondingWidget(saWidget, widgetForCurrent, corrWidgetInMainAssignment);
+				Widget corrWidget = WidgetUtils.getCorrespondingWidget(saWidget, widgetForCurrent, corrWidgetInMainAssignment);
 				
-				handleAssignmentFurther(root, mainAssignment, subAssignment, corrWidget, statementSoFar);
+				handleAssignmentRecursively(root, mainAssignment, subAssignment, corrWidget, statementSoFar);
 				
 			}
 			
-			
-			
-		} else {	//Simple type
+		} else {	//Simple type, a.k.a base case
 			
 			String finalStatement = statementSoFar + (String) currentAssignment.eGet(utils.aStatementFeature);
 			String layoutId = "#" + corrWidgetInMainAssignment.getId().intValue();
@@ -262,49 +216,5 @@ public class AssignmentHandler {
 		
 		
 	}
-	
-	
-	private static Widget getCorrespondingWidget(Widget tAWidget, Widget typeWidget, Widget assignmentWidget) {
-		
-		WidgetGroup typeWidgetGroup = (WidgetGroup) typeWidget;
-		
-		int counter = 0, numberInLine = -1;
-		
-		for (Widget w : typeWidgetGroup.getWidgets()) {
-			
-			if (tAWidget.equals(w)) {
-				numberInLine = counter;
-			} 
-			
-			counter++;
-			
-		}
-		
-		Widget correctWidget = null;
-		WidgetGroup assignmentWidgetGroup = (WidgetGroup) assignmentWidget;
-		
-		for (int i = 0; i < assignmentWidgetGroup.getWidgets().size(); i++) {
-			
-			if (i == numberInLine) {
-				correctWidget = assignmentWidgetGroup.getWidgets().get(i);
-			}
-			
-		}
-		
-		if (correctWidget == null) {
-			throw new RuntimeException("Whoa! Somehow didn't find the correct widget for the type");
-		}
-		
-		
-		return correctWidget;
-		
-	}
-	
-	private static int getCorrespondingId(Widget tAWidget, Widget typeWidget, Widget assignmentWidget) {
-		
-		return getCorrespondingWidget(tAWidget, typeWidget, assignmentWidget).getId().intValue();
-		
-	}
-	
 	
 }
