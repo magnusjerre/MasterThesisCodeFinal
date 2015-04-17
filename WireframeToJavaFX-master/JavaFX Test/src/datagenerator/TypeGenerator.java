@@ -23,7 +23,7 @@ public class TypeGenerator {
 	private TypeGenerator() {
 		
 		utils = DataUtils.getInstance();
-		assignments = AssignmentGenerator.getInstance().assignments;
+		assignments = Assignment2Generator.getInstance().assignments;
 		list = new DoubleList<EObject, Master>();
 		
 	}
@@ -86,10 +86,12 @@ public class TypeGenerator {
 	private void setupConnection(EObject assignment, EObject type) {
 
 		((EList<EObject>)type.eGet(utils.tAssignmentsFeature)).add(assignment);
-		assignment.eSet(utils.aPartOfTypeFeature, type);
-		assignment.eSet(utils.aWidgetFeature, getCorrectWidget(assignment));
+//		assignment.eSet(utils.aPartOfTypeFeature, type);
+		assignment.eSet(utils.a2PartOfComponentFeature, type);
+		assignment.eSet(utils.a2WidgetFeature, getCorrectWidget(assignment));
 		
-		String assignmentUsesTypeNamed = (String) assignment.eGet(utils.aUsingTypeNamedFeature);
+//		String assignmentUsesTypeNamed = (String) assignment.eGet(utils.aUsingTypeNamedFeature);
+		String assignmentUsesTypeNamed = (String) assignment.eGet(utils.a2UseComponentNamedFeature);
 		if (assignmentUsesTypeNamed != null) {
 			EObject typeToUse = findTypeNamed(assignmentUsesTypeNamed);
 			((EList<EObject>)type.eGet(utils.tTypesFeature)).add(typeToUse);

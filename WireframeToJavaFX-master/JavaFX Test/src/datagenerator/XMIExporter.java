@@ -23,8 +23,8 @@ import application.Constants;
 
 public class XMIExporter {
 	
-	AssignmentGenerator assignmentGenerator;
-	Context2Generator contextGenerator;
+	Assignment2Generator assignment2Generator;
+	Context2Generator context2Generator;
 	TypeGenerator typeGenerator;
 	
 	//EMF
@@ -33,7 +33,7 @@ public class XMIExporter {
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
 	EClass dataForScreenClass;
-	EStructuralFeature allContextsFeature, allAssignmentsFeature, allTypesFeature;
+	EStructuralFeature allContexts2Feature, allAssignments2Feature, allTypesFeature;
 	
 	public XMIExporter() {
 		
@@ -52,40 +52,40 @@ public class XMIExporter {
 		dataFactory = dataPackage.getEFactoryInstance();
 		
 		dataForScreenClass = (EClass) dataPackage.getEClassifier("DataForScreen");
-		allContextsFeature = dataForScreenClass.getEStructuralFeature("allContexts");
-		allAssignmentsFeature = dataForScreenClass.getEStructuralFeature("allAssignments");
+		allContexts2Feature = dataForScreenClass.getEStructuralFeature("allContext2s");
+		allAssignments2Feature = dataForScreenClass.getEStructuralFeature("allAssignment2s");
 		allTypesFeature = dataForScreenClass.getEStructuralFeature("allTypes");
 		
 	}
 	
-	public void setGenerators(AssignmentGenerator ag, Context2Generator cg, TypeGenerator tg) {
-		assignmentGenerator = ag;
-		contextGenerator = cg;
+	public void setGenerators(Assignment2Generator ag, Context2Generator cg, TypeGenerator tg) {
+		assignment2Generator = ag;
+		context2Generator = cg;
 		typeGenerator = tg;
 	}
 	
 	public void exportXMI(String filename, String absFolderLocation) {
 		
-		if (contextGenerator == null) throw new NullPointerException("Context generator not set for XMIExporter.");
-		if (assignmentGenerator == null) throw new NullPointerException("Assignment generator not set for XMIExporter.");
+		if (context2Generator == null) throw new NullPointerException("Context generator not set for XMIExporter.");
+		if (assignment2Generator == null) throw new NullPointerException("Assignment generator not set for XMIExporter.");
 		if (typeGenerator == null) throw new NullPointerException("Type generator not set for XMIExporter.");
 
 		//Create and fill the new instance with the contexts
 		EObject newContextsForScreen = dataFactory.create(dataForScreenClass);
 		
 		@SuppressWarnings("unchecked")	//Defined as an EList in Data.ecore by me, therefore safe to suppress warning
-		EList<EObject> allContexts = (EList<EObject>) newContextsForScreen.eGet(allContextsFeature);
-		for (EObject eObject : contextGenerator.rootContexts) {
+		EList<EObject> allContexts = (EList<EObject>) newContextsForScreen.eGet(allContexts2Feature);
+		for (EObject eObject : context2Generator.rootContexts) {
 			allContexts.add(eObject);
 		}
 		
-		for (EObject eObject : contextGenerator.contexts) {
+		for (EObject eObject : context2Generator.contexts) {
 			allContexts.add(eObject);
 		}
 		
 		@SuppressWarnings("unchecked")	//Defined as an EList in Data.ecore by me, therefore safe to suppress warning
-		EList<EObject> allAssignments = (EList<EObject>) newContextsForScreen.eGet(allAssignmentsFeature);
-		for (EObject eObject : assignmentGenerator.assignments.getElementsIterable()) {
+		EList<EObject> allAssignments = (EList<EObject>) newContextsForScreen.eGet(allAssignments2Feature);
+		for (EObject eObject : assignment2Generator.assignments.getElementsIterable()) {
 			allAssignments.add(eObject);
 		}
 		

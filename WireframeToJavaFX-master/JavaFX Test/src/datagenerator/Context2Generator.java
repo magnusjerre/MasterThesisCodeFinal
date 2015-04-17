@@ -66,6 +66,15 @@ public class Context2Generator {
 			
 	}
 	
+	public ArrayList<EObject> getAllContexts() {
+		
+		ArrayList<EObject> allContexts = new ArrayList<EObject>();
+		allContexts.addAll(rootContexts);
+		allContexts.addAll(contexts);
+		return allContexts;
+		
+	}
+	
 	public void generatePaths() {
 		
 		while (!allContextsSet()) {
@@ -81,7 +90,7 @@ public class Context2Generator {
 						Object dataResult = getResult(statement, parent);
 						
 						if (dataResult instanceof Collection<?>) {
-							fillListWithCorrectFormat((Collection<EObject>) dataResult, (EList<EObject>) eObject.eGet(utils.c2DataFeature));
+							fillListWithCorrectFormat((Collection<Object>) dataResult, (EList<Object>) eObject.eGet(utils.c2DataFeature));
 						} else {
 							EObject res = (EObject) dataResult;
 							((EList<EObject>) eObject.eGet(utils.c2DataFeature)).add(res);
@@ -95,12 +104,12 @@ public class Context2Generator {
 		
 	}
 	
-	private void fillListWithCorrectFormat(Collection<EObject> result, EList<EObject> listToFille) {
+	protected static void fillListWithCorrectFormat(Collection<Object> result, EList<Object> listToFille) {
 		
 		Iterator it = result.iterator();
 		while (it.hasNext()) {
-			EObject eObject = (EObject) it.next();
-			listToFille.add(eObject);
+			Object object = it.next();
+			listToFille.add(object);
 		}
 		
 		
@@ -120,9 +129,9 @@ public class Context2Generator {
 	}
 	
 	
-	private Object getResult(String statement, EObject parent) {
+	protected static Object getResult(String statement, EObject parent) {
 		
-		EList<EObject> list = (EList<EObject>) parent.eGet(utils.c2DataFeature);
+		EList<EObject> list = (EList<EObject>) parent.eGet(DataUtils.getInstance().c2DataFeature);
 		if (list.size() == 1) {
 			EObject first = list.get(0);
 			ResourceSet rs = first.eResource().getResourceSet();
@@ -131,8 +140,12 @@ public class Context2Generator {
 			
 			return result;
 		} else {
-			statement = "data" + statement;
-			Object result = OCLHandler.parseOCLStatement(utils.dataResource.getResourceSet(), parent, statement);
+			if (statement.startsWith("self")) {
+				statement = "self.data" + statement.replace("self", "");
+			} else {
+				statement = "data" + statement;
+			}
+			Object result = OCLHandler.parseOCLStatement(DataUtils.getInstance().dataResource.getResourceSet(), parent, statement);
 			return result;
 		}
 		

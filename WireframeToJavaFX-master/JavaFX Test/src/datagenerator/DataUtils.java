@@ -3,6 +3,7 @@ package datagenerator;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -30,7 +31,7 @@ public class DataUtils {
 	protected Resource dataResource;
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
-	EClass contextClass, context2Class, assignmentClass, dataForScreenClass, typeClass;
+	EClass contextClass, context2Class, assignmentClass, assignment2Class, dataForScreenClass, typeClass, javaObjectContainerClass;
 	//Context class features are prefixed with a c
 	EStructuralFeature cNameFeature, cContextFeature, cIsRootFeature, cStatementFeature, cSpecificStatementFeature;
 	//Assignment class features are prefixed with an s
@@ -41,6 +42,11 @@ public class DataUtils {
 	EStructuralFeature tNameFeature, tAssignmentsFeature, tTypesFeature, tWidgetFeature;
 	//Context2 class features are prefixed with a c
 	EStructuralFeature c2NameFeature, c2StatementFeature, c2DataFeature;
+	//Assignment2 class features are prefixed with a2
+	EStructuralFeature a2StatementFeature, a2DataFeature, a2WidgetFeature, a2UseComponentNamedFeature, a2UseComponentFeature, a2PartOfComponentFeature;
+	//JavaObjectContainer class
+	EStructuralFeature jocObjectFeature, jocTypeFeature;
+	
 	
 	private DataUtils() {
 		
@@ -89,10 +95,24 @@ public class DataUtils {
 		tWidgetFeature = typeClass.getEStructuralFeature("widget");
 		
 		//Context2
-		context2Class = (EClass) dataPackage.getEClassifierGen("Context2");
+		context2Class = (EClass) dataPackage.getEClassifier("Context2");
 		c2NameFeature = context2Class.getEStructuralFeature("name");
 		c2StatementFeature = context2Class.getEStructuralFeature("statement");
 		c2DataFeature = context2Class.getEStructuralFeature("data");
+		
+		//Assignment2
+		assignment2Class = (EClass) dataPackage.getEClassifier("Assignment2"); 
+		a2StatementFeature = assignment2Class.getEStructuralFeature("statement");
+		a2DataFeature = assignment2Class.getEStructuralFeature("data");
+		a2WidgetFeature = assignment2Class.getEStructuralFeature("widget");
+		a2UseComponentNamedFeature = assignment2Class.getEStructuralFeature("useComponentNamed");
+		a2UseComponentFeature = assignment2Class.getEStructuralFeature("useComponent");
+		a2PartOfComponentFeature = assignment2Class.getEStructuralFeature("partOfComponent");
+		
+		//JavaObjectContainer
+		javaObjectContainerClass = (EClass) dataPackage.getEClassifier("JavaObjectContainer");
+		jocObjectFeature = javaObjectContainerClass.getEStructuralFeature("object");
+		jocTypeFeature = javaObjectContainerClass.getEStructuralFeature("type");
 		
 	}
 	

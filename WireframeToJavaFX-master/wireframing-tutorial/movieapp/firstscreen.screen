@@ -124,6 +124,13 @@
       </widgets>
     </overrides>
   </widgets>
+  <widgets xsi:type="model:Master" id="39" x="520" y="200" measuredWidth="129" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="129" height="33" text="actress"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="40" x="320" y="188" width="201" height="28" measuredWidth="201" measuredHeight="28" foreground="#999999"/>
   <hRuler>
     <guides position="401"/>
   </hRuler>

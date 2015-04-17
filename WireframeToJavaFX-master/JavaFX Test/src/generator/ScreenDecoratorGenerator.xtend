@@ -29,6 +29,7 @@ import datagenerator.ContextGenerator
 import datagenerator.AssignmentGenerator
 import datagenerator.TypeGenerator
 import datagenerator.Context2Generator
+import datagenerator.Assignment2Generator
 
 /** A singleton class that parse and generate screendecorator models */
 class ScreenDecoratorGenerator {
@@ -92,7 +93,7 @@ class ScreenDecoratorGenerator {
 	}
 	
 	def generateDecoratorAssignment(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		AssignmentGenerator.getInstance.generateDecorator(strings, master, map)
+		Assignment2Generator.getInstance.generateDecorator(strings, master, map)
 	}
 	
 	def generateDecoratorContext(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
