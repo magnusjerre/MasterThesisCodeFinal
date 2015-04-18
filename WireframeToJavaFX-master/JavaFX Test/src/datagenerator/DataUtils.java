@@ -3,7 +3,6 @@ package datagenerator;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -37,7 +36,7 @@ public class DataUtils {
 	//Assignment class features are prefixed with an s
 	EStructuralFeature aStatementFeature, aSpecificStatementFeature, aRootContextFeature, aUsingTypeFeature, aUsingTypeNamedFeature, aPartOfTypeFeature, aWidgetFeature;
 	//DataForScreen class features are prefixed with a d
-	EStructuralFeature dAllContextsFeature, dAllAssignmentsFeature, dAllTypesFeature;
+	EStructuralFeature dAllContextsFeature, dAllAssignmentsFeature, dAllTypesFeature, dAllAssignment2sFeature;
 	//Type class features are prefixed with a t
 	EStructuralFeature tNameFeature, tAssignmentsFeature, tTypesFeature, tWidgetFeature;
 	//Context2 class features are prefixed with a c
@@ -86,6 +85,7 @@ public class DataUtils {
 		dAllContextsFeature = dataForScreenClass.getEStructuralFeature("allContexts");
 		dAllAssignmentsFeature = dataForScreenClass.getEStructuralFeature("allAssignments");
 		dAllTypesFeature = dataForScreenClass.getEStructuralFeature("allTypes");
+		dAllAssignment2sFeature = dataForScreenClass.getEStructuralFeature("allAssignment2s");
 		
 		//Type
 		typeClass = (EClass) dataPackage.getEClassifier("Type");
