@@ -40,9 +40,9 @@ public class DataUtils {
 	//Assignment2 class features are prefixed with a2
 	EStructuralFeature a2StatementFeature, a2DataFeature, a2WidgetFeature, a2UseComponentNamedFeature, a2UseComponentFeature, a2PartOfComponentFeature;
 	//JavaObjectContainer class
-	EStructuralFeature jocObjectFeature, jocTypeFeature;
+	EStructuralFeature jocObjectFeature, jocTypeFeature, jocStringRepresentationFeature;
 	//Mapping class features are prefixed with m
-	EStructuralFeature mLayoutIdFeature, mValueFeature, mAssignmentPathFeature;
+	EStructuralFeature mLayoutIdFeature, mValueFeature, mAssignmentPathFeature, mStringRepresentationFeature;
 	
 	
 	private DataUtils() {
@@ -93,12 +93,14 @@ public class DataUtils {
 		javaObjectContainerClass = (EClass) dataPackage.getEClassifier("JavaObjectContainer");
 		jocObjectFeature = javaObjectContainerClass.getEStructuralFeature("object");
 		jocTypeFeature = javaObjectContainerClass.getEStructuralFeature("type");
+		jocStringRepresentationFeature = javaObjectContainerClass.getEStructuralFeature("stringRepresentation");
 		
 		//Mapping
 		mappingClass = (EClass) dataPackage.getEClassifier("Mapping");
 		mLayoutIdFeature = mappingClass.getEStructuralFeature("layoutId");
 		mValueFeature = mappingClass.getEStructuralFeature("value");
 		mAssignmentPathFeature = mappingClass.getEStructuralFeature("assignmentPath");
+		mStringRepresentationFeature = mappingClass.getEStructuralFeature("stringRepresentation");
 		
 	}
 	

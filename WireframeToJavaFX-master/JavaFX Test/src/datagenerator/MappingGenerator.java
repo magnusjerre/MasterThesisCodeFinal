@@ -103,6 +103,7 @@ public class MappingGenerator {
 		EObject mapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
 		mapping.eSet(DataUtils.getInstance().mLayoutIdFeature, id);
 		mapping.eSet(DataUtils.getInstance().mValueFeature, value);
+		mapping.eSet(DataUtils.getInstance().mStringRepresentationFeature, value.toString());
 		for (EObject eObject : assignmentPath) {
 			((EList<EObject>) mapping.eGet(DataUtils.getInstance().mAssignmentPathFeature)).add(eObject);
 		}
