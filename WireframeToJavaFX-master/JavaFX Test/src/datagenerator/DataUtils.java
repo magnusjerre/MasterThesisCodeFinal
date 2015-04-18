@@ -72,13 +72,13 @@ public class DataUtils {
 		tWidgetFeature = typeClass.getEStructuralFeature("widget");
 		
 		//Context2
-		context2Class = (EClass) dataPackage.getEClassifier("Context2");
+		context2Class = (EClass) dataPackage.getEClassifier("Context");
 		c2NameFeature = context2Class.getEStructuralFeature("name");
 		c2StatementFeature = context2Class.getEStructuralFeature("statement");
 		c2DataFeature = context2Class.getEStructuralFeature("data");
 		
 		//Assignment2
-		assignment2Class = (EClass) dataPackage.getEClassifier("Assignment2"); 
+		assignment2Class = (EClass) dataPackage.getEClassifier("Assignment"); 
 		a2StatementFeature = assignment2Class.getEStructuralFeature("statement");
 		a2DataFeature = assignment2Class.getEStructuralFeature("data");
 		a2WidgetFeature = assignment2Class.getEStructuralFeature("widget");

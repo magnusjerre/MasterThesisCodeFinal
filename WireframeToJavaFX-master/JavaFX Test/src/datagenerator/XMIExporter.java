@@ -23,8 +23,8 @@ import application.Constants;
 
 public class XMIExporter {
 	
-	Assignment2Generator assignment2Generator;
-	Context2Generator context2Generator;
+	AssignmentGenerator assignment2Generator;
+	ContextGenerator context2Generator;
 	TypeGenerator typeGenerator;
 	
 	//EMF
@@ -58,7 +58,7 @@ public class XMIExporter {
 		
 	}
 	
-	public void setGenerators(Assignment2Generator ag, Context2Generator cg, TypeGenerator tg) {
+	public void setGenerators(AssignmentGenerator ag, ContextGenerator cg, TypeGenerator tg) {
 		assignment2Generator = ag;
 		context2Generator = cg;
 		typeGenerator = tg;

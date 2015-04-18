@@ -7,8 +7,6 @@ import com.wireframesketcher.model.Master
 import com.wireframesketcher.model.Screen
 import com.wireframesketcher.model.Widget
 import com.wireframesketcher.model.story.Storyboard
-import datagenerator.Assignment2Generator
-import datagenerator.Context2Generator
 import datagenerator.TypeGenerator
 import java.io.File
 import java.util.HashMap
@@ -28,6 +26,8 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
+import datagenerator.AssignmentGenerator
+import datagenerator.ContextGenerator
 
 /** A singleton class that parse and generate screendecorator models */
 class ScreenDecoratorGenerator {
@@ -91,11 +91,11 @@ class ScreenDecoratorGenerator {
 	}
 	
 	def generateDecoratorAssignment(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		Assignment2Generator.getInstance.generateDecorator(strings, master, map)
+		AssignmentGenerator.getInstance.generateDecorator(strings, master, map)
 	}
 	
 	def generateDecoratorContext(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		Context2Generator.getInstance.generateDecorator(strings);
+		ContextGenerator.getInstance.generateDecorator(strings);
 	}
 
 	def void generateDataModel(String[] dataString, Master master, HashMap<Master, Pair<Arrow, Widget>> masterMap) {

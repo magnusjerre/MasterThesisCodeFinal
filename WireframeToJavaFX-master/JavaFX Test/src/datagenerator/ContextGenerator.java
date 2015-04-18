@@ -9,24 +9,24 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-public class Context2Generator {
+public class ContextGenerator {
 	
-	private static Context2Generator instance = null;
+	private static ContextGenerator instance = null;
 	private DataUtils utils;
 	
 	public ArrayList<EObject> contexts;
 	public ArrayList<EObject> rootContexts;
 	
-	public static Context2Generator getInstance() {
+	public static ContextGenerator getInstance() {
 		
 		if (instance == null)
-			instance = new Context2Generator();
+			instance = new ContextGenerator();
 		
 		return instance;
 		
 	}
 	
-	private Context2Generator() {
+	private ContextGenerator() {
 		
 		utils = DataUtils.getInstance();
 		rootContexts = new ArrayList<>();

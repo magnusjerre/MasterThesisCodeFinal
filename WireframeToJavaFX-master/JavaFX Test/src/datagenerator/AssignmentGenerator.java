@@ -12,9 +12,9 @@ import com.wireframesketcher.model.Arrow;
 import com.wireframesketcher.model.Master;
 import com.wireframesketcher.model.Widget;
 
-public class Assignment2Generator {
+public class AssignmentGenerator {
 	
-	private static Assignment2Generator instance = null;
+	private static AssignmentGenerator instance = null;
 	private DataUtils utils;
 	
 	
@@ -23,16 +23,16 @@ public class Assignment2Generator {
 	
 	public HashMap<Master, Pair<Arrow, Widget>> masterMap = null;
 	
-	public static Assignment2Generator getInstance() {
+	public static AssignmentGenerator getInstance() {
 		
 		if (instance == null)
-			instance = new Assignment2Generator();
+			instance = new AssignmentGenerator();
 		
 		return instance;
 		
 	}
 	
-	private Assignment2Generator() {
+	private AssignmentGenerator() {
 		
 		utils = DataUtils.getInstance();
 		assignments = new DoubleList<EObject, Master>();
@@ -109,11 +109,11 @@ public class Assignment2Generator {
 		String contextName = DataUtils.getParentName(statement);
 		EObject context = DataUtils.getInstance().getContextNamed(contextName, contexts);
 		statement = statement.replaceFirst(contextName, "self");
-		Object data = Context2Generator.getResult(statement, context);
+		Object data = ContextGenerator.getResult(statement, context);
 		
 		EList<Object> dataList = (EList<Object>) assignment.eGet(utils.a2DataFeature);
 		if (data instanceof Collection<?>) {
-			Context2Generator.fillListWithCorrectFormat((Collection<Object>) data, dataList);
+			ContextGenerator.fillListWithCorrectFormat((Collection<Object>) data, dataList);
 		} else {
 			Object result = data;
 			if (result instanceof EObject) {

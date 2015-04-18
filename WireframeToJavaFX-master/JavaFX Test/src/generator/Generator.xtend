@@ -23,8 +23,6 @@ import com.wireframesketcher.model.TextField
 import com.wireframesketcher.model.VLine
 import com.wireframesketcher.model.Widget
 import com.wireframesketcher.model.WidgetGroup
-import datagenerator.Assignment2Generator
-import datagenerator.Context2Generator
 import datagenerator.TypeGenerator
 import datagenerator.XMIExporter
 import java.io.BufferedWriter
@@ -45,6 +43,8 @@ import org.apache.commons.io.FilenameUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.w3c.dom.Element
+import datagenerator.AssignmentGenerator
+import datagenerator.ContextGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -1350,21 +1350,21 @@ class Generator {
 					val name = FilenameUtils.getBaseName(path) 
 					println("Generating FXML for " + name)
 					
-					Context2Generator.getInstance.clear
+					ContextGenerator.getInstance.clear
 					TypeGenerator.getInstance.clear
-					Assignment2Generator.getInstance.clear
+					AssignmentGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
 					
-					Context2Generator.getInstance.generatePaths
+					ContextGenerator.getInstance.generatePaths
 					TypeGenerator.getInstance.setupAssignmentReferences
-					Assignment2Generator.getInstance.context = Context2Generator.getInstance.allContexts
-					Assignment2Generator.getInstance.doSetup
+					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
+					AssignmentGenerator.getInstance.doSetup
 //					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
 //					AssignmentGenerator.getInstance.generatePaths
 					
 					val xmiExpoter = new XMIExporter
-					xmiExpoter.setGenerators(Assignment2Generator.getInstance, Context2Generator.getInstance, TypeGenerator.getInstance)
+					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance, TypeGenerator.getInstance)
 					xmiExpoter.exportXMI(name, Constants.FXML_DIRECTORY)
 					
 				} 

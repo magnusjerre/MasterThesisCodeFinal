@@ -23,7 +23,7 @@ public class TypeGenerator {
 	private TypeGenerator() {
 		
 		utils = DataUtils.getInstance();
-		assignments = Assignment2Generator.getInstance().assignments;
+		assignments = AssignmentGenerator.getInstance().assignments;
 		list = new DoubleList<EObject, Master>();
 		
 	}
