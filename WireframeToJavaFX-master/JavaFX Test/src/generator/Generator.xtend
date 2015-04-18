@@ -45,6 +45,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import org.w3c.dom.Element
 import datagenerator.AssignmentGenerator
 import datagenerator.ContextGenerator
+import datagenerator.MappingGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -1353,6 +1354,7 @@ class Generator {
 					ContextGenerator.getInstance.clear
 					TypeGenerator.getInstance.clear
 					AssignmentGenerator.getInstance.clear
+					MappingGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
 					
@@ -1360,6 +1362,7 @@ class Generator {
 					TypeGenerator.getInstance.setupAssignmentReferences
 					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
 					AssignmentGenerator.getInstance.doSetup
+					MappingGenerator.getInstance.assignValues(Constants.FXML_DIRECTORY + name + ".xmi");
 //					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
 //					AssignmentGenerator.getInstance.generatePaths
 					

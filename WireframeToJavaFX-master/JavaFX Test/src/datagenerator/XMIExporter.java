@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.junit.experimental.theories.internal.AllMembersSupplier;
 
 import application.Constants;
 
@@ -26,6 +27,7 @@ public class XMIExporter {
 	AssignmentGenerator assignment2Generator;
 	ContextGenerator context2Generator;
 	TypeGenerator typeGenerator;
+	MappingGenerator mappingGenerator = MappingGenerator.getInstance();
 	
 	//EMF
 	ResourceSet resourceSet;
@@ -33,7 +35,7 @@ public class XMIExporter {
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
 	EClass dataForScreenClass;
-	EStructuralFeature allContexts2Feature, allAssignments2Feature, allTypesFeature;
+	EStructuralFeature allContexts2Feature, allAssignments2Feature, allTypesFeature, allMappingsFeature;
 	
 	public XMIExporter() {
 		
@@ -55,6 +57,7 @@ public class XMIExporter {
 		allContexts2Feature = dataForScreenClass.getEStructuralFeature("allContext2s");
 		allAssignments2Feature = dataForScreenClass.getEStructuralFeature("allAssignment2s");
 		allTypesFeature = dataForScreenClass.getEStructuralFeature("allTypes");
+		allMappingsFeature = dataForScreenClass.getEStructuralFeature("allMappings");
 		
 	}
 	
@@ -93,6 +96,12 @@ public class XMIExporter {
 		EList<EObject> allTypes = (EList<EObject>) newContextsForScreen.eGet(allTypesFeature);
 		for (EObject eObject : typeGenerator.list.getElementsIterable()) {
 			allTypes.add(eObject);
+		}
+		
+		@SuppressWarnings("unchecked")
+		EList<EObject> allMappings = (EList<EObject>) newContextsForScreen.eGet(allMappingsFeature);
+		for (EObject eObject : mappingGenerator.mappings) {
+			allMappings.add(eObject);
 		}
 		
 		//Create the xmi and fill with the new instance

@@ -30,9 +30,9 @@ public class DataUtils {
 	protected Resource dataResource;
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
-	EClass context2Class, assignment2Class, dataForScreenClass, typeClass, javaObjectContainerClass;
+	EClass context2Class, assignment2Class, dataForScreenClass, typeClass, javaObjectContainerClass, mappingClass;
 	//DataForScreen class features are prefixed with a d
-	EStructuralFeature dAllContextsFeature, dAllTypesFeature, dAllAssignment2sFeature;
+	EStructuralFeature dAllContextsFeature, dAllTypesFeature, dAllAssignment2sFeature, dAllMappings;
 	//Type class features are prefixed with a t
 	EStructuralFeature tNameFeature, tAssignmentsFeature, tTypesFeature, tWidgetFeature;
 	//Context2 class features are prefixed with a c
@@ -41,6 +41,8 @@ public class DataUtils {
 	EStructuralFeature a2StatementFeature, a2DataFeature, a2WidgetFeature, a2UseComponentNamedFeature, a2UseComponentFeature, a2PartOfComponentFeature;
 	//JavaObjectContainer class
 	EStructuralFeature jocObjectFeature, jocTypeFeature;
+	//Mapping class features are prefixed with m
+	EStructuralFeature mLayoutIdFeature, mValueFeature, mAssignmentPathFeature;
 	
 	
 	private DataUtils() {
@@ -63,6 +65,7 @@ public class DataUtils {
 		dAllContextsFeature = dataForScreenClass.getEStructuralFeature("allContexts");
 		dAllTypesFeature = dataForScreenClass.getEStructuralFeature("allTypes");
 		dAllAssignment2sFeature = dataForScreenClass.getEStructuralFeature("allAssignment2s");
+		dAllMappings = dataForScreenClass.getEStructuralFeature("allMappings");
 		
 		//Type
 		typeClass = (EClass) dataPackage.getEClassifier("Type");
@@ -90,6 +93,12 @@ public class DataUtils {
 		javaObjectContainerClass = (EClass) dataPackage.getEClassifier("JavaObjectContainer");
 		jocObjectFeature = javaObjectContainerClass.getEStructuralFeature("object");
 		jocTypeFeature = javaObjectContainerClass.getEStructuralFeature("type");
+		
+		//Mapping
+		mappingClass = (EClass) dataPackage.getEClassifier("Mapping");
+		mLayoutIdFeature = mappingClass.getEStructuralFeature("layoutId");
+		mValueFeature = mappingClass.getEStructuralFeature("value");
+		mAssignmentPathFeature = mappingClass.getEStructuralFeature("assignmentPath");
 		
 	}
 	
