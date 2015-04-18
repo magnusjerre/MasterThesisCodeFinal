@@ -15,12 +15,18 @@ import com.wireframesketcher.model.Label
 import com.wireframesketcher.model.List
 import com.wireframesketcher.model.Master
 import com.wireframesketcher.model.Position
+import com.wireframesketcher.model.RadioButton
 import com.wireframesketcher.model.Screen
 import com.wireframesketcher.model.State
 import com.wireframesketcher.model.TextArea
 import com.wireframesketcher.model.TextField
 import com.wireframesketcher.model.VLine
 import com.wireframesketcher.model.Widget
+import com.wireframesketcher.model.WidgetGroup
+import datagenerator.Assignment2Generator
+import datagenerator.Context2Generator
+import datagenerator.TypeGenerator
+import datagenerator.XMIExporter
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -39,14 +45,6 @@ import org.apache.commons.io.FilenameUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.w3c.dom.Element
-import com.wireframesketcher.model.RadioButton
-import datagenerator.ContextGenerator
-import datagenerator.AssignmentGenerator
-import datagenerator.XMIExporter
-import datagenerator.TypeGenerator
-import com.wireframesketcher.model.WidgetGroup
-import datagenerator.Context2Generator
-import datagenerator.Assignment2Generator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.

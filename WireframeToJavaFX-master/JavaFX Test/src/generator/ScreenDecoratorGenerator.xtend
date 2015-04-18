@@ -7,6 +7,9 @@ import com.wireframesketcher.model.Master
 import com.wireframesketcher.model.Screen
 import com.wireframesketcher.model.Widget
 import com.wireframesketcher.model.story.Storyboard
+import datagenerator.Assignment2Generator
+import datagenerator.Context2Generator
+import datagenerator.TypeGenerator
 import java.io.File
 import java.util.HashMap
 import no.fhl.screenDecorator.DecoratorModel
@@ -25,11 +28,6 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
-import datagenerator.ContextGenerator
-import datagenerator.AssignmentGenerator
-import datagenerator.TypeGenerator
-import datagenerator.Context2Generator
-import datagenerator.Assignment2Generator
 
 /** A singleton class that parse and generate screendecorator models */
 class ScreenDecoratorGenerator {

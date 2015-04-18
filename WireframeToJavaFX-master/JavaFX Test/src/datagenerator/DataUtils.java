@@ -30,13 +30,9 @@ public class DataUtils {
 	protected Resource dataResource;
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
-	EClass contextClass, context2Class, assignmentClass, assignment2Class, dataForScreenClass, typeClass, javaObjectContainerClass;
-	//Context class features are prefixed with a c
-	EStructuralFeature cNameFeature, cContextFeature, cIsRootFeature, cStatementFeature, cSpecificStatementFeature;
-	//Assignment class features are prefixed with an s
-	EStructuralFeature aStatementFeature, aSpecificStatementFeature, aRootContextFeature, aUsingTypeFeature, aUsingTypeNamedFeature, aPartOfTypeFeature, aWidgetFeature;
+	EClass context2Class, assignment2Class, dataForScreenClass, typeClass, javaObjectContainerClass;
 	//DataForScreen class features are prefixed with a d
-	EStructuralFeature dAllContextsFeature, dAllAssignmentsFeature, dAllTypesFeature, dAllAssignment2sFeature;
+	EStructuralFeature dAllContextsFeature, dAllTypesFeature, dAllAssignment2sFeature;
 	//Type class features are prefixed with a t
 	EStructuralFeature tNameFeature, tAssignmentsFeature, tTypesFeature, tWidgetFeature;
 	//Context2 class features are prefixed with a c
@@ -62,28 +58,9 @@ public class DataUtils {
 		//Factory
 		dataFactory = dataPackage.getEFactoryInstance();
 		
-		//Context
-		contextClass = (EClass)dataPackage.getEClassifier("Context");
-		cNameFeature = contextClass.getEStructuralFeature("name");
-		cContextFeature = contextClass.getEStructuralFeature("rootContext");
-		cIsRootFeature = contextClass.getEStructuralFeature("isRoot");
-		cStatementFeature = contextClass.getEStructuralFeature("statement");
-		cSpecificStatementFeature = contextClass.getEStructuralFeature("specificStatement");
-		
-		//Assignment
-		assignmentClass = (EClass) dataPackage.getEClassifier("Assignment");
-		aStatementFeature = assignmentClass.getEStructuralFeature("statement");
-		aSpecificStatementFeature = assignmentClass.getEStructuralFeature("specificStatement");
-		aRootContextFeature = assignmentClass.getEStructuralFeature("rootContext");
-		aUsingTypeFeature = assignmentClass.getEStructuralFeature("usingType");
-		aUsingTypeNamedFeature = assignmentClass.getEStructuralFeature("usingTypeNamed");
-		aPartOfTypeFeature = assignmentClass.getEStructuralFeature("partOfType");
-		aWidgetFeature = assignmentClass.getEStructuralFeature("widget");
-		
 		//DataForContext
 		dataForScreenClass = (EClass) dataPackage.getEClassifier("DataForScreen");
 		dAllContextsFeature = dataForScreenClass.getEStructuralFeature("allContexts");
-		dAllAssignmentsFeature = dataForScreenClass.getEStructuralFeature("allAssignments");
 		dAllTypesFeature = dataForScreenClass.getEStructuralFeature("allTypes");
 		dAllAssignment2sFeature = dataForScreenClass.getEStructuralFeature("allAssignment2s");
 		
