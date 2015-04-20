@@ -1362,11 +1362,14 @@ class Generator {
 					TypeGenerator.getInstance.setupAssignmentReferences
 					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
 					AssignmentGenerator.getInstance.doSetup
+					var xmiExpoter = new XMIExporter
+					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance, TypeGenerator.getInstance)
+					xmiExpoter.exportXMI(name, Constants.FXML_DIRECTORY)
 					MappingGenerator.getInstance.assignValues(Constants.FXML_DIRECTORY + name + ".xmi");
 //					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
 //					AssignmentGenerator.getInstance.generatePaths
 					
-					val xmiExpoter = new XMIExporter
+					xmiExpoter = new XMIExporter
 					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance, TypeGenerator.getInstance)
 					xmiExpoter.exportXMI(name, Constants.FXML_DIRECTORY)
 					

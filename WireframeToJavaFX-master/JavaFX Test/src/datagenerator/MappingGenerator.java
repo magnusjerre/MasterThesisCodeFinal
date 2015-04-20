@@ -63,6 +63,7 @@ public class MappingGenerator {
 		
 		@SuppressWarnings("unchecked")
 		EList<EObject> allAssignments = (EList<EObject>) screenDataInstanceRoot.eGet(DataUtils.getInstance().dAllAssignment2sFeature);
+		
 		for (EObject assignment : allAssignments) {
 			
 			if (isAssignmentPlain(assignment)) {
@@ -92,41 +93,50 @@ public class MappingGenerator {
 			String id = getJavaFXIdFromWidgetId(assignment);
 			List<EObject> assignmentPath = new ArrayList<EObject>();
 			assignmentPath.add(assignment);
-			handleResultCorrectly(id, value, assignmentPath);
+			EObject mapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
+			handleResultCorrectly(id, value, assignmentPath, mapping, mapping);
 		} else {
 			throw new RuntimeException("Something is wrong here. An EObject cannot be directly assigned without using some sort of component");
 		}
 	}
 	
-	private void handleResultCorrectly(String id, Object value, List<EObject> assignmentPath) {
+	private void handleResultCorrectly(String id, Object value, List<EObject> assignmentPath, EObject rootMapping, EObject mapping) {
 		
-		EObject mapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
 		mapping.eSet(DataUtils.getInstance().mLayoutIdFeature, id);
-		mapping.eSet(DataUtils.getInstance().mValueFeature, value);
-		mapping.eSet(DataUtils.getInstance().mStringRepresentationFeature, value.toString());
+		
+		mapping.eSet(utils.mValueFeature, value);
+		mapping.eSet(utils.mStringRepresentationFeature, value.toString());
+		
 		for (EObject eObject : assignmentPath) {
 			((EList<EObject>) mapping.eGet(DataUtils.getInstance().mAssignmentPathFeature)).add(eObject);
 		}
 		
-		mappings.add(mapping);
+		mappings.add(rootMapping);
 	}
 
 	private void handleAssignmentUsingComponent(EObject mainAssignment) {
 		
 		Widget mainAssignmentWidget = (Widget) mainAssignment.eGet(DataUtils.getInstance().a2WidgetFeature);
 		List<EObject> assignmentPath = new ArrayList<>();
-		handleRecursively(mainAssignment, null, mainAssignmentWidget, assignmentPath);
+		EObject mapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
+		handleRecursively(mainAssignment, null, mainAssignmentWidget, assignmentPath, mapping, mapping);
 		
 	}
 
 	private void handleRecursively(EObject parentAssignment, Object prevResult, Widget corrWidgetInMainAssignment, 
-			List<EObject> assignmentPath) {
+			List<EObject> assignmentPath, EObject rootMapping, EObject mapping) {
 		
 		
 		List<EObject> newAssignmentPath = new ArrayList<EObject>();
 		newAssignmentPath.addAll(assignmentPath);
 		newAssignmentPath.add(parentAssignment);
+		for (EObject eObject : newAssignmentPath) {
+			((EList<EObject>) mapping.eGet(DataUtils.getInstance().mAssignmentPathFeature)).add(eObject);
+		}
 		if (isAssignmentUsingType(parentAssignment)) {
+			
+			EObject component = (EObject) parentAssignment.eGet(utils.a2UseComponentFeature);
+			mapping.eSet(utils.mUsingComponentFeature, component);
 			
 			Widget mainAssignmentWidget = (Widget) parentAssignment.eGet(DataUtils.getInstance().a2WidgetFeature);
 			@SuppressWarnings("unchecked")
@@ -146,7 +156,12 @@ public class MappingGenerator {
 					compStatement = modifyCompstatementToFitList(compStatement);
 					Object result = OCLHandler.parseOCLStatement(parentAssignment.eResource().getResourceSet(), parentAssignment, compStatement);
 					
-					handleRecursively(compAssignment, result, corrWidget, newAssignmentPath);
+					EObject newMapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
+					@SuppressWarnings("unchecked")
+					EList<EObject> mappingsInMapping = (EList<EObject>) mapping.eGet(DataUtils.getInstance().mMappingsFeature);
+					mappingsInMapping.add(newMapping);
+					
+					handleRecursively(compAssignment, result, corrWidget, newAssignmentPath, rootMapping, newMapping);
 					
 				}
 			} else {
@@ -172,7 +187,12 @@ public class MappingGenerator {
 						result = OCLHandler.parseOCLStatement(temp.eResource().getResourceSet(), temp, compStatement);
 					}
 					
-					handleRecursively(compAssignment, result, corrWidget, newAssignmentPath);
+					EObject newMapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
+					@SuppressWarnings("unchecked")
+					EList<EObject> mappingsInMapping = (EList<EObject>) mapping.eGet(DataUtils.getInstance().mMappingsFeature);
+					mappingsInMapping.add(newMapping);
+					
+					handleRecursively(compAssignment, result, corrWidget, newAssignmentPath, rootMapping, newMapping);
 					
 				}
 			}
@@ -181,7 +201,7 @@ public class MappingGenerator {
 		} else {	//Base case
 			
 			String layoutId = "#" + corrWidgetInMainAssignment.getId().intValue();
-			handleResultCorrectly(layoutId, prevResult, newAssignmentPath);
+			handleResultCorrectly(layoutId, prevResult, newAssignmentPath, rootMapping, mapping);
 			
 		}
 		

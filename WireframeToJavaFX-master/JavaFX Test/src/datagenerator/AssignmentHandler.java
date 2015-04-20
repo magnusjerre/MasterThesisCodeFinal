@@ -32,12 +32,25 @@ public class AssignmentHandler {
 		
 		@SuppressWarnings("unchecked")
 		EList<EObject> allMappings = (EList<EObject>) screenDataInstanceRoot.eGet(DataUtils.getInstance().dAllMappings);
-		for (EObject mapping : allMappings) {
+		assignValues(root, allMappings);
+		
+	}
+	
+	private static void assignValues(Parent root, EList<EObject> mappings) {
+		
+		for (EObject mapping : mappings) {
 			
-			Object value = mapping.eGet(DataUtils.getInstance().mValueFeature);
-			if (value != null) {
-				String id = (String) mapping.eGet(DataUtils.getInstance().mLayoutIdFeature);
-				handleResultCorrectly(root, id, value);
+			if (mapping.eGet(utils.mLayoutIdFeature) != null) {
+			
+				Object value = mapping.eGet(DataUtils.getInstance().mValueFeature);
+				if (value != null) {
+					String id = (String) mapping.eGet(DataUtils.getInstance().mLayoutIdFeature);
+					handleResultCorrectly(root, id, value);
+				}
+			} else {
+				@SuppressWarnings("unchecked")
+				EList<EObject> newMappings = (EList<EObject>) mapping.eGet(utils.mMappingsFeature);
+				assignValues(root, newMappings);
 			}
 			
 		}

@@ -42,7 +42,7 @@ public class DataUtils {
 	//JavaObjectContainer class
 	EStructuralFeature jocObjectFeature, jocTypeFeature, jocStringRepresentationFeature;
 	//Mapping class features are prefixed with m
-	EStructuralFeature mLayoutIdFeature, mValueFeature, mAssignmentPathFeature, mStringRepresentationFeature;
+	EStructuralFeature mLayoutIdFeature, mValueFeature, mAssignmentPathFeature, mStringRepresentationFeature, mMappingsFeature, mUsingComponentFeature;
 	
 	
 	private DataUtils() {
@@ -101,6 +101,8 @@ public class DataUtils {
 		mValueFeature = mappingClass.getEStructuralFeature("value");
 		mAssignmentPathFeature = mappingClass.getEStructuralFeature("assignmentPath");
 		mStringRepresentationFeature = mappingClass.getEStructuralFeature("stringRepresentation");
+		mMappingsFeature = mappingClass.getEStructuralFeature("mappings");
+		mUsingComponentFeature = mappingClass.getEStructuralFeature("usingComponent");
 		
 	}
 	
