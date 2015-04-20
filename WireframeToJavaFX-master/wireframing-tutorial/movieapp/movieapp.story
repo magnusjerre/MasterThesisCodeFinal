@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <story:Storyboard xmlns:story="http://wireframesketcher.com/1.0/model/story">
-  <panels id="VAdFkLRfCXHNXFLD2styInVow00=" x="75" y="75">
-    <screen href="firstscreen.screen#/"/>
-  </panels>
-  <panels id="w4i8yKt_bZRNTsEOYjxPmw5eNWw=" x="375" y="75">
-    <screen href="secondscreen.screen#/"/>
-  </panels>
-  <panels id="tO9sxKNUxKNGotxb2GaZpBVR6JM=" x="975" y="75">
-    <screen href="fourthscreen.screen#/"/>
-  </panels>
-  <panels id="vRTb1acIa1IHG7ICa7hK_nMRIXc=" x="675" y="75">
-    <screen href="thirdscreen.screen#/"/>
+  <panels id="DsyYnChLMu6lBLh1tiLQQbyQzgk=" x="75" y="375">
+    <screen href="fifthscreen.screen#/"/>
   </panels>
 </story:Storyboard>

@@ -109,9 +109,16 @@ public class ContextGenerator {
 		Iterator it = result.iterator();
 		while (it.hasNext()) {
 			Object object = it.next();
-			listToFille.add(object);
+			if (object instanceof EObject) {
+				listToFille.add(object);
+			} else {
+				EObject container = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().javaObjectContainerClass);
+				EList<Object> jocs = (EList<Object>) container.eGet(DataUtils.getInstance().jocObjectFeature);
+				jocs.add(object);
+				container.eSet(DataUtils.getInstance().jocStringRepresentationFeature, jocs.toString());
+				listToFille.add(container);
+			}
 		}
-		
 		
 	}
 	

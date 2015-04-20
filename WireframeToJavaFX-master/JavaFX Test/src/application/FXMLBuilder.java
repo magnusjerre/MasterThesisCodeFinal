@@ -124,6 +124,10 @@ public class FXMLBuilder {
 
 		ProcessingInstruction import1 = doc.createProcessingInstruction(
 				"import", "java.lang.*");
+		ProcessingInstruction import7 = doc.createProcessingInstruction(
+				"import", "java.util.*");
+		ProcessingInstruction import8 = doc.createProcessingInstruction(
+				"import", "javafx.scene.*?");
 		ProcessingInstruction import2 = doc.createProcessingInstruction(
 				"import", " javafx.scene.control.*");
 		ProcessingInstruction import3 = doc.createProcessingInstruction(
@@ -138,12 +142,13 @@ public class FXMLBuilder {
 		// "import", "javafx.geometry.Insets");
 
 		doc.appendChild(import1);
+		doc.appendChild(import7);
+		doc.appendChild(import8);
 		doc.appendChild(import2);
 		doc.appendChild(import3);
 		doc.appendChild(import4);
 		doc.appendChild(import5);
 		doc.appendChild(import6);
-		// doc.appendChild(import7);
 
 		if (layoutType == LayoutStyle.AnchorPane) {
 			/* Using AnchorPane with explicit coordinates */

@@ -579,21 +579,29 @@ class Generator {
 	}
 	
 	def dispatch void generateFxml(WidgetGroup widgetGroup) {
-		val widgets = widgetGroup.widgets
-		val tempOffsetX = widgetGroup.x
-		val tempOffsetY = widgetGroup.y
-		offsetX = offsetX + tempOffsetX
-		offsetY = offsetY + tempOffsetY
-		for (widget : widgets) {
-			if (!(widget instanceof Master)) {
-//				widget.x = widget.x + offsetX
-//				widget.y = widget.y + offsetY
-				generateFxml(widget)
+		if (widgetGroup.name == "list") {
+			(builder += "ListView") => [
+				it += "fx:id" -> "listView"	//should be named something else, this is just temporary
+				it += "layoutX" -> widgetGroup.x + offsetX
+				it += "layoutY" -> widgetGroup.y + offsetY
+				it += "prefWidth" -> widgetGroup.measuredWidth
+				it += "prefHeight" -> widgetGroup.measuredHeight
+			]
+		} else {
+			val widgets = widgetGroup.widgets
+			val tempOffsetX = widgetGroup.x
+			val tempOffsetY = widgetGroup.y
+			offsetX = offsetX + tempOffsetX
+			offsetY = offsetY + tempOffsetY
+			for (widget : widgets) {
+				if (!(widget instanceof Master)) {
+					generateFxml(widget)
+				}
 			}
+			offsetX = offsetX - tempOffsetX
+			offsetY = offsetY - tempOffsetY
 		}
-		offsetX = offsetX - tempOffsetX
-		offsetY = offsetY - tempOffsetY
-		
+			
 	}
 
 	/** Button */
