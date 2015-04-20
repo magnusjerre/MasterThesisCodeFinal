@@ -81,23 +81,32 @@ public class MappingGenerator {
 		@SuppressWarnings("unchecked")
 		EList<EObject> dataInAssignment = (EList<EObject>) assignment.eGet(DataUtils.getInstance().a2DataFeature);
 		
-		if (isMany((EList<EObject>) dataInAssignment)) {
-			throw new RuntimeException("Something is wrong here, no list implementation for lists exists yet.");
+		if (isMany((EList<EObject>) dataInAssignment)) {	//Treat result as a list
+			for (EObject eObject : dataInAssignment) {
+				String id = getJavaFXIdFromWidgetId(assignment);
+				List<EObject> assignmentPath = new ArrayList<EObject>();
+				assignmentPath.add(assignment);
+				EObject mapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
+				mapping.eSet(utils.mIsListFeature, true);
+				EList<Object> jocObjects = (EList<Object>) eObject.eGet(utils.jocObjectFeature);
+				handleResultCorrectly(id, jocObjects.get(0), assignmentPath, mapping, mapping);
+			}
+		} else {			
+			EObject theElement = (EObject) getFirstObjectInCollection(dataInAssignment);
+			
+			if (isJavaObjectContainerClass(theElement)) {
+				Object value = theElement.eGet(DataUtils.getInstance().jocObjectFeature);
+				value = getFirstObjectInCollection((Collection<?>) value);
+				String id = getJavaFXIdFromWidgetId(assignment);
+				List<EObject> assignmentPath = new ArrayList<EObject>();
+				assignmentPath.add(assignment);
+				EObject mapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
+				handleResultCorrectly(id, value, assignmentPath, mapping, mapping);
+			} else {
+				throw new RuntimeException("Something is wrong here. An EObject cannot be directly assigned without using some sort of component");
+			}
 		}
 		
-		EObject theElement = (EObject) getFirstObjectInCollection(dataInAssignment);
-		
-		if (isJavaObjectContainerClass(theElement)) {
-			Object value = theElement.eGet(DataUtils.getInstance().jocObjectFeature);
-			value = getFirstObjectInCollection((Collection<?>) value);
-			String id = getJavaFXIdFromWidgetId(assignment);
-			List<EObject> assignmentPath = new ArrayList<EObject>();
-			assignmentPath.add(assignment);
-			EObject mapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
-			handleResultCorrectly(id, value, assignmentPath, mapping, mapping);
-		} else {
-			throw new RuntimeException("Something is wrong here. An EObject cannot be directly assigned without using some sort of component");
-		}
 	}
 	
 	private void handleResultCorrectly(String id, Object value, List<EObject> assignmentPath, EObject rootMapping, EObject mapping) {

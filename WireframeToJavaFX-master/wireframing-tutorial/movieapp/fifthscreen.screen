@@ -23,11 +23,18 @@
   <widgets xsi:type="model:Master" id="9" x="352" y="123" measuredWidth="585" measuredHeight="31">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
     <overrides>
-      <widgets ref="5" width="585" height="31" text="allActorsContext = db.allActors.name">
+      <widgets ref="5" width="585" height="31" text="allActorNames = db.allActors.name">
         <attributes key="textAlignment" value="Left"/>
       </widgets>
     </overrides>
   </widgets>
+  <widgets xsi:type="model:Master" id="10" x="352" y="165" height="36" measuredWidth="121" measuredHeight="36">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="121" height="36" text="allActorNames"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="11" x="160" y="144" width="193" height="41" measuredWidth="193" measuredHeight="41"/>
   <hRuler>
     <guides position="252"/>
   </hRuler>
