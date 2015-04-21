@@ -58,6 +58,7 @@ public class ListGenerator {
 			if (isList) {
 				
 				String name = listViewNames.get(PosOfListViewName);
+				mapping.eSet(utils.mLayoutIdFeature, name);
 				
 				if (isSimpleList(mapping)) {
 					handleSimpleList(mapping, name);

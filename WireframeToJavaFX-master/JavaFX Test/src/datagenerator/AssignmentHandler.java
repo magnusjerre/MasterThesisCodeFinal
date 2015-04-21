@@ -1,13 +1,17 @@
 package datagenerator;
 
+import generated.Cell;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
@@ -46,6 +50,13 @@ public class AssignmentHandler {
 				if (value != null) {
 					String id = (String) mapping.eGet(DataUtils.getInstance().mLayoutIdFeature);
 					handleResultCorrectly(root, id, value);
+				} else {
+					String id = (String) mapping.eGet(DataUtils.getInstance().mLayoutIdFeature);
+					boolean isList = (boolean) mapping.eGet(utils.mIsListFeature); 
+					if (isList) {
+						EList<EObject> childMappings = (EList<EObject>) mapping.eGet(utils.mMappingsFeature);
+						handleListResultCorrectly(root, "#" + id, childMappings);
+					}
 				}
 			} else {
 				@SuppressWarnings("unchecked")
@@ -54,6 +65,18 @@ public class AssignmentHandler {
 			}
 			
 		}
+		
+	}
+	
+	private static void handleListResultCorrectly(Parent root, String id, EList<EObject> childMappings) {
+		
+		ListView listView = (ListView) root.lookup(id);
+		
+		for (EObject mapping : childMappings) {
+			Object value = mapping.eGet(utils.mValueFeature);
+			listView.getItems().add(new Cell(value.toString()));
+		}
+		
 		
 	}
 	
