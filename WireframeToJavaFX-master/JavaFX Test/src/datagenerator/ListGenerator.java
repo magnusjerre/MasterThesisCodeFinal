@@ -1,16 +1,132 @@
 package datagenerator;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+
+import application.Constants;
 
 public class ListGenerator {
 	
-	public static void main(String[] args) {
+	private static ListGenerator instance;
+	public ArrayList<EObject> mappings;
+	private DataUtils utils;
+	
+	public ArrayList<String> listViewNames;
+	
+	private ListGenerator() {
+		utils = DataUtils.getInstance();
+		listViewNames = new ArrayList<String>();
+	}
+	
+	public static ListGenerator getInstance() {
 		
-		System.out.println(generateCellFxmlForSimpleListElements());
+		if (instance == null) {
+			instance = new ListGenerator();
+		}
+		
+		return instance;
+		
+	}
+	
+	public void setMappings(ArrayList<EObject> mappings) {
+		
+		this.mappings = mappings;
+		
+	}
+	
+	public void clear() {
+		
+		listViewNames.clear();
+		
+	}
+	
+	public void createLists() {
+		
+		int PosOfListViewName = 0;
+		for (EObject mapping : mappings) {
+			
+			boolean isList = (boolean) mapping.eGet(utils.mIsListFeature);
+			if (isList) {
+				
+				String name = listViewNames.get(PosOfListViewName);
+				
+				if (isSimpleList(mapping)) {
+					handleSimpleList(mapping, name);
+				} else {
+					//handle advanced list
+				}
+				PosOfListViewName++;
+				
+			}
+			
+		}
+		
+		File f = new File(Constants.FXML_DIRECTORY + "ScreenNavigatorControllerfifthscreen.xtend");
+		if (f.exists()) {
+			writeFile(Constants.FXML_DIRECTORY + "ScreenNavigatorControllerfifthscreen.xtend", getModifiedFileContents(f));
+		}
+		
+	}
+	
+	private void handleSimpleList(EObject listMapping, String listViewName) {
+		
+		writeFile(Constants.FXML_DIRECTORY + "simple_cell.fxml", generateFxmlForSimpleListelements());
+		writeFile(Constants.FXML_DIRECTORY + "Cell.java", generateCellJava());
+		writeFile(Constants.FXML_DIRECTORY + "CellFXML.java", generateCellFxmlForSimpleListElements());
+		writeFile(Constants.FXML_DIRECTORY + "ListCellImpl.java", generateListCellImpl());
+		writeFile(Constants.FXML_DIRECTORY + "ListController.java", generateListController());
+		
+	}
+	
+	private void writeFile(String fileName, String content) {
+		
+		BufferedWriter bw = null;
+		
+		try {
+			FileWriter fw = new FileWriter(new File(fileName));
+			bw = new BufferedWriter(fw);
+			bw.write(content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			
+			if (bw != null) {
+				try {
+					bw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+	}
+	
+	/**
+	 * Assumes all child-mappings of listMapping are the same with respect to 
+	 * the number of children each mapping has.
+	 * @param listMapping
+	 * @return
+	 */
+	private boolean isSimpleList(EObject listMapping) {
+		
+		EList<EObject> childMappings = (EList<EObject>) listMapping.eGet(utils.mMappingsFeature);
+		EObject firstMapping = childMappings.get(0);
+		if (firstMapping.eGet(utils.mValueFeature) != null) {
+			return true;
+		}
+		
+		return false;
+		
 	}
 	
 	protected static String generateFxmlForSimpleListelements() {
@@ -33,7 +149,7 @@ public class ListGenerator {
 	
 	protected static String generateCellFxmlForSimpleListElements() {
 		
-		String text =  "package simplelist;\n" + 
+		String text =  "package application;\n" + 
 				"\n" + 
 				"import java.io.IOException;\n" + 
 				"import javafx.fxml.FXML;\n" + 
@@ -80,8 +196,8 @@ public class ListGenerator {
 		
 	}
 	
-	protected static String generateSimpleCellJava() {
-		String text = "package javafxmlsimplelistexample;\n" + 
+	protected static String generateCellJava() {
+		String text = "package application;\n" + 
 				"\n" + 
 				"public class Cell {\n" + 
 				"    \n" + 
@@ -98,7 +214,7 @@ public class ListGenerator {
 	
 	protected static String generateListCellImpl() {
 		
-		String text = "package simplelist;\n" + 
+		String text = "package application;\n" + 
 				"\n" + 
 				"import javafx.scene.control.ListCell;\n" + 
 				"\n" + 
@@ -121,7 +237,7 @@ public class ListGenerator {
 	}
 	
 	protected static String generateListController() {
-		String text = "package simplelist;\n" + 
+		String text = "package application;\n" + 
 				"\n" + 
 				"import javafx.collections.FXCollections;\n" + 
 				"import javafx.collections.ObservableList;\n" + 
@@ -153,7 +269,7 @@ public class ListGenerator {
 		return text;
 	}
 	
-	public String getModifiedFileContents(File fileToModify, String className, String fileWithData) {
+	public String getModifiedFileContents(File fileToModify) {
 		System.out.println("trying to modify");
 		try {
 			FileReader fr = new FileReader(fileToModify);
@@ -164,11 +280,7 @@ public class ListGenerator {
 				if (line.contains("import javafx.fxml.FXML")) {
 					line += "\n" +
 							"import javafx.fxml.Initializable\n" +
-							"import javafx.scene.control.ListCell\n" +
 							"import javafx.scene.control.ListView\n" +
-							"import javafx.util.Callback\n" +
-							"import javafx.collections.FXCollections\n" +
-							"import list.ListFileParser\n" + 
 							"import java.net.URL\n" + 
 							"import java.util.ResourceBundle\n";
 				}
@@ -177,8 +289,7 @@ public class ListGenerator {
 					line = line.replace("{", "");
 					line += 
 							"implements Initializable {\n" +
-							"\t@FXML\n" +
-							"\tListView listView\n";
+							createListFields(listViewNames);
 					
 				}
 				
@@ -188,37 +299,47 @@ public class ListGenerator {
 			
 			br.close();
 			
-			String builderString = builder.toString();
-			String factoryClassName = className + "Factory";
-			String modified = builderString.substring(0, builderString.length() - 2) +
+			String initialize = "	override initialize(URL location, ResourceBundle resources) {\n" + 
+					"		\n" + 
+					createLists(listViewNames) + 
+					"		lc.obsList.add(new Cell(\"Anniken\"))\n" + 
+					"		\n" + 
+					"	}\n" +
 					"\n" +
-					"\toverride initialize(URL location, ResourceBundle resources) {\n" + 
-						"\t\tval obsList = FXCollections.observableArrayList();\n" +
-						"\t\tobsList.addAll(" + factoryClassName + ".gettAllListData(ListFileParser.parseListFile(\"" + fileWithData + "\")));\n" +
-						
-						"\t\tlistView.setItems(obsList);\n" +
-						"\t\tlistView.setCellFactory(new Callback<ListView<" + className + ">, ListCell<" + className + ">>() {\n\n" +
-							
-							"\t\t\toverride call(ListView<" + className +"> param) {\n" +
-								"\t\t\t\treturn new " + className + "Cell\n" +
-							"\t\t\t}\n\n" +
-								
-						"\t\t});\n\n" +
-					
-					"\t}\n\n" +
-					
-				"}";
+					"}\n";
+			
+			String modified = builder.toString().substring(0,  builder.length() - 2) + "\n" + initialize;
 			return modified;
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "";
 	}
 	
+	private String createListFields(ArrayList<String> listViewNames) {
+		
+		StringBuilder builder = new StringBuilder();
+		for (String name : listViewNames) {
+			builder.append("\n" +
+					"\t@FXML\n" +
+					"\tListView " + name + "\n");
+		}
+		return builder.toString();
+		
+	}
+	
+	private String createLists(ArrayList<String> listViewNames) {
+		
+		StringBuilder builder = new StringBuilder();
+		for (String name : listViewNames) {
+			builder.append("		val lc" + name + " = new ListController(" + name + ")\n");
+		}
+		
+		return builder.toString();
+		
+	}
 	
 	protected static String generateListPopulator() {
 		

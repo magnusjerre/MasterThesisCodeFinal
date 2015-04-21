@@ -46,6 +46,7 @@ import org.w3c.dom.Element
 import datagenerator.AssignmentGenerator
 import datagenerator.ContextGenerator
 import datagenerator.MappingGenerator
+import datagenerator.ListGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -107,6 +108,7 @@ class Generator {
 	LayoutStyle layoutStyle = null
 	int offsetX = 0
 	int offsetY = 0
+	int listViewCounter = 1
 
 	def HashMap<Long, String> getNavigatorMap() {
 		return navigatorMap
@@ -580,13 +582,16 @@ class Generator {
 	
 	def dispatch void generateFxml(WidgetGroup widgetGroup) {
 		if (widgetGroup.name == "list") {
+			val fxid = ("listView" + listViewCounter) as String
 			(builder += "ListView") => [
-				it += "fx:id" -> "listView"	//should be named something else, this is just temporary
+				it += "fx:id" -> fxid
 				it += "layoutX" -> widgetGroup.x + offsetX
 				it += "layoutY" -> widgetGroup.y + offsetY
 				it += "prefWidth" -> widgetGroup.measuredWidth
 				it += "prefHeight" -> widgetGroup.measuredHeight
 			]
+			ListGenerator.getInstance.listViewNames.add(fxid)
+			listViewCounter++
 		} else {
 			val widgets = widgetGroup.widgets
 			val tempOffsetX = widgetGroup.x
@@ -1363,6 +1368,7 @@ class Generator {
 					TypeGenerator.getInstance.clear
 					AssignmentGenerator.getInstance.clear
 					MappingGenerator.getInstance.clear
+					ListGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
 					
@@ -1374,6 +1380,8 @@ class Generator {
 					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance, TypeGenerator.getInstance)
 					xmiExpoter.exportXMI(name, Constants.FXML_DIRECTORY)
 					MappingGenerator.getInstance.assignValues(Constants.FXML_DIRECTORY + name + ".xmi");
+					ListGenerator.getInstance.mappings = MappingGenerator.getInstance.mappings
+					ListGenerator.getInstance.createLists
 //					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
 //					AssignmentGenerator.getInstance.generatePaths
 					

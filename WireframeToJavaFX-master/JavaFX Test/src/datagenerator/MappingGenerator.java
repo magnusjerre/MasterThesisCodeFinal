@@ -82,14 +82,20 @@ public class MappingGenerator {
 		EList<EObject> dataInAssignment = (EList<EObject>) assignment.eGet(DataUtils.getInstance().a2DataFeature);
 		
 		if (isMany((EList<EObject>) dataInAssignment)) {	//Treat result as a list
+			EObject rootMapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
+			rootMapping.eSet(utils.mIsListFeature, true);
+			mappings.add(rootMapping);
 			for (EObject eObject : dataInAssignment) {
 				String id = getJavaFXIdFromWidgetId(assignment);
 				List<EObject> assignmentPath = new ArrayList<EObject>();
 				assignmentPath.add(assignment);
+				
+				
 				EObject mapping = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().mappingClass);
-				mapping.eSet(utils.mIsListFeature, true);
 				EList<Object> jocObjects = (EList<Object>) eObject.eGet(utils.jocObjectFeature);
-				handleResultCorrectly(id, jocObjects.get(0), assignmentPath, mapping, mapping);
+				
+				handleListResultCorrectly(id, jocObjects.get(0), assignmentPath, rootMapping, mapping);
+				
 			}
 		} else {			
 			EObject theElement = (EObject) getFirstObjectInCollection(dataInAssignment);
@@ -105,6 +111,21 @@ public class MappingGenerator {
 			} else {
 				throw new RuntimeException("Something is wrong here. An EObject cannot be directly assigned without using some sort of component");
 			}
+		}
+		
+	}
+	
+	private void handleListResultCorrectly(String id, Object value, List<EObject> assignmentPath, EObject rootMapping, EObject mapping) {
+		rootMapping.eSet(utils.mLayoutIdFeature, id);
+		EList<EObject> mappings = (EList<EObject>) rootMapping.eGet(utils.mMappingsFeature);
+		mappings.add(mapping);
+		
+		mapping.eSet(utils.mValueFeature, value);
+		mapping.eSet(utils.mStringRepresentationFeature, value.toString());
+		
+		for (EObject eObject : assignmentPath) {
+			((EList<EObject>) mapping.eGet(DataUtils.getInstance().mAssignmentPathFeature)).add(eObject);
+			((EList<EObject>) rootMapping.eGet(utils.mAssignmentPathFeature)).add(eObject);
 		}
 		
 	}

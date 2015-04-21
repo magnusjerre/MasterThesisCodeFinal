@@ -127,7 +127,7 @@ public class FXMLBuilder {
 		ProcessingInstruction import7 = doc.createProcessingInstruction(
 				"import", "java.util.*");
 		ProcessingInstruction import8 = doc.createProcessingInstruction(
-				"import", "javafx.scene.*?");
+				"import", "javafx.scene.*");
 		ProcessingInstruction import2 = doc.createProcessingInstruction(
 				"import", " javafx.scene.control.*");
 		ProcessingInstruction import3 = doc.createProcessingInstruction(
