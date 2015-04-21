@@ -200,7 +200,7 @@ class AppController extends Application {
 			}
 		]
 		
-//		AssignmentHandler.assignValues(getRoot, Constants.FXML_DIRECTORY + fileName + ".xmi")
+		AssignmentHandler.assignValues(getRoot, Constants.GENERATED_DIRECTORY + fileName + ".xmi")
 
 		stage.setScene(scene)
 		stage.show()

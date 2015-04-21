@@ -302,7 +302,6 @@ public class ListGenerator {
 			String initialize = "	override initialize(URL location, ResourceBundle resources) {\n" + 
 					"		\n" + 
 					createLists(listViewNames) + 
-					"		lc.obsList.add(new Cell(\"Anniken\"))\n" + 
 					"		\n" + 
 					"	}\n" +
 					"\n" +
