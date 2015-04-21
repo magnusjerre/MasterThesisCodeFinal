@@ -19,7 +19,8 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import application.Constants;
 
 /**
- * Contains the blueprint for the Data model in Data.ecore. Also contains some helper methods.
+ * Contains the blueprint for the Data model in Data.ecore, as well as any loaded resources
+ * the prototype will use. Also contains some helper methods.
  * @author Magnus
  */
 public class DataUtils {
@@ -27,6 +28,7 @@ public class DataUtils {
 	private static DataUtils instance = null;
 	
 	//EMF
+	protected ResourceSet resourceSet;
 	protected Resource dataResource;
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
@@ -43,16 +45,29 @@ public class DataUtils {
 	EStructuralFeature jocObjectFeature, jocTypeFeature, jocStringRepresentationFeature;
 	//Mapping class features are prefixed with m
 	EStructuralFeature mLayoutIdFeature, mValueFeature, mAssignmentPathFeature, mStringRepresentationFeature, mMappingsFeature, mUsingComponentFeature, mIsListFeature;
-	
-	
+
 	private DataUtils() {
 		
-		dataResource = loadResource(Constants.DATAGENERATOR_DIRECTORY + "Data.ecore");
+		clear();
+		
+	}
+	
+	public void clear() {
+		
+		resourceSet = new ResourceSetImpl();
+		resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
+		
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+
 		loadDefinitions();
 		
 	}
 	
 	private void loadDefinitions() {
+		
+		//Resource
+		dataResource = loadResource(Constants.DATAGENERATOR_DIRECTORY + "Data.ecore");
 		
 		//Package
 		dataPackage = (EPackageImpl)dataResource.getContents().get(0);
@@ -116,7 +131,7 @@ public class DataUtils {
 		
 	}
 
-	protected static EObject getRootObjectForXmi(String xmiLocation) {
+	protected EObject getRootObjectForXmi(String xmiLocation) {
 		
 		return loadResource(xmiLocation).getContents().get(0);
 		
@@ -135,18 +150,9 @@ public class DataUtils {
 		
 	}
 	
-	protected static Resource loadResource(String resourceLocation) {
+	protected Resource loadResource(String resourceLocation) {
 		
-		String pathToEcore = resourceLocation;
-		
-		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
-		
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-		
-		URI existingInstanceUri = URI.createFileURI(pathToEcore);
-		
+		URI existingInstanceUri = URI.createFileURI(resourceLocation);
 		return resourceSet.getResource(existingInstanceUri, true);
 		
 	}

@@ -1,7 +1,5 @@
 package datagenerator;
 
-import generated.Cell;
-
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,7 +33,7 @@ public class AssignmentHandler {
 		EObject screenDataInstanceRoot = instanceResource.getContents().get(0);
 		
 		@SuppressWarnings("unchecked")
-		EList<EObject> allMappings = (EList<EObject>) screenDataInstanceRoot.eGet(DataUtils.getInstance().dAllMappings);
+		EList<EObject> allMappings = (EList<EObject>) screenDataInstanceRoot.eGet(utils.dAllMappings);
 		assignValues(root, allMappings);
 		
 	}
@@ -46,12 +44,12 @@ public class AssignmentHandler {
 			
 			if (mapping.eGet(utils.mLayoutIdFeature) != null) {
 			
-				Object value = mapping.eGet(DataUtils.getInstance().mValueFeature);
+				Object value = mapping.eGet(utils.mValueFeature);
 				if (value != null) {
-					String id = (String) mapping.eGet(DataUtils.getInstance().mLayoutIdFeature);
+					String id = (String) mapping.eGet(utils.mLayoutIdFeature);
 					handleResultCorrectly(root, id, value);
 				} else {
-					String id = (String) mapping.eGet(DataUtils.getInstance().mLayoutIdFeature);
+					String id = (String) mapping.eGet(utils.mLayoutIdFeature);
 					boolean isList = (boolean) mapping.eGet(utils.mIsListFeature); 
 					if (isList) {
 						EList<EObject> childMappings = (EList<EObject>) mapping.eGet(utils.mMappingsFeature);
@@ -74,7 +72,7 @@ public class AssignmentHandler {
 		
 		for (EObject mapping : childMappings) {
 			Object value = mapping.eGet(utils.mValueFeature);
-			listView.getItems().add(new Cell(value.toString()));
+//			listView.getItems().add(new Cell(value.toString()));
 		}
 		
 		

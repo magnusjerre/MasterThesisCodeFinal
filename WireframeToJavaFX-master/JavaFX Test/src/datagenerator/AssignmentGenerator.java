@@ -1,6 +1,5 @@
 package datagenerator;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -17,11 +16,7 @@ public class AssignmentGenerator {
 	private static AssignmentGenerator instance = null;
 	private DataUtils utils;
 	
-	
 	public DoubleList<EObject, Master> assignments;
-	public ArrayList<EObject> contexts;
-	
-	public HashMap<Master, Pair<Arrow, Widget>> masterMap = null;
 	
 	public static AssignmentGenerator getInstance() {
 		
@@ -36,28 +31,18 @@ public class AssignmentGenerator {
 		
 		utils = DataUtils.getInstance();
 		assignments = new DoubleList<EObject, Master>();
-		contexts = new ArrayList<EObject>();
-		
-	}
-	
-	public void setContext(ArrayList<EObject> contexts) {
-		
-		this.contexts = contexts;
 		
 	}
 	
 	public void clear() {
 		
-		masterMap = null;
+		utils = DataUtils.getInstance();
+		
 		assignments.clear();
 		
 	}
 	
 	public void generateDecorator(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		
-		if (masterMap == null) {
-			masterMap = map;
-		}
 		
 		if (strings.length < 1 || strings.length > 2) {
 			throw new RuntimeException("The decorator is not well formed, it contains either too many or too few lines.\n"
@@ -73,7 +58,7 @@ public class AssignmentGenerator {
 			assignmentObject.eSet(utils.a2UseComponentNamedFeature, strings[1].trim());
 		}
 		
-		assignmentObject.eSet(utils.a2WidgetFeature, getCorrectWidget(assignmentObject, masterMap.get(master)));
+		assignmentObject.eSet(utils.a2WidgetFeature, getCorrectWidget(assignmentObject, map.get(master)));
 		
 		//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
 		
@@ -88,8 +73,6 @@ public class AssignmentGenerator {
 		doSetupAssignmentsPartOfComponent();
 		
 	}
-	
-	
 	
 	private void doSetupNormalAssignmentsOnly() {
 		
@@ -107,13 +90,13 @@ public class AssignmentGenerator {
 		
 		String statement = (String) assignment.eGet(utils.a2StatementFeature);
 		String contextName = DataUtils.getParentName(statement);
-		EObject context = DataUtils.getInstance().getContextNamed(contextName, contexts);
+		EObject context = DataUtils.getInstance().getContextNamed(contextName, ContextGenerator.getInstance().getAllContexts());
 		statement = statement.replaceFirst(contextName, "self");
-		Object data = ContextGenerator.getResult(statement, context);
+		Object data = ContextGenerator.getInstance().getResult(statement, context);
 		
 		EList<Object> dataList = (EList<Object>) assignment.eGet(utils.a2DataFeature);
 		if (data instanceof Collection<?>) {
-			ContextGenerator.fillListWithCorrectFormat((Collection<Object>) data, dataList);
+			ContextGenerator.getInstance().fillListWithCorrectFormat((Collection<Object>) data, dataList);
 		} else {
 			Object result = data;
 			if (result instanceof EObject) {
@@ -174,9 +157,9 @@ public class AssignmentGenerator {
 		
 	}
 	
-	private static boolean isAssignmentUsingComponent(EObject eObject) {
+	private boolean isAssignmentUsingComponent(EObject eObject) {
 		
-		String usesComponent = (String) eObject.eGet(DataUtils.getInstance().a2UseComponentNamedFeature);
+		String usesComponent = (String) eObject.eGet(utils.a2UseComponentNamedFeature);
 		return usesComponent != null;
 		
 	}
@@ -186,9 +169,9 @@ public class AssignmentGenerator {
 	 * @param eObject
 	 * @return
 	 */
-	protected static boolean isAssignmentPartOfComponent(EObject eObject) {
+	protected boolean isAssignmentPartOfComponent(EObject eObject) {
 		
-		EObject partOfType = (EObject) eObject.eGet(DataUtils.getInstance().a2PartOfComponentFeature);
+		EObject partOfType = (EObject) eObject.eGet(utils.a2PartOfComponentFeature);
 		return partOfType != null;
 		
 	}

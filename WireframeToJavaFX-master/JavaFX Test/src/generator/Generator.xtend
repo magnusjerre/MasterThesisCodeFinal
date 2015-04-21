@@ -47,6 +47,8 @@ import datagenerator.AssignmentGenerator
 import datagenerator.ContextGenerator
 import datagenerator.MappingGenerator
 import datagenerator.ListGenerator
+import datagenerator.DataUtils
+import datagenerator.DataGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -1367,30 +1369,11 @@ class Generator {
 					val name = FilenameUtils.getBaseName(path) 
 					println("Generating FXML for " + name)
 					
-					ContextGenerator.getInstance.clear
-					TypeGenerator.getInstance.clear
-					AssignmentGenerator.getInstance.clear
-					MappingGenerator.getInstance.clear
-					ListGenerator.getInstance.clear
+					DataGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
 					
-					ContextGenerator.getInstance.generatePaths
-					TypeGenerator.getInstance.setupAssignmentReferences
-					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
-					AssignmentGenerator.getInstance.doSetup
-					var xmiExpoter = new XMIExporter
-					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance, TypeGenerator.getInstance)
-					xmiExpoter.exportXMI(name, Constants.GENERATED_DIRECTORY)
-					MappingGenerator.getInstance.assignValues(Constants.GENERATED_DIRECTORY + name + ".xmi");
-					ListGenerator.getInstance.mappings = MappingGenerator.getInstance.mappings
-					ListGenerator.getInstance.createLists
-//					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
-//					AssignmentGenerator.getInstance.generatePaths
-					
-					xmiExpoter = new XMIExporter
-					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance, TypeGenerator.getInstance)
-					xmiExpoter.exportXMI(name, Constants.GENERATED_DIRECTORY)
+					DataGenerator.getInstance.generate(name)
 					
 				} 
 			]

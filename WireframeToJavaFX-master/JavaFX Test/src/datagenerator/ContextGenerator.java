@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 public class ContextGenerator {
@@ -58,7 +59,7 @@ public class ContextGenerator {
 
 		if (isContextRoot(line)) {
 			EList<EObject> list = (EList<EObject>) contextObject.eGet(utils.c2DataFeature);
-			list.add(DataUtils.getRootObjectForXmi(specificStatement));
+			list.add(DataUtils.getInstance().getRootObjectForXmi(specificStatement));
 			rootContexts.add(contextObject);
 		} else {
 			contexts.add(contextObject);
@@ -104,7 +105,7 @@ public class ContextGenerator {
 		
 	}
 	
-	protected static void fillListWithCorrectFormat(Collection<Object> result, EList<Object> listToFille) {
+	protected void fillListWithCorrectFormat(Collection<Object> result, EList<Object> listToFille) {
 		
 		Iterator it = result.iterator();
 		while (it.hasNext()) {
@@ -112,10 +113,10 @@ public class ContextGenerator {
 			if (object instanceof EObject) {
 				listToFille.add(object);
 			} else {
-				EObject container = DataUtils.getInstance().dataFactory.create(DataUtils.getInstance().javaObjectContainerClass);
-				EList<Object> jocs = (EList<Object>) container.eGet(DataUtils.getInstance().jocObjectFeature);
+				EObject container = utils.dataFactory.create(utils.javaObjectContainerClass);
+				EList<Object> jocs = (EList<Object>) container.eGet(utils.jocObjectFeature);
 				jocs.add(object);
-				container.eSet(DataUtils.getInstance().jocStringRepresentationFeature, jocs.toString());
+				container.eSet(utils.jocStringRepresentationFeature, jocs.toString());
 				listToFille.add(container);
 			}
 		}
@@ -136,12 +137,13 @@ public class ContextGenerator {
 	}
 	
 	
-	protected static Object getResult(String statement, EObject parent) {
+	protected Object getResult(String statement, EObject parent) {
 		
-		EList<EObject> list = (EList<EObject>) parent.eGet(DataUtils.getInstance().c2DataFeature);
+		EList<EObject> list = (EList<EObject>) parent.eGet(utils.c2DataFeature);
 		if (list.size() == 1) {
 			EObject first = list.get(0);
-			ResourceSet rs = first.eResource().getResourceSet();
+//			ResourceSet rs = first.eResource().getResourceSet();
+			ResourceSet rs = utils.resourceSet;
 			
 			Object result = (Object) OCLHandler.parseOCLStatement(rs, first, statement);
 			
@@ -152,7 +154,7 @@ public class ContextGenerator {
 			} else {
 				statement = "data" + statement;
 			}
-			Object result = OCLHandler.parseOCLStatement(DataUtils.getInstance().dataResource.getResourceSet(), parent, statement);
+			Object result = OCLHandler.parseOCLStatement(utils.dataResource.getResourceSet(), parent, statement);
 			return result;
 		}
 		
