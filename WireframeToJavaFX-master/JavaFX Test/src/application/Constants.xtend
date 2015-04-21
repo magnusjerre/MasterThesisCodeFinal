@@ -8,9 +8,10 @@ abstract class Constants {
 	/** The directory of the wireframesketcher storyboard/screen files. Must have a trailing slash */
 	public static final val PROJECT_DIR = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/wireframing-tutorial/"
 	/**  Allows several subproject/apps per projectDir. Will probably be removed. */
-	public static final val SUB_PROJECT_NAME = "movieapp" //"toduka" // "muniapp"//  
+	public static final val SUB_PROJECT_NAME = "muniapp" //"toduka" // "muniapp"//  
 	/** JavaFX project directory (dictates where FXMLBuilder saves the fxml files.  Must have a trailing slash */
 	public static final val FXML_DIRECTORY = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/application/" 
+	public static final val GENERATED_DIRECTORY = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/generated/"
 	/** Directory containing the definition of the Data model used for storing the Context, Assignment and Type annotations, as well as containing class for using them*/
 	public static final val DATAGENERATOR_DIRECTORY = "/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/"
 	/** If enabled adds visual grid lines if LayoutStyle is GridPane */

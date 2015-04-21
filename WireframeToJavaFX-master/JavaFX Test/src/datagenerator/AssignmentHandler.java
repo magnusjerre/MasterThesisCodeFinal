@@ -107,7 +107,7 @@ public class AssignmentHandler {
 		String[] possibleLocations = new String[] {
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/images/" + fileName,
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + fileName,
-				 Constants.FXML_DIRECTORY + fileName
+				 Constants.GENERATED_DIRECTORY + fileName
 		};
 		
 		for (int i = 0; i < possibleLocations.length; i++) {

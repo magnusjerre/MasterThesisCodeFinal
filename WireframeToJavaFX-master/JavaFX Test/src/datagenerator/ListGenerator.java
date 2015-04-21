@@ -70,20 +70,20 @@ public class ListGenerator {
 			
 		}
 		
-		File f = new File(Constants.FXML_DIRECTORY + "ScreenNavigatorControllerfifthscreen.xtend");
+		File f = new File(Constants.GENERATED_DIRECTORY + "ScreenNavigatorControllerfifthscreen.xtend");
 		if (f.exists()) {
-			writeFile(Constants.FXML_DIRECTORY + "ScreenNavigatorControllerfifthscreen.xtend", getModifiedFileContents(f));
+			writeFile(Constants.GENERATED_DIRECTORY + "ScreenNavigatorControllerfifthscreen.xtend", getModifiedFileContents(f));
 		}
 		
 	}
 	
 	private void handleSimpleList(EObject listMapping, String listViewName) {
 		
-		writeFile(Constants.FXML_DIRECTORY + "simple_cell.fxml", generateFxmlForSimpleListelements());
-		writeFile(Constants.FXML_DIRECTORY + "Cell.java", generateCellJava());
-		writeFile(Constants.FXML_DIRECTORY + "CellFXML.java", generateCellFxmlForSimpleListElements());
-		writeFile(Constants.FXML_DIRECTORY + "ListCellImpl.java", generateListCellImpl());
-		writeFile(Constants.FXML_DIRECTORY + "ListController.java", generateListController());
+		writeFile(Constants.GENERATED_DIRECTORY + "simple_cell.fxml", generateFxmlForSimpleListelements());
+		writeFile(Constants.GENERATED_DIRECTORY + "Cell.java", generateCellJava());
+		writeFile(Constants.GENERATED_DIRECTORY + "CellFXML.java", generateCellFxmlForSimpleListElements());
+		writeFile(Constants.GENERATED_DIRECTORY + "ListCellImpl.java", generateListCellImpl());
+		writeFile(Constants.GENERATED_DIRECTORY + "ListController.java", generateListController());
 		
 	}
 	
@@ -149,7 +149,7 @@ public class ListGenerator {
 	
 	protected static String generateCellFxmlForSimpleListElements() {
 		
-		String text =  "package application;\n" + 
+		String text =  "package generated;\n" + 
 				"\n" + 
 				"import java.io.IOException;\n" + 
 				"import javafx.fxml.FXML;\n" + 
@@ -197,7 +197,7 @@ public class ListGenerator {
 	}
 	
 	protected static String generateCellJava() {
-		String text = "package application;\n" + 
+		String text = "package generated;\n" + 
 				"\n" + 
 				"public class Cell {\n" + 
 				"    \n" + 
@@ -214,7 +214,7 @@ public class ListGenerator {
 	
 	protected static String generateListCellImpl() {
 		
-		String text = "package application;\n" + 
+		String text = "package generated;\n" + 
 				"\n" + 
 				"import javafx.scene.control.ListCell;\n" + 
 				"\n" + 
@@ -237,7 +237,7 @@ public class ListGenerator {
 	}
 	
 	protected static String generateListController() {
-		String text = "package application;\n" + 
+		String text = "package generated;\n" + 
 				"\n" + 
 				"import javafx.collections.FXCollections;\n" + 
 				"import javafx.collections.ObservableList;\n" + 
