@@ -152,7 +152,7 @@ class AppController extends Application {
 		
 		// Load the fxml file and set the custom controller class
 		try {
-			var filePath = "src/application/" + fileName + ".fxml"
+			var filePath = "src/generated/" + fileName + ".fxml"
 			if (Paths.get(filePath).toFile().exists()) {
 
 				val loader = new FXMLLoader
@@ -160,7 +160,7 @@ class AppController extends Application {
 
 				// Create the dedicated ScreenNavigatorController using reflection 
 				val safeFileName = fileName.replace("-", "").replace(" ", "")
-				class = Class.forName("application.ScreenNavigatorController" + safeFileName)
+				class = Class.forName("generated.ScreenNavigatorController" + safeFileName)
 				constructor = class.getConstructor(Object, HashMap)
 				screenNavigatorController = constructor.newInstance(this, navigatorMap)
 				loader.setLocation(location)
@@ -181,7 +181,7 @@ class AppController extends Application {
 
 	
 		// Save the scene in the map along with the screen file checksum
-		val fxmlFile = new File(Constants.FXML_DIRECTORY + fileName + ".fxml")
+		val fxmlFile = new File(Constants.GENERATED_DIRECTORY + fileName + ".fxml")
 		if (!fxmlFile.exists) {
 			throw new FileNotFoundException(
 				"Generate should have created the file " + fxmlFile + ".fxml - Check write permissions")
@@ -200,7 +200,7 @@ class AppController extends Application {
 			}
 		]
 		
-		AssignmentHandler.assignValues(getRoot, Constants.FXML_DIRECTORY + fileName + ".xmi")
+		AssignmentHandler.assignValues(getRoot, Constants.GENERATED_DIRECTORY + fileName + ".xmi")
 
 		stage.setScene(scene)
 		stage.show()

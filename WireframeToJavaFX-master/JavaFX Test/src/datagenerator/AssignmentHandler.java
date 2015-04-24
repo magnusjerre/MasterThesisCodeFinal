@@ -5,9 +5,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
@@ -31,7 +33,7 @@ public class AssignmentHandler {
 		EObject screenDataInstanceRoot = instanceResource.getContents().get(0);
 		
 		@SuppressWarnings("unchecked")
-		EList<EObject> allMappings = (EList<EObject>) screenDataInstanceRoot.eGet(DataUtils.getInstance().dAllMappings);
+		EList<EObject> allMappings = (EList<EObject>) screenDataInstanceRoot.eGet(utils.dAllMappings);
 		assignValues(root, allMappings);
 		
 	}
@@ -42,10 +44,17 @@ public class AssignmentHandler {
 			
 			if (mapping.eGet(utils.mLayoutIdFeature) != null) {
 			
-				Object value = mapping.eGet(DataUtils.getInstance().mValueFeature);
+				Object value = mapping.eGet(utils.mValueFeature);
 				if (value != null) {
-					String id = (String) mapping.eGet(DataUtils.getInstance().mLayoutIdFeature);
+					String id = (String) mapping.eGet(utils.mLayoutIdFeature);
 					handleResultCorrectly(root, id, value);
+				} else {
+					String id = (String) mapping.eGet(utils.mLayoutIdFeature);
+					boolean isList = (boolean) mapping.eGet(utils.mIsListFeature); 
+					if (isList) {
+						EList<EObject> childMappings = (EList<EObject>) mapping.eGet(utils.mMappingsFeature);
+						handleListResultCorrectly(root, "#" + id, childMappings);
+					}
 				}
 			} else {
 				@SuppressWarnings("unchecked")
@@ -54,6 +63,18 @@ public class AssignmentHandler {
 			}
 			
 		}
+		
+	}
+	
+	private static void handleListResultCorrectly(Parent root, String id, EList<EObject> childMappings) {
+		
+		ListView listView = (ListView) root.lookup(id);
+		
+		for (EObject mapping : childMappings) {
+			Object value = mapping.eGet(utils.mValueFeature);
+//			listView.getItems().add(new Cell(value.toString()));
+		}
+		
 		
 	}
 	
@@ -107,7 +128,7 @@ public class AssignmentHandler {
 		String[] possibleLocations = new String[] {
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/images/" + fileName,
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + fileName,
-				 Constants.FXML_DIRECTORY + fileName
+				 Constants.GENERATED_DIRECTORY + fileName
 		};
 		
 		for (int i = 0; i < possibleLocations.length; i++) {

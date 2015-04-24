@@ -128,62 +128,6 @@
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="65" x="207" y="144" width="146" height="32" measuredWidth="146" measuredHeight="32" foreground="#666666" lineStyle="dashed"/>
-  <widgets xsi:type="model:WidgetGroup" id="86" x="1077" y="331" measuredWidth="209" measuredHeight="398">
-    <widgets xsi:type="model:Panel" id="84" width="209" height="398" measuredWidth="209" measuredHeight="398"/>
-    <widgets xsi:type="model:WidgetGroup" id="66" x="19" y="13" measuredWidth="168" measuredHeight="185">
-      <widgets xsi:type="model:Panel" id="67" width="168" height="185" measuredWidth="168" measuredHeight="185"/>
-      <widgets xsi:type="model:WidgetGroup" id="68" x="10" y="104" measuredWidth="143" measuredHeight="65">
-        <widgets xsi:type="model:Label" id="69" x="56" y="21" text="Movie title" measuredWidth="87" measuredHeight="26">
-          <font size="16px" bold="true"/>
-        </widgets>
-        <widgets xsi:type="model:Image" id="70" width="46" height="65" measuredWidth="46" measuredHeight="65" src="images/300.jpg"/>
-      </widgets>
-      <widgets xsi:type="model:WidgetGroup" id="71" x="10" y="16" measuredWidth="153" measuredHeight="65">
-        <widgets xsi:type="model:Label" id="72" x="56" y="21" text="Actor name" measuredWidth="97" measuredHeight="26">
-          <font size="16px" bold="true"/>
-        </widgets>
-        <widgets xsi:type="model:Image" id="73" width="46" height="65" measuredWidth="46" measuredHeight="65" src="images/300.jpg"/>
-      </widgets>
-      <widgets xsi:type="model:HLine" id="74" x="10" y="90" width="153" measuredWidth="153" measuredHeight="6"/>
-    </widgets>
-    <widgets xsi:type="model:WidgetGroup" id="75" x="19" y="205" measuredWidth="168" measuredHeight="185">
-      <widgets xsi:type="model:Panel" id="76" width="168" height="185" measuredWidth="168" measuredHeight="185"/>
-      <widgets xsi:type="model:WidgetGroup" id="77" x="10" y="104" measuredWidth="143" measuredHeight="65">
-        <widgets xsi:type="model:Label" id="78" x="56" y="21" text="Movie title" measuredWidth="87" measuredHeight="26">
-          <font size="16px" bold="true"/>
-        </widgets>
-        <widgets xsi:type="model:Image" id="79" width="46" height="65" measuredWidth="46" measuredHeight="65" src="images/300.jpg"/>
-      </widgets>
-      <widgets xsi:type="model:WidgetGroup" id="80" x="10" y="16" measuredWidth="153" measuredHeight="65">
-        <widgets xsi:type="model:Label" id="81" x="56" y="21" text="Actor name" measuredWidth="97" measuredHeight="26">
-          <font size="16px" bold="true"/>
-        </widgets>
-        <widgets xsi:type="model:Image" id="82" width="46" height="65" measuredWidth="46" measuredHeight="65" src="images/300.jpg"/>
-      </widgets>
-      <widgets xsi:type="model:HLine" id="83" x="10" y="90" width="153" measuredWidth="153" measuredHeight="6"/>
-    </widgets>
-  </widgets>
-  <widgets xsi:type="model:Master" id="85" x="1416" y="417" measuredWidth="153" measuredHeight="40">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
-    <overrides>
-      <widgets ref="9" width="153" height="40" text="Double"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="87" x="1272" y="441" width="145" height="80" measuredWidth="145" measuredHeight="80" foreground="#666666" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Master" id="88" x="1328" y="352" measuredWidth="201" measuredHeight="49">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="201" height="49" text="actors->at(1)&#xA;ActorMoviePair"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="89" x="1232" y="378" width="97" height="25" measuredWidth="97" measuredHeight="25" foreground="#666666" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Master" id="90" x="1344" y="580" measuredWidth="201" measuredHeight="49">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="201" height="49" text="actors->at(2)&#xA;ActorMoviePair"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="91" x="1248" y="606" width="97" height="25" measuredWidth="97" measuredHeight="25" foreground="#666666" lineStyle="dashed" direction="bottom"/>
   <widgets xsi:type="model:Button" id="92" x="160" y="247" text="Next Screen" measuredWidth="91" measuredHeight="25" link="fourthscreen.screen">
     <font/>
   </widgets>

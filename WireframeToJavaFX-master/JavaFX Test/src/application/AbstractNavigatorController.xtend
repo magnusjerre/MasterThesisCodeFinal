@@ -781,7 +781,7 @@ abstract class AbstractNavigatorController {
 		event.performActionForEvent
 		
 		var fxmlFile = new File(
-		Constants.FXML_DIRECTORY + nextScreen + ".fxml" )
+		Constants.GENERATED_DIRECTORY + nextScreen + ".fxml" )
 		if (fxmlFile.exists) {
 			checksum = MD5Checksum.checkSum(fxmlFile.absolutePath)
 		}
@@ -799,7 +799,7 @@ abstract class AbstractNavigatorController {
 		} else if (sceneResource == null || (sceneResource != null && sceneResource.checksum != checksum) ) { 
 			// The file does not exist, or the the file exist but has changed. then load the updated file
 	
-				val filePath = "src/application/" + nextScreen + ".fxml"
+				val filePath = "src/generated/" + nextScreen + ".fxml"
 	
 				if (!new File(filePath).exists) {
 					throw new FileNotFoundException(
@@ -814,7 +814,7 @@ abstract class AbstractNavigatorController {
 		
 				// Create the dedicated ScreenNavigatorController using reflection 
 				val safeFileName = nextScreen.replace("-", "") 
-				val className = Class.forName("application.ScreenNavigatorController" + safeFileName);
+				val className = Class.forName("generated.ScreenNavigatorController" + safeFileName);
 				val con = className.getConstructor(Object, HashMap);
 				val controller = con.newInstance(appController, _navigatorMap);
 				loader.setController(controller);
@@ -831,7 +831,7 @@ abstract class AbstractNavigatorController {
 			
 			nextScreen.evaluateRulesForScreen
 			
-		AssignmentHandler.assignValues(appController.getRoot, Constants.FXML_DIRECTORY + nextScreen + ".xmi")
+		AssignmentHandler.assignValues(appController.getRoot, Constants.GENERATED_DIRECTORY + nextScreen + ".xmi")
 	
 		stage.setScene(scene);
 		stage.show();

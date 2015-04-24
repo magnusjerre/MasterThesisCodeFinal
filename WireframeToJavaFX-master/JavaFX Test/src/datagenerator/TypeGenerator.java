@@ -18,12 +18,10 @@ public class TypeGenerator {
 	public DoubleList<EObject, Master> list;
 	public HashMap<Master, Pair<Arrow, Widget>> masterMap;
 	
-	public DoubleList<EObject, Master> assignments;
 	
 	private TypeGenerator() {
 		
 		utils = DataUtils.getInstance();
-		assignments = AssignmentGenerator.getInstance().assignments;
 		list = new DoubleList<EObject, Master>();
 		
 	}
@@ -71,7 +69,7 @@ public class TypeGenerator {
 			return;
 		}
 		
-		for (EObject assignment : assignments.getElementsIterable()) {
+		for (EObject assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
 			
 			if (isPartOfType(assignment)) {
 				EObject type = getTypeForAssignment(assignment);
@@ -86,11 +84,9 @@ public class TypeGenerator {
 	private void setupConnection(EObject assignment, EObject type) {
 
 		((EList<EObject>)type.eGet(utils.tAssignmentsFeature)).add(assignment);
-//		assignment.eSet(utils.aPartOfTypeFeature, type);
 		assignment.eSet(utils.a2PartOfComponentFeature, type);
 		assignment.eSet(utils.a2WidgetFeature, getCorrectWidget(assignment));
 		
-//		String assignmentUsesTypeNamed = (String) assignment.eGet(utils.aUsingTypeNamedFeature);
 		String assignmentUsesTypeNamed = (String) assignment.eGet(utils.a2UseComponentNamedFeature);
 		if (assignmentUsesTypeNamed != null) {
 			EObject typeToUse = findTypeNamed(assignmentUsesTypeNamed);
@@ -101,21 +97,10 @@ public class TypeGenerator {
 	
 	private Widget getCorrectWidget(EObject assignment) {
 		
-		Pair<Arrow, Widget> assignmentPair = getPair(assignment, assignments);
+		Pair<Arrow, Widget> assignmentPair = getPair(assignment, AssignmentGenerator.getInstance().assignments);
 		Arrow arrow = assignmentPair.getKey();
 		Widget widget = assignmentPair.getValue();
 		return WidgetUtils.getSecondShallowestWidget(arrow, widget);
-		
-	}
-	
-	private int getLayoutIdForAssignment(EObject assignment) {
-		
-		Pair<Arrow, Widget> assignmentPair = getPair(assignment, assignments);
-		Arrow arrow = assignmentPair.getKey();
-		Widget widget = assignmentPair.getValue();
-		Widget finalWidget = WidgetUtils.getSecondShallowestWidget(arrow, widget);
-		
-		return finalWidget.getId().intValue();
 		
 	}
 	
@@ -132,7 +117,7 @@ public class TypeGenerator {
 			return null;
 		}
 		
-		Master assignmentMaster = assignments.getMaster(assignment);
+		Master assignmentMaster = AssignmentGenerator.getInstance().assignments.getMaster(assignment);
 		Pair<Arrow, Widget> pairForAssignment = masterMap.get(assignmentMaster);
 		Master correctMaster = null;
 		

@@ -46,6 +46,9 @@ import org.w3c.dom.Element
 import datagenerator.AssignmentGenerator
 import datagenerator.ContextGenerator
 import datagenerator.MappingGenerator
+import datagenerator.ListGenerator
+import datagenerator.DataUtils
+import datagenerator.DataGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -107,6 +110,7 @@ class Generator {
 	LayoutStyle layoutStyle = null
 	int offsetX = 0
 	int offsetY = 0
+	int listViewCounter = 1
 
 	def HashMap<Long, String> getNavigatorMap() {
 		return navigatorMap
@@ -234,7 +238,7 @@ class Generator {
 	def void generate(Screen screen, String fileName) {
 		filename = fileName
 		navigatorControllerFile = new File(
-			Constants.FXML_DIRECTORY + "ScreenNavigatorController" + fileName +
+			Constants.GENERATED_DIRECTORY + "ScreenNavigatorController" + fileName +
 				".xtend");
 		navigatorControllerFile.createNewFile()
 		writer = new BufferedWriter(new FileWriter(navigatorControllerFile))
@@ -252,7 +256,7 @@ class Generator {
 		* as part of the project "«Constants.SUB_PROJECT_NAME»"
 		* at «dateString»
 		*/
-		package application
+		package generated
 
 		import java.util.HashMap
 		import javafx.event.ActionEvent
@@ -260,6 +264,9 @@ class Generator {
 		import javafx.fxml.FXML
 		import javafx.scene.Node
 		import javafx.scene.input.MouseButton
+		import application.AbstractNavigatorController
+		import application.AppController
+		import application.PropertyResult
 		
 		/* Generated */
 		class ScreenNavigatorController«safeFileName» extends AbstractNavigatorController {
@@ -322,10 +329,10 @@ class Generator {
 
 		// Save fxml
 		if (fileName == null || fileName == "") {
-			save(Constants.FXML_DIRECTORY, "untitled.fxml")
-			println("Saved file as " + Constants.FXML_DIRECTORY + "untitled.fxml")
+			save(Constants.GENERATED_DIRECTORY, "untitled.fxml")
+			println("Saved file as " + Constants.GENERATED_DIRECTORY + "untitled.fxml")
 		} else {
-			save(Constants.FXML_DIRECTORY, fileName + ".fxml")
+			save(Constants.GENERATED_DIRECTORY, fileName + ".fxml")
 //			println("Saved file as " + Constants.FXML_DIRECTORY + fileName + ".fxml")
 		}
 
@@ -579,21 +586,32 @@ class Generator {
 	}
 	
 	def dispatch void generateFxml(WidgetGroup widgetGroup) {
-		val widgets = widgetGroup.widgets
-		val tempOffsetX = widgetGroup.x
-		val tempOffsetY = widgetGroup.y
-		offsetX = offsetX + tempOffsetX
-		offsetY = offsetY + tempOffsetY
-		for (widget : widgets) {
-			if (!(widget instanceof Master)) {
-//				widget.x = widget.x + offsetX
-//				widget.y = widget.y + offsetY
-				generateFxml(widget)
+		if (widgetGroup.name == "list") {
+			val fxid = ("listView" + listViewCounter) as String
+			(builder += "ListView") => [
+				it += "fx:id" -> fxid
+				it += "layoutX" -> widgetGroup.x + offsetX
+				it += "layoutY" -> widgetGroup.y + offsetY
+				it += "prefWidth" -> widgetGroup.measuredWidth
+				it += "prefHeight" -> widgetGroup.measuredHeight
+			]
+			ListGenerator.getInstance.listViewNames.add(fxid)
+			listViewCounter++
+		} else {
+			val widgets = widgetGroup.widgets
+			val tempOffsetX = widgetGroup.x
+			val tempOffsetY = widgetGroup.y
+			offsetX = offsetX + tempOffsetX
+			offsetY = offsetY + tempOffsetY
+			for (widget : widgets) {
+				if (!(widget instanceof Master)) {
+					generateFxml(widget)
+				}
 			}
+			offsetX = offsetX - tempOffsetX
+			offsetY = offsetY - tempOffsetY
 		}
-		offsetX = offsetX - tempOffsetX
-		offsetY = offsetY - tempOffsetY
-		
+			
 	}
 
 	/** Button */
@@ -756,7 +774,7 @@ class Generator {
 			fileName = path.substring(index + 1);
 		}
 		
-		if (new File(Constants.FXML_DIRECTORY + fileName).exists) {	//Use current directory (src/application)
+		if (new File(Constants.GENERATED_DIRECTORY + fileName).exists) {	//Use current directory (src/application)
 			path = fileName
 		} else if (new File("../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/" + fileName).exists){
 			//Use Wireframesketcher project directory as resource
@@ -1290,7 +1308,7 @@ class Generator {
 		}
 		// Delete all FXML files and ScreenNavigatorController* 
 		try {
-			val directory = new File(Constants.FXML_DIRECTORY)
+			val directory = new File(Constants.GENERATED_DIRECTORY)
 			for (File fileEntry : directory.listFiles()) {
 				if (!fileEntry.isDirectory()) {
 					if (fileEntry.name.endsWith(".fxml")) {
@@ -1351,27 +1369,11 @@ class Generator {
 					val name = FilenameUtils.getBaseName(path) 
 					println("Generating FXML for " + name)
 					
-					ContextGenerator.getInstance.clear
-					TypeGenerator.getInstance.clear
-					AssignmentGenerator.getInstance.clear
-					MappingGenerator.getInstance.clear
+					DataGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
 					
-					ContextGenerator.getInstance.generatePaths
-					TypeGenerator.getInstance.setupAssignmentReferences
-					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
-					AssignmentGenerator.getInstance.doSetup
-					var xmiExpoter = new XMIExporter
-					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance, TypeGenerator.getInstance)
-					xmiExpoter.exportXMI(name, Constants.FXML_DIRECTORY)
-					MappingGenerator.getInstance.assignValues(Constants.FXML_DIRECTORY + name + ".xmi");
-//					AssignmentGenerator.getInstance.context = ContextGenerator.getInstance.allContexts
-//					AssignmentGenerator.getInstance.generatePaths
-					
-					xmiExpoter = new XMIExporter
-					xmiExpoter.setGenerators(AssignmentGenerator.getInstance, ContextGenerator.getInstance, TypeGenerator.getInstance)
-					xmiExpoter.exportXMI(name, Constants.FXML_DIRECTORY)
+					DataGenerator.getInstance.generate(name)
 					
 				} 
 			]
