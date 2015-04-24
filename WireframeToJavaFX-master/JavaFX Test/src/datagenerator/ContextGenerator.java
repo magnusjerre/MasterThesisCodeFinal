@@ -114,9 +114,11 @@ public class ContextGenerator {
 				listToFille.add(object);
 			} else {
 				EObject container = utils.dataFactory.create(utils.javaObjectContainerClass);
-				EList<Object> jocs = (EList<Object>) container.eGet(utils.jocObjectFeature);
-				jocs.add(object);
-				container.eSet(utils.jocStringRepresentationFeature, jocs.toString());
+//				EList<Object> jocs = (EList<Object>) container.eGet(utils.jocObjectFeature);
+//				jocs.add(object);
+				container.eSet(utils.jocObjectFeature, object);
+//				container.eSet(utils.jocStringRepresentationFeature, jocs.toString());
+				container.eSet(utils.jocStringRepresentationFeature, object.toString());
 				listToFille.add(container);
 			}
 		}

@@ -105,8 +105,9 @@ public class AssignmentGenerator {
 				EObject container = utils.dataFactory.create(utils.javaObjectContainerClass);
 				String objectType = result.getClass().getSimpleName();
 				container.eSet(utils.jocTypeFeature, objectType);
-				EList<Object> containerList = (EList<Object>) container.eGet(utils.jocObjectFeature);
-				containerList.add(result);
+//				EList<Object> containerList = (EList<Object>) container.eGet(utils.jocObjectFeature);
+//				containerList.add(result);
+				container.eSet(utils.jocObjectFeature, result);
 				container.eSet(utils.jocStringRepresentationFeature, result.toString());
 				dataList.add(container);
 			}
