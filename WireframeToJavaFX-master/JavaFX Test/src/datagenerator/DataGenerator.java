@@ -48,6 +48,9 @@ public class DataGenerator {
 		xmiExpoter = new XMIExporter();
 		xmiExpoter.setGenerators(AssignmentGenerator.getInstance(), ContextGenerator.getInstance(), TypeGenerator.getInstance());
 		xmiExpoter.exportXMI(name, Constants.GENERATED_DIRECTORY);
+		
+		ScreenEcoreGenerator seg = new ScreenEcoreGenerator();
+		seg.generateEcoreForScreen(name);
 	}
 	
 }
