@@ -1,6 +1,7 @@
 package datagenerator;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -11,6 +12,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.impl.ETypedElementImpl;
+import org.eclipse.emf.ecore.impl.EcoreFactoryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -18,12 +21,14 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import application.Constants;
 
 import com.wireframesketcher.model.Widget;
+import com.wireframesketcher.model.WidgetGroup;
 
 public class ScreenEcoreGenerator {
 	
 	private DataUtils utils;
 	private static final String ANNOTATION_SOURCE = "wireframe";
 	private int counter;
+	private String screenName = "nothing";
 	
 	public ScreenEcoreGenerator() {
 		
@@ -37,6 +42,7 @@ public class ScreenEcoreGenerator {
 		if (screenName.endsWith(".screen")) {
 			screenName = screenName.replace(".screen", "");
 		}
+		this.screenName = screenName;
 		
 		EClass screenClass = EcoreFactory.eINSTANCE.createEClass();
 		screenClass.setName(screenName);
@@ -59,12 +65,39 @@ public class ScreenEcoreGenerator {
 			
 		}
 		
+		
 		EPackage screenPackage = createScreenPackage(screenName, screenClass);
+		
+		addTypesToPackage(screenPackage);
 		
 		saveAsResource(screenPackage);
 		
 	}
 	
+	private void addTypesToPackage(EPackage ePackage) {
+		
+		HashMap<String, EClass> typesMap = new HashMap<String, EClass>();
+		
+
+		for (EObject type : TypeGenerator.getInstance().list.getElementsIterable()) {
+			
+			String typeName = (String) type.eGet(utils.tNameFeature);
+			EClass typeClass = EcoreFactory.eINSTANCE.createEClass();
+			typeClass.setName(typeName);
+			
+			EAttribute typeAttr = EcoreFactory.eINSTANCE.createEAttribute();
+			typeAttr.setName("fxmlLocation");
+			typeAttr.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEString());
+			typeAttr.setDefaultValue(String.format("%s%s-%s.fxml", Constants.DATAGENERATOR_DIRECTORY, screenName, typeName));
+			
+			typeClass.getEStructuralFeatures().add(typeAttr);
+			ePackage.getEClassifiers().add(typeClass);
+			
+		}
+		
+		
+	}
+
 	private void addAssignmentAttributeTo(EClass screenClass, EObject assignment) {
 		String statement = (String) assignment.eGet(utils.a2StatementFeature);
 		String attrName = createReferenceName(statement);
