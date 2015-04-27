@@ -33,24 +33,26 @@ public class DataGenerator {
 	
 	public void generate(String name) {
 		
-		ContextGenerator.getInstance().generatePaths();
+		ContextGenerator cg = ContextGenerator.getInstance();
+		cg.generatePaths();
 		TypeGenerator.getInstance().setupAssignmentReferences();
 //		AssignmentGenerator.getInstance().setContexts(ContextGenerator.getInstance().getAllContexts());
 		AssignmentGenerator.getInstance().doSetup();
 		
-		XMIExporter xmiExpoter = new XMIExporter();
-		xmiExpoter.setGenerators(AssignmentGenerator.getInstance(), ContextGenerator.getInstance(), TypeGenerator.getInstance());
-		xmiExpoter.exportXMI(name, Constants.GENERATED_DIRECTORY);
-		MappingGenerator.getInstance().assignValues(Constants.GENERATED_DIRECTORY + name + ".xmi");
-		ListGenerator.getInstance().mappings = MappingGenerator.getInstance().mappings;
-		ListGenerator.getInstance().createLists();
-				
-		xmiExpoter = new XMIExporter();
-		xmiExpoter.setGenerators(AssignmentGenerator.getInstance(), ContextGenerator.getInstance(), TypeGenerator.getInstance());
-		xmiExpoter.exportXMI(name, Constants.GENERATED_DIRECTORY);
-		
 		ScreenEcoreGenerator seg = new ScreenEcoreGenerator();
 		seg.generateEcoreForScreen(name);
+//		XMIExporter xmiExpoter = new XMIExporter();
+////		xmiExpoter.setGenerators(AssignmentGenerator.getInstance(), ContextGenerator.getInstance(), TypeGenerator.getInstance());
+//		xmiExpoter.exportXMI(name, Constants.GENERATED_DIRECTORY);
+//		MappingGenerator.getInstance().assignValues(Constants.GENERATED_DIRECTORY + name + ".xmi");
+//		ListGenerator.getInstance().mappings = MappingGenerator.getInstance().mappings;
+//		ListGenerator.getInstance().createLists();
+//				
+//		xmiExpoter = new XMIExporter();
+////		xmiExpoter.setGenerators(AssignmentGenerator.getInstance(), ContextGenerator.getInstance(), TypeGenerator.getInstance());
+//		xmiExpoter.exportXMI(name, Constants.GENERATED_DIRECTORY);
+		
+		
 	}
 	
 }

@@ -47,12 +47,14 @@ public class ScreenEcoreGenerator {
 		
 		for (EObject assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
 			
-			@SuppressWarnings("unchecked")
-			EList<EObject> dataList = (EList<EObject>) assignment.eGet(utils.a2DataFeature);
-			if (isJavaObjectContainerClass(dataList.get(0))) {
-				addAssignmentAttributeTo(screenClass, assignment);
-			} else {
-				//TODO: implement type
+			if (assignment.eGet(utils.a2UseComponentFeature) != null) {
+				@SuppressWarnings("unchecked")
+				EList<EObject> dataList = (EList<EObject>) assignment.eGet(utils.a2DataFeature);
+				if (isJavaObjectContainerClass(dataList.get(0))) {
+					addAssignmentAttributeTo(screenClass, assignment);
+				} else {
+					//TODO: implement type
+				}
 			}
 			
 		}
@@ -137,6 +139,7 @@ public class ScreenEcoreGenerator {
 			contextAnnotation.setSource(ANNOTATION_SOURCE);
 			contextAnnotation.getDetails().put("ocl", statement);
 			contextRef.getEAnnotations().add(contextAnnotation);
+			
 			
 			@SuppressWarnings("unchecked")
 			EList<EObject> dataList = (EList<EObject>) context.eGet(utils.c2DataFeature);

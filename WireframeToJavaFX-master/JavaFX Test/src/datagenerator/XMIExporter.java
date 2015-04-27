@@ -28,43 +28,23 @@ public class XMIExporter {
 	ContextGenerator context2Generator;
 	TypeGenerator typeGenerator;
 	MappingGenerator mappingGenerator = MappingGenerator.getInstance();
+	private DataUtils utils;
 	
-	//EMF
-	ResourceSet resourceSet;
-	Resource ecoreResource;
-	EPackageImpl dataPackage;
-	EFactory dataFactory;
-	EClass dataForScreenClass;
-	EStructuralFeature allContexts2Feature, allAssignments2Feature, allTypesFeature, allMappingsFeature;
+//	//EMF
+//	ResourceSet resourceSet;
+//	Resource ecoreResource;
+//	EPackageImpl dataPackage;
+//	EFactory dataFactory;
+//	EClass dataForScreenClass;
+//	EStructuralFeature allContexts2Feature, allAssignments2Feature, allTypesFeature, allMappingsFeature;
 	
 	public XMIExporter() {
 		
-		String pathToEcore = Constants.DATAGENERATOR_DIRECTORY + "Data.ecore";
+		utils = DataUtils.getInstance();
+		assignment2Generator = AssignmentGenerator.getInstance();
+		context2Generator = ContextGenerator.getInstance();
+		typeGenerator = TypeGenerator.getInstance();
 		
-		resourceSet = new ResourceSetImpl();
-		resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
-		
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-		
-		URI existingInstanceUri = URI.createFileURI(pathToEcore);
-		
-		ecoreResource = resourceSet.getResource(existingInstanceUri, true);
-		dataPackage = (EPackageImpl)ecoreResource.getContents().get(0);
-		dataFactory = dataPackage.getEFactoryInstance();
-		
-		dataForScreenClass = (EClass) dataPackage.getEClassifier("DataForScreen");
-		allContexts2Feature = dataForScreenClass.getEStructuralFeature("allContext2s");
-		allAssignments2Feature = dataForScreenClass.getEStructuralFeature("allAssignment2s");
-		allTypesFeature = dataForScreenClass.getEStructuralFeature("allTypes");
-		allMappingsFeature = dataForScreenClass.getEStructuralFeature("allMappings");
-		
-	}
-	
-	public void setGenerators(AssignmentGenerator ag, ContextGenerator cg, TypeGenerator tg) {
-		assignment2Generator = ag;
-		context2Generator = cg;
-		typeGenerator = tg;
 	}
 	
 	public void exportXMI(String filename, String absFolderLocation) {
@@ -74,10 +54,10 @@ public class XMIExporter {
 		if (typeGenerator == null) throw new NullPointerException("Type generator not set for XMIExporter.");
 
 		//Create and fill the new instance with the contexts
-		EObject newContextsForScreen = dataFactory.create(dataForScreenClass);
+		EObject newContextsForScreen = utils.dataFactory.create(utils.dataForScreenClass);
 		
 		@SuppressWarnings("unchecked")	//Defined as an EList in Data.ecore by me, therefore safe to suppress warning
-		EList<EObject> allContexts = (EList<EObject>) newContextsForScreen.eGet(allContexts2Feature);
+		EList<EObject> allContexts = (EList<EObject>) newContextsForScreen.eGet(utils.dAllContextsFeature);
 		for (EObject eObject : context2Generator.rootContexts) {
 			allContexts.add(eObject);
 		}
@@ -87,19 +67,19 @@ public class XMIExporter {
 		}
 		
 		@SuppressWarnings("unchecked")	//Defined as an EList in Data.ecore by me, therefore safe to suppress warning
-		EList<EObject> allAssignments = (EList<EObject>) newContextsForScreen.eGet(allAssignments2Feature);
+		EList<EObject> allAssignments = (EList<EObject>) newContextsForScreen.eGet(utils.dAllAssignment2sFeature);
 		for (EObject eObject : assignment2Generator.assignments.getElementsIterable()) {
 			allAssignments.add(eObject);
 		}
 		
 		@SuppressWarnings("unchecked")
-		EList<EObject> allTypes = (EList<EObject>) newContextsForScreen.eGet(allTypesFeature);
+		EList<EObject> allTypes = (EList<EObject>) newContextsForScreen.eGet(utils.dAllTypesFeature);
 		for (EObject eObject : typeGenerator.list.getElementsIterable()) {
 			allTypes.add(eObject);
 		}
 		
 		@SuppressWarnings("unchecked")
-		EList<EObject> allMappings = (EList<EObject>) newContextsForScreen.eGet(allMappingsFeature);
+		EList<EObject> allMappings = (EList<EObject>) newContextsForScreen.eGet(utils.dAllMappings);
 		for (EObject eObject : mappingGenerator.mappings) {
 			allMappings.add(eObject);
 		}
@@ -110,7 +90,8 @@ public class XMIExporter {
 			filename = filename + ".xmi";
 		URI newInstanceUri = URI.createFileURI(absFolderLocation + filename);
 		
-		Resource newInstanceResource = resourceSet.createResource(newInstanceUri);
+//		Resource newInstanceResource = resourceSet.createResource(newInstanceUri);
+		Resource newInstanceResource = DataUtils.getInstance().resourceSet.createResource(newInstanceUri);
 		newInstanceResource.getContents().add(newContextsForScreen);
 		
 		try {
