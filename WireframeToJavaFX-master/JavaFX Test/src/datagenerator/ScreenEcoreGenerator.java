@@ -47,7 +47,7 @@ public class ScreenEcoreGenerator {
 		
 		for (EObject assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
 			
-			if (assignment.eGet(utils.a2UseComponentFeature) != null) {
+			if (assignment.eGet(utils.a2PartOfComponentFeature) == null) {
 				@SuppressWarnings("unchecked")
 				EList<EObject> dataList = (EList<EObject>) assignment.eGet(utils.a2DataFeature);
 				if (isJavaObjectContainerClass(dataList.get(0))) {
@@ -67,22 +67,22 @@ public class ScreenEcoreGenerator {
 	
 	private void addAssignmentAttributeTo(EClass screenClass, EObject assignment) {
 		String statement = (String) assignment.eGet(utils.a2StatementFeature);
-		String refName = createReferenceName(statement);
-		EAttribute assignmentRef = EcoreFactory.eINSTANCE.createEAttribute();
-		assignmentRef.setName(refName);
+		String attrName = createReferenceName(statement);
+		EAttribute assignmentAttr = EcoreFactory.eINSTANCE.createEAttribute();
+		assignmentAttr.setName(attrName);
 		
 		EAnnotation assignmentAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 		assignmentAnnotation.setSource(ANNOTATION_SOURCE);
 		assignmentAnnotation.getDetails().put("ocl", statement);
 		assignmentAnnotation.getDetails().put("layoutId", "#" + ((Widget) assignment.eGet(utils.a2WidgetFeature)).getId().intValue());
 		assignmentAnnotation.getDetails().put("useComponent", (String) assignment.eGet(utils.a2UseComponentNamedFeature));
-		assignmentRef.getEAnnotations().add(assignmentAnnotation);
+		assignmentAttr.getEAnnotations().add(assignmentAnnotation);
 
 		@SuppressWarnings("unchecked")
 		EList<EObject> dataList = (EList<EObject>) assignment.eGet(utils.a2DataFeature);
-		assignmentRef.setEType(dataList.get(0).eClass().getEStructuralFeature("object").getEType());
+		assignmentAttr.setEType(dataList.get(0).eClass().getEStructuralFeature("object").getEType());
 		
-		screenClass.getEStructuralFeatures().add(assignmentRef);
+		screenClass.getEStructuralFeatures().add(assignmentAttr);
 	}
 
 	private String createReferenceName(String statement) {
