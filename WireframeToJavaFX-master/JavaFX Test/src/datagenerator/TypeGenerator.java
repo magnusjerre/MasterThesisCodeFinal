@@ -193,7 +193,7 @@ public class TypeGenerator {
 			
 			WidgetGroup widgetGroup = (WidgetGroup) type.eGet(utils.tWidgetFeature);
 			fxmlBuidler.append(String.format(
-					"<AnchorPane xmlns:fx=\"http://javafx.com/fxml/1\" id=\"AnchorPane\" prefHeight=\"%d\" prefWidth=\"%d\" >\n" + 
+					"<AnchorPane xmlns:fx=\"http://javafx.com/fxml/1\" prefHeight=\"%d\" prefWidth=\"%d\" >\n" + 
 							"    <children>\n", 
 					widgetGroup.getMeasuredWidth(), widgetGroup.getMeasuredHeight()));
 			
@@ -218,7 +218,6 @@ public class TypeGenerator {
 					"</AnchorPane>";
 			
 			fxmlBuidler.append(end);
-			System.out.println("fxml:\n" + fxmlBuidler.toString());
 			
 			FileWriter fw = null;
 			try {
