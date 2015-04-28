@@ -12,10 +12,10 @@
       <widgets ref="7" width="129" height="33" text="actress.portrait"/>
     </overrides>
   </widgets>
-  <widgets xsi:type="model:Master" id="4" x="952" y="208" measuredWidth="457" measuredHeight="31">
+  <widgets xsi:type="model:Master" id="4" x="952" y="209" measuredWidth="457" measuredHeight="31">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
     <overrides>
-      <widgets ref="5" width="457" height="31" text="actress = db.allActors->select(name = 'Eva Green')->asSequence()->at(1)">
+      <widgets ref="5" width="457" height="31" text="movie2 = actor.movies->at(2)">
         <attributes key="textAlignment" value="Left"/>
       </widgets>
     </overrides>
@@ -66,7 +66,7 @@
   <widgets xsi:type="model:Master" id="24" x="952" y="256" width="585" measuredWidth="585" measuredHeight="31">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
     <overrides>
-      <widgets ref="5" width="585" height="31" text="movie = actress.movies->select(title = '300: Rise of an Empire')->asSequence()->at(1)">
+      <widgets ref="5" width="585" height="31" text="actor = movie.actors->at(2)">
         <attributes key="textAlignment" value="Left"/>
       </widgets>
     </overrides>
@@ -98,14 +98,14 @@
   <widgets xsi:type="model:Arrow" id="29" x="263" y="286" width="250" height="8" measuredWidth="250" measuredHeight="8" foreground="#999999"/>
   <widgets xsi:type="model:Arrow" id="30" x="144" y="320" width="369" height="8" measuredWidth="369" measuredHeight="8" foreground="#999999"/>
   <widgets xsi:type="model:Arrow" id="32" x="64" y="368" width="8" height="57" measuredWidth="8" measuredHeight="57" foreground="#999999"/>
-  <widgets xsi:type="model:TextArea" id="33" x="120" y="346" width="265" text="synopsis" measuredWidth="265" measuredHeight="31">
+  <widgets xsi:type="model:TextArea" id="33" x="120" y="346" width="265" text="synopsis" measuredWidth="265" measuredHeight="23">
     <font/>
   </widgets>
   <widgets xsi:type="model:Arrow" id="31" x="184" y="360" width="329" height="8" measuredWidth="329" measuredHeight="8" foreground="#999999"/>
   <widgets xsi:type="model:Master" id="37" x="952" y="305" measuredWidth="585" measuredHeight="31">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
     <overrides>
-      <widgets ref="5" width="585" height="31" text="allActorsContext = db.allActors">
+      <widgets ref="5" width="585" height="31" text="movie = actress.movies->select(title = '300: Rise of an Empire')->asSequence()->at(1)">
         <attributes key="textAlignment" value="Left"/>
       </widgets>
     </overrides>
@@ -113,7 +113,7 @@
   <widgets xsi:type="model:Master" id="38" x="952" y="354" measuredWidth="585" measuredHeight="31">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
     <overrides>
-      <widgets ref="5" width="585" height="31" text="sam = allActorsContext->at(1)">
+      <widgets ref="5" width="585" height="31" text="actress = db.allActors->select(name = 'Eva Green')->asSequence()->at(1)">
         <attributes key="textAlignment" value="Left"/>
       </widgets>
     </overrides>

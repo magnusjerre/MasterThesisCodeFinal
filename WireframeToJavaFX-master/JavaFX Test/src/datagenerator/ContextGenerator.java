@@ -18,6 +18,8 @@ public class ContextGenerator {
 	public ArrayList<EObject> contexts;
 	public ArrayList<EObject> rootContexts;
 	
+	public ArrayList<EObject> contextsInOrder;
+	
 	public static ContextGenerator getInstance() {
 		
 		if (instance == null)
@@ -32,6 +34,7 @@ public class ContextGenerator {
 		utils = DataUtils.getInstance();
 		rootContexts = new ArrayList<>();
 		contexts = new ArrayList<>();
+		contextsInOrder = new ArrayList<EObject>();
 		
 	}
 
@@ -61,6 +64,7 @@ public class ContextGenerator {
 			EList<EObject> list = (EList<EObject>) contextObject.eGet(utils.c2DataFeature);
 			list.add(DataUtils.getInstance().getRootObjectForXmi(specificStatement));
 			rootContexts.add(contextObject);
+			contextsInOrder.add(contextObject);
 		} else {
 			contexts.add(contextObject);
 		}
@@ -89,13 +93,16 @@ public class ContextGenerator {
 					if (parent != null) {
 						String statement = trimStatementOfParentAndDot((String) eObject.eGet(utils.c2StatementFeature));
 						Object dataResult = getResult(statement, parent);
-						
-						if (dataResult instanceof Collection<?>) {
-							fillListWithCorrectFormat((Collection<Object>) dataResult, (EList<Object>) eObject.eGet(utils.c2DataFeature));
-						} else {
-							EObject res = (EObject) dataResult;
-							((EList<EObject>) eObject.eGet(utils.c2DataFeature)).add(res);
+						if (dataResult != null) {
+							if (dataResult instanceof Collection<?>) {
+								fillListWithCorrectFormat((Collection<Object>) dataResult, (EList<Object>) eObject.eGet(utils.c2DataFeature));
+							} else {
+								EObject res = (EObject) dataResult;
+								((EList<EObject>) eObject.eGet(utils.c2DataFeature)).add(res);
+							}
+							contextsInOrder.add(eObject);
 						}
+						
 					}
 					
 				}

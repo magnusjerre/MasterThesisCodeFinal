@@ -199,48 +199,51 @@ public class ScreenEcoreGenerator {
 	}
 
 	private void addContextsTo(EClass screenClass) {
-		for (EObject context : ContextGenerator.getInstance().contexts) {
+		for (EObject context : ContextGenerator.getInstance().contextsInOrder) {
 			
-			EReference contextRef = EcoreFactory.eINSTANCE.createEReference();
-			String refName = (String) context.eGet(utils.c2NameFeature);
-			contextRef.setName(refName);
-			
-			String statement = (String) context.eGet(utils.c2StatementFeature);
-			EAnnotation contextAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			contextAnnotation.setSource(ANNOTATION_SOURCE);
-			contextAnnotation.getDetails().put("ocl", statement);
-			contextRef.getEAnnotations().add(contextAnnotation);
-			
-			
-			@SuppressWarnings("unchecked")
-			EList<EObject> dataList = (EList<EObject>) context.eGet(utils.c2DataFeature);
-			EClass contextClass = dataList.get(0).eClass();
-			contextRef.setEType(contextClass);
-			
-			screenClass.getEStructuralFeatures().add(contextRef);
-			
+			if (ContextGenerator.getInstance().contexts.contains(context)) {
+				EReference contextRef = EcoreFactory.eINSTANCE.createEReference();
+				String refName = (String) context.eGet(utils.c2NameFeature);
+				contextRef.setName(refName);
+				
+				String statement = (String) context.eGet(utils.c2StatementFeature);
+				EAnnotation contextAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+				contextAnnotation.setSource(ANNOTATION_SOURCE);
+				contextAnnotation.getDetails().put("ocl", statement);
+				contextRef.getEAnnotations().add(contextAnnotation);
+				
+				
+				@SuppressWarnings("unchecked")
+				EList<EObject> dataList = (EList<EObject>) context.eGet(utils.c2DataFeature);
+				EClass contextClass = dataList.get(0).eClass();
+				contextRef.setEType(contextClass);
+				
+				screenClass.getEStructuralFeatures().add(contextRef);
+			}
 		}
 	}
 
 	private void addRootContextsTo(EClass screenClass) {
-		for (EObject root : ContextGenerator.getInstance().rootContexts) {
+		for (EObject root : ContextGenerator.getInstance().contextsInOrder) {
 			
-			EReference rootRef = EcoreFactory.eINSTANCE.createEReference();
-			String refName = (String) root.eGet(utils.c2NameFeature);	//left side of equals statement
-			rootRef.setName(refName);
-			
-			String xmiLocation = (String) root.eGet(utils.c2StatementFeature);
-			EAnnotation rootAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			rootAnnotation.setSource(ANNOTATION_SOURCE);
-			rootAnnotation.getDetails().put("xmiLocation", xmiLocation);
-			rootRef.getEAnnotations().add(rootAnnotation);
-			
-			@SuppressWarnings("unchecked")
-			EList<EObject> dataList = (EList<EObject>) root.eGet(utils.c2DataFeature);	//Requires the model to have already been read...
-			EClass rootClass = dataList.get(0).eClass();
-			rootRef.setEType(rootClass);
-			
-			screenClass.getEStructuralFeatures().add(rootRef);
+			if (ContextGenerator.getInstance().rootContexts.contains(root)) {
+				EReference rootRef = EcoreFactory.eINSTANCE.createEReference();
+				String refName = (String) root.eGet(utils.c2NameFeature);	//left side of equals statement
+				rootRef.setName(refName);
+				
+				String xmiLocation = (String) root.eGet(utils.c2StatementFeature);
+				EAnnotation rootAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+				rootAnnotation.setSource(ANNOTATION_SOURCE);
+				rootAnnotation.getDetails().put("xmiLocation", xmiLocation);
+				rootRef.getEAnnotations().add(rootAnnotation);
+				
+				@SuppressWarnings("unchecked")
+				EList<EObject> dataList = (EList<EObject>) root.eGet(utils.c2DataFeature);	//Requires the model to have already been read...
+				EClass rootClass = dataList.get(0).eClass();
+				rootRef.setEType(rootClass);
+				
+				screenClass.getEStructuralFeatures().add(rootRef);
+			}
 			
 		}
 	}
