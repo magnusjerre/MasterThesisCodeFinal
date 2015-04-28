@@ -76,9 +76,6 @@ public class ScreenEcoreGenerator {
 	
 	private void addTypesToPackage(EPackage ePackage) {
 		
-		HashMap<String, EClass> typesMap = new HashMap<String, EClass>();
-		
-
 		for (EObject type : TypeGenerator.getInstance().list.getElementsIterable()) {
 			
 			String typeName = (String) type.eGet(utils.tNameFeature);
@@ -92,6 +89,26 @@ public class ScreenEcoreGenerator {
 			
 			typeClass.getEStructuralFeatures().add(typeAttr);
 			ePackage.getEClassifiers().add(typeClass);
+			
+			@SuppressWarnings("unchecked")
+			EList<EObject> assignmentsForType = (EList<EObject>) type.eGet(utils.tAssignmentsFeature);
+			for (EObject assignment : assignmentsForType) {
+				
+				EAttribute aType = EcoreFactory.eINSTANCE.createEAttribute();
+				String assName = createReferenceName((String) assignment.eGet(utils.a2StatementFeature));
+				aType.setName(assName);
+				aType.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEString());
+				
+				EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+				annotation.setSource(ANNOTATION_SOURCE);
+				annotation.getDetails().put("ocl", (String) assignment.eGet(utils.a2StatementFeature));
+				Widget aWidget = (Widget) assignment.eGet(utils.a2WidgetFeature);
+				annotation.getDetails().put("layoutId", "#" + aWidget.getId());
+				
+				aType.getEAnnotations().add(annotation);
+				typeClass.getEStructuralFeatures().add(aType);
+				
+			}
 			
 		}
 		
