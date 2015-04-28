@@ -36,7 +36,7 @@ public class DataGenerator {
 		ContextGenerator cg = ContextGenerator.getInstance();
 		cg.generatePaths();
 		TypeGenerator.getInstance().setupAssignmentReferences();
-		TypeGenerator.getInstance().generateFxmlForTypes("cake");
+		TypeGenerator.getInstance().generateFxmlForTypes(name);
 //		AssignmentGenerator.getInstance().setContexts(ContextGenerator.getInstance().getAllContexts());
 		AssignmentGenerator.getInstance().doSetup();
 		

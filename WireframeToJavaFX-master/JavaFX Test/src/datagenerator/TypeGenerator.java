@@ -180,7 +180,7 @@ public class TypeGenerator {
 		
 		for (EObject type : list.getElementsIterable()) {
 			
-			String fileName = String.format("%s-%s.fxml", screenName, (String) type.eGet(utils.tNameFeature));
+			String fileName = String.format("%s-Type%s.fxml", screenName, (String) type.eGet(utils.tNameFeature));
 			StringBuilder fxmlBuidler = new StringBuilder();
 			fxmlBuidler.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
 					"\n" + 
@@ -188,7 +188,9 @@ public class TypeGenerator {
 					"<?import java.util.*?>\n" + 
 					"<?import javafx.scene.*?>\n" + 
 					"<?import javafx.scene.control.*?>\n" + 
-					"<?import javafx.scene.layout.*?>\n" + 
+					"<?import javafx.scene.layout.*?>\n" +
+					"<?import javafx.scene.image.*?>" +
+					"\n" +
 					"\n");
 			
 			WidgetGroup widgetGroup = (WidgetGroup) type.eGet(utils.tWidgetFeature);
@@ -201,14 +203,17 @@ public class TypeGenerator {
 				
 				//Assume it is a label for now
 				String nodeType = "Label";
+				String height = "minHeight", width = "minWidth"; 
 				if (widget instanceof Image) {
 					nodeType = "ImageView";
+					height = "fitHeight";
+					width = "fitWidth";
 				}
 				
 				String element = String.format(
-						"        <%s layoutX=\"%d\" layoutY=\"%d\" minHeight=\"%d\" minWidth=\"%d\" fx:id=\"%d\" />" +
+						"        <%s layoutX=\"%d\" layoutY=\"%d\" %s=\"%d\" %s=\"%d\" fx:id=\"%d\" />" +
 						"\n",
-						nodeType, widget.getX(), widget.getY(), widget.getMeasuredHeight(), widget.getMeasuredWidth(), widget.getId().intValue());
+						nodeType, widget.getX(), widget.getY(), height, widget.getMeasuredHeight(), width, widget.getMeasuredWidth(), widget.getId().intValue());
 				fxmlBuidler.append(element);
 				
 			}

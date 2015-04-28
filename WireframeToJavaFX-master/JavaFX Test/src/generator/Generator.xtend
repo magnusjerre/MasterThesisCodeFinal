@@ -603,8 +603,6 @@ class Generator {
 				it += "id" -> widgetGroup.id
 				it += "layoutX" -> widgetGroup.x
 				it += "layoutY" -> widgetGroup.y
-				it += "prefWidth" -> widgetGroup.measuredWidth
-				it += "prefHeight" -> widgetGroup.measuredHeight;
 			]
 			
 		}

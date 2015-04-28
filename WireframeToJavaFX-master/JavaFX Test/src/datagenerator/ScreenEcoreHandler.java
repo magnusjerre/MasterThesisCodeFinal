@@ -1,10 +1,15 @@
 package datagenerator;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -34,9 +39,11 @@ public class ScreenEcoreHandler {
 	public ResourceSet resourceSet;
 	public EPackage ePackage;
 	public EObject instance;
+	public String fileName;
 	
 	public ScreenEcoreHandler(String fileName) {
 		
+		this.fileName = fileName;
 		resourceSet = new ResourceSetImpl();
 		resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
 		
@@ -48,8 +55,8 @@ public class ScreenEcoreHandler {
 		ePackage = (EPackage) firstScreen.getContents().get(0);
 		
 		EFactory factory = ePackage.getEFactoryInstance();
-		EClass firstScreenClass = (EClass) ePackage.getEClassifier("firstscreen");
-		instance = factory.create(firstScreenClass);
+		EClass screenClass = (EClass) ePackage.getEClassifiers().get(0);
+		instance = factory.create(screenClass);
 		
 		for (EStructuralFeature feature : instance.eClass().getEStructuralFeatures()) {
 			
@@ -78,17 +85,52 @@ public class ScreenEcoreHandler {
 			
 			EAnnotation annotation = feature.getEAnnotation("wireframe");
 			
-			String id = annotation.getDetails().get("layoutId");
-			if (id != null) {
-				handleResultCorrectly(root, id, instance.eGet(feature));
+			String useComponent = annotation.getDetails().get("useComponent");
+			if (useComponent != null) {
+				File file = new File(fileName);
+				String screenName = file.getName().replace(".ecore", "");
+				String location = Constants.GENERATED_DIRECTORY + screenName + "-" + useComponent + ".fxml";
+				String id = annotation.getDetails().get("layoutId");
+				Group node = (Group) root.lookup(id);
+				try {
+					URL url = new File(location).toURI().toURL();
+					Node typeNode = FXMLLoader.load(url);
+					
+					EClass typeClass = (EClass) ePackage.getEClassifier(useComponent);
+					for (EStructuralFeature tcFeature : typeClass.getEStructuralFeatures()) {
+						
+						EAnnotation annot = tcFeature.getEAnnotation("wireframe");
+						String ocl = annot.getDetails().get("ocl");
+						String layoutId = annot.getDetails().get("layoutId");
+						
+						Node subNode = typeNode.lookup(layoutId);
+						Object result = OCLHandler.parseOCLStatement(resourceSet, (EObject) instance.eGet(feature), ocl);
+						handleResultCorrectly(subNode, result);
+						
+					}
+					
+					node.getChildren().add(typeNode);
+					
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				
+			} else {
+				String id = annotation.getDetails().get("layoutId");
+				if (id != null) {
+					Node node = root.lookup(id);
+					handleResultCorrectly(node, instance.eGet(feature));
+				}
 			}
 			
 		}
 		
 	}
 	
-	private void handleResultCorrectly(Parent root, String id, Object result) {
-		Node node = root.lookup(id);
+	private void handleResultCorrectly(Node node, Object result) {
 		
 		if (node instanceof Label) {
 			((Label) node).setText(getStringRepresentation(result));
@@ -109,6 +151,7 @@ public class ScreenEcoreHandler {
 			String uri = imageFile.toURI().toString();
 			((ImageView) node).setImage(new Image(uri));
 		}
+		
 	}
 	
 	private String getStringRepresentation(Object object) {

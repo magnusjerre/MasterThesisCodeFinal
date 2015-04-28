@@ -24,7 +24,6 @@ public class ScreenEcoreGenerator {
 	private DataUtils utils;
 	private static final String ANNOTATION_SOURCE = "wireframe";
 	private int counter;
-	private String screenName = "nothing";
 	private String ASSIGNMENT_PREFIX = "a";
 	private String TYPE_PREFIX = "Type";
 	
@@ -40,7 +39,6 @@ public class ScreenEcoreGenerator {
 		if (screenName.endsWith(".screen")) {
 			screenName = screenName.replace(".screen", "");
 		}
-		this.screenName = screenName;
 		
 		EClass screenClass = EcoreFactory.eINSTANCE.createEClass();
 		screenClass.setName(screenName);
@@ -57,11 +55,7 @@ public class ScreenEcoreGenerator {
 				if (isJavaObjectContainerClass(dataList.get(0))) {
 					addAssignmentAttributeTo(screenClass, assignment);
 				} else {
-					
 					addAssignmentReferenceTo(screenClass, assignment);
-					
-					//TODO: implement type
-					System.out.println("not a java object container");
 				}
 			}
 			
@@ -104,12 +98,6 @@ public class ScreenEcoreGenerator {
 			EClass typeClass = EcoreFactory.eINSTANCE.createEClass();
 			typeClass.setName(typeName);
 			
-			EAttribute typeAttr = EcoreFactory.eINSTANCE.createEAttribute();
-			typeAttr.setName("fxmlLocation");
-			typeAttr.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEString());
-			typeAttr.setDefaultValue(String.format("%s%s-%s.fxml", Constants.DATAGENERATOR_DIRECTORY, screenName, typeName));
-			
-			typeClass.getEStructuralFeatures().add(typeAttr);
 			ePackage.getEClassifiers().add(typeClass);
 			
 			@SuppressWarnings("unchecked")
@@ -119,7 +107,7 @@ public class ScreenEcoreGenerator {
 				EAttribute aType = EcoreFactory.eINSTANCE.createEAttribute();
 				String assName = createReferenceName((String) assignment.eGet(utils.a2StatementFeature));
 				aType.setName(assName);
-				aType.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEString());
+				aType.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEJavaObject());
 				
 				EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
 				annotation.setSource(ANNOTATION_SOURCE);
