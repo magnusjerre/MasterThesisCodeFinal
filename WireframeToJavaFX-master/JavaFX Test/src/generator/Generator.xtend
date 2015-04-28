@@ -598,18 +598,15 @@ class Generator {
 			ListGenerator.getInstance.listViewNames.add(fxid)
 			listViewCounter++
 		} else {
-			val widgets = widgetGroup.widgets
-			val tempOffsetX = widgetGroup.x
-			val tempOffsetY = widgetGroup.y
-			offsetX = offsetX + tempOffsetX
-			offsetY = offsetY + tempOffsetY
-			for (widget : widgets) {
-				if (!(widget instanceof Master)) {
-					generateFxml(widget)
-				}
-			}
-			offsetX = offsetX - tempOffsetX
-			offsetY = offsetY - tempOffsetY
+			
+			(builder += "Group") => [
+				it += "id" -> widgetGroup.id
+				it += "layoutX" -> widgetGroup.x
+				it += "layoutY" -> widgetGroup.y
+				it += "prefWidth" -> widgetGroup.measuredWidth
+				it += "prefHeight" -> widgetGroup.measuredHeight;
+			]
+			
 		}
 			
 	}

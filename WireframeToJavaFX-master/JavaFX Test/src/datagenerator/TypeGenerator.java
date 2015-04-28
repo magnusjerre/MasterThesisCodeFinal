@@ -1,14 +1,21 @@
 package datagenerator;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Pair;
 
+import application.Constants;
+
 import com.wireframesketcher.model.Arrow;
+import com.wireframesketcher.model.Image;
 import com.wireframesketcher.model.Master;
 import com.wireframesketcher.model.Widget;
+import com.wireframesketcher.model.WidgetGroup;
 
 public class TypeGenerator {
 	
@@ -162,6 +169,77 @@ public class TypeGenerator {
 		}
 
 		return true;
+		
+	}
+	
+	/**
+	 * This will currently only generate the base cases, i.e not types containing types
+	 * @param screenName
+	 */
+	public void generateFxmlForTypes(String screenName) {
+		
+		for (EObject type : list.getElementsIterable()) {
+			
+			String fileName = String.format("%s-%s.fxml", screenName, (String) type.eGet(utils.tNameFeature));
+			StringBuilder fxmlBuidler = new StringBuilder();
+			fxmlBuidler.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
+					"\n" + 
+					"<?import java.lang.*?>\n" + 
+					"<?import java.util.*?>\n" + 
+					"<?import javafx.scene.*?>\n" + 
+					"<?import javafx.scene.control.*?>\n" + 
+					"<?import javafx.scene.layout.*?>\n" + 
+					"\n");
+			
+			WidgetGroup widgetGroup = (WidgetGroup) type.eGet(utils.tWidgetFeature);
+			fxmlBuidler.append(String.format(
+					"<AnchorPane xmlns:fx=\"http://javafx.com/fxml/1\" prefHeight=\"%d\" prefWidth=\"%d\" >\n" + 
+							"    <children>\n", 
+					widgetGroup.getMeasuredWidth(), widgetGroup.getMeasuredHeight()));
+			
+			for (Widget widget : widgetGroup.getWidgets()) {
+				
+				//Assume it is a label for now
+				String nodeType = "Label";
+				if (widget instanceof Image) {
+					nodeType = "ImageView";
+				}
+				
+				String element = String.format(
+						"        <%s layoutX=\"%d\" layoutY=\"%d\" minHeight=\"%d\" minWidth=\"%d\" fx:id=\"%d\" />" +
+						"\n",
+						nodeType, widget.getX(), widget.getY(), widget.getMeasuredHeight(), widget.getMeasuredWidth(), widget.getId().intValue());
+				fxmlBuidler.append(element);
+				
+			}
+			
+			
+			String end = "    </children>\n" + 
+					"</AnchorPane>";
+			
+			fxmlBuidler.append(end);
+			
+			FileWriter fw = null;
+			try {
+				fw = new FileWriter(new File(Constants.GENERATED_DIRECTORY + fileName));
+				fw.write(fxmlBuidler.toString());
+				fw.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				
+				if (fw != null) {
+					try {
+						fw.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		}
 		
 	}
 	
