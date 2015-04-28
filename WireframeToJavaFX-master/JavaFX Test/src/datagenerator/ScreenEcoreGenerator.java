@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -104,10 +105,8 @@ public class ScreenEcoreGenerator {
 			EList<EObject> assignmentsForType = (EList<EObject>) type.eGet(utils.tAssignmentsFeature);
 			for (EObject assignment : assignmentsForType) {
 				
-				EAttribute aType = EcoreFactory.eINSTANCE.createEAttribute();
-				String assName = createReferenceName((String) assignment.eGet(utils.a2StatementFeature));
-				aType.setName(assName);
-				aType.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEJavaObject());
+				EStructuralFeature feature;
+				String assignmentName = createAssignmentNameFromStatement((String) assignment.eGet(utils.a2StatementFeature));
 				
 				EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
 				annotation.setSource(ANNOTATION_SOURCE);
@@ -115,8 +114,20 @@ public class ScreenEcoreGenerator {
 				Widget aWidget = (Widget) assignment.eGet(utils.a2WidgetFeature);
 				annotation.getDetails().put("layoutId", "#" + aWidget.getId());
 				
-				aType.getEAnnotations().add(annotation);
-				typeClass.getEStructuralFeatures().add(aType);
+				String useComponent = (String) assignment.eGet(utils.a2UseComponentNamedFeature); 
+				if (useComponent == null) {	//No type is used
+					feature = EcoreFactory.eINSTANCE.createEAttribute();
+					feature.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEJavaObject());
+				} else {
+					feature = EcoreFactory.eINSTANCE.createEReference();
+					feature.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEObject());
+					annotation.getDetails().put("useComponent", createComponentName(useComponent));
+				}
+				
+				feature.setName(assignmentName);
+					
+				feature.getEAnnotations().add(annotation);
+				typeClass.getEStructuralFeatures().add(feature);
 				
 			}
 			
@@ -142,26 +153,6 @@ public class ScreenEcoreGenerator {
 		assignmentAttr.setEType(dataList.get(0).eClass().getEStructuralFeature("object").getEType());
 		
 		screenClass.getEStructuralFeatures().add(assignmentAttr);
-	}
-
-	private String createReferenceName(String statement) {
-
-		String[] split = statement.split("\\.");
-		if (split.length == 1) {
-			return split[0];
-		}
-		
-		String out = split[0];
-		for (int i = 1; i < split.length; i++) {
-			String upperCase = split[i].toUpperCase();
-			split[i] = upperCase.charAt(0) + split[i].substring(1);
-			out += split[i];
-		}
-		out += counter;
-		counter++;
-		return out;
-		
-		
 	}
 
 	private void saveAsResource(EPackage screenPackage) {
@@ -241,6 +232,37 @@ public class ScreenEcoreGenerator {
 		return eObject.eClass().equals(utils.javaObjectContainerClass);
 		
 	}
+	
+	private String clipAtSequence(String sequence, String string) {
+		
+		int indexOfSequence = string.indexOf(sequence);
+		
+		if (indexOfSequence == -1) {
+			return string;
+		}
+		
+		return string.substring(0, indexOfSequence);
+	}
+	
+	private String createReferenceName(String statement) {
+		
+		statement = clipAtSequence("->", statement);
+		statement = clipAtSequence("(", statement);
+		
+		String[] split = statement.split("\\.");
+		
+		String out = split[0];
+		for (int i = 1; i < split.length; i++) {
+			String upperCase = split[i].toUpperCase();
+			split[i] = upperCase.charAt(0) + split[i].substring(1);
+			out += split[i];
+		}
+		out += counter;
+		counter++;
+		return out;
+		
+	}
+
 	
 	private String createAssignmentNameFromStatement(String statement) {
 		
