@@ -3,11 +3,13 @@ package application
 import com.wireframesketcher.model.Screen
 import com.wireframesketcher.model.Widget
 import com.wireframesketcher.model.story.Storyboard
+import datagenerator.ScreenEcoreHandler
 import java.io.File
 import java.io.FileNotFoundException
 import java.lang.reflect.Method
 import java.nio.file.Paths
 import java.util.HashMap
+import java.util.regex.Pattern
 import javafx.event.Event
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
@@ -27,8 +29,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.resource.Resource
-import java.util.regex.Pattern
-import datagenerator.AssignmentHandler
 
 /** Used to indicate if the methods <code>getPropertyForNode()</code> or 
  * <code>setPropertyForNode()</code> was successful in invoking the property.
@@ -830,8 +830,9 @@ abstract class AbstractNavigatorController {
 			}
 			
 			nextScreen.evaluateRulesForScreen
-			
-		AssignmentHandler.assignValues(appController.getRoot, Constants.GENERATED_DIRECTORY + nextScreen + ".xmi")
+		
+		val seh = new ScreenEcoreHandler(Constants.GENERATED_DIRECTORY + nextScreen + ".ecore")
+		seh.assignValues(appController.getRoot)	
 	
 		stage.setScene(scene);
 		stage.show();
