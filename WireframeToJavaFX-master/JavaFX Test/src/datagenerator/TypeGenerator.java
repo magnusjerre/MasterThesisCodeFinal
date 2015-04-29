@@ -94,12 +94,6 @@ public class TypeGenerator {
 		assignment.eSet(utils.a2PartOfComponentFeature, type);
 		assignment.eSet(utils.a2WidgetFeature, getCorrectWidget(assignment));
 		
-		String assignmentUsesTypeNamed = (String) assignment.eGet(utils.a2UseComponentNamedFeature);
-		if (assignmentUsesTypeNamed != null) {
-			EObject typeToUse = findTypeNamed(assignmentUsesTypeNamed);
-			((EList<EObject>)type.eGet(utils.tTypesFeature)).add(typeToUse);
-		}
-		
 	}
 	
 	private Widget getCorrectWidget(EObject assignment) {

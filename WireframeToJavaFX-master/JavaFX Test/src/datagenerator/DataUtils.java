@@ -32,19 +32,13 @@ public class DataUtils {
 	protected Resource dataResource;
 	EPackageImpl dataPackage;
 	EFactory dataFactory;
-	EClass context2Class, assignment2Class, dataForScreenClass, typeClass, javaObjectContainerClass, mappingClass;
-	//DataForScreen class features are prefixed with a d
-	EStructuralFeature dAllContextsFeature, dAllTypesFeature, dAllAssignment2sFeature, dAllMappings, dAllJavaObjectContainers;
+	EClass context2Class, assignment2Class, typeClass;
 	//Type class features are prefixed with a t
-	EStructuralFeature tNameFeature, tAssignmentsFeature, tTypesFeature, tWidgetFeature;
+	EStructuralFeature tNameFeature, tAssignmentsFeature, tWidgetFeature;
 	//Context2 class features are prefixed with a c
-	EStructuralFeature c2NameFeature, c2StatementFeature, c2DataFeature;
+	EStructuralFeature c2NameFeature, c2StatementFeature;
 	//Assignment2 class features are prefixed with a2
-	EStructuralFeature a2StatementFeature, a2DataFeature, a2WidgetFeature, a2UseComponentNamedFeature, a2UseComponentFeature, a2PartOfComponentFeature;
-	//JavaObjectContainer class
-	EStructuralFeature jocObjectFeature, jocTypeFeature, jocStringRepresentationFeature;
-	//Mapping class features are prefixed with m
-	EStructuralFeature mLayoutIdFeature, mValueFeature, mAssignmentPathFeature, mStringRepresentationFeature, mMappingsFeature, mUsingComponentFeature, mIsListFeature;
+	EStructuralFeature a2StatementFeature, a2WidgetFeature, a2UseComponentNamedFeature, a2PartOfComponentFeature;
 
 	private DataUtils() {
 		
@@ -75,51 +69,23 @@ public class DataUtils {
 		//Factory
 		dataFactory = dataPackage.getEFactoryInstance();
 		
-		//DataForContext
-		dataForScreenClass = (EClass) dataPackage.getEClassifier("DataForScreen");
-		dAllContextsFeature = dataForScreenClass.getEStructuralFeature("allContexts");
-		dAllTypesFeature = dataForScreenClass.getEStructuralFeature("allTypes");
-		dAllAssignment2sFeature = dataForScreenClass.getEStructuralFeature("allAssignment2s");
-		dAllMappings = dataForScreenClass.getEStructuralFeature("allMappings");
-		dAllJavaObjectContainers = dataForScreenClass.getEStructuralFeature("allJavaObjectContainers");
-		
 		//Type
 		typeClass = (EClass) dataPackage.getEClassifier("Type");
 		tNameFeature = typeClass.getEStructuralFeature("name");
 		tAssignmentsFeature = typeClass.getEStructuralFeature("assignments");
-		tTypesFeature = typeClass.getEStructuralFeature("types");
 		tWidgetFeature = typeClass.getEStructuralFeature("widget");
 		
 		//Context2
 		context2Class = (EClass) dataPackage.getEClassifier("Context");
 		c2NameFeature = context2Class.getEStructuralFeature("name");
 		c2StatementFeature = context2Class.getEStructuralFeature("statement");
-		c2DataFeature = context2Class.getEStructuralFeature("data");
 		
 		//Assignment2
 		assignment2Class = (EClass) dataPackage.getEClassifier("Assignment"); 
 		a2StatementFeature = assignment2Class.getEStructuralFeature("statement");
-		a2DataFeature = assignment2Class.getEStructuralFeature("data");
 		a2WidgetFeature = assignment2Class.getEStructuralFeature("widget");
 		a2UseComponentNamedFeature = assignment2Class.getEStructuralFeature("useComponentNamed");
-		a2UseComponentFeature = assignment2Class.getEStructuralFeature("useComponent");
 		a2PartOfComponentFeature = assignment2Class.getEStructuralFeature("partOfComponent");
-		
-		//JavaObjectContainer
-		javaObjectContainerClass = (EClass) dataPackage.getEClassifier("JavaObjectContainer");
-		jocObjectFeature = javaObjectContainerClass.getEStructuralFeature("object");
-		jocTypeFeature = javaObjectContainerClass.getEStructuralFeature("type");
-		jocStringRepresentationFeature = javaObjectContainerClass.getEStructuralFeature("stringRepresentation");
-		
-		//Mapping
-		mappingClass = (EClass) dataPackage.getEClassifier("Mapping");
-		mLayoutIdFeature = mappingClass.getEStructuralFeature("layoutId");
-		mValueFeature = mappingClass.getEStructuralFeature("value");
-		mAssignmentPathFeature = mappingClass.getEStructuralFeature("assignmentPath");
-		mStringRepresentationFeature = mappingClass.getEStructuralFeature("stringRepresentation");
-		mMappingsFeature = mappingClass.getEStructuralFeature("mappings");
-		mUsingComponentFeature = mappingClass.getEStructuralFeature("usingComponent");
-		mIsListFeature = mappingClass.getEStructuralFeature("isList");
 		
 	}
 	

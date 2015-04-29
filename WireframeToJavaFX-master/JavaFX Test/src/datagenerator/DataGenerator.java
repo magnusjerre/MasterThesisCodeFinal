@@ -32,10 +32,8 @@ public class DataGenerator {
 	public void generate(String name) {
 		
 		ContextGenerator cg = ContextGenerator.getInstance();
-		cg.generatePaths();
 		TypeGenerator.getInstance().setupAssignmentReferences();
 		TypeGenerator.getInstance().generateFxmlForTypes(name);
-		AssignmentGenerator.getInstance().doSetup();
 		
 		ScreenEcoreGenerator seg = new ScreenEcoreGenerator();
 		seg.generateEcoreForScreen(name);

@@ -51,30 +51,30 @@ public class ListGenerator {
 	
 	public void createLists() {
 		
-		int PosOfListViewName = 0;
-		for (EObject mapping : mappings) {
-			
-			boolean isList = (boolean) mapping.eGet(utils.mIsListFeature);
-			if (isList) {
-				
-				String name = listViewNames.get(PosOfListViewName);
-				mapping.eSet(utils.mLayoutIdFeature, name);
-				
-				if (isSimpleList(mapping)) {
-					handleSimpleList(mapping, name);
-				} else {
-					//handle advanced list
-				}
-				PosOfListViewName++;
-				
-			}
-			
-		}
-		
-		File f = new File(Constants.GENERATED_DIRECTORY + "ScreenNavigatorControllerfifthscreen.xtend");
-		if (f.exists()) {
-			writeFile(Constants.GENERATED_DIRECTORY + "ScreenNavigatorControllerfifthscreen.xtend", getModifiedFileContents(f));
-		}
+//		int PosOfListViewName = 0;
+//		for (EObject mapping : mappings) {
+//			
+//			boolean isList = (boolean) mapping.eGet(utils.mIsListFeature);
+//			if (isList) {
+//				
+//				String name = listViewNames.get(PosOfListViewName);
+//				mapping.eSet(utils.mLayoutIdFeature, name);
+//				
+//				if (isSimpleList(mapping)) {
+//					handleSimpleList(mapping, name);
+//				} else {
+//					//handle advanced list
+//				}
+//				PosOfListViewName++;
+//				
+//			}
+//			
+//		}
+//		
+//		File f = new File(Constants.GENERATED_DIRECTORY + "ScreenNavigatorControllerfifthscreen.xtend");
+//		if (f.exists()) {
+//			writeFile(Constants.GENERATED_DIRECTORY + "ScreenNavigatorControllerfifthscreen.xtend", getModifiedFileContents(f));
+//		}
 		
 	}
 	
@@ -120,12 +120,12 @@ public class ListGenerator {
 	 */
 	private boolean isSimpleList(EObject listMapping) {
 		
-		EList<EObject> childMappings = (EList<EObject>) listMapping.eGet(utils.mMappingsFeature);
-		EObject firstMapping = childMappings.get(0);
-		if (firstMapping.eGet(utils.mValueFeature) != null) {
-			return true;
-		}
-		
+//		EList<EObject> childMappings = (EList<EObject>) listMapping.eGet(utils.mMappingsFeature);
+//		EObject firstMapping = childMappings.get(0);
+//		if (firstMapping.eGet(utils.mValueFeature) != null) {
+//			return true;
+//		}
+//		
 		return false;
 		
 	}
