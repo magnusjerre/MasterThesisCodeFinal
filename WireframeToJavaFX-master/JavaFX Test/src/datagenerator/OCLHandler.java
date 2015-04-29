@@ -25,7 +25,7 @@ public class OCLHandler {
 			Query query = ocl.createQuery(queryExpression);
 			return query.evaluate(instanceRoot);
 		} catch (ParserException e) {
-			e.printStackTrace();
+			System.out.println(String.format("Error in parsing ocl on instance. The instance might not currently be set but will later in the execution. %s", e.getLocalizedMessage()));
 		}
 		
 		return null;

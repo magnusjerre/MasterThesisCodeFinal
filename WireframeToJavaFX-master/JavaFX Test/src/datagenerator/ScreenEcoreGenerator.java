@@ -1,6 +1,7 @@
 package datagenerator;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -15,6 +16,8 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import application.Constants;
 
@@ -27,6 +30,8 @@ public class ScreenEcoreGenerator {
 	private int counter;
 	private String ASSIGNMENT_PREFIX = "a";
 	private String TYPE_PREFIX = "Type";
+	private EPackage screenPackage;
+	private ResourceSet resSet;
 	
 	public ScreenEcoreGenerator() {
 		
@@ -41,12 +46,17 @@ public class ScreenEcoreGenerator {
 			screenName = screenName.replace(".screen", "");
 		}
 		
+		
 		EClass screenClass = EcoreFactory.eINSTANCE.createEClass();
 		screenClass.setName(screenName);
 		
-		addRootContextsTo(screenClass);
+		screenPackage = createScreenPackage(screenName, screenClass);
 		
-		addContextsTo(screenClass);
+		resSet = new ResourceSetImpl();
+		resSet.getPackageRegistry().put(screenPackage.getNsURI(), screenPackage);
+		resSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+		resSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+		addAllContextsTo(screenClass);
 		
 		for (EObject assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
 			
@@ -61,9 +71,6 @@ public class ScreenEcoreGenerator {
 			}
 			
 		}
-		
-		
-		EPackage screenPackage = createScreenPackage(screenName, screenClass);
 		
 		addTypesToPackage(screenPackage);
 		
@@ -176,55 +183,94 @@ public class ScreenEcoreGenerator {
 		screenPackage.getEClassifiers().add(screenClass);
 		return screenPackage;
 	}
-
-	private void addContextsTo(EClass screenClass) {
-		for (EObject context : ContextGenerator.getInstance().contextsInOrder) {
+	
+	private void addAllContextsTo(EClass screenClass) {
+		
+		List<EObject> allContexts = (List<EObject>) ContextGenerator.getInstance().getAllContexts();
+		
+		while (screenClass.getEStructuralFeatures().size() != allContexts.size()) {
 			
-			if (ContextGenerator.getInstance().contexts.contains(context)) {
-				EReference contextRef = EcoreFactory.eINSTANCE.createEReference();
-				String refName = (String) context.eGet(utils.c2NameFeature);
-				contextRef.setName(refName);
+			for (EObject eObject : allContexts) {
+				String name = (String) eObject.eGet(utils.c2NameFeature);
+				if (!containsEStructuralFeature(name, screenClass)) {
+					String statement = (String) eObject.eGet(utils.c2StatementFeature);
+					
+					EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+					eAnnotation.setSource(ANNOTATION_SOURCE);
+					
+					if (statement.startsWith("/")) {
+						Resource resource = utils.resourceSet.getResource(URI.createFileURI(statement), true);
+						EObject value = resource.getContents().get(0);
+						EClass type = value.eClass();
+						
+						EStructuralFeature eFeature = EcoreFactory.eINSTANCE.createEReference();
+						eFeature.setName(name);
+						eFeature.setEType(type);
+						eFeature.getEAnnotations().add(eAnnotation);
+						eAnnotation.getDetails().put("xmiLocation", statement);
+						screenClass.getEStructuralFeatures().add(eFeature);
+					} else {
+						
+						EObject instance = screenPackage.getEFactoryInstance().create(screenClass);
+						populateInstance(instance);
+						
+						Object result = OCLHandler.parseOCLStatement(resSet, instance, statement);
+						if (result != null) {
+							EStructuralFeature eFeature;
+							if (result instanceof EObject) {
+								eFeature = EcoreFactory.eINSTANCE.createEReference();
+								eFeature.setEType(((EObject) result).eClass());
+							} else {
+								eFeature = EcoreFactory.eINSTANCE.createEAttribute();
+								eFeature.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEJavaObject());
+							}
+							eFeature.setName(name);
+							eFeature.getEAnnotations().add(eAnnotation);
+							eAnnotation.getDetails().put("ocl", statement);
+							screenClass.getEStructuralFeatures().add(eFeature);
+						}
+						
+					}
+					
+				}
 				
-				String statement = (String) context.eGet(utils.c2StatementFeature);
-				EAnnotation contextAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				contextAnnotation.setSource(ANNOTATION_SOURCE);
-				contextAnnotation.getDetails().put("ocl", statement);
-				contextRef.getEAnnotations().add(contextAnnotation);
-				
-				
-				@SuppressWarnings("unchecked")
-				EList<EObject> dataList = (EList<EObject>) context.eGet(utils.c2DataFeature);
-				EClass contextClass = dataList.get(0).eClass();
-				contextRef.setEType(contextClass);
-				
-				screenClass.getEStructuralFeatures().add(contextRef);
 			}
+			
 		}
+		
 	}
 
-	private void addRootContextsTo(EClass screenClass) {
-		for (EObject root : ContextGenerator.getInstance().contextsInOrder) {
+	private void populateInstance(EObject instance) {
+		for (EStructuralFeature f : instance.eClass().getEStructuralFeatures()) {
 			
-			if (ContextGenerator.getInstance().rootContexts.contains(root)) {
-				EReference rootRef = EcoreFactory.eINSTANCE.createEReference();
-				String refName = (String) root.eGet(utils.c2NameFeature);	//left side of equals statement
-				rootRef.setName(refName);
+			if (f.getEAnnotation(ANNOTATION_SOURCE).getDetails().get("xmiLocation") != null) {
+				String location = f.getEAnnotation(ANNOTATION_SOURCE).getDetails().get("xmiLocation");
 				
-				String xmiLocation = (String) root.eGet(utils.c2StatementFeature);
-				EAnnotation rootAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				rootAnnotation.setSource(ANNOTATION_SOURCE);
-				rootAnnotation.getDetails().put("xmiLocation", xmiLocation);
-				rootRef.getEAnnotations().add(rootAnnotation);
-				
-				@SuppressWarnings("unchecked")
-				EList<EObject> dataList = (EList<EObject>) root.eGet(utils.c2DataFeature);	//Requires the model to have already been read...
-				EClass rootClass = dataList.get(0).eClass();
-				rootRef.setEType(rootClass);
-				
-				screenClass.getEStructuralFeatures().add(rootRef);
+				Resource resource = utils.resourceSet.getResource(URI.createFileURI(location), true);
+				EObject value = resource.getContents().get(0);
+				instance.eSet(f, value);
+			} else {
+				String ocl = f.getEAnnotation(ANNOTATION_SOURCE).getDetails().get("ocl");
+				Object result = OCLHandler.parseOCLStatement(resSet, instance, ocl);
+				instance.eSet(f, result);
 			}
 			
 		}
+	}
+	
+	
+	private boolean containsEStructuralFeature(String name, EClass screenClass) {
+
+		for (EStructuralFeature eStructuralFeature : screenClass.getEStructuralFeatures()) {
+			
+			if (eStructuralFeature.getName().equals(name)) {
+				return true;
+			}
+			
+		}
+		
+		return false;
+		
 	}
 	
 	private boolean isJavaObjectContainerClass(EObject eObject) {
