@@ -54,17 +54,21 @@ public class ScreenEcoreGenerator {
 		resSet.getPackageRegistry().put(screenPackage.getNsURI(), screenPackage);
 		resSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
 		resSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-		addAllContextsTo(screenClass);
 		
+		addContextsTo(screenClass);
 		
-		for (EObject assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
-			addAssignmentTo(screenClass, assignment);
-		}
+		addAssignmentsTo(screenClass);
 		
-		addTypesToPackage(screenPackage);
+		addComponentsToPackage(screenPackage);
 		
 		saveAsResource(screenPackage);
 		
+	}
+
+	private void addAssignmentsTo(EClass screenClass) {
+		for (EObject assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
+			addAssignmentTo(screenClass, assignment);
+		}
 	}
 	
 	private void addAssignmentTo(EClass screenClass, EObject assignment) {
@@ -109,48 +113,51 @@ public class ScreenEcoreGenerator {
 		
 	}
 
-	private void addTypesToPackage(EPackage ePackage) {
+	private void addComponentsToPackage(EPackage ePackage) {
 		
-		for (EObject type : TypeGenerator.getInstance().list.getElementsIterable()) {
+		for (EObject component : TypeGenerator.getInstance().list.getElementsIterable()) {
 			
-			String typeName = createPrefixedComponentNameFromName((String) type.eGet(utils.tNameFeature));
-			EClass typeClass = EcoreFactory.eINSTANCE.createEClass();
-			typeClass.setName(typeName);
+			String typeName = createPrefixedComponentNameFromName((String) component.eGet(utils.tNameFeature));
+			EClass componentClass = EcoreFactory.eINSTANCE.createEClass();
+			componentClass.setName(typeName);
 			
-			ePackage.getEClassifiers().add(typeClass);
+			ePackage.getEClassifiers().add(componentClass);
 			
 			@SuppressWarnings("unchecked")
-			EList<EObject> assignmentsForType = (EList<EObject>) type.eGet(utils.tAssignmentsFeature);
+			EList<EObject> assignmentsForType = (EList<EObject>) component.eGet(utils.tAssignmentsFeature);
 			for (EObject assignment : assignmentsForType) {
-				
-				EStructuralFeature feature;
-				String assignmentName = createAssignmentNameFromStatement((String) assignment.eGet(utils.a2StatementFeature));
-				
-				EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				annotation.setSource(ANNOTATION_SOURCE);
-				annotation.getDetails().put("ocl", (String) assignment.eGet(utils.a2StatementFeature));
-				Widget aWidget = (Widget) assignment.eGet(utils.a2WidgetFeature);
-				annotation.getDetails().put("layoutId", "#" + aWidget.getId());
-				
-				String useComponent = (String) assignment.eGet(utils.a2UseComponentNamedFeature); 
-				if (useComponent == null) {	//No type is used
-					feature = EcoreFactory.eINSTANCE.createEAttribute();
-					feature.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEJavaObject());
-				} else {
-					feature = EcoreFactory.eINSTANCE.createEReference();
-					feature.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEObject());
-					annotation.getDetails().put("useComponent", createPrefixedComponentNameFromName(useComponent));
-				}
-				
-				feature.setName(assignmentName);
-					
-				feature.getEAnnotations().add(annotation);
-				typeClass.getEStructuralFeatures().add(feature);
-				
+				addAssignmentToComponent(componentClass, assignment);
 			}
 			
 		}
 		
+	}
+	
+	private void addAssignmentToComponent(EClass componentClass, EObject assignment) {
+		
+		EStructuralFeature feature;
+		String assignmentName = createAssignmentNameFromStatement((String) assignment.eGet(utils.a2StatementFeature));
+		
+		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		annotation.setSource(ANNOTATION_SOURCE);
+		annotation.getDetails().put("ocl", (String) assignment.eGet(utils.a2StatementFeature));
+		Widget aWidget = (Widget) assignment.eGet(utils.a2WidgetFeature);
+		annotation.getDetails().put("layoutId", "#" + aWidget.getId());
+		
+		String useComponent = (String) assignment.eGet(utils.a2UseComponentNamedFeature); 
+		if (useComponent == null) {	//No type is used
+			feature = EcoreFactory.eINSTANCE.createEAttribute();
+			feature.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEJavaObject());
+		} else {
+			feature = EcoreFactory.eINSTANCE.createEReference();
+			feature.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEObject());
+			annotation.getDetails().put("useComponent", createPrefixedComponentNameFromName(useComponent));
+		}
+		
+		feature.setName(assignmentName);
+		
+		feature.getEAnnotations().add(annotation);
+		componentClass.getEStructuralFeatures().add(feature);
 		
 	}
 
@@ -176,7 +183,7 @@ public class ScreenEcoreGenerator {
 		return screenPackage;
 	}
 	
-	private void addAllContextsTo(EClass screenClass) {
+	private void addContextsTo(EClass screenClass) {
 		
 		List<EObject> allContexts = (List<EObject>) ContextGenerator.getInstance().getAllContexts();
 		
