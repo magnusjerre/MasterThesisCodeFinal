@@ -1,1 +1,1 @@
-This package contains the files generated for the prototype
+This package contains the files generated for the prototype. All files in this package, except for readme.md and .gitignore can be safely deleted.
