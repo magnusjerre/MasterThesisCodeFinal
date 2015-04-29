@@ -108,9 +108,9 @@ class Generator {
 	HashMap<Master, Pair<Arrow, Widget>> masterMap = null
 	
 	LayoutStyle layoutStyle = null
-	int offsetX = 0
-	int offsetY = 0
 	int listViewCounter = 1
+	int verticalBorder = 0
+	int horizontalBorder = 0
 
 	def HashMap<Long, String> getNavigatorMap() {
 		return navigatorMap
@@ -445,6 +445,8 @@ class Generator {
 		}
 		builder.setPaneWidth(maxHorizontal)
 		builder.setPaneHeight(maxVertical)
+		verticalBorder = maxVertical
+		horizontalBorder = maxHorizontal
 		
 		if (layoutStyle == LayoutStyle.GridPane){
 			generateGrid(screen, fileName)
@@ -586,12 +588,16 @@ class Generator {
 	}
 	
 	def dispatch void generateFxml(WidgetGroup widgetGroup) {
+		if (widgetGroup.x > horizontalBorder || widgetGroup.y > verticalBorder) {
+			return
+		}
+		 
 		if (widgetGroup.name == "list") {
 			val fxid = ("listView" + listViewCounter) as String
 			(builder += "ListView") => [
 				it += "fx:id" -> fxid
-				it += "layoutX" -> widgetGroup.x + offsetX
-				it += "layoutY" -> widgetGroup.y + offsetY
+				it += "layoutX" -> widgetGroup.x
+				it += "layoutY" -> widgetGroup.y
 				it += "prefWidth" -> widgetGroup.measuredWidth
 				it += "prefHeight" -> widgetGroup.measuredHeight
 			]
@@ -615,8 +621,8 @@ class Generator {
 
 			(builder += "Button" ) => [
 				it += "text" -> escapeText(widget.text.replace("\\n", "\n"))
-				it += "layoutX" -> widget.x + offsetX
-				it += "layoutY" -> widget.y + offsetY
+				it += "layoutX" -> widget.x
+				it += "layoutY" -> widget.y
 				it += "style" -> "-fx-base:" + widget.background + ";"
 				it += "id" -> widget.id
 				it += "alignment" -> if (widget.textAlignment.toString.toUpperCase == "CENTER") "CENTER" else "CENTER_" + widget.textAlignment.toString.toUpperCase
@@ -670,8 +676,8 @@ class Generator {
 		if (builder.layoutType == LayoutStyle.AnchorPane) {
 
 			(builder += "CheckBox" ) => [
-				it += "layoutX" -> widget.x + offsetX
-				it += "layoutY" -> widget.y + offsetY
+				it += "layoutX" -> widget.x
+				it += "layoutY" -> widget.y
 				it += "text" -> escapeText(widget.text.replace("\\n", "\n"))
 				it += "selected" -> if(widget.selected) "true" else "false"
 				it += "onAction" -> "#handleActionEvent" + widget.id
@@ -716,8 +722,8 @@ class Generator {
 		if (builder.layoutType == LayoutStyle.AnchorPane) {
 
 			(builder += "RadioButton" ) => [
-				it += "layoutX" -> widget.x + offsetX
-				it += "layoutY" -> widget.y + offsetY
+				it += "layoutX" -> widget.x
+				it += "layoutY" -> widget.y
 				it += "text" -> escapeText(widget.text.replace("\\n", "\n"))
 				it += "selected" -> if(widget.selected) "true" else "false"
 				it += "onAction" -> "#handleActionEvent" + widget.id
@@ -785,8 +791,8 @@ class Generator {
 
 			(builder += "ImageView" ) => [
 				it += "id" -> widget.id
-				it += "layoutX" -> widget.x + offsetX
-				it += "layoutY" -> widget.y + offsetY
+				it += "layoutX" -> widget.x
+				it += "layoutY" -> widget.y
 				if(widget.rotation != null) it += "rotate" -> widget.rotation;
 				if(widget.HFlip) it += "scaleX" -> "-1"
 				if(widget.VFlip) it += "scaleY" -> "-1"
@@ -864,8 +870,8 @@ class Generator {
 		if (builder.layoutType == LayoutStyle.AnchorPane) {
 
 			(builder += "Label") => [
-				it += "layoutX" -> widget.x + offsetX
-				it += "layoutY" -> widget.y + offsetY
+				it += "layoutX" -> widget.x
+				it += "layoutY" -> widget.y
 				it += "onMousePressed" -> "#handleMouseEvent" + widget.id
 				if(widget.foreground != null) it += "textFill" -> widget.foreground
 				if(widget.rotation != null) it += "rotate" -> widget.rotation
@@ -927,8 +933,8 @@ class Generator {
 		if (builder.layoutType == LayoutStyle.AnchorPane) {
 
 			(builder += "TextField") => [
-				it += "layoutX" -> widget.x + offsetX
-				it += "layoutY" -> widget.y + offsetY
+				it += "layoutX" -> widget.x
+				it += "layoutY" -> widget.y
 				it += "prefWidth" -> widget.measuredWidth
 				it += "text" -> escapeText(widget.text.replace("\\n", "\n"))
 				it += "id" -> widget.id
@@ -974,8 +980,8 @@ class Generator {
 		if (builder.layoutType == LayoutStyle.AnchorPane) {
 
 			(builder += "TextArea") => [
-				it += "layoutX" -> widget.x + offsetX
-				it += "layoutY" -> widget.y + offsetY
+				it += "layoutX" -> widget.x
+				it += "layoutY" -> widget.y
 				it += "prefWidth" -> widget.measuredWidth
 				it += "prefHeight" -> widget.measuredHeight
 				it += "text" -> escapeText(widget.text.replace("\\n", "\n"))
@@ -1022,8 +1028,8 @@ class Generator {
 		(builder += "VBox" ) => [ vbox |
 			
 			if (builder.layoutType == LayoutStyle.AnchorPane){
-				vbox += "layoutX" -> widget.x + offsetX
-				vbox += "layoutY" -> widget.y + offsetY
+				vbox += "layoutX" -> widget.x
+				vbox += "layoutY" -> widget.y
 			} else if (builder.layoutType == LayoutStyle.GridPane) {
 				val col1 = columns.keySet.indexOf(widget.x)
 				val col2 = columns.keySet.indexOf(widget.x + widget.measuredWidth)
@@ -1161,8 +1167,8 @@ class Generator {
 
 			val id = widget.id;
 			(builder += "Separator") => [
-				it += "layoutX" -> widget.x + offsetX
-				it += "layoutY" -> widget.y + offsetY
+				it += "layoutX" -> widget.x
+				it += "layoutY" -> widget.y
 				it += "prefWidth" -> widget.measuredWidth
 				it += "id" -> id
 			]
@@ -1199,8 +1205,8 @@ class Generator {
 
 			val id = widget.id;
 			(builder += "Separator") => [
-				it += "layoutX" -> widget.x + offsetX
-				it += "layoutY" -> widget.y + offsetY
+				it += "layoutX" -> widget.x
+				it += "layoutY" -> widget.y
 				it += "prefHeight" -> widget.measuredHeight
 				it += "orientation" -> "VERTICAL"
 				it += "id" -> id
