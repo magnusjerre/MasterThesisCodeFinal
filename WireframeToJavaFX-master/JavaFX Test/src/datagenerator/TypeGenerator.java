@@ -203,17 +203,25 @@ public class TypeGenerator {
 				
 				//Assume it is a label for now
 				String nodeType = "Label";
-				String height = "minHeight", width = "minWidth"; 
+				String height = "minHeight", width = "minWidth";
 				if (widget instanceof Image) {
 					nodeType = "ImageView";
 					height = "fitHeight";
 					width = "fitWidth";
-				}
+				} 
 				
 				String element = String.format(
 						"        <%s layoutX=\"%d\" layoutY=\"%d\" %s=\"%d\" %s=\"%d\" fx:id=\"%d\" />" +
-						"\n",
-						nodeType, widget.getX(), widget.getY(), height, widget.getMeasuredHeight(), width, widget.getMeasuredWidth(), widget.getId().intValue());
+								"\n",
+								nodeType, widget.getX(), widget.getY(), height, widget.getMeasuredHeight(), width, widget.getMeasuredWidth(), widget.getId().intValue());
+				
+				if (widget instanceof WidgetGroup) {
+					element = String.format(
+							"        <Group layoutX=\"%d\" layoutY=\"%d\" fx:id=\"%d\" />" +
+									"\n",
+									widget.getX(), widget.getY(), widget.getId().intValue());
+				}
+				
 				fxmlBuidler.append(element);
 				
 			}

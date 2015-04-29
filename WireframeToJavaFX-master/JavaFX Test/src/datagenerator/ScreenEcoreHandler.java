@@ -17,6 +17,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -38,6 +39,7 @@ public class ScreenEcoreHandler {
 	
 	public ResourceSet resourceSet;
 	public EPackage ePackage;
+	public EFactory factory;
 	public EObject instance;
 	public String fileName;
 	
@@ -54,7 +56,7 @@ public class ScreenEcoreHandler {
 		Resource firstScreen = resourceSet.getResource(uri, true);
 		ePackage = (EPackage) firstScreen.getContents().get(0);
 		
-		EFactory factory = ePackage.getEFactoryInstance();
+		factory = ePackage.getEFactoryInstance();
 		EClass screenClass = (EClass) ePackage.getEClassifiers().get(0);
 		instance = factory.create(screenClass);
 		
@@ -80,54 +82,80 @@ public class ScreenEcoreHandler {
 	}
 	
 	public void assignValues(Parent root) {
-		
 		for (EStructuralFeature feature : instance.eClass().getEStructuralFeatures()) {
+			assignComponents(root, instance, feature);
 			
-			EAnnotation annotation = feature.getEAnnotation("wireframe");
+		}
+		
+	}
+	
+	public void assignComponents(Node node, EObject instance, EStructuralFeature feature) {
+		
+		EAnnotation iAnnotation = feature.getEAnnotation("wireframe");
+		
+		String iLayoutId = iAnnotation.getDetails().get("layoutId");
+		if (iLayoutId == null) {
+			return;
+		}
+		
+		String iUseComponent = iAnnotation.getDetails().get("useComponent");
+		if (iUseComponent == null) {
+			Node finalNode = node.lookup(iLayoutId);
+			handleResultCorrectly(finalNode, instance.eGet(feature));
+		} else {
 			
-			String useComponent = annotation.getDetails().get("useComponent");
-			if (useComponent != null) {
-				File file = new File(fileName);
-				String screenName = file.getName().replace(".ecore", "");
-				String location = Constants.GENERATED_DIRECTORY + screenName + "-" + useComponent + ".fxml";
-				String id = annotation.getDetails().get("layoutId");
-				Group node = (Group) root.lookup(id);
-				try {
-					URL url = new File(location).toURI().toURL();
-					Node typeNode = FXMLLoader.load(url);
+			EObject instanceFromFeature = (EObject) instance.eGet(feature);
+			
+			//Create and populate the component used 
+			EClass iUseComponentClass = (EClass) ePackage.getEClassifier(iUseComponent);
+			EObject componentInstance = factory.create(iUseComponentClass);
+			for (EStructuralFeature iuccFeature : componentInstance.eClass().getEStructuralFeatures()) {
+				
+				EAnnotation iuccAnnotation = iuccFeature.getEAnnotation("wireframe");
+				String iuccOcl = iuccAnnotation.getDetails().get("ocl");
+				Object result = OCLHandler.parseOCLStatement(resourceSet, instanceFromFeature, iuccOcl);
+				componentInstance.eSet(iuccFeature, result);
+				
+			}
+			
+			try {
+				String componentFxmlLocation = getFxmlLocationForComponent(iUseComponent);
+				URL url = new File(componentFxmlLocation).toURI().toURL();
+				Node componentNode = FXMLLoader.load(url);
+				
+				for (EStructuralFeature cFeature : componentInstance.eClass().getEStructuralFeatures()) {
 					
-					EClass typeClass = (EClass) ePackage.getEClassifier(useComponent);
-					for (EStructuralFeature tcFeature : typeClass.getEStructuralFeatures()) {
-						
-						EAnnotation annot = tcFeature.getEAnnotation("wireframe");
-						String ocl = annot.getDetails().get("ocl");
-						String layoutId = annot.getDetails().get("layoutId");
-						
-						Node subNode = typeNode.lookup(layoutId);
-						Object result = OCLHandler.parseOCLStatement(resourceSet, (EObject) instance.eGet(feature), ocl);
-						handleResultCorrectly(subNode, result);
-						
-					}
+					String cLayoutId = cFeature.getEAnnotation("wireframe").getDetails().get("layoutId");
+					Node subComponentNode = componentNode.lookup(cLayoutId);
 					
-					node.getChildren().add(typeNode);
+					assignComponents(subComponentNode, componentInstance, cFeature);
 					
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 				
+				//The node provided in the method is the parent node for the group/anchorpane node we want to add the child to
+				Node nodeToAddTo = node.lookup(feature.getEAnnotation("wireframe").getDetails().get("layoutId"));
 				
-			} else {
-				String id = annotation.getDetails().get("layoutId");
-				if (id != null) {
-					Node node = root.lookup(id);
-					handleResultCorrectly(node, instance.eGet(feature));
+				if (nodeToAddTo instanceof Group) {
+					((Group) nodeToAddTo).getChildren().add(componentNode);
+				} else if (nodeToAddTo instanceof Pane) {
+					((Pane) nodeToAddTo).getChildren().add(componentNode);
 				}
+				
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			
 		}
 		
+	}
+
+	private String getFxmlLocationForComponent(String iUseComponent) {
+		File componentFxmlFile = new File(fileName);
+		String screenName = componentFxmlFile.getName().replace(".ecore", "");
+		String componentFxmlLocation = String.format("%s%s-%s.fxml", Constants.GENERATED_DIRECTORY, screenName, iUseComponent);
+		return componentFxmlLocation;
 	}
 	
 	private void handleResultCorrectly(Node node, Object result) {
