@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import javafx.fxml.FXMLLoader;
@@ -43,6 +44,8 @@ public class ScreenEcoreHandler {
 	public EObject instance;
 	public String fileName;
 	
+	public static final String ANNOTATION_SOURCE = "wireframe";
+	
 	public ScreenEcoreHandler(String fileName) {
 		
 		this.fileName = fileName;
@@ -59,7 +62,12 @@ public class ScreenEcoreHandler {
 		factory = ePackage.getEFactoryInstance();
 		EClass screenClass = (EClass) ePackage.getEClassifiers().get(0);
 		instance = factory.create(screenClass);
+
+		populateInstance();
 		
+	}
+
+	private void populateInstance() {
 		for (EStructuralFeature feature : instance.eClass().getEStructuralFeatures()) {
 			
 			EAnnotation annotation = feature.getEAnnotation("wireframe");
@@ -74,11 +82,18 @@ public class ScreenEcoreHandler {
 			String ocl = annotation.getDetails().get("ocl");
 			if (ocl != null) {
 				Object result = OCLHandler.parseOCLStatement(resourceSet, instance, ocl);
-				instance.eSet(feature, result);
+				if (feature.isMany()) {
+					@SuppressWarnings("unchecked")
+					Collection<Object> coll = (Collection<Object>) instance.eGet(feature);
+					@SuppressWarnings("unchecked")
+					Collection<Object> resColl = (Collection<Object>) result;
+					coll.addAll(resColl);
+				} else {
+					instance.eSet(feature, result);
+				}
 			}
 			
 		}
-		
 	}
 	
 	public void assignValues(Parent root) {
