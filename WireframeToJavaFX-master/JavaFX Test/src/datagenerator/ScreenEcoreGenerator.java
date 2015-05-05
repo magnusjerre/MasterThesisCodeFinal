@@ -244,9 +244,9 @@ public class ScreenEcoreGenerator {
 		if (classifier instanceof CollectionTypeImpl) {
 			EClassifier elementType = ((CollectionTypeImpl) classifier).getElementType();
 			
-			if (isEDataType(classifier)) {
+			if (isEDataType(elementType)) {
 				feature = EcoreFactory.eINSTANCE.createEAttribute();
-				EDataType eDataType = getEDataTypeFromClassifier(classifier);
+				EDataType eDataType = getEDataTypeFromClassifier(elementType);
 				feature.setEType(eDataType);
 			} else {
 				feature = EcoreFactory.eINSTANCE.createEReference();
