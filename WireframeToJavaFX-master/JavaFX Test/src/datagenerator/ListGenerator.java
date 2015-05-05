@@ -18,12 +18,10 @@ public class ListGenerator {
 	
 	private static ListGenerator instance;
 	public ArrayList<EObject> mappings;
-	private DataUtils utils;
 	
 	public ArrayList<String> listViewNames;
 	
 	private ListGenerator() {
-		utils = DataUtils.getInstance();
 		listViewNames = new ArrayList<String>();
 	}
 	

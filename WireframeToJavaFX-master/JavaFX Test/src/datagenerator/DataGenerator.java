@@ -21,7 +21,6 @@ public class DataGenerator {
 	
 	public void clear() {
 		
-		DataUtils.getInstance().clear();
 		ContextGenerator.getInstance().clear();
 		TypeGenerator.getInstance().clear();
 		AssignmentGenerator.getInstance().clear();

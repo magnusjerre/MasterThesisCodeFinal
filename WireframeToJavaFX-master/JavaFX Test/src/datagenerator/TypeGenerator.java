@@ -5,8 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 import application.Constants;
@@ -17,19 +15,21 @@ import com.wireframesketcher.model.Master;
 import com.wireframesketcher.model.Widget;
 import com.wireframesketcher.model.WidgetGroup;
 
+import data.Assignment;
+import data.DataFactory;
+import data.ViewComponent;
+
 public class TypeGenerator {
 	
 	private static TypeGenerator instance = null;
-	private DataUtils utils;
 	
-	public DoubleList<EObject, Master> list;
+	public DoubleList<ViewComponent, Master> theList;
 	public HashMap<Master, Pair<Arrow, Widget>> masterMap;
 	
 	
 	private TypeGenerator() {
 		
-		utils = DataUtils.getInstance();
-		list = new DoubleList<EObject, Master>();
+		theList = new DoubleList<ViewComponent, Master>();
 		
 	}
 	
@@ -45,7 +45,7 @@ public class TypeGenerator {
 	public void clear() {
 		
 		masterMap = null;
-		list.clear();
+		theList.clear();
 		
 	}
 	
@@ -63,13 +63,11 @@ public class TypeGenerator {
 		String name = split[0];
 		String type = split[1];
 
-		EObject typeObject = utils.dataFactory.create(utils.typeClass);
-		typeObject.eSet(utils.tNameFeature, name);
-		typeObject.eSet(utils.tType, type);
-		typeObject.eSet(utils.tWidgetFeature, masterMap.get(master).getValue());
-		//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
-		
-		list.add(typeObject, master);
+		ViewComponent viewComponent = DataFactory.eINSTANCE.createViewComponent();
+		viewComponent.setName(name);
+		viewComponent.setExpectedType(type);
+		viewComponent.setWidget(masterMap.get(master).getValue());
+		theList.add(viewComponent, master);
 
 	}
 	
@@ -104,31 +102,38 @@ public class TypeGenerator {
 	
 	public void setupAssignmentReferences() {
 		
-		if (list.size() == 0) {
+		if (theList.size() == 0) {
 			return;
 		}
 		
-		for (EObject assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
+		for (Assignment assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
 			
-			if (isPartOfType(assignment)) {
-				EObject type = getTypeForAssignment(assignment);
-				setupConnection(assignment, type);
+			if (shouldBePartOfViewComponent(assignment)) {
+				ViewComponent component = getComponentForAssignment(assignment);
+				setupConntection(assignment, component);
 			}
 			
 		}
 		
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void setupConnection(EObject assignment, EObject type) {
+	private boolean shouldBePartOfViewComponent(Assignment assignment) {
+		
+		if (getComponentForAssignment(assignment) == null) {
+			return false;
+		}
+		return true;
+	}
 
-		((EList<EObject>)type.eGet(utils.tAssignmentsFeature)).add(assignment);
-		assignment.eSet(utils.a2PartOfComponentFeature, type);
-		assignment.eSet(utils.a2WidgetFeature, getCorrectWidget(assignment));
+	private void setupConntection(Assignment assignment, ViewComponent component) {
+		
+		component.getAssignments().add(assignment);
+		assignment.setPartOfComponent(component);
+		assignment.setWidget(getCorrectWidget2(assignment));
 		
 	}
 	
-	private Widget getCorrectWidget(EObject assignment) {
+	private Widget getCorrectWidget2(Assignment assignment) {
 		
 		Pair<Arrow, Widget> assignmentPair = getPair(assignment, AssignmentGenerator.getInstance().assignments);
 		Arrow arrow = assignmentPair.getKey();
@@ -136,16 +141,15 @@ public class TypeGenerator {
 		return WidgetUtils.getSecondShallowestWidget(arrow, widget);
 		
 	}
-	
-	private Pair<Arrow, Widget> getPair(EObject eObject, DoubleList<EObject, Master> doubleList) {
-		
-		return masterMap.get(doubleList.getMaster(eObject));
+
+	private Pair<Arrow, Widget> getPair(Assignment assignment, DoubleList<Assignment, Master> newAssignments) {
+
+		return masterMap.get(newAssignments.getMaster(assignment));
 		
 	}
 
+	private ViewComponent getComponentForAssignment(Assignment assignment) {
 
-	private EObject getTypeForAssignment(EObject assignment) {
-		
 		if (masterMap == null) {
 			return null;
 		}
@@ -154,7 +158,7 @@ public class TypeGenerator {
 		Pair<Arrow, Widget> pairForAssignment = masterMap.get(assignmentMaster);
 		Master correctMaster = null;
 		
-		for (Master type : list.getMasterIterable()) {
+		for (Master type : theList.getMasterIterable()) {
 			
 			Widget widget = masterMap.get(type).getValue();
 			if (widget.equals(pairForAssignment.getValue())) {
@@ -168,33 +172,7 @@ public class TypeGenerator {
 			return null;
 		}
 		
-		return list.getElement(correctMaster);
-		
-	}
-	
-	protected EObject findTypeNamed(String name) {
-		
-		for (EObject type : list.getElementsIterable()) {
-			
-			String typeName = (String) type.eGet(utils.tNameFeature);
-			if (typeName.equals(name)) {
-				return type;
-			}
-			
-		}
-		
-		throw new RuntimeException(String.format("Couldn't find Type with name %s", name));
-		
-	}
-	
-	
-	protected boolean isPartOfType(EObject assignment) {
-		
-		if (getTypeForAssignment(assignment) == null) {
-			return false;
-		}
-
-		return true;
+		return theList.getElement(correctMaster);
 		
 	}
 	
@@ -204,9 +182,9 @@ public class TypeGenerator {
 	 */
 	public void generateFxmlForTypes(String screenName) {
 		
-		for (EObject type : list.getElementsIterable()) {
+		for (ViewComponent type : theList.getElementsIterable()) {
 			
-			String fileName = String.format("%s-Type%s.fxml", screenName, (String) type.eGet(utils.tNameFeature));
+			String fileName = String.format("%s-Type%s.fxml", screenName, type.getName());
 			StringBuilder fxmlBuidler = new StringBuilder();
 			fxmlBuidler.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
 					"\n" + 
@@ -219,7 +197,7 @@ public class TypeGenerator {
 					"\n" +
 					"\n");
 			
-			WidgetGroup widgetGroup = (WidgetGroup) type.eGet(utils.tWidgetFeature);
+			WidgetGroup widgetGroup = (WidgetGroup) type.getWidget();
 			fxmlBuidler.append(String.format(
 					"<AnchorPane xmlns:fx=\"http://javafx.com/fxml/1\" prefHeight=\"%d\" prefWidth=\"%d\" >\n" + 
 							"    <children>\n", 
@@ -264,7 +242,6 @@ public class TypeGenerator {
 				fw.write(fxmlBuidler.toString());
 				fw.flush();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 				
@@ -272,7 +249,6 @@ public class TypeGenerator {
 					try {
 						fw.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

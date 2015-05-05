@@ -1,15 +1,16 @@
 package datagenerator;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
+import data.Context;
+import data.DataFactory;
 
 public class ContextGenerator {
 	
 	private static ContextGenerator instance = null;
-	private DataUtils utils;
 
-	public ArrayList<EObject> newContextsList;
+	public List<Context> contexts;
 	
 	public static ContextGenerator getInstance() {
 		
@@ -22,14 +23,13 @@ public class ContextGenerator {
 	
 	private ContextGenerator() {
 		
-		utils = DataUtils.getInstance();
-		newContextsList = new ArrayList<EObject>();
+		contexts = new ArrayList<Context>();
+		
 	}
 
 	public void clear() {
 		
-		newContextsList.clear();
-		
+		contexts.clear();
 	}
 	
 	public void generateDecorator(String[] strings) {
@@ -42,17 +42,17 @@ public class ContextGenerator {
 		String[] splitted = line.split(" = ", 2);
 		String name = splitted[0].trim();
 		String specificStatement = splitted[1].trim();
+		
+		Context context = DataFactory.eINSTANCE.createContext();
+		context.setName(name);
+		context.setStatement(specificStatement);
+		contexts.add(context);
 
-		EObject contextObject = utils.dataFactory.create(utils.context2Class);
-		contextObject.eSet(utils.c2NameFeature, name);
-		contextObject.eSet(utils.c2StatementFeature, specificStatement);
-		newContextsList.add(contextObject);
-			
 	}
 	
-	public ArrayList<EObject> getAllContexts() {
+	public List<Context> getAllContexts() {
 		
-		return newContextsList;
+		return contexts;
 		
 	}
 
