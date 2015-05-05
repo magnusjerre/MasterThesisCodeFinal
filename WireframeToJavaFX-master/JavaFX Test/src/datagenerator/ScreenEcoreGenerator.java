@@ -1,7 +1,10 @@
 package datagenerator;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -34,10 +37,13 @@ public class ScreenEcoreGenerator {
 	private EPackage screenPackage;
 	private ResourceSet resSet;
 	
+	private Map<String, Map<String, EClassifier>> classesForXmis;
+	
 	public ScreenEcoreGenerator() {
 		
 		utils = DataUtils.getInstance();
 		counter = 1;
+		classesForXmis = new HashMap<String, Map<String,EClassifier>>();
 		
 	}
 	
@@ -152,7 +158,6 @@ public class ScreenEcoreGenerator {
 	
 	private void addAssignmentToComponent(EClass componentClass, EObject assignment) {
 		
-		EStructuralFeature feature;
 		String assignmentName = createAssignmentNameFromStatement((String) assignment.eGet(utils.a2StatementFeature));
 		
 		EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
@@ -161,13 +166,15 @@ public class ScreenEcoreGenerator {
 		Widget aWidget = (Widget) assignment.eGet(utils.a2WidgetFeature);
 		annotation.getDetails().put("layoutId", "#" + aWidget.getId());
 		
-		String useComponent = (String) assignment.eGet(utils.a2UseComponentNamedFeature); 
-		if (useComponent == null) {	//No type is used
-			feature = EcoreFactory.eINSTANCE.createEAttribute();
-			feature.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEJavaObject());
-		} else {
-			feature = EcoreFactory.eINSTANCE.createEReference();
-			feature.setEType(EcoreFactory.eINSTANCE.getEcorePackage().getEObject());
+		String statement = (String) assignment.eGet(utils.a2StatementFeature);
+		String compType = componentClass.getEAnnotations().get(0).getDetails().get("expectedType");
+		
+		EClassifier expectedComponentClassifier = getClassifierNamed(compType);
+		EClassifier assignmentClassifier = OCLHandler.getClassifierForStatement2(resSet, expectedComponentClassifier, statement);
+		EStructuralFeature feature = createFeatureFromClassifier(assignmentClassifier);
+		
+		String useComponent = (String) assignment.eGet(utils.a2UseComponentNamedFeature);
+		if (useComponent != null) {
 			annotation.getDetails().put("useComponent", createPrefixedComponentNameFromName(useComponent));
 		}
 		
@@ -175,6 +182,19 @@ public class ScreenEcoreGenerator {
 		
 		feature.getEAnnotations().add(annotation);
 		componentClass.getEStructuralFeatures().add(feature);
+		
+	}
+	
+	private EClassifier getClassifierNamed(String name) {
+		
+		for (String key : classesForXmis.keySet()) {
+			for (Entry<String, EClassifier> entry : classesForXmis.get(key).entrySet()) {
+				if (entry.getKey().equals(name)) {
+					return entry.getValue();
+				}
+			}
+		}
+		return null;
 		
 	}
 
@@ -216,6 +236,7 @@ public class ScreenEcoreGenerator {
 					
 					if (statement.startsWith("/")) {
 						Resource resource = utils.resourceSet.getResource(URI.createFileURI(statement), true);
+						addClassesFromResource(statement, resource);
 						EObject value = resource.getContents().get(0);
 						EClass type = value.eClass();
 						
@@ -246,6 +267,27 @@ public class ScreenEcoreGenerator {
 		
 	}
 	
+	private void addClassesFromResource(String resourceName, Resource resource) {
+		
+		Map<String, EClassifier> entry = classesForXmis.get(resourceName);
+		if (entry == null) {
+			entry = new HashMap<String, EClassifier>();
+		
+			for (EObject content : resource.getContents()) {
+				
+				EPackage thePackage = content.eClass().getEPackage();
+				for (EClassifier classifier : thePackage.getEClassifiers()) {
+					entry.put(classifier.getName(), classifier);
+				}
+				
+			}
+			
+			classesForXmis.put(resourceName, entry);
+			
+		}
+		
+	}
+
 	/**
 	 * Creates an EStructuralFeature of either EReference or EAttribute from the given classifier. The classifier can be of three different types:
 	 * CollectionTypeImpl, PrimitiveTypeImpl or EClassImpl. In case of a collection, the type of the elements will be used as the type for the
