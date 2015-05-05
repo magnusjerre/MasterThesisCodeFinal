@@ -51,7 +51,7 @@
   <widgets xsi:type="model:Master" id="23" x="280" y="617" measuredWidth="81" measuredHeight="40">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
     <overrides>
-      <widgets ref="9" width="81" height="40" text="Movie"/>
+      <widgets ref="9" width="81" height="40" text="Movie movie"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="25" x="264" y="188" measuredWidth="81" measuredHeight="49">
@@ -85,7 +85,7 @@
   <widgets xsi:type="model:Master" id="36" x="280" y="433" measuredWidth="81" measuredHeight="40">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
     <overrides>
-      <widgets ref="9" width="81" height="40" text="Actor"/>
+      <widgets ref="9" width="81" height="40" text="actor : Actor"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:WidgetGroup" id="37" x="24" y="160" measuredWidth="153" measuredHeight="65">

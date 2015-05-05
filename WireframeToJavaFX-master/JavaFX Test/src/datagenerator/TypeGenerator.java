@@ -59,15 +59,51 @@ public class TypeGenerator {
 			throw new RuntimeException(String.format("Illegal number of lines in Type decorator. First line states: %s", strings[0]));
 		}
 		
-		String name = strings[0].trim();
+		String[] split = getNameAndType(strings[0]);
+		String name = split[0];
+		String type = split[1];
 
 		EObject typeObject = utils.dataFactory.create(utils.typeClass);
 		typeObject.eSet(utils.tNameFeature, name);
+		typeObject.eSet(utils.tType, type);
 		typeObject.eSet(utils.tWidgetFeature, masterMap.get(master).getValue());
 		//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
 		
 		list.add(typeObject, master);
 
+	}
+	
+	/**
+	 * The first element is the name of the component, the second element is the name of the expected type for the component.
+	 * @param string
+	 * @return
+	 */
+	private String[] getNameAndType(String string) {
+		
+		string = string.trim();
+		
+		String[] split;
+		String name, type;
+		if (string.contains(":")) {	//Type declaration after colon
+			split = string.split(":");
+			name = split[0];
+			type = split[1];
+		} else if (string.contains(" ")) {	//Type declaration before blank space, like normal java programming
+			split = string.split(" ");
+			name = split[1];
+			type = split[0];
+		} else {	//No type declaration
+			split = new String[] {string};
+			name = split[0];
+			type = null;
+		}
+
+		if (split.length == 1) {
+			return new String[]{split[0].trim(), null};
+		}
+		
+		return new String[] {name.trim(), type.trim()};
+		
 	}
 	
 	public void setupAssignmentReferences() {

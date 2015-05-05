@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -20,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -120,6 +122,10 @@ public class ScreenEcoreHandler {
 		} else {
 			
 			EObject instanceFromFeature = (EObject) instance.eGet(feature);
+
+			if (!instanceTypeMatchesComponentExpectedType(instanceFromFeature.eClass(), iUseComponent)) {
+				throw new RuntimeException(String.format("Error! The type from the assignment doesn't match the expected type for the component %s", iUseComponent));
+			}
 			
 			//Create and populate the component used 
 			EClass iUseComponentClass = (EClass) ePackage.getEClassifier(iUseComponent);
@@ -163,6 +169,23 @@ public class ScreenEcoreHandler {
 			}
 			
 		}
+		
+	}
+	
+	private boolean instanceTypeMatchesComponentExpectedType(EClass instanceClass, String comopnentNamed) {
+		
+		EClass compClass = (EClass) ePackage.getEClassifier(comopnentNamed);
+		String expectedTypeName = compClass.getEAnnotations().get(0).getDetails().get("expectedType");
+		
+		if (expectedTypeName == null) {
+			return true;
+		}
+		
+		if (instanceClass.getName().equals(expectedTypeName)) {
+			return true;
+		}
+		
+		return false;
 		
 	}
 

@@ -31,7 +31,6 @@ public class ScreenEcoreGenerator {
 	private static final String ANNOTATION_SOURCE = "wireframe";
 	private int counter;
 	private String ASSIGNMENT_PREFIX = "a";
-	private String TYPE_PREFIX = "Type";
 	private EPackage screenPackage;
 	private ResourceSet resSet;
 	
@@ -114,6 +113,12 @@ public class ScreenEcoreGenerator {
 			String typeName = createPrefixedComponentNameFromName((String) component.eGet(utils.tNameFeature));
 			EClass componentClass = EcoreFactory.eINSTANCE.createEClass();
 			componentClass.setName(typeName);
+
+			String typeType = (String) component.eGet(utils.tType);
+			EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+			annotation.setSource(ANNOTATION_SOURCE);
+			annotation.getDetails().put("expectedType", typeType);
+			componentClass.getEAnnotations().add(annotation);
 			
 			ePackage.getEClassifiers().add(componentClass);
 			
@@ -375,7 +380,7 @@ public class ScreenEcoreGenerator {
 
 	private String createPrefixedComponentNameFromName(String string) {
 		
-		return TYPE_PREFIX + string;
+		return string;
 		
 	}
 	

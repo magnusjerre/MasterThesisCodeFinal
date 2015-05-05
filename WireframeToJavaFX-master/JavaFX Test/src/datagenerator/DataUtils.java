@@ -34,7 +34,7 @@ public class DataUtils {
 	EFactory dataFactory;
 	EClass context2Class, assignment2Class, typeClass;
 	//Type class features are prefixed with a t
-	EStructuralFeature tNameFeature, tAssignmentsFeature, tWidgetFeature;
+	EStructuralFeature tNameFeature, tAssignmentsFeature, tWidgetFeature, tType;
 	//Context2 class features are prefixed with a c
 	EStructuralFeature c2NameFeature, c2StatementFeature;
 	//Assignment2 class features are prefixed with a2
@@ -74,6 +74,7 @@ public class DataUtils {
 		tNameFeature = typeClass.getEStructuralFeature("name");
 		tAssignmentsFeature = typeClass.getEStructuralFeature("assignments");
 		tWidgetFeature = typeClass.getEStructuralFeature("widget");
+		tType = typeClass.getEStructuralFeature("type");
 		
 		//Context2
 		context2Class = (EClass) dataPackage.getEClassifier("Context");
