@@ -74,6 +74,7 @@ public class ScreenEcoreHandler {
 			
 			EAnnotation annotation = feature.getEAnnotation("wireframe");
 			
+			//Load and populate the instance with the xmi if the feature is specified to do so
 			String location = annotation.getDetails().get("xmiLocation");
 			if (location != null) {
 				Resource res = resourceSet.getResource(URI.createFileURI("/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi"), true);
@@ -81,6 +82,7 @@ public class ScreenEcoreHandler {
 				instance.eSet(feature, database);
 			} 
 		
+			//Populate the instance with the value from the context's or assignment's ocl-statement
 			String ocl = annotation.getDetails().get("ocl");
 			if (ocl != null) {
 				Object result = OCLHandler.parseOCLStatement(resourceSet, instance, ocl);
@@ -176,10 +178,6 @@ public class ScreenEcoreHandler {
 		
 		EClass compClass = (EClass) ePackage.getEClassifier(comopnentNamed);
 		String expectedTypeName = compClass.getEAnnotations().get(0).getDetails().get("expectedType");
-		
-		if (expectedTypeName == null) {
-			return true;
-		}
 		
 		if (instanceClass.getName().equals(expectedTypeName)) {
 			return true;

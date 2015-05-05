@@ -60,9 +60,9 @@ public class ScreenEcoreGenerator {
 		
 		addContextsTo(screenClass);
 		
-		addAssignmentsTo(screenClass);
-		
 		addComponentsToPackage(screenPackage);
+		
+		addAssignmentsTo(screenClass);
 		
 		saveAsResource(screenPackage);
 		
@@ -96,14 +96,32 @@ public class ScreenEcoreGenerator {
 		eAnnotation.setSource(ANNOTATION_SOURCE);
 		eAnnotation.getDetails().put("ocl", statement);
 		eAnnotation.getDetails().put("layoutId", getAssignmentId(assignment));
-		if (assignment.eGet(utils.a2UseComponentNamedFeature) != null) {
+		if (assignmentUsesComponent(assignment)) {
 			String compName = (String) assignment.eGet(utils.a2UseComponentNamedFeature);
+			EClassifier compForAssignment = screenPackage.getEClassifier(compName);
+			
+			if (compForAssignment == null) {
+				throw new RuntimeException(String.format("Error! Assignment \"%s\" tries to use component \"%s\", but the component doesn't exist.", statement, compName));
+			}
+			
+			String expectedTypeForComponent = compForAssignment.getEAnnotations().get(0).getDetails().get("expectedType");
+			if (assignmentProducesWrongTypeForComponent(eClassifier, expectedTypeForComponent)) {
+				throw new RuntimeException(String.format("Error! Component \"%s\" expects input of type \"%s\". Assignment \"%s\" produces type \"%s\".", compName, expectedTypeForComponent, statement, eClassifier.getName()));
+			}
 			eAnnotation.getDetails().put("useComponent", createPrefixedComponentNameFromName(compName));
 		}
 		
 		eFeature.getEAnnotations().add(eAnnotation);
 		screenClass.getEStructuralFeatures().add(eFeature);
 		
+	}
+
+	private boolean assignmentProducesWrongTypeForComponent(EClassifier eClassifier, String expectedTypeForComponent) {
+		return !eClassifier.getName().equals(expectedTypeForComponent);
+	}
+
+	private boolean assignmentUsesComponent(EObject assignment) {
+		return assignment.eGet(utils.a2UseComponentNamedFeature) != null;
 	}
 
 	private void addComponentsToPackage(EPackage ePackage) {

@@ -82,8 +82,8 @@ public class TypeGenerator {
 		
 		string = string.trim();
 		
-		String[] split;
-		String name, type;
+		String[] split = new String[]{string};
+		String name = null, type = null;
 		if (string.contains(":")) {	//Type declaration after colon
 			split = string.split(":");
 			name = split[0];
@@ -92,14 +92,10 @@ public class TypeGenerator {
 			split = string.split(" ");
 			name = split[1];
 			type = split[0];
-		} else {	//No type declaration
-			split = new String[] {string};
-			name = split[0];
-			type = null;
-		}
+		} 
 
-		if (split.length == 1) {
-			return new String[]{split[0].trim(), null};
+		if (split.length != 2) {
+			throw new RuntimeException(String.format("Error! The component \"%s\" is either malformed or it doesn't declare a type.", string));
 		}
 		
 		return new String[] {name.trim(), type.trim()};
