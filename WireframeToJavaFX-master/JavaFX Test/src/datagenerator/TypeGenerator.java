@@ -184,7 +184,7 @@ public class TypeGenerator {
 		
 		for (ViewComponent type : theList.getElementsIterable()) {
 			
-			String fileName = String.format("%s-Type%s.fxml", screenName, type.getName());
+			String fileName = String.format("%s-%s.fxml", screenName, type.getName());
 			StringBuilder fxmlBuidler = new StringBuilder();
 			fxmlBuidler.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
 					"\n" + 
