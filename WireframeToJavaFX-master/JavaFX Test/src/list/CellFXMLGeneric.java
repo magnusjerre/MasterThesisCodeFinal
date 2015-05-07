@@ -43,33 +43,36 @@ public class CellFXMLGeneric {
 			
 			if ((viewComponentEClass != null) && (object instanceof EObject)) {
 				String ocl = getOCLStatementForId(child.getId());
-				EObject eObject = (EObject) object;
-				Object oclResult = OCLHandler.parseOCLStatement(eObject.eResource().getResourceSet(), eObject, ocl);
+				EObject listElement = (EObject) object;
+				Object oclResult = OCLHandler.parseOCLStatement(listElement.eResource().getResourceSet(), listElement, ocl);
 				//start with simple case, handle advanced view comp case later if I have time
 				EStructuralFeature featureInViewComponent = getFeatureForId(child.getId());
 				EObject newInstance = ScreenEcoreHandler.ePackage.getEFactoryInstance().create(viewComponentEClass);
-				
-				for (EStructuralFeature iuccFeature : newInstance.eClass().getEStructuralFeatures()) {
-					
-					EAnnotation iuccAnnotation = iuccFeature.getEAnnotation("wireframe");
-					String iuccOcl = iuccAnnotation.getDetails().get("ocl");
-					Object result = OCLHandler.parseOCLStatement(ScreenEcoreHandler.resourceSet, eObject, iuccOcl);
-					if (iuccFeature.isMany())
-					{
-						List<Object> lst = (List<Object>) newInstance.eGet(iuccFeature);
-						lst.addAll((Collection<Object>) result);
-					} else {
-						newInstance.eSet(iuccFeature, result);
-					}
-					
-				}
+				populateInstance(listElement, newInstance);
 				
 				EStructuralFeature aFeature = getFeatureForId(child.getId());
-				ScreenEcoreHandler.assignComponents(child, newInstance, aFeature );
+				ScreenEcoreHandler.assignComponents(child, newInstance, aFeature);
 			}
 			
 		}
 		
+	}
+
+	private void populateInstance(EObject elementEObject, EObject newInstance) {
+		for (EStructuralFeature iuccFeature : newInstance.eClass().getEStructuralFeatures()) {
+			
+			EAnnotation iuccAnnotation = iuccFeature.getEAnnotation("wireframe");
+			String iuccOcl = iuccAnnotation.getDetails().get("ocl");
+			Object result = OCLHandler.parseOCLStatement(ScreenEcoreHandler.resourceSet, elementEObject, iuccOcl);
+			if (iuccFeature.isMany())
+			{
+				List<Object> lst = (List<Object>) newInstance.eGet(iuccFeature);
+				lst.addAll((Collection<Object>) result);
+			} else {
+				newInstance.eSet(iuccFeature, result);
+			}
+			
+		}
 	}
 	
 	public Pane getPane() {
