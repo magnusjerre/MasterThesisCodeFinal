@@ -15,13 +15,14 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import list.ListController;
 
-import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -123,6 +124,15 @@ public class ScreenEcoreHandler {
 			handleResultCorrectly(finalNode, instance.eGet(feature));
 		} else {
 			
+			if (feature.isMany() ) {
+				EClass iUseComponentClass = (EClass) ePackage.getEClassifier(iUseComponent);
+				List<Object> values = (List<Object>) instance.eGet(feature);
+				ListView lv = (ListView) node.lookup(iLayoutId);
+				ListController lc = new ListController(lv, "advancedlist-someDetails.fxml", iUseComponentClass);
+				Object result = OCLHandler.parseOCLStatement(resourceSet, instance, feature.getEAnnotations().get(0).getDetails().get("ocl"));
+				lc.obsList.addAll((Collection<Object>) result);
+				return;
+			} 
 			EObject instanceFromFeature = (EObject) instance.eGet(feature);
 
 			if (!instanceTypeMatchesComponentExpectedType(instanceFromFeature.eClass(), iUseComponent)) {
@@ -194,7 +204,7 @@ public class ScreenEcoreHandler {
 		return componentFxmlLocation;
 	}
 	
-	private void handleResultCorrectly(Node node, Object result) {
+	public static void handleResultCorrectly(Node node, Object result) {
 		
 		if (node instanceof Label) {
 			((Label) node).setText(getStringRepresentation(result));
@@ -214,11 +224,17 @@ public class ScreenEcoreHandler {
 			File imageFile = fileLocation(fileName);
 			String uri = imageFile.toURI().toString();
 			((ImageView) node).setImage(new Image(uri));
+		} else if (node instanceof ListView) {
+			
+//			ListView lv = (ListView) node;
+//			ListController lc = new ListController(lv, "simple_cell.fxml");
+//			lc.obsList.addAll((Collection<Object>) result);
+//			
 		}
 		
 	}
 	
-	private String getStringRepresentation(Object object) {
+	private static String getStringRepresentation(Object object) {
 		
 		if (object instanceof String) {
 			return object.toString();
@@ -240,7 +256,7 @@ public class ScreenEcoreHandler {
 		return null;
 	}
 	
-	private File fileLocation(String fileName) {
+	private static File fileLocation(String fileName) {
 		String[] possibleLocations = new String[] {
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/images/" + fileName,
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + fileName,
