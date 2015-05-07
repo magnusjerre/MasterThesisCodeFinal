@@ -25,7 +25,7 @@
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="7" x="720" y="937" width="65" height="31" measuredWidth="65" measuredHeight="31" foreground="#666666" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Arrow" id="8" x="728" y="998" width="57" height="50" measuredWidth="57" measuredHeight="50" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Arrow" id="8" x="752" y="984" width="33" height="64" measuredWidth="33" measuredHeight="64" foreground="#666666" lineStyle="dashed"/>
   <widgets xsi:type="model:Arrow" id="9" x="760" y="977" width="73" height="21" measuredWidth="73" measuredHeight="21" foreground="#666666" lineStyle="dashed" direction="bottom"/>
   <widgets xsi:type="model:WidgetGroup" id="28" x="736" y="576" measuredWidth="166" measuredHeight="221">
     <widgets xsi:type="model:Image" id="10" width="48" height="76" measuredWidth="48" measuredHeight="76"/>
