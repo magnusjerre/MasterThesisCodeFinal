@@ -37,7 +37,7 @@ public class DataGenerator {
 		ScreenEcoreGenerator seg = new ScreenEcoreGenerator();
 		seg.generateEcoreForScreen(name);
 		
-		ListGenerator.getInstance().createList(seg.screenPackage);
+//		ListGenerator.getInstance().createList(seg.screenPackage);
 		
 	}
 	

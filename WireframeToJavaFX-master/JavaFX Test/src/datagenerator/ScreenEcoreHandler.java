@@ -41,11 +41,11 @@ import application.Constants;
 
 public class ScreenEcoreHandler {
 	
-	public ResourceSet resourceSet;
-	public EPackage ePackage;
-	public EFactory factory;
+	public static ResourceSet resourceSet;
+	public static EPackage ePackage;
+	public static EFactory factory;
 	public EObject instance;
-	public String fileName;
+	public static String fileName;
 	
 	public static final String ANNOTATION_SOURCE = "wireframe";
 	
@@ -109,7 +109,7 @@ public class ScreenEcoreHandler {
 		
 	}
 	
-	public void assignComponents(Node node, EObject instance, EStructuralFeature feature) {
+	public static void assignComponents(Node node, EObject instance, EStructuralFeature feature) {
 		
 		EAnnotation iAnnotation = feature.getEAnnotation("wireframe");
 		
@@ -124,10 +124,16 @@ public class ScreenEcoreHandler {
 			handleResultCorrectly(finalNode, instance.eGet(feature));
 		} else {
 			
-			if (feature.isMany() ) {
+			if (feature.isMany()) {
 				EClass iUseComponentClass = (EClass) ePackage.getEClassifier(iUseComponent);
 				List<Object> values = (List<Object>) instance.eGet(feature);
-				ListView lv = (ListView) node.lookup(iLayoutId);
+				Node lookedUpNode = node.lookup(iLayoutId);
+				ListView lv = null;
+				if (lookedUpNode instanceof Group) {
+					
+				}
+				lv = (ListView) lookedUpNode;
+//				ListView lv = (ListView) node.lookup(iLayoutId);
 				ListController lc = new ListController(lv, "advancedlist-someDetails.fxml", iUseComponentClass);
 				Object result = OCLHandler.parseOCLStatement(resourceSet, instance, feature.getEAnnotations().get(0).getDetails().get("ocl"));
 				lc.obsList.addAll((Collection<Object>) result);
@@ -184,7 +190,7 @@ public class ScreenEcoreHandler {
 		
 	}
 	
-	private boolean instanceTypeMatchesComponentExpectedType(EClass instanceClass, String comopnentNamed) {
+	private static boolean instanceTypeMatchesComponentExpectedType(EClass instanceClass, String comopnentNamed) {
 		
 		EClass compClass = (EClass) ePackage.getEClassifier(comopnentNamed);
 		String expectedTypeName = compClass.getEAnnotations().get(0).getDetails().get("expectedType");
@@ -197,7 +203,7 @@ public class ScreenEcoreHandler {
 		
 	}
 
-	private String getFxmlLocationForComponent(String iUseComponent) {
+	private static String getFxmlLocationForComponent(String iUseComponent) {
 		File componentFxmlFile = new File(fileName);
 		String screenName = componentFxmlFile.getName().replace(".ecore", "");
 		String componentFxmlLocation = String.format("%s%s-%s.fxml", Constants.GENERATED_DIRECTORY, screenName, iUseComponent);
