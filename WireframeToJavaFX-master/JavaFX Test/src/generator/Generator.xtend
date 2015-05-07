@@ -43,6 +43,9 @@ import org.apache.commons.io.FilenameUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.w3c.dom.Element
+import datagenerator.ContextGenerator
+import datagenerator.AssignmentGenerator
+import datagenerator.TypeGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -102,7 +105,6 @@ class Generator {
 	HashMap<Master, Pair<Arrow, Widget>> masterMap = null
 	
 	LayoutStyle layoutStyle = null
-	int listViewCounter = 1
 	int verticalBorder = 0
 	int horizontalBorder = 0
 
@@ -587,16 +589,13 @@ class Generator {
 		}
 		 
 		if (widgetGroup.name == "list") {
-			val fxid = ("listView" + listViewCounter) as String
 			(builder += "ListView") => [
-				it += "fx:id" -> fxid
+				it += "fx:id" -> widgetGroup.id
 				it += "layoutX" -> widgetGroup.x
 				it += "layoutY" -> widgetGroup.y
 				it += "prefWidth" -> widgetGroup.measuredWidth
 				it += "prefHeight" -> widgetGroup.measuredHeight
 			]
-			ListGenerator.getInstance.listViewNames.add(fxid)
-			listViewCounter++
 		} else {
 			
 			(builder += "Group") => [
