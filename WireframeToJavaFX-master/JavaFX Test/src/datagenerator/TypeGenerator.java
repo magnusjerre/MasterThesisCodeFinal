@@ -220,10 +220,18 @@ public class TypeGenerator {
 								nodeType, widget.getX(), widget.getY(), height, widget.getMeasuredHeight(), width, widget.getMeasuredWidth(), widget.getId().intValue());
 				
 				if (widget instanceof WidgetGroup) {
-					element = String.format(
-							"        <Group layoutX=\"%d\" layoutY=\"%d\" fx:id=\"%d\" />" +
-									"\n",
-									widget.getX(), widget.getY(), widget.getId().intValue());
+					if ("list".equalsIgnoreCase(((WidgetGroup) widget).getName())) {
+						element = String.format(
+								"        <ListView layoutX=\"%d\" layoutY=\"%d\" prefHeight=\"%d\" prefWidth=\"%d\" fx:id=\"%d\" />" +
+										"\n",
+										widget.getX(), widget.getY(), widget.getMeasuredHeight(), widget.getMeasuredWidth(), widget.getId().intValue());
+					} else {
+						element = String.format(
+								"        <Group layoutX=\"%d\" layoutY=\"%d\" fx:id=\"%d\" />" +
+										"\n",
+										widget.getX(), widget.getY(), widget.getId().intValue());
+					}
+					
 				}
 				
 				fxmlBuidler.append(element);
