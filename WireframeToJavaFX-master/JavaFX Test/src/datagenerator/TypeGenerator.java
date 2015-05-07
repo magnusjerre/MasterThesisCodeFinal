@@ -201,7 +201,7 @@ public class TypeGenerator {
 			fxmlBuidler.append(String.format(
 					"<AnchorPane xmlns:fx=\"http://javafx.com/fxml/1\" prefHeight=\"%d\" prefWidth=\"%d\" >\n" + 
 							"    <children>\n", 
-					widgetGroup.getMeasuredWidth(), widgetGroup.getMeasuredHeight()));
+					widgetGroup.getMeasuredHeight(), widgetGroup.getMeasuredWidth()));
 			
 			for (Widget widget : widgetGroup.getWidgets()) {
 				
