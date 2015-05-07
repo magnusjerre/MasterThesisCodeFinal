@@ -584,15 +584,15 @@ class Generator {
 	}
 	
 	def dispatch void generateFxml(WidgetGroup widgetGroup) {
-		if (widgetGroup.x > horizontalBorder || widgetGroup.y > verticalBorder) {
+		if ((widgetGroup.x > horizontalBorder || widgetGroup.y > verticalBorder) && horizontalBorder != 0 && verticalBorder != 0) {
 			return
 		}
 		 
 		if (widgetGroup.name == "list") {
 			(builder += "ListView") => [
-				it += "fx:id" -> widgetGroup.id
 				it += "layoutX" -> widgetGroup.x
 				it += "layoutY" -> widgetGroup.y
+				it += "id" -> widgetGroup.id
 				it += "prefWidth" -> widgetGroup.measuredWidth
 				it += "prefHeight" -> widgetGroup.measuredHeight
 			]
