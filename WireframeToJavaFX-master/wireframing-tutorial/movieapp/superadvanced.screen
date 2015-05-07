@@ -56,7 +56,7 @@
   <widgets xsi:type="model:Master" id="22" x="856" y="681" measuredWidth="97" measuredHeight="68">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
     <overrides>
-      <widgets ref="7" height="68" text="movies&#xA;Movie"/>
+      <widgets ref="7" height="68" text="movies&#xA;movieDetail"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="23" x="776" y="711" width="81" height="8" measuredWidth="81" measuredHeight="8" foreground="#666666" lineStyle="dashed" direction="bottom"/>
