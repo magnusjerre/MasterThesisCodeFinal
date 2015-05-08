@@ -588,25 +588,31 @@ class Generator {
 			return
 		}
 		 
-		if (widgetGroup.name.contains("list")) {
-			var listAndOrientation = widgetGroup.name.split(" ", 2)
-			var orientation = "VERTICAL"
-			if (listAndOrientation.length > 1 ) {
-				if (listAndOrientation.get(1).startsWith("h") || listAndOrientation.get(1).startsWith("H")) {
-				orientation = "HORIZONTAL"
+		var createGroup = true
+		if (widgetGroup.name != null) {
+			if (widgetGroup.name.contains("list")) {	//The group can be named something else for visibility's sake, should then create group
+				createGroup = false
+				var listAndOrientation = widgetGroup.name.split(" ", 2)
+				var orientation = "VERTICAL"
+				if (listAndOrientation.length > 1 ) {
+					if (listAndOrientation.get(1).startsWith("h") || listAndOrientation.get(1).startsWith("H")) {
+					orientation = "HORIZONTAL"
+					}
 				}
-			}
-			val or = orientation as String
-			
-			(builder += "ListView") => [
-				it += "layoutX" -> widgetGroup.x
-				it += "layoutY" -> widgetGroup.y
-				it += "id" -> widgetGroup.id
-				it += "prefWidth" -> widgetGroup.measuredWidth
-				it += "prefHeight" -> widgetGroup.measuredHeight
-				it += "orientation" -> or
-			]
-		} else {
+				val or = orientation as String
+				
+				(builder += "ListView") => [
+					it += "layoutX" -> widgetGroup.x
+					it += "layoutY" -> widgetGroup.y
+					it += "id" -> widgetGroup.id
+					it += "prefWidth" -> widgetGroup.measuredWidth
+					it += "prefHeight" -> widgetGroup.measuredHeight
+					it += "orientation" -> or
+				]
+			} 
+		} 
+		
+		if (createGroup) {
 			
 			(builder += "Group") => [
 				it += "id" -> widgetGroup.id
