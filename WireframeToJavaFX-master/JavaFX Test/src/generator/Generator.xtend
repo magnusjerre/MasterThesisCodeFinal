@@ -46,6 +46,7 @@ import org.w3c.dom.Element
 import datagenerator.ContextGenerator
 import datagenerator.AssignmentGenerator
 import datagenerator.TypeGenerator
+import datagenerator.SelectionEcoreGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -1392,6 +1393,8 @@ class Generator {
 			]
 			
 		}
+		
+		SelectionEcoreGenerator.getInstance.saveResource
 		println("Done.")
 	}
 }

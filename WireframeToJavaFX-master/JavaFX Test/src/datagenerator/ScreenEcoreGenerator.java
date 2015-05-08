@@ -188,7 +188,7 @@ public class ScreenEcoreGenerator {
 		
 	}
 	
-	private EClassifier getClassifierNamed(String name) {
+	protected EClassifier getClassifierNamed(String name) {
 		
 		for (String key : classesForXmis.keySet()) {
 			for (Entry<String, EClassifier> entry : classesForXmis.get(key).entrySet()) {
@@ -301,7 +301,7 @@ public class ScreenEcoreGenerator {
 	 * @param classifier
 	 * @return EAttribute or EReference
 	 */
-	private EStructuralFeature createFeatureFromClassifier(EClassifier classifier) {
+	protected EStructuralFeature createFeatureFromClassifier(EClassifier classifier) {
 		
 		EStructuralFeature feature = null;
 		

@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import datagenerator.AssignmentGenerator
 import datagenerator.ContextGenerator
+import datagenerator.SelectionGenerator
 
 /** A singleton class that parse and generate screendecorator models */
 class ScreenDecoratorGenerator {
@@ -130,7 +131,9 @@ class ScreenDecoratorGenerator {
 			if (dataString.get(0).indexOf("=") == -1) {
 				//Jerre: Must then be part of selection for contexts
 				println("This is my part of the action generation")
-				createScriptAction(widget, "cake")
+				val sg = SelectionGenerator.getInstance
+				SelectionGenerator.getInstance.generateDecorator(dataString, master, masterMap)
+				println("This is my part of the action generation")
 			} else {
 				for (string : dataString) {
 					feature = getFeatureNameFromDataString(string)
