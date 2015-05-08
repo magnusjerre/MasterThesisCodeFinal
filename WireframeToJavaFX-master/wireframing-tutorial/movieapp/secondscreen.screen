@@ -9,7 +9,7 @@
   <widgets xsi:type="model:Master" id="3" x="264" y="128" width="89" measuredWidth="89" measuredHeight="49">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
     <overrides>
-      <widgets ref="7" width="89" height="49" text="movie&#xA;Movie"/>
+      <widgets ref="7" width="89" height="49" text="movie&#xA;movieComp"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="4" x="264" y="48" width="185" measuredWidth="185" measuredHeight="31">
@@ -51,13 +51,13 @@
   <widgets xsi:type="model:Master" id="23" x="280" y="617" measuredWidth="81" measuredHeight="40">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
     <overrides>
-      <widgets ref="9" width="81" height="40" text="Movie"/>
+      <widgets ref="9" width="81" height="40" text="Movie movieComp"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="25" x="264" y="188" measuredWidth="81" measuredHeight="49">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
     <overrides>
-      <widgets ref="7" width="81" height="49" text="actress&#xA;Actor"/>
+      <widgets ref="7" width="81" height="49" text="actress&#xA;actorComp"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="26" x="96" y="96" width="169" height="41" measuredWidth="169" measuredHeight="41" foreground="#666666" lineStyle="dashed"/>
@@ -85,7 +85,7 @@
   <widgets xsi:type="model:Master" id="36" x="280" y="433" measuredWidth="81" measuredHeight="40">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
     <overrides>
-      <widgets ref="9" width="81" height="40" text="Actor"/>
+      <widgets ref="9" width="81" height="40" text="actorComp : Actor"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:WidgetGroup" id="37" x="24" y="160" measuredWidth="153" measuredHeight="65">

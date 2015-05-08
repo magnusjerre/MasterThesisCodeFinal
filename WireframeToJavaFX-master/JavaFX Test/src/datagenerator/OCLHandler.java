@@ -25,10 +25,28 @@ public class OCLHandler {
 			Query query = ocl.createQuery(queryExpression);
 			return query.evaluate(instanceRoot);
 		} catch (ParserException e) {
-			e.printStackTrace();
+			System.out.println(String.format("Error in parsing ocl on instance. The statement doesn't result in any value. %s", e.getLocalizedMessage()));
 		}
 		
 		return null;
+	}
+	
+	public static EClassifier getClassifierForStatement2(ResourceSet resourceSet, EClassifier instanceRoot, String query) {
+		
+		OCL.initialize(resourceSet);
+		OCL ocl = OCL.newInstance(EcoreEnvironmentFactory.INSTANCE);
+		OCLHelper<EClassifier, ?, ?, Constraint> oclHelper = ocl.createOCLHelper();
+		
+		try {
+			oclHelper.setContext(instanceRoot);
+			OCLExpression<EClassifier> queryExpression = oclHelper.createQuery(query);
+			return queryExpression.getType();
+		} catch (ParserException e) {
+			System.out.println(String.format("Error in retrieving the classifier for the ocl on instance. The screenfile might not have added it, or the statement might not be legal. %s", e.getLocalizedMessage()));
+		}
+		
+		return null;
+		
 	}
 
 }

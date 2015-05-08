@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:WidgetGroup" id="3" x="720" y="960" measuredWidth="81" measuredHeight="40">
+    <widgets xsi:type="model:Image" id="1" width="21" height="40" measuredWidth="21" measuredHeight="40"/>
+    <widgets xsi:type="model:Label" id="2" x="24" y="10" width="57" text="title" measuredWidth="57" measuredHeight="20" foreground="#444444">
+      <font size="10px" italic="true"/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:Master" id="4" x="832" y="957" measuredWidth="97" measuredHeight="46">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
+    <overrides>
+      <widgets ref="9" height="46" text="movieDetail : Movie"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="5" x="784" y="920" measuredWidth="97" measuredHeight="34">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="34" text="poster"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="6" x="784" y="1024" measuredWidth="97" measuredHeight="31">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="31" text="title"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="7" x="720" y="937" width="65" height="31" measuredWidth="65" measuredHeight="31" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Arrow" id="8" x="752" y="984" width="33" height="64" measuredWidth="33" measuredHeight="64" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Arrow" id="9" x="760" y="977" width="73" height="21" measuredWidth="73" measuredHeight="21" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:WidgetGroup" id="28" x="736" y="576" measuredWidth="304" measuredHeight="157">
+    <widgets xsi:type="model:Image" id="10" width="48" height="76" measuredWidth="48" measuredHeight="76"/>
+    <widgets xsi:type="model:Label" id="11" x="56" y="22" width="153" text="Actor name" measuredWidth="153" measuredHeight="31">
+      <font size="20px"/>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="21" y="87" width="305" measuredWidth="304" measuredHeight="70" name="list horizontal">
+      <widgets xsi:type="model:WidgetGroup" id="12" width="305" measuredWidth="304" measuredHeight="23">
+        <widgets xsi:type="model:Image" id="13" width="77" height="18" measuredWidth="77" measuredHeight="18"/>
+        <widgets xsi:type="model:Label" id="14" x="89" y="3" width="215" text="title" measuredWidth="215" measuredHeight="20" foreground="#444444">
+          <font size="10px" italic="true"/>
+        </widgets>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="15" y="22" width="305" measuredWidth="304" measuredHeight="23">
+        <widgets xsi:type="model:Image" id="16" width="77" height="18" measuredWidth="77" measuredHeight="18"/>
+        <widgets xsi:type="model:Label" id="17" x="89" y="3" width="215" text="title" measuredWidth="215" measuredHeight="20" foreground="#444444">
+          <font size="10px" italic="true"/>
+        </widgets>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="18" y="47" width="305" measuredWidth="304" measuredHeight="23">
+        <widgets xsi:type="model:Image" id="19" width="77" height="18" measuredWidth="77" measuredHeight="18"/>
+        <widgets xsi:type="model:Label" id="20" x="89" y="3" width="215" text="title" measuredWidth="215" measuredHeight="20" foreground="#444444">
+          <font size="10px" italic="true"/>
+        </widgets>
+      </widgets>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:Master" id="22" x="952" y="748" measuredWidth="97" measuredHeight="68">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="68" text="movies&#xA;movieDetail"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="23" x="832" y="704" width="129" height="80" measuredWidth="129" measuredHeight="80" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="24" x="901" y="567" measuredWidth="97" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="33" text="name"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="25" x="736" y="527" measuredWidth="97" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="33" text="portrait"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="26" x="760" y="559" width="24" height="18" measuredWidth="24" measuredHeight="18" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Arrow" id="27" x="872" y="583" width="30" height="33" measuredWidth="30" measuredHeight="33" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="29" x="1080" y="599" measuredWidth="97" measuredHeight="46">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
+    <overrides>
+      <widgets ref="9" height="46" text="actorDetail : Actor"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="30" x="840" y="625" width="241" height="27" measuredWidth="241" measuredHeight="27" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:WidgetGroup" id="83" x="8" y="32" width="432" measuredWidth="431" measuredHeight="701" name="list">
+    <widgets xsi:type="model:WidgetGroup" id="31" width="432" measuredWidth="431" measuredHeight="221">
+      <widgets xsi:type="model:Image" id="32" width="123" height="76" measuredWidth="123" measuredHeight="76"/>
+      <widgets xsi:type="model:Label" id="33" x="145" y="22" width="286" text="Actor name" measuredWidth="286" measuredHeight="31">
+        <font size="20px"/>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="34" y="87" width="207" measuredWidth="206" measuredHeight="134">
+        <widgets xsi:type="model:WidgetGroup" id="35" width="207" measuredWidth="206" measuredHeight="40">
+          <widgets xsi:type="model:Image" id="36" width="53" height="40" measuredWidth="53" measuredHeight="40"/>
+          <widgets xsi:type="model:Label" id="37" x="60" y="10" width="146" text="title" measuredWidth="146" measuredHeight="20" foreground="#444444">
+            <font size="10px" italic="true"/>
+          </widgets>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="38" y="47" width="207" measuredWidth="206" measuredHeight="40">
+          <widgets xsi:type="model:Image" id="39" width="53" height="40" measuredWidth="53" measuredHeight="40"/>
+          <widgets xsi:type="model:Label" id="40" x="60" y="10" width="146" text="title" measuredWidth="146" measuredHeight="20" foreground="#444444">
+            <font size="10px" italic="true"/>
+          </widgets>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="41" y="94" width="207" measuredWidth="206" measuredHeight="40">
+          <widgets xsi:type="model:Image" id="42" width="53" height="40" measuredWidth="53" measuredHeight="40"/>
+          <widgets xsi:type="model:Label" id="43" x="60" y="10" width="146" text="title" measuredWidth="146" measuredHeight="20" foreground="#444444">
+            <font size="10px" italic="true"/>
+          </widgets>
+        </widgets>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="57" y="240" width="432" measuredWidth="431" measuredHeight="221">
+      <widgets xsi:type="model:Image" id="58" width="123" height="76" measuredWidth="123" measuredHeight="76"/>
+      <widgets xsi:type="model:Label" id="59" x="145" y="22" width="286" text="Actor name" measuredWidth="286" measuredHeight="31">
+        <font size="20px"/>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="60" y="87" width="207" measuredWidth="206" measuredHeight="134">
+        <widgets xsi:type="model:WidgetGroup" id="61" width="207" measuredWidth="206" measuredHeight="40">
+          <widgets xsi:type="model:Image" id="62" width="53" height="40" measuredWidth="53" measuredHeight="40"/>
+          <widgets xsi:type="model:Label" id="63" x="60" y="10" width="146" text="title" measuredWidth="146" measuredHeight="20" foreground="#444444">
+            <font size="10px" italic="true"/>
+          </widgets>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="64" y="47" width="207" measuredWidth="206" measuredHeight="40">
+          <widgets xsi:type="model:Image" id="65" width="53" height="40" measuredWidth="53" measuredHeight="40"/>
+          <widgets xsi:type="model:Label" id="66" x="60" y="10" width="146" text="title" measuredWidth="146" measuredHeight="20" foreground="#444444">
+            <font size="10px" italic="true"/>
+          </widgets>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="67" y="94" width="207" measuredWidth="206" measuredHeight="40">
+          <widgets xsi:type="model:Image" id="68" width="53" height="40" measuredWidth="53" measuredHeight="40"/>
+          <widgets xsi:type="model:Label" id="69" x="60" y="10" width="146" text="title" measuredWidth="146" measuredHeight="20" foreground="#444444">
+            <font size="10px" italic="true"/>
+          </widgets>
+        </widgets>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="70" y="480" width="432" measuredWidth="431" measuredHeight="221">
+      <widgets xsi:type="model:Image" id="71" width="123" height="76" measuredWidth="123" measuredHeight="76"/>
+      <widgets xsi:type="model:Label" id="72" x="145" y="22" width="286" text="Actor name" measuredWidth="286" measuredHeight="31">
+        <font size="20px"/>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="73" y="87" width="207" measuredWidth="206" measuredHeight="134">
+        <widgets xsi:type="model:WidgetGroup" id="74" width="207" measuredWidth="206" measuredHeight="40">
+          <widgets xsi:type="model:Image" id="75" width="53" height="40" measuredWidth="53" measuredHeight="40"/>
+          <widgets xsi:type="model:Label" id="76" x="60" y="10" width="146" text="title" measuredWidth="146" measuredHeight="20" foreground="#444444">
+            <font size="10px" italic="true"/>
+          </widgets>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="77" y="47" width="207" measuredWidth="206" measuredHeight="40">
+          <widgets xsi:type="model:Image" id="78" width="53" height="40" measuredWidth="53" measuredHeight="40"/>
+          <widgets xsi:type="model:Label" id="79" x="60" y="10" width="146" text="title" measuredWidth="146" measuredHeight="20" foreground="#444444">
+            <font size="10px" italic="true"/>
+          </widgets>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="80" y="94" width="207" measuredWidth="206" measuredHeight="40">
+          <widgets xsi:type="model:Image" id="81" width="53" height="40" measuredWidth="53" measuredHeight="40"/>
+          <widgets xsi:type="model:Label" id="82" x="60" y="10" width="146" text="title" measuredWidth="146" measuredHeight="20" foreground="#444444">
+            <font size="10px" italic="true"/>
+          </widgets>
+        </widgets>
+      </widgets>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:Master" id="84" x="488" y="264" measuredWidth="97" measuredHeight="68">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="68" text="actors&#xA;actorDetail"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="85" x="280" y="288" width="209" height="10" measuredWidth="209" measuredHeight="10" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="86" x="544" y="56" measuredWidth="865" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="865" height="33" text="db = /Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="87" x="544" y="144" measuredWidth="585" measuredHeight="31">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="585" height="31" text="actors = db.allActors">
+        <attributes key="textAlignment" value="Left"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler>
+    <guides position="454"/>
+  </hRuler>
+  <vRuler>
+    <guides position="802"/>
+  </vRuler>
+  <font size="12px"/>
+</model:Screen>

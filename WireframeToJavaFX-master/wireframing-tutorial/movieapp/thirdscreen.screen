@@ -38,7 +38,7 @@
   <widgets xsi:type="model:Master" id="23" x="280" y="585" measuredWidth="81" measuredHeight="40">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
     <overrides>
-      <widgets ref="9" width="81" height="40" text="Movie"/>
+      <widgets ref="9" width="81" height="40" text="Movie : Movie"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Master" id="28" x="280" y="336" measuredWidth="129" measuredHeight="33">
@@ -65,7 +65,7 @@
   <widgets xsi:type="model:Master" id="36" x="280" y="401" measuredWidth="81" measuredHeight="40">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
     <overrides>
-      <widgets ref="9" width="81" height="40" text="Actor"/>
+      <widgets ref="9" width="81" height="40" text="Actor : Actor"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:WidgetGroup" id="48" x="553" y="288" measuredWidth="168" measuredHeight="185" name="ActorMoviePair">
@@ -87,7 +87,7 @@
   <widgets xsi:type="model:Master" id="49" x="827" y="361" measuredWidth="153" measuredHeight="40">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
     <overrides>
-      <widgets ref="9" width="153" height="40" text="ActorMoviePair"/>
+      <widgets ref="9" width="153" height="40" text="ActorMoviePair : Actor"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="50" x="683" y="360" width="145" height="13" measuredWidth="145" measuredHeight="13" foreground="#666666" lineStyle="dashed"/>
@@ -128,7 +128,7 @@
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="65" x="207" y="144" width="146" height="32" measuredWidth="146" measuredHeight="32" foreground="#666666" lineStyle="dashed"/>
-  <widgets xsi:type="model:Button" id="92" x="160" y="247" text="Next Screen" measuredWidth="91" measuredHeight="25" link="fourthscreen.screen">
+  <widgets xsi:type="model:Button" id="92" x="160" y="247" text="Next Screen" measuredWidth="91" measuredHeight="25" link="fifthscreen.screen">
     <font/>
   </widgets>
   <widgets xsi:type="model:Button" id="93" y="247" text="Prev Screen" measuredWidth="90" measuredHeight="25" link="secondscreen.screen">

@@ -1,22 +1,22 @@
 package datagenerator;
 
-import java.util.Collection;
 import java.util.HashMap;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 import com.wireframesketcher.model.Arrow;
 import com.wireframesketcher.model.Master;
 import com.wireframesketcher.model.Widget;
+import com.wireframesketcher.model.WidgetGroup;
+
+import data.Assignment;
+import data.DataFactory;
 
 public class AssignmentGenerator {
 	
 	private static AssignmentGenerator instance = null;
-	private DataUtils utils;
 	
-	public DoubleList<EObject, Master> assignments;
+	public DoubleList<Assignment, Master> assignments;
 	
 	public static AssignmentGenerator getInstance() {
 		
@@ -29,14 +29,11 @@ public class AssignmentGenerator {
 	
 	private AssignmentGenerator() {
 		
-		utils = DataUtils.getInstance();
-		assignments = new DoubleList<EObject, Master>();
+		assignments = new DoubleList<Assignment, Master>();
 		
 	}
 	
 	public void clear() {
-		
-		utils = DataUtils.getInstance();
 		
 		assignments.clear();
 		
@@ -49,131 +46,37 @@ public class AssignmentGenerator {
 					+ "The Assignment decorator allows either one or two lines.");
 		}
 		
-		EObject assignmentObject = utils.dataFactory.create(utils.assignment2Class);
+		Assignment assignment = DataFactory.eINSTANCE.createAssignment();
 		
 		String statement = strings[0].trim();
-		assignmentObject.eSet(utils.a2StatementFeature, statement);
+		assignment.setStatement(statement);
 		
 		if (strings.length == 2) {
-			assignmentObject.eSet(utils.a2UseComponentNamedFeature, strings[1].trim());
+			assignment.setUsingViewComponentNamed(strings[1].trim());
 		}
 		
-		assignmentObject.eSet(utils.a2WidgetFeature, getCorrectWidget(assignmentObject, map.get(master)));
+		assignment.setWidget(getCorrectWidget2(assignment, map.get(master)));
 		
 		//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
 		
-		assignments.add(assignmentObject, master);
-		
+		assignments.add(assignment, master);
 	}
 	
-	public void doSetup() {
+	private Widget getCorrectWidget2(Assignment assignment, Pair<Arrow, Widget> pair) {
 		
-		doSetupNormalAssignmentsOnly();
-		doSetupNormalAssignmentsUsingComponent();
-		doSetupAssignmentsPartOfComponent();
-		
-	}
-	
-	private void doSetupNormalAssignmentsOnly() {
-		
-		for (EObject assignment : assignments.getElementsIterable()) {
-			
-			if (!isAssignmentUsingComponent(assignment) && !isAssignmentPartOfComponent(assignment)) {
-				attachData(assignment);
-			}
-			
-		}
-		
-	}
-	
-	private void attachData(EObject assignment) {
-		
-		String statement = (String) assignment.eGet(utils.a2StatementFeature);
-		String contextName = DataUtils.getParentName(statement);
-		EObject context = DataUtils.getInstance().getContextNamed(contextName, ContextGenerator.getInstance().getAllContexts());
-		statement = statement.replaceFirst(contextName, "self");
-		Object data = ContextGenerator.getInstance().getResult(statement, context);
-		
-		EList<Object> dataList = (EList<Object>) assignment.eGet(utils.a2DataFeature);
-		if (data instanceof Collection<?>) {
-			ContextGenerator.getInstance().fillListWithCorrectFormat((Collection<Object>) data, dataList);
-		} else {
-			Object result = data;
-			if (result instanceof EObject) {
-				dataList.add(result);
-			} else {
-				EObject container = utils.dataFactory.create(utils.javaObjectContainerClass);
-				String objectType = result.getClass().getSimpleName();
-				container.eSet(utils.jocTypeFeature, objectType);
-//				EList<Object> containerList = (EList<Object>) container.eGet(utils.jocObjectFeature);
-//				containerList.add(result);
-				container.eSet(utils.jocObjectFeature, result);
-				container.eSet(utils.jocStringRepresentationFeature, result.toString());
-				dataList.add(container);
+		if (pair.getValue() instanceof WidgetGroup) {
+			WidgetGroup widgetGroup = (WidgetGroup) pair.getValue();
+			if ("list".equalsIgnoreCase(widgetGroup.getName())) {
+				return widgetGroup;
 			}
 		}
 		
-	}
-
-	private void doSetupNormalAssignmentsUsingComponent() {
-		
-		for (EObject assignment : assignments.getElementsIterable()) {
-			
-			if (isAssignmentUsingComponent(assignment) 
-					&& !isAssignmentPartOfComponent(assignment)) {
-				attachComponent(assignment);
-				attachData(assignment);
-			}
-			
-		}
-		
-	}
-
-	private void doSetupAssignmentsPartOfComponent() {
-		
-		for (EObject assignment : assignments.getElementsIterable()) {
-			
-			if (isAssignmentPartOfComponent(assignment) 
-					&& isAssignmentUsingComponent(assignment)) {
-				attachComponent(assignment);
-			}
-			
-		}
-		
-	}
-	
-	private void attachComponent(EObject assignment) {
-		String componentName = (String) assignment.eGet(utils.a2UseComponentNamedFeature);
-		EObject component = TypeGenerator.getInstance().findTypeNamed(componentName);
-		assignment.eSet(utils.a2UseComponentFeature, component);
-	}
-	
-	private Widget getCorrectWidget(EObject assignmentObject, Pair<Arrow, Widget> pair) {
-		
-		if (isAssignmentUsingComponent(assignmentObject)) {
+		if (assignment.isUsingViewComponent()) {
 			return pair.getValue();
-		} else {
-			return WidgetUtils.getDeepestWidget(pair.getKey(), pair.getValue());
-		}
+		} 
 		
-	}
-	
-	private boolean isAssignmentUsingComponent(EObject eObject) {
+		return WidgetUtils.getDeepestWidget(pair.getKey(), pair.getValue());
 		
-		String usesComponent = (String) eObject.eGet(utils.a2UseComponentNamedFeature);
-		return usesComponent != null;
-		
-	}
-
-	/**
-	 * Only useable after all types for the screen file have been processed.
-	 * @param eObject
-	 * @return
-	 */
-	protected boolean isAssignmentPartOfComponent(EObject eObject) {
-		
-		EObject partOfType = (EObject) eObject.eGet(utils.a2PartOfComponentFeature);
-		return partOfType != null;
 		
 	}
 

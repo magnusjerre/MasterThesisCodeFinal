@@ -1,28 +1,35 @@
 package datagenerator;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Pair;
 
+import application.Constants;
+
 import com.wireframesketcher.model.Arrow;
+import com.wireframesketcher.model.Image;
 import com.wireframesketcher.model.Master;
 import com.wireframesketcher.model.Widget;
+import com.wireframesketcher.model.WidgetGroup;
+
+import data.Assignment;
+import data.DataFactory;
+import data.ViewComponent;
 
 public class TypeGenerator {
 	
 	private static TypeGenerator instance = null;
-	private DataUtils utils;
 	
-	public DoubleList<EObject, Master> list;
+	public DoubleList<ViewComponent, Master> theList;
 	public HashMap<Master, Pair<Arrow, Widget>> masterMap;
 	
 	
 	private TypeGenerator() {
 		
-		utils = DataUtils.getInstance();
-		list = new DoubleList<EObject, Master>();
+		theList = new DoubleList<ViewComponent, Master>();
 		
 	}
 	
@@ -38,7 +45,7 @@ public class TypeGenerator {
 	public void clear() {
 		
 		masterMap = null;
-		list.clear();
+		theList.clear();
 		
 	}
 	
@@ -52,50 +59,81 @@ public class TypeGenerator {
 			throw new RuntimeException(String.format("Illegal number of lines in Type decorator. First line states: %s", strings[0]));
 		}
 		
-		String name = strings[0].trim();
+		String[] split = getNameAndType(strings[0]);
+		String name = split[0];
+		String type = split[1];
 
-		EObject typeObject = utils.dataFactory.create(utils.typeClass);
-		typeObject.eSet(utils.tNameFeature, name);
-		typeObject.eSet(utils.tWidgetFeature, masterMap.get(master).getValue());
-		//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
+		ViewComponent viewComponent = DataFactory.eINSTANCE.createViewComponent();
+		viewComponent.setName(name);
+		viewComponent.setExpectedType(type);
+		viewComponent.setWidget(masterMap.get(master).getValue());
+		theList.add(viewComponent, master);
+
+	}
+	
+	/**
+	 * The first element is the name of the component, the second element is the name of the expected type for the component.
+	 * @param string
+	 * @return
+	 */
+	private String[] getNameAndType(String string) {
 		
-		list.add(typeObject, master);
+		string = string.trim();
+		
+		String[] split = new String[]{string};
+		String name = null, type = null;
+		if (string.contains(":")) {	//Type declaration after colon
+			split = string.split(":");
+			name = split[0];
+			type = split[1];
+		} else if (string.contains(" ")) {	//Type declaration before blank space, like normal java programming
+			split = string.split(" ");
+			name = split[1];
+			type = split[0];
+		} 
 
+		if (split.length != 2) {
+			throw new RuntimeException(String.format("Error! The component \"%s\" is either malformed or it doesn't declare a type.", string));
+		}
+		
+		return new String[] {name.trim(), type.trim()};
+		
 	}
 	
 	public void setupAssignmentReferences() {
 		
-		if (list.size() == 0) {
+		if (theList.size() == 0) {
 			return;
 		}
 		
-		for (EObject assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
+		for (Assignment assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
 			
-			if (isPartOfType(assignment)) {
-				EObject type = getTypeForAssignment(assignment);
-				setupConnection(assignment, type);
+			if (shouldBePartOfViewComponent(assignment)) {
+				ViewComponent component = getComponentForAssignment(assignment);
+				setupConntection(assignment, component);
 			}
 			
 		}
 		
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void setupConnection(EObject assignment, EObject type) {
-
-		((EList<EObject>)type.eGet(utils.tAssignmentsFeature)).add(assignment);
-		assignment.eSet(utils.a2PartOfComponentFeature, type);
-		assignment.eSet(utils.a2WidgetFeature, getCorrectWidget(assignment));
+	private boolean shouldBePartOfViewComponent(Assignment assignment) {
 		
-		String assignmentUsesTypeNamed = (String) assignment.eGet(utils.a2UseComponentNamedFeature);
-		if (assignmentUsesTypeNamed != null) {
-			EObject typeToUse = findTypeNamed(assignmentUsesTypeNamed);
-			((EList<EObject>)type.eGet(utils.tTypesFeature)).add(typeToUse);
+		if (getComponentForAssignment(assignment) == null) {
+			return false;
 		}
+		return true;
+	}
+
+	private void setupConntection(Assignment assignment, ViewComponent component) {
+		
+		component.getAssignments().add(assignment);
+		assignment.setPartOfComponent(component);
+		assignment.setWidget(getCorrectWidget2(assignment));
 		
 	}
 	
-	private Widget getCorrectWidget(EObject assignment) {
+	private Widget getCorrectWidget2(Assignment assignment) {
 		
 		Pair<Arrow, Widget> assignmentPair = getPair(assignment, AssignmentGenerator.getInstance().assignments);
 		Arrow arrow = assignmentPair.getKey();
@@ -103,16 +141,15 @@ public class TypeGenerator {
 		return WidgetUtils.getSecondShallowestWidget(arrow, widget);
 		
 	}
-	
-	private Pair<Arrow, Widget> getPair(EObject eObject, DoubleList<EObject, Master> doubleList) {
-		
-		return masterMap.get(doubleList.getMaster(eObject));
+
+	private Pair<Arrow, Widget> getPair(Assignment assignment, DoubleList<Assignment, Master> newAssignments) {
+
+		return masterMap.get(newAssignments.getMaster(assignment));
 		
 	}
 
+	private ViewComponent getComponentForAssignment(Assignment assignment) {
 
-	private EObject getTypeForAssignment(EObject assignment) {
-		
 		if (masterMap == null) {
 			return null;
 		}
@@ -121,7 +158,7 @@ public class TypeGenerator {
 		Pair<Arrow, Widget> pairForAssignment = masterMap.get(assignmentMaster);
 		Master correctMaster = null;
 		
-		for (Master type : list.getMasterIterable()) {
+		for (Master type : theList.getMasterIterable()) {
 			
 			Widget widget = masterMap.get(type).getValue();
 			if (widget.equals(pairForAssignment.getValue())) {
@@ -135,33 +172,107 @@ public class TypeGenerator {
 			return null;
 		}
 		
-		return list.getElement(correctMaster);
+		return theList.getElement(correctMaster);
 		
 	}
 	
-	protected EObject findTypeNamed(String name) {
+	/**
+	 * This will currently only generate the base cases, i.e not types containing types
+	 * @param screenName
+	 */
+	public void generateFxmlForTypes(String screenName) {
 		
-		for (EObject type : list.getElementsIterable()) {
+		for (ViewComponent type : theList.getElementsIterable()) {
 			
-			String typeName = (String) type.eGet(utils.tNameFeature);
-			if (typeName.equals(name)) {
-				return type;
+			String fileName = String.format("%s-%s.fxml", screenName, type.getName());
+			StringBuilder fxmlBuidler = new StringBuilder();
+			fxmlBuidler.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
+					"\n" + 
+					"<?import java.lang.*?>\n" + 
+					"<?import java.util.*?>\n" + 
+					"<?import javafx.scene.*?>\n" + 
+					"<?import javafx.scene.control.*?>\n" + 
+					"<?import javafx.scene.layout.*?>\n" +
+					"<?import javafx.scene.image.*?>" +
+					"\n" +
+					"\n");
+			
+			WidgetGroup widgetGroup = (WidgetGroup) type.getWidget();
+			fxmlBuidler.append(String.format(
+					"<AnchorPane xmlns:fx=\"http://javafx.com/fxml/1\" prefHeight=\"%d\" prefWidth=\"%d\" >\n" + 
+							"    <children>\n", 
+					widgetGroup.getMeasuredHeight(), widgetGroup.getMeasuredWidth()));
+			
+			for (Widget widget : widgetGroup.getWidgets()) {
+				
+				//Assume it is a label for now
+				String nodeType = "Label";
+				String height = "minHeight", width = "minWidth";
+				if (widget instanceof Image) {
+					nodeType = "ImageView";
+					height = "fitHeight";
+					width = "fitWidth";
+				} 
+				
+				String element = String.format(
+						"        <%s layoutX=\"%d\" layoutY=\"%d\" %s=\"%d\" %s=\"%d\" fx:id=\"%d\" />" +
+								"\n",
+								nodeType, widget.getX(), widget.getY(), height, widget.getMeasuredHeight(), width, widget.getMeasuredWidth(), widget.getId().intValue());
+				
+				if (widget instanceof WidgetGroup) {
+					
+					if (((WidgetGroup) widget).getName().contains("list")) {
+						
+						String orientation = "VERTICAL";
+						String[] split = ((WidgetGroup) widget).getName().split(" ");
+						if (split.length > 1) {
+							if (split[1].startsWith("h") || split[1].startsWith("H")) {
+								orientation = "HORIZONTAL";
+							}
+						}
+						
+						element = String.format(
+								"        <ListView layoutX=\"%d\" layoutY=\"%d\" prefHeight=\"%d\" prefWidth=\"%d\" orientation=\"%s\" fx:id=\"%d\" />" +
+										"\n",
+										widget.getX(), widget.getY(), widget.getMeasuredHeight(), widget.getMeasuredWidth(), orientation, widget.getId().intValue());
+					} else {
+						element = String.format(
+								"        <Group layoutX=\"%d\" layoutY=\"%d\" fx:id=\"%d\" />" +
+										"\n",
+										widget.getX(), widget.getY(), widget.getId().intValue());
+					}
+					
+				}
+				
+				fxmlBuidler.append(element);
+				
 			}
 			
+			
+			String end = "    </children>\n" + 
+					"</AnchorPane>";
+			
+			fxmlBuidler.append(end);
+			
+			FileWriter fw = null;
+			try {
+				fw = new FileWriter(new File(Constants.GENERATED_DIRECTORY + fileName));
+				fw.write(fxmlBuidler.toString());
+				fw.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				
+				if (fw != null) {
+					try {
+						fw.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}
 		}
-		
-		throw new RuntimeException(String.format("Couldn't find Type with name %s", name));
-		
-	}
-	
-	
-	protected boolean isPartOfType(EObject assignment) {
-		
-		if (getTypeForAssignment(assignment) == null) {
-			return false;
-		}
-
-		return true;
 		
 	}
 	

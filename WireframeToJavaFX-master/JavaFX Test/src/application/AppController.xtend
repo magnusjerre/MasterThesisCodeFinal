@@ -18,7 +18,7 @@ import org.apache.commons.io.FilenameUtils
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.util.EcoreUtil
 import com.wireframesketcher.model.story.Storyboard
-import datagenerator.AssignmentHandler
+import datagenerator.ScreenEcoreHandler
 
 /**
  * 
@@ -199,8 +199,8 @@ class AppController extends Application {
 				it.invoke(finalConstructor, resource)
 			}
 		]
-		
-		AssignmentHandler.assignValues(getRoot, Constants.GENERATED_DIRECTORY + fileName + ".xmi")
+		val seh = new ScreenEcoreHandler(Constants.GENERATED_DIRECTORY + fileName + ".ecore")
+		seh.assignValues(getRoot)
 
 		stage.setScene(scene)
 		stage.show()

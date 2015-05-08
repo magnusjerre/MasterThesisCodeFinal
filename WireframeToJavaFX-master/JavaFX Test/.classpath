@@ -8,5 +8,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/screenDecorator"/>
 	<classpathentry kind="lib" path="/Applications/Eclipse EE Kepler/plugins/commons-io-2.4-javadoc.jar"/>
 	<classpathentry kind="lib" path="/Applications/Eclipse EE Kepler/plugins/commons-io-2.4.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/dataGeneration"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
