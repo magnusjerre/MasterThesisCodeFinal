@@ -495,7 +495,7 @@ class Generator {
 		
 		var String eventType = "ActionEvent"
 		switch widget {
-			Label, TextArea : eventType = "MouseEvent"
+			WidgetGroup, Label, TextArea : eventType = "MouseEvent"
 		}
 		
 		val link = getPropertyForWidget(widget, "link")
@@ -605,6 +605,7 @@ class Generator {
 					it += "layoutX" -> widgetGroup.x
 					it += "layoutY" -> widgetGroup.y
 					it += "id" -> widgetGroup.id
+					it += "onMousePressed" -> "#handleMouseEvent" + widgetGroup.id
 					it += "prefWidth" -> widgetGroup.measuredWidth
 					it += "prefHeight" -> widgetGroup.measuredHeight
 					it += "orientation" -> or
@@ -616,11 +617,13 @@ class Generator {
 			
 			(builder += "Group") => [
 				it += "id" -> widgetGroup.id
+				it += "onMousePressed" -> "#handleMouseEvent" + widgetGroup.id
 				it += "layoutX" -> widgetGroup.x
 				it += "layoutY" -> widgetGroup.y
 			]
 			
 		}
+		generateActionCode(widgetGroup)
 			
 	}
 

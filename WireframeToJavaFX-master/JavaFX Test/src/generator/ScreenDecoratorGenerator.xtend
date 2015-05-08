@@ -127,11 +127,17 @@ class ScreenDecoratorGenerator {
 		var String value = null
 		val widget = masterMap.get(master)?.value
 		if (widget != null) {
-			for (string : dataString) {
-				feature = getFeatureNameFromDataString(string)
-				value = getFeatureValueFromDataString(string)
-				if (feature != "") {
-					createScriptAction(widget, feature + " = " + value)
+			if (dataString.get(0).indexOf("=") == -1) {
+				//Jerre: Must then be part of selection for contexts
+				println("This is my part of the action generation")
+				createScriptAction(widget, "cake")
+			} else {
+				for (string : dataString) {
+					feature = getFeatureNameFromDataString(string)
+					value = getFeatureValueFromDataString(string)
+					if (feature != "") {
+						createScriptAction(widget, feature + " = " + value)
+					}
 				}
 			}
 		} 
