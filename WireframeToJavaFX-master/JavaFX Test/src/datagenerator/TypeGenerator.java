@@ -201,7 +201,7 @@ public class TypeGenerator {
 			fxmlBuidler.append(String.format(
 					"<AnchorPane xmlns:fx=\"http://javafx.com/fxml/1\" prefHeight=\"%d\" prefWidth=\"%d\" >\n" + 
 							"    <children>\n", 
-					widgetGroup.getMeasuredWidth(), widgetGroup.getMeasuredHeight()));
+					widgetGroup.getMeasuredHeight(), widgetGroup.getMeasuredWidth()));
 			
 			for (Widget widget : widgetGroup.getWidgets()) {
 				
@@ -220,10 +220,28 @@ public class TypeGenerator {
 								nodeType, widget.getX(), widget.getY(), height, widget.getMeasuredHeight(), width, widget.getMeasuredWidth(), widget.getId().intValue());
 				
 				if (widget instanceof WidgetGroup) {
-					element = String.format(
-							"        <Group layoutX=\"%d\" layoutY=\"%d\" fx:id=\"%d\" />" +
-									"\n",
-									widget.getX(), widget.getY(), widget.getId().intValue());
+					
+					if (((WidgetGroup) widget).getName().contains("list")) {
+						
+						String orientation = "VERTICAL";
+						String[] split = ((WidgetGroup) widget).getName().split(" ");
+						if (split.length > 1) {
+							if (split[1].startsWith("h") || split[1].startsWith("H")) {
+								orientation = "HORIZONTAL";
+							}
+						}
+						
+						element = String.format(
+								"        <ListView layoutX=\"%d\" layoutY=\"%d\" prefHeight=\"%d\" prefWidth=\"%d\" orientation=\"%s\" fx:id=\"%d\" />" +
+										"\n",
+										widget.getX(), widget.getY(), widget.getMeasuredHeight(), widget.getMeasuredWidth(), orientation, widget.getId().intValue());
+					} else {
+						element = String.format(
+								"        <Group layoutX=\"%d\" layoutY=\"%d\" fx:id=\"%d\" />" +
+										"\n",
+										widget.getX(), widget.getY(), widget.getId().intValue());
+					}
+					
 				}
 				
 				fxmlBuidler.append(element);

@@ -7,6 +7,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 import com.wireframesketcher.model.Arrow;
 import com.wireframesketcher.model.Master;
 import com.wireframesketcher.model.Widget;
+import com.wireframesketcher.model.WidgetGroup;
 
 import data.Assignment;
 import data.DataFactory;
@@ -63,11 +64,19 @@ public class AssignmentGenerator {
 	
 	private Widget getCorrectWidget2(Assignment assignment, Pair<Arrow, Widget> pair) {
 		
+		if (pair.getValue() instanceof WidgetGroup) {
+			WidgetGroup widgetGroup = (WidgetGroup) pair.getValue();
+			if ("list".equalsIgnoreCase(widgetGroup.getName())) {
+				return widgetGroup;
+			}
+		}
+		
 		if (assignment.isUsingViewComponent()) {
 			return pair.getValue();
-		} else {
-			return WidgetUtils.getDeepestWidget(pair.getKey(), pair.getValue());
-		}
+		} 
+		
+		return WidgetUtils.getDeepestWidget(pair.getKey(), pair.getValue());
+		
 		
 	}
 

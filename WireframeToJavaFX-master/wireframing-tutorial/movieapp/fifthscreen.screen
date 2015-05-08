@@ -64,6 +64,9 @@
       </widgets>
     </overrides>
   </widgets>
+  <widgets xsi:type="model:Button" id="20" y="247" text="Prev Screen" measuredWidth="90" measuredHeight="25" link="thirdscreen.screen">
+    <font/>
+  </widgets>
   <hRuler>
     <guides position="252"/>
   </hRuler>

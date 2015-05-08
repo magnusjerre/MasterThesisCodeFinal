@@ -15,13 +15,14 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import list.ListController;
 
-import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -40,11 +41,11 @@ import application.Constants;
 
 public class ScreenEcoreHandler {
 	
-	public ResourceSet resourceSet;
-	public EPackage ePackage;
-	public EFactory factory;
+	public static ResourceSet resourceSet;
+	public static EPackage ePackage;
+	public static EFactory factory;
 	public EObject instance;
-	public String fileName;
+	public static String fileName;
 	
 	public static final String ANNOTATION_SOURCE = "wireframe";
 	
@@ -108,7 +109,7 @@ public class ScreenEcoreHandler {
 		
 	}
 	
-	public void assignComponents(Node node, EObject instance, EStructuralFeature feature) {
+	public static void assignComponents(Node node, EObject instance, EStructuralFeature feature) {
 		
 		EAnnotation iAnnotation = feature.getEAnnotation("wireframe");
 		
@@ -123,58 +124,82 @@ public class ScreenEcoreHandler {
 			handleResultCorrectly(finalNode, instance.eGet(feature));
 		} else {
 			
-			EObject instanceFromFeature = (EObject) instance.eGet(feature);
-
-			if (!instanceTypeMatchesComponentExpectedType(instanceFromFeature.eClass(), iUseComponent)) {
-				throw new RuntimeException(String.format("Error! The type from the assignment doesn't match the expected type for the component %s", iUseComponent));
-			}
-			
-			//Create and populate the component used 
-			EClass iUseComponentClass = (EClass) ePackage.getEClassifier(iUseComponent);
-			EObject componentInstance = factory.create(iUseComponentClass);
-			for (EStructuralFeature iuccFeature : componentInstance.eClass().getEStructuralFeatures()) {
+			if (feature.isMany()) {
+				@SuppressWarnings("unchecked")
+				List<Object> listValues = (List<Object>) instance.eGet(feature);
 				
-				EAnnotation iuccAnnotation = iuccFeature.getEAnnotation("wireframe");
-				String iuccOcl = iuccAnnotation.getDetails().get("ocl");
-				Object result = OCLHandler.parseOCLStatement(resourceSet, instanceFromFeature, iuccOcl);
-				componentInstance.eSet(iuccFeature, result);
+				EClass iUseComponentClass = (EClass) ePackage.getEClassifier(iUseComponent);
 				
-			}
-			
-			try {
-				String componentFxmlLocation = getFxmlLocationForComponent(iUseComponent);
-				URL url = new File(componentFxmlLocation).toURI().toURL();
-				Node componentNode = FXMLLoader.load(url);
+				ListView listView = (ListView) node.lookup(iLayoutId);
+				String simpleFileName = getSimpleName(fileName);
+				String componentName = String.format("%s-%s.fxml", simpleFileName, iUseComponent);
+				ListController lc = new ListController(listView, componentName, iUseComponentClass);
+				lc.obsList.addAll(listValues);
 				
-				for (EStructuralFeature cFeature : componentInstance.eClass().getEStructuralFeatures()) {
+			} else {
+				
+				EObject instanceFromFeature = (EObject) instance.eGet(feature);
+				
+				if (!instanceTypeMatchesComponentExpectedType(instanceFromFeature.eClass(), iUseComponent)) {
+					throw new RuntimeException(String.format("Error! The type from the assignment doesn't match the expected type for the component %s", iUseComponent));
+				}
+				
+				//Create and populate the component used 
+				EClass iUseComponentClass = (EClass) ePackage.getEClassifier(iUseComponent);
+				EObject componentInstance = factory.create(iUseComponentClass);
+				for (EStructuralFeature iuccFeature : componentInstance.eClass().getEStructuralFeatures()) {
 					
-					String cLayoutId = cFeature.getEAnnotation("wireframe").getDetails().get("layoutId");
-					Node subComponentNode = componentNode.lookup(cLayoutId);
-					
-					assignComponents(subComponentNode, componentInstance, cFeature);
+					EAnnotation iuccAnnotation = iuccFeature.getEAnnotation("wireframe");
+					String iuccOcl = iuccAnnotation.getDetails().get("ocl");
+					Object result = OCLHandler.parseOCLStatement(resourceSet, instanceFromFeature, iuccOcl);
+					componentInstance.eSet(iuccFeature, result);
 					
 				}
 				
-				//The node provided in the method is the parent node for the group/anchorpane node we want to add the child to
-				Node nodeToAddTo = node.lookup(feature.getEAnnotation("wireframe").getDetails().get("layoutId"));
-				
-				if (nodeToAddTo instanceof Group) {
-					((Group) nodeToAddTo).getChildren().add(componentNode);
-				} else if (nodeToAddTo instanceof Pane) {
-					((Pane) nodeToAddTo).getChildren().add(componentNode);
+				try {
+					String componentFxmlLocation = getFxmlLocationForComponent(iUseComponent);
+					URL url = new File(componentFxmlLocation).toURI().toURL();
+					Node componentNode = FXMLLoader.load(url);
+					
+					for (EStructuralFeature cFeature : componentInstance.eClass().getEStructuralFeatures()) {
+						
+						String cLayoutId = cFeature.getEAnnotation("wireframe").getDetails().get("layoutId");
+						Node subComponentNode = componentNode.lookup(cLayoutId);
+						
+						assignComponents(subComponentNode, componentInstance, cFeature);
+						
+					}
+					
+					//The node provided in the method is the parent node for the group/anchorpane node we want to add the child to
+					Node nodeToAddTo = node.lookup(feature.getEAnnotation("wireframe").getDetails().get("layoutId"));
+					
+					if (nodeToAddTo instanceof Group) {
+						((Group) nodeToAddTo).getChildren().add(componentNode);
+					} else if (nodeToAddTo instanceof Pane) {
+						((Pane) nodeToAddTo).getChildren().add(componentNode);
+					}
+					
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 				
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 			
 		}
 		
 	}
 	
-	private boolean instanceTypeMatchesComponentExpectedType(EClass instanceClass, String comopnentNamed) {
+	private static String getSimpleName(String fileLocation) {
+		
+		String removedPath = fileLocation.replace(Constants.GENERATED_DIRECTORY, "");
+		String removedFileEnding = removedPath.replace(".ecore", "");
+		return removedFileEnding;
+				
+	}
+	
+	private static boolean instanceTypeMatchesComponentExpectedType(EClass instanceClass, String comopnentNamed) {
 		
 		EClass compClass = (EClass) ePackage.getEClassifier(comopnentNamed);
 		String expectedTypeName = compClass.getEAnnotations().get(0).getDetails().get("expectedType");
@@ -187,14 +212,14 @@ public class ScreenEcoreHandler {
 		
 	}
 
-	private String getFxmlLocationForComponent(String iUseComponent) {
+	private static String getFxmlLocationForComponent(String iUseComponent) {
 		File componentFxmlFile = new File(fileName);
 		String screenName = componentFxmlFile.getName().replace(".ecore", "");
 		String componentFxmlLocation = String.format("%s%s-%s.fxml", Constants.GENERATED_DIRECTORY, screenName, iUseComponent);
 		return componentFxmlLocation;
 	}
 	
-	private void handleResultCorrectly(Node node, Object result) {
+	public static void handleResultCorrectly(Node node, Object result) {
 		
 		if (node instanceof Label) {
 			((Label) node).setText(getStringRepresentation(result));
@@ -214,11 +239,17 @@ public class ScreenEcoreHandler {
 			File imageFile = fileLocation(fileName);
 			String uri = imageFile.toURI().toString();
 			((ImageView) node).setImage(new Image(uri));
+		} else if (node instanceof ListView) {
+			
+			ListView lv = (ListView) node;
+			ListController lc = new ListController(lv, "simple_strings.fxml", null);
+			lc.obsList.addAll((Collection<Object>) result);
+			
 		}
 		
 	}
 	
-	private String getStringRepresentation(Object object) {
+	private static String getStringRepresentation(Object object) {
 		
 		if (object instanceof String) {
 			return object.toString();
@@ -240,7 +271,7 @@ public class ScreenEcoreHandler {
 		return null;
 	}
 	
-	private File fileLocation(String fileName) {
+	private static File fileLocation(String fileName) {
 		String[] possibleLocations = new String[] {
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/images/" + fileName,
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + fileName,

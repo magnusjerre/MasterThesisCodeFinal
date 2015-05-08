@@ -36,7 +36,7 @@ public class ScreenEcoreGenerator {
 	private static final String ANNOTATION_SOURCE = "wireframe";
 	private int counter;
 	private String ASSIGNMENT_PREFIX = "a";
-	private EPackage screenPackage;
+	protected EPackage screenPackage;
 	private ResourceSet resSet;
 	
 	private Map<String, Map<String, EClassifier>> classesForXmis;
@@ -125,6 +125,11 @@ public class ScreenEcoreGenerator {
 	}
 	
 	private boolean assignmentProducesWrongTypeForComponent(EClassifier eClassifier, String expectedTypeForComponent) {
+		
+		if (eClassifier instanceof CollectionTypeImpl) {
+			CollectionTypeImpl cti = (CollectionTypeImpl) eClassifier;
+			return !cti.getElementType().getName().equals(expectedTypeForComponent);
+		}
 		return !eClassifier.getName().equals(expectedTypeForComponent);
 	}
 

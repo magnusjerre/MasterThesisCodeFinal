@@ -43,6 +43,9 @@ import org.apache.commons.io.FilenameUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.w3c.dom.Element
+import datagenerator.ContextGenerator
+import datagenerator.AssignmentGenerator
+import datagenerator.TypeGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -102,7 +105,6 @@ class Generator {
 	HashMap<Master, Pair<Arrow, Widget>> masterMap = null
 	
 	LayoutStyle layoutStyle = null
-	int listViewCounter = 1
 	int verticalBorder = 0
 	int horizontalBorder = 0
 
@@ -582,21 +584,28 @@ class Generator {
 	}
 	
 	def dispatch void generateFxml(WidgetGroup widgetGroup) {
-		if (widgetGroup.x > horizontalBorder || widgetGroup.y > verticalBorder) {
+		if ((widgetGroup.x > horizontalBorder || widgetGroup.y > verticalBorder) && horizontalBorder != 0 && verticalBorder != 0) {
 			return
 		}
 		 
-		if (widgetGroup.name == "list") {
-			val fxid = ("listView" + listViewCounter) as String
+		if (widgetGroup.name.contains("list")) {
+			var listAndOrientation = widgetGroup.name.split(" ", 2)
+			var orientation = "VERTICAL"
+			if (listAndOrientation.length > 1 ) {
+				if (listAndOrientation.get(1).startsWith("h") || listAndOrientation.get(1).startsWith("H")) {
+				orientation = "HORIZONTAL"
+				}
+			}
+			val or = orientation as String
+			
 			(builder += "ListView") => [
-				it += "fx:id" -> fxid
 				it += "layoutX" -> widgetGroup.x
 				it += "layoutY" -> widgetGroup.y
+				it += "id" -> widgetGroup.id
 				it += "prefWidth" -> widgetGroup.measuredWidth
 				it += "prefHeight" -> widgetGroup.measuredHeight
+				it += "orientation" -> or
 			]
-			ListGenerator.getInstance.listViewNames.add(fxid)
-			listViewCounter++
 		} else {
 			
 			(builder += "Group") => [
