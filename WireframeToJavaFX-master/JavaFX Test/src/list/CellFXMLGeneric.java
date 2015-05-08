@@ -1,6 +1,7 @@
 package list;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import application.Constants;
 import datagenerator.OCLHandler;
 import datagenerator.ScreenEcoreHandler;
 
@@ -26,14 +28,23 @@ public class CellFXMLGeneric {
 		
 		this.viewComponentEClass = viewComponentEClass;
 		
-		fxmlLoader = new FXMLLoader(getClass().getResource("/generated/" + resourceName));
-		fxmlLoader.setController(this);
-		
 		try {
+			
+			String path = Constants.GEN_DIRECTORY + resourceName;
+			URL pathURl = getClass().getResource(path);
+			if (pathURl == null) {
+				path = Constants.LIST_DIRECTORY + resourceName;
+			}
+			
+			
+			fxmlLoader = new FXMLLoader(getClass().getResource(path));
+			fxmlLoader.setController(this);
+			
 			fxmlLoader.load();
+
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		
 	}
 	
@@ -42,16 +53,17 @@ public class CellFXMLGeneric {
 		for (Node child : ((Pane) fxmlLoader.getRoot()).getChildren()) {
 			
 			if ((viewComponentEClass != null) && (object instanceof EObject)) {
-				String ocl = getOCLStatementForId(child.getId());
 				EObject listElement = (EObject) object;
-				Object oclResult = OCLHandler.parseOCLStatement(listElement.eResource().getResourceSet(), listElement, ocl);
-				//start with simple case, handle advanced view comp case later if I have time
-				EStructuralFeature featureInViewComponent = getFeatureForId(child.getId());
+
 				EObject newInstance = ScreenEcoreHandler.ePackage.getEFactoryInstance().create(viewComponentEClass);
 				populateInstance(listElement, newInstance);
 				
 				EStructuralFeature aFeature = getFeatureForId(child.getId());
 				ScreenEcoreHandler.assignComponents(child, newInstance, aFeature);
+			} else {
+				
+				ScreenEcoreHandler.handleResultCorrectly(child, object);
+				
 			}
 			
 		}
@@ -78,22 +90,6 @@ public class CellFXMLGeneric {
 	public Pane getPane() {
 		
 		return (Pane) fxmlLoader.getRoot();
-		
-	}
-	
-	private String getOCLStatementForId(String id) {
-		
-		for (EStructuralFeature feature : viewComponentEClass.getEStructuralFeatures()) {
-			
-			EAnnotation eAnnotation = feature.getEAnnotations().get(0);
-			String featureId = eAnnotation.getDetails().get("layoutId");
-			if (("#" + id).equals(featureId)) {
-				return eAnnotation.getDetails().get("ocl");
-			}
-			
-		}
-
-		return null;
 		
 	}
 	

@@ -241,10 +241,10 @@ public class ScreenEcoreHandler {
 			((ImageView) node).setImage(new Image(uri));
 		} else if (node instanceof ListView) {
 			
-//			ListView lv = (ListView) node;
-//			ListController lc = new ListController(lv, "simple_cell.fxml");
-//			lc.obsList.addAll((Collection<Object>) result);
-//			
+			ListView lv = (ListView) node;
+			ListController lc = new ListController(lv, "simple_strings.fxml", null);
+			lc.obsList.addAll((Collection<Object>) result);
+			
 		}
 		
 	}

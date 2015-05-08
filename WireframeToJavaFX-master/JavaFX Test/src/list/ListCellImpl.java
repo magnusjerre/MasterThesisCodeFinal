@@ -1,7 +1,6 @@
 package list;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 
 import javafx.scene.control.ListCell;
 import list.CellFXMLGeneric;
