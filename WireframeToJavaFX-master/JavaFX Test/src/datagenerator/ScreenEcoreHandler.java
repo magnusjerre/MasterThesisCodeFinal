@@ -44,7 +44,7 @@ public class ScreenEcoreHandler {
 	public static ResourceSet resourceSet;
 	public static EPackage ePackage;
 	public static EFactory factory;
-	public EObject instance;
+	public static EObject instance;
 	public static String fileName;
 	
 	public static final String ANNOTATION_SOURCE = "wireframe";
