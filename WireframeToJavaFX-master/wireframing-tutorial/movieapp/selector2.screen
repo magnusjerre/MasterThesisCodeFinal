@@ -40,13 +40,13 @@
       <widgets ref="1" text="bool useSelection"/>
     </overrides>
   </widgets>
-  <widgets xsi:type="model:WidgetGroup" id="20" x="16" y="112" measuredWidth="204" measuredHeight="52">
+  <widgets xsi:type="model:WidgetGroup" id="20" x="16" y="112" measuredWidth="204" measuredHeight="52" link="theselected.screen">
     <widgets xsi:type="model:Label" id="3" x="48" y="8" text="Actorname 2" measuredWidth="156" measuredHeight="36">
       <font size="24px" bold="true"/>
     </widgets>
     <widgets xsi:type="model:Image" id="18" width="41" height="52" measuredWidth="41" measuredHeight="52"/>
   </widgets>
-  <widgets xsi:type="model:WidgetGroup" id="21" x="16" y="48" measuredWidth="204" measuredHeight="52">
+  <widgets xsi:type="model:WidgetGroup" id="21" x="16" y="48" measuredWidth="204" measuredHeight="52" link="theselected.screen">
     <widgets xsi:type="model:Label" id="2" x="48" y="8" text="Actorname 1" measuredWidth="156" measuredHeight="36">
       <font size="24px" bold="true"/>
     </widgets>

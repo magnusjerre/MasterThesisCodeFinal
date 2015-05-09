@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Master" id="1" x="813" y="112" width="564" measuredWidth="564" measuredHeight="81">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="564" text="db1 = /Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Image" id="2" x="157" y="96" width="81" height="113" measuredWidth="81" measuredHeight="113"/>
+  <widgets xsi:type="model:Label" id="3" x="253" y="104" text="The actor's name" measuredWidth="276" measuredHeight="46" foreground="#0000ff">
+    <font size="32px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="4" x="253" y="168" text="birthdate" measuredWidth="79" measuredHeight="29" foreground="#666666">
+    <font size="18px" bold="false" italic="true"/>
+  </widgets>
+  <widgets xsi:type="model:TextArea" id="5" x="157" y="232" width="372" height="89" text="A *paragraph* of text&#xA;A _second_ row of text" measuredWidth="372" measuredHeight="89">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:HLine" id="6" x="157" y="352" width="372" measuredWidth="372" measuredHeight="6"/>
+  <widgets xsi:type="model:WidgetGroup" id="11" x="669" y="760" measuredWidth="361" measuredHeight="73">
+    <widgets xsi:type="model:Image" id="7" width="49" height="73" measuredWidth="49" measuredHeight="73"/>
+    <widgets xsi:type="model:Label" id="8" x="56" y="8" width="305" text="movie title" measuredWidth="305" measuredHeight="31">
+      <font size="20px" bold="true" italic="false" underline="false"/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="10" x="56" y="36" text="runtime" measuredWidth="61" measuredHeight="26" foreground="#666666">
+      <font size="16px" bold="false" italic="true"/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:Master" id="12" x="981" y="632" measuredWidth="97" measuredHeight="81">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
+    <overrides>
+      <widgets ref="9" text="movieInfo : Movie"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="13" x="798" y="704" measuredWidth="97" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="33" text="title"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="14" x="528" y="780" measuredWidth="97" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="33" text="poster"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="15" x="789" y="872" measuredWidth="97" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="33" text="runtime"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="16" x="773" y="737" width="41" height="44" measuredWidth="41" measuredHeight="44" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Arrow" id="17" x="773" y="809" width="41" height="64" measuredWidth="41" measuredHeight="64" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Arrow" id="18" x="958" y="697" width="24" height="84" measuredWidth="24" measuredHeight="84" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Arrow" id="19" x="625" y="792" width="45" height="8" measuredWidth="45" measuredHeight="8" foreground="#666666" lineStyle="dashed" left="false" right="true" direction="bottom"/>
+  <widgets xsi:type="model:WidgetGroup" id="40" x="157" y="368" measuredWidth="361" measuredHeight="313" name="list">
+    <widgets xsi:type="model:WidgetGroup" id="20" measuredWidth="361" measuredHeight="73">
+      <widgets xsi:type="model:Image" id="21" width="49" height="73" measuredWidth="49" measuredHeight="73"/>
+      <widgets xsi:type="model:Label" id="22" x="56" y="8" width="305" text="movie title" measuredWidth="305" measuredHeight="31">
+        <font size="20px" bold="true" italic="false" underline="false"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="23" x="56" y="36" text="runtime" measuredWidth="61" measuredHeight="26" foreground="#666666">
+        <font size="16px" bold="false" italic="true"/>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="28" y="80" measuredWidth="361" measuredHeight="73">
+      <widgets xsi:type="model:Image" id="29" width="49" height="73" measuredWidth="49" measuredHeight="73"/>
+      <widgets xsi:type="model:Label" id="30" x="56" y="8" width="305" text="movie title" measuredWidth="305" measuredHeight="31">
+        <font size="20px" bold="true" italic="false" underline="false"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="31" x="56" y="36" text="runtime" measuredWidth="61" measuredHeight="26" foreground="#666666">
+        <font size="16px" bold="false" italic="true"/>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="32" y="160" measuredWidth="361" measuredHeight="73">
+      <widgets xsi:type="model:Image" id="33" width="49" height="73" measuredWidth="49" measuredHeight="73"/>
+      <widgets xsi:type="model:Label" id="34" x="56" y="8" width="305" text="movie title" measuredWidth="305" measuredHeight="31">
+        <font size="20px" bold="true" italic="false" underline="false"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="35" x="56" y="36" text="runtime" measuredWidth="61" measuredHeight="26" foreground="#666666">
+        <font size="16px" bold="false" italic="true"/>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="36" y="240" measuredWidth="361" measuredHeight="73">
+      <widgets xsi:type="model:Image" id="37" width="49" height="73" measuredWidth="49" measuredHeight="73"/>
+      <widgets xsi:type="model:Label" id="38" x="56" y="8" width="305" text="movie title" measuredWidth="305" measuredHeight="31">
+        <font size="20px" bold="true" italic="false" underline="false"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="39" x="56" y="36" text="runtime" measuredWidth="61" measuredHeight="26" foreground="#666666">
+        <font size="16px" bold="false" italic="true"/>
+      </widgets>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:Master" id="41" x="613" y="492" measuredWidth="145" measuredHeight="65">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="145" height="65" text="db.selected.movies&#xA;movieInfo"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="42" x="349" y="521" width="265" height="8" measuredWidth="265" measuredHeight="8" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="44" x="608" y="259" measuredWidth="145" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="145" height="33" text="db.selected.biography"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="46" x="581" y="166" measuredWidth="145" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="145" height="33" text="db.selected.birthdate"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="47" x="528" y="48" measuredWidth="145" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="145" height="33" text="db.selected.name"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="48" x="13" y="24" measuredWidth="145" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="145" height="33" text="db.selected.portrait"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="49" x="112" y="56" width="49" height="57" measuredWidth="49" measuredHeight="57" foreground="#666666" lineStyle="dashed" left="false" right="true"/>
+  <widgets xsi:type="model:Arrow" id="50" x="528" y="272" width="81" height="8" measuredWidth="81" measuredHeight="8" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Arrow" id="52" x="309" y="184" width="273" height="8" measuredWidth="273" measuredHeight="8" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Arrow" id="53" x="389" y="73" width="140" height="55" measuredWidth="140" measuredHeight="55" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="54" x="824" y="232" measuredWidth="865" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="865" height="33" text="db = #selectionModel"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Button" id="55" x="157" y="708" width="372" text="Back" measuredWidth="372" measuredHeight="25" link="advancedlist2.screen">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

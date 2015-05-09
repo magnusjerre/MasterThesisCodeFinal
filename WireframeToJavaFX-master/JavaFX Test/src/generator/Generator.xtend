@@ -512,6 +512,21 @@ class Generator {
 				«"\t"»/* Generated - "«widget.text»"*/
 					@FXML
 					def handle«eventType»«widget.id»(«eventType» event) {
+						var id = null as Object
+						«IF eventType == "MouseEvent"»
+						if(event.button == MouseButton.PRIMARY){
+						«ENDIF»			
+							val resource = getResourceForScreenFile(screenName + ".screen")
+							id = getPropertyForNode(event.source as Node, "id") 
+							if (id != null && id != PropertyResult.NO_SUCH_METHOD){
+								resource.performActionForWidgetId(id as String)
+							} 
+							resource.evaluateRules
+						«IF eventType == "MouseEvent"»
+						}
+						«ENDIF»
+						
+						SelectionHandler.getInstance.handleMouseEvent(id as String, event)
 						«IF eventType == "MouseEvent"»
 						if(event.button == MouseButton.PRIMARY){	
 						«ENDIF»			

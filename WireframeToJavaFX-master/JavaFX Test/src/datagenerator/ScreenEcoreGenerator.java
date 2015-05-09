@@ -238,7 +238,17 @@ public class ScreenEcoreGenerator {
 					EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 					eAnnotation.setSource(ANNOTATION_SOURCE);
 					
-					if (statement.startsWith("/")) {
+					if (statement.startsWith("#")) {
+						Resource resource = resSet.getResource(URI.createFileURI(Constants.GENERATED_DIRECTORY + "selectionModel.ecore"), true);
+						EStructuralFeature feature = EcoreFactory.eINSTANCE.createEReference();
+						feature.setName(name);
+						feature.setEType(((EPackage) resource.getContents().get(0)).getEClassifier("Selections"));
+						
+						feature.getEAnnotations().add(eAnnotation);
+						eAnnotation.getDetails().put("xmiLocation", Constants.GENERATED_DIRECTORY + "selectionModel.ecore");
+						screenClass.getEStructuralFeatures().add(feature);
+						
+					} else if (statement.startsWith("/")) {
 						Resource resource = resSet.getResource(URI.createFileURI(statement), true);
 						addClassesFromResource(statement, resource);
 						EObject value = resource.getContents().get(0);

@@ -1,5 +1,6 @@
 package datagenerator;
 
+import javafx.event.Event;
 import javafx.scene.Group;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -32,6 +33,7 @@ public class SelectionHandler {
 	
 	private SelectionHandler() {
 		
+		
 		resSet = ScreenEcoreHandler.resourceSet;
 
 		URI uri = URI.createFileURI(Constants.GENERATED_DIRECTORY + SELECTION_MODEL_SIMPLE_FILE_NAME);
@@ -54,7 +56,7 @@ public class SelectionHandler {
 		
 	}
 	
-	public void handleMouseEvent(String id, MouseEvent event) {
+	public void handleMouseEvent(String id, Event event) {
 		
 		if (id == null) {
 			return;
