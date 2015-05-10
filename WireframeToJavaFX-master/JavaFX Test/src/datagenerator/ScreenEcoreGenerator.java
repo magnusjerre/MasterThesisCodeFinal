@@ -36,12 +36,21 @@ public class ScreenEcoreGenerator {
 	private static final String ANNOTATION_SOURCE = "wireframe";
 	private int counter;
 	private String ASSIGNMENT_PREFIX = "a";
+	
+	List<Context> contexts;
+	List<Assignment> assignments;
+	List<ViewComponent> types;
+	
 	protected EPackage screenPackage;
 	private ResourceSet resSet;
 	
 	private Map<String, Map<String, EClassifier>> classesForXmis;
 	
-	public ScreenEcoreGenerator() {
+	public ScreenEcoreGenerator(List<Context> contexts, List<Assignment> assignments, List<ViewComponent> types) {
+		
+		this.contexts = contexts;
+		this.assignments = assignments;
+		this.types = types;
 		
 		counter = 1;
 		classesForXmis = new HashMap<String, Map<String,EClassifier>>();
@@ -77,7 +86,7 @@ public class ScreenEcoreGenerator {
 
 	private void addAssignmentsTo(EClass screenClass) {
 		
-		for (Assignment assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
+		for (Assignment assignment : assignments) {
 			addAssignmentTo(screenClass, assignment);
 		}
 	}
@@ -135,7 +144,7 @@ public class ScreenEcoreGenerator {
 
 	private void addViewComponentsToPackage(EPackage ePackage) {
 		
-		for (ViewComponent component : TypeGenerator.getInstance().theList.getElementsIterable()) {
+		for (ViewComponent component : types) {
 			
 			String typeName = createPrefixedComponentNameFromName(component.getName());
 			EClass componentClass = EcoreFactory.eINSTANCE.createEClass();
@@ -225,7 +234,7 @@ public class ScreenEcoreGenerator {
 	
 	private void addContextsTo(EClass screenClass) {
 		
-		List<Context> allContexts = ContextGenerator.getInstance().getAllContexts();
+		List<Context> allContexts = contexts;
 		
 		while (screenClass.getEStructuralFeatures().size() != allContexts.size()) {
 			

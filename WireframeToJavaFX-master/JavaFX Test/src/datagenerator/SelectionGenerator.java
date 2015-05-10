@@ -15,29 +15,11 @@ import data.Selection;
 
 public class SelectionGenerator {
 	
-	private static SelectionGenerator instance = null;
-	
 	public List<Selection> selections; 
 	
-	public static SelectionGenerator getInstance() {
-		
-		if (instance == null) {
-			instance = new SelectionGenerator();
-		}
-		
-		return instance;
-		
-	}
-	
-	private SelectionGenerator() {
+	public SelectionGenerator() {
 		
 		selections = new ArrayList<Selection>();
-		
-	}
-	
-	public void clear() {
-		
-		selections.clear();
 		
 	}
 	

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import datagenerator.AssignmentGenerator
 import datagenerator.ContextGenerator
 import datagenerator.SelectionGenerator
+import datagenerator.NewGenerator
 
 /** A singleton class that parse and generate screendecorator models */
 class ScreenDecoratorGenerator {
@@ -88,15 +89,18 @@ class ScreenDecoratorGenerator {
 	}
 	
 	def generateDecoratorType(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		TypeGenerator.getInstance.generateDecorator(strings, master, map)
+//		TypeGenerator.getInstance.generateDecorator(strings, master, map)
+		NewGenerator.getInstance.generateViewComponentDecorator(strings, master, map);
 	}
 	
 	def generateDecoratorAssignment(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		AssignmentGenerator.getInstance.generateDecorator(strings, master, map)
+//		AssignmentGenerator.getInstance.generateDecorator(strings, master, map)
+		NewGenerator.getInstance.generateAssignmentDecorator(strings, master, map);
 	}
 	
 	def generateDecoratorContext(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-		ContextGenerator.getInstance.generateDecorator(strings);
+//		ContextGenerator.getInstance.generateDecorator(strings);
+		NewGenerator.getInstance.generateContextDecorator(strings);
 	}
 
 	def void generateDataModel(String[] dataString, Master master, HashMap<Master, Pair<Arrow, Widget>> masterMap) {
@@ -131,8 +135,7 @@ class ScreenDecoratorGenerator {
 			if (dataString.get(0).indexOf("=") == -1) {
 				//Jerre: Must then be part of selection for contexts
 				println("This is my part of the action generation")
-				val sg = SelectionGenerator.getInstance
-				SelectionGenerator.getInstance.generateDecorator(dataString, master, masterMap)
+				NewGenerator.getInstance.generateSelectionDecorator(dataString, master, masterMap)
 				println("This is my part of the action generation")
 			} else {
 				for (string : dataString) {
