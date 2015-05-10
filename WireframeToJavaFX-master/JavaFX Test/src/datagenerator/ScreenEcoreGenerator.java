@@ -39,18 +39,18 @@ public class ScreenEcoreGenerator {
 	
 	List<Context> contexts;
 	List<Assignment> assignments;
-	List<ViewComponent> types;
+	List<ViewComponent> viewComponents;
 	
 	protected EPackage screenPackage;
 	private ResourceSet resSet;
 	
 	private Map<String, Map<String, EClassifier>> classesForXmis;
 	
-	public ScreenEcoreGenerator(List<Context> contexts, List<Assignment> assignments, List<ViewComponent> types) {
+	public ScreenEcoreGenerator(List<Context> contexts, List<Assignment> assignments, List<ViewComponent> viewComponents) {
 		
 		this.contexts = contexts;
 		this.assignments = assignments;
-		this.types = types;
+		this.viewComponents = viewComponents;
 		
 		counter = 1;
 		classesForXmis = new HashMap<String, Map<String,EClassifier>>();
@@ -122,8 +122,8 @@ public class ScreenEcoreGenerator {
 			}
 			
 			String expectedTypeForComponent = compForAssignment.getEAnnotations().get(0).getDetails().get("expectedType");
-			if (assignmentProducesWrongTypeForComponent(eClassifier, expectedTypeForComponent)) {
-				throw new RuntimeException(String.format("Error! Component \"%s\" expects input of type \"%s\". Assignment \"%s\" produces type \"%s\".", compName, expectedTypeForComponent, statement, eClassifier.getName()));
+			if (assignmentProducesWrongDataTypeForComponent(eClassifier, expectedTypeForComponent)) {
+				throw new RuntimeException(String.format("Error! Component \"%s\" expects input of data type \"%s\". Assignment \"%s\" produces data type \"%s\".", compName, expectedTypeForComponent, statement, eClassifier.getName()));
 			}
 			eAnnotation.getDetails().put("useComponent", createPrefixedComponentNameFromName(compName));
 		}
@@ -133,7 +133,7 @@ public class ScreenEcoreGenerator {
 		
 	}
 	
-	private boolean assignmentProducesWrongTypeForComponent(EClassifier eClassifier, String expectedTypeForComponent) {
+	private boolean assignmentProducesWrongDataTypeForComponent(EClassifier eClassifier, String expectedTypeForComponent) {
 		
 		if (eClassifier instanceof CollectionTypeImpl) {
 			CollectionTypeImpl cti = (CollectionTypeImpl) eClassifier;
@@ -144,16 +144,16 @@ public class ScreenEcoreGenerator {
 
 	private void addViewComponentsToPackage(EPackage ePackage) {
 		
-		for (ViewComponent component : types) {
+		for (ViewComponent component : viewComponents) {
 			
-			String typeName = createPrefixedComponentNameFromName(component.getName());
+			String viewComponentName = createPrefixedComponentNameFromName(component.getName());
 			EClass componentClass = EcoreFactory.eINSTANCE.createEClass();
-			componentClass.setName(typeName);
+			componentClass.setName(viewComponentName);
 
-			String typeType = component.getExpectedType();
+			String viewComponentDataType = component.getExpectedType();
 			EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
 			annotation.setSource(ANNOTATION_SOURCE);
-			annotation.getDetails().put("expectedType", typeType);
+			annotation.getDetails().put("expectedType", viewComponentDataType);
 			componentClass.getEAnnotations().add(annotation);
 			
 			ePackage.getEClassifiers().add(componentClass);
@@ -179,9 +179,9 @@ public class ScreenEcoreGenerator {
 		annotation.getDetails().put("layoutId", "#" + aWidget.getId());
 		
 		String statement = assignment.getStatement();
-		String compType = componentClass.getEAnnotations().get(0).getDetails().get("expectedType");
+		String viewComponentDataType = componentClass.getEAnnotations().get(0).getDetails().get("expectedType");
 		
-		EClassifier expectedComponentClassifier = getClassifierNamed(compType);
+		EClassifier expectedComponentClassifier = getClassifierNamed(viewComponentDataType);
 		EClassifier assignmentClassifier = OCLHandler.getClassifierForStatement2(resSet, expectedComponentClassifier, statement);
 		EStructuralFeature feature = createFeatureFromClassifier(assignmentClassifier);
 		
@@ -313,7 +313,7 @@ public class ScreenEcoreGenerator {
 
 	/**
 	 * Creates an EStructuralFeature of either EReference or EAttribute from the given classifier. The classifier can be of three different types:
-	 * CollectionTypeImpl, PrimitiveTypeImpl or EClassImpl. In case of a collection, the type of the elements will be used as the type for the
+	 * CollectionTypeImpl, PrimitiveTypeImpl or EClassImpl. In case of a collection, the data type of the elements will be used as the data type for the
 	 * structural feature and the upperbound will be set to unbound.
 	 * 
 	 * The name for the created structural feature is not set and must therefore be set later.

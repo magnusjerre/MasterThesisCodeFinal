@@ -177,15 +177,15 @@ public class WidgetUtils {
 		}
 	}
 	
-	protected static Widget getCorrespondingWidget(Widget tAWidget, Widget typeWidget, Widget assignmentWidget) {
+	protected static Widget getCorrespondingWidget(Widget viewComponentAWidget, Widget viewComponentWidget, Widget assignmentWidget) {
 		
-		WidgetGroup typeWidgetGroup = (WidgetGroup) typeWidget;
+		WidgetGroup viewComponentWidgetGroup = (WidgetGroup) viewComponentWidget;
 		
 		int counter = 0, numberInLine = -1;
 		
-		for (Widget w : typeWidgetGroup.getWidgets()) {
+		for (Widget w : viewComponentWidgetGroup.getWidgets()) {
 			
-			if (tAWidget.equals(w)) {
+			if (viewComponentAWidget.equals(w)) {
 				numberInLine = counter;
 			} 
 			
@@ -205,7 +205,7 @@ public class WidgetUtils {
 		}
 		
 		if (correctWidget == null) {
-			throw new RuntimeException("Whoa! Somehow didn't find the correct widget for the type");
+			throw new RuntimeException("Whoa! Somehow didn't find the correct widget for the view component");
 		}
 		
 		

@@ -7,7 +7,6 @@ import com.wireframesketcher.model.Master
 import com.wireframesketcher.model.Screen
 import com.wireframesketcher.model.Widget
 import com.wireframesketcher.model.story.Storyboard
-import datagenerator.TypeGenerator
 import java.io.File
 import java.util.HashMap
 import no.fhl.screenDecorator.DecoratorModel
@@ -30,6 +29,7 @@ import datagenerator.AssignmentGenerator
 import datagenerator.ContextGenerator
 import datagenerator.SelectionGenerator
 import datagenerator.NewGenerator
+import datagenerator.ViewComponentGenerator
 
 /** A singleton class that parse and generate screendecorator models */
 class ScreenDecoratorGenerator {

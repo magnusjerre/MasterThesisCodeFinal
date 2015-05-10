@@ -23,8 +23,7 @@ import com.wireframesketcher.model.TextField
 import com.wireframesketcher.model.VLine
 import com.wireframesketcher.model.Widget
 import com.wireframesketcher.model.WidgetGroup
-import datagenerator.DataGenerator
-import datagenerator.ListGenerator
+import datagenerator.NewGenerator
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -43,11 +42,6 @@ import org.apache.commons.io.FilenameUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.w3c.dom.Element
-import datagenerator.ContextGenerator
-import datagenerator.AssignmentGenerator
-import datagenerator.TypeGenerator
-import datagenerator.SelectionEcoreGenerator
-import datagenerator.NewGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.

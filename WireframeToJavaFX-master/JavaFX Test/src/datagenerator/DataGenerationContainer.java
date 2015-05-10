@@ -15,7 +15,7 @@ public class DataGenerationContainer {
 	
 	ContextGenerator contextGenerator;
 	AssignmentGenerator assignmentGenerator;
-	TypeGenerator viewComponentGenerator;
+	ViewComponentGenerator viewComponentGenerator;
 	SelectionGenerator selectionGenerator;
 	
 	ResourceSet resSet;
@@ -27,7 +27,7 @@ public class DataGenerationContainer {
 		
 		contextGenerator = new ContextGenerator();
 		assignmentGenerator = new AssignmentGenerator();
-		viewComponentGenerator = new TypeGenerator(assignmentGenerator.assignments);
+		viewComponentGenerator = new ViewComponentGenerator(assignmentGenerator.assignments);
 		selectionGenerator = new SelectionGenerator();
 		
 	}
@@ -51,11 +51,11 @@ public class DataGenerationContainer {
 	public void setup() {
 		
 		viewComponentGenerator.setupAssignmentReferences();
-		viewComponentGenerator.generateFxmlForTypes(screenName);
+		viewComponentGenerator.generateFxmlForViewComponents(screenName);
 	}
 
 	public void createEcore() {
-		ScreenEcoreGenerator seg = new ScreenEcoreGenerator(contextGenerator.getAllContexts(), assignmentGenerator.assignments.elements, viewComponentGenerator.theList.elements);
+		ScreenEcoreGenerator seg = new ScreenEcoreGenerator(contextGenerator.getAllContexts(), assignmentGenerator.assignments.elements, viewComponentGenerator.viewComponents.elements);
 		seg.generateEcoreForScreen(screenName);
 	}
 	

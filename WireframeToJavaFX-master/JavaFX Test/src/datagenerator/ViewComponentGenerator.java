@@ -19,16 +19,16 @@ import data.Assignment;
 import data.DataFactory;
 import data.ViewComponent;
 
-public class TypeGenerator {
+public class ViewComponentGenerator {
 	
-	public DoubleList<ViewComponent, Master> theList;
+	public DoubleList<ViewComponent, Master> viewComponents;
 	public HashMap<Master, Pair<Arrow, Widget>> masterMap;
 	
 	private DoubleList<Assignment, Master> assignments;
 	
-	public TypeGenerator(DoubleList<Assignment, Master> assignments) {
+	public ViewComponentGenerator(DoubleList<Assignment, Master> assignments) {
 		
-		theList = new DoubleList<ViewComponent, Master>();
+		viewComponents = new DoubleList<ViewComponent, Master>();
 		this.assignments = assignments;
 		
 	}
@@ -40,60 +40,60 @@ public class TypeGenerator {
 		}
 		
 		if (strings.length > 1 || strings.length < 1) {
-			throw new RuntimeException(String.format("Illegal number of lines in Type decorator. First line states: %s", strings[0]));
+			throw new RuntimeException(String.format("Illegal number of lines in ViewComponent decorator. First line states: %s", strings[0]));
 		}
 		
-		String[] split = getNameAndType(strings[0]);
+		String[] split = getNameAndDataType(strings[0]);
 		String name = split[0];
-		String type = split[1];
+		String dataType = split[1];
 
 		ViewComponent viewComponent = DataFactory.eINSTANCE.createViewComponent();
 		viewComponent.setName(name);
-		viewComponent.setExpectedType(type);
+		viewComponent.setExpectedType(dataType);
 		viewComponent.setWidget(masterMap.get(master).getValue());
-		theList.add(viewComponent, master);
+		viewComponents.add(viewComponent, master);
 
 	}
 	
 	/**
-	 * The first element is the name of the component, the second element is the name of the expected type for the component.
+	 * The first element is the name of the component, the second element is the name of the expected data type for the component.
 	 * @param string
 	 * @return
 	 */
-	private String[] getNameAndType(String string) {
+	private String[] getNameAndDataType(String string) {
 		
 		string = string.trim();
 		
 		String[] split = new String[]{string};
-		String name = null, type = null;
+		String name = null, dataType = null;
 		if (string.contains(":")) {	//Type declaration after colon
 			split = string.split(":");
 			name = split[0];
-			type = split[1];
-		} else if (string.contains(" ")) {	//Type declaration before blank space, like normal java programming
+			dataType = split[1];
+		} else if (string.contains(" ")) {	//Data type declaration before blank space, like normal java programming
 			split = string.split(" ");
 			name = split[1];
-			type = split[0];
+			dataType = split[0];
 		} 
 
 		if (split.length != 2) {
-			throw new RuntimeException(String.format("Error! The component \"%s\" is either malformed or it doesn't declare a type.", string));
+			throw new RuntimeException(String.format("Error! The component \"%s\" is either malformed or it doesn't declare a data type.", string));
 		}
 		
-		return new String[] {name.trim(), type.trim()};
+		return new String[] {name.trim(), dataType.trim()};
 		
 	}
 	
 	public void setupAssignmentReferences() {
 		
-		if (theList.size() == 0) {
+		if (viewComponents.size() == 0) {
 			return;
 		}
 		
 		for (Assignment assignment : assignments.getElementsIterable()) {
 			
 			if (shouldBePartOfViewComponent(assignment)) {
-				ViewComponent component = getComponentForAssignment(assignment);
+				ViewComponent component = getViewComponentForAssignment(assignment);
 				setupConntection(assignment, component);
 			}
 			
@@ -103,7 +103,7 @@ public class TypeGenerator {
 	
 	private boolean shouldBePartOfViewComponent(Assignment assignment) {
 		
-		if (getComponentForAssignment(assignment) == null) {
+		if (getViewComponentForAssignment(assignment) == null) {
 			return false;
 		}
 		return true;
@@ -132,7 +132,7 @@ public class TypeGenerator {
 		
 	}
 
-	private ViewComponent getComponentForAssignment(Assignment assignment) {
+	private ViewComponent getViewComponentForAssignment(Assignment assignment) {
 
 		if (masterMap == null) {
 			return null;
@@ -142,11 +142,11 @@ public class TypeGenerator {
 		Pair<Arrow, Widget> pairForAssignment = masterMap.get(assignmentMaster);
 		Master correctMaster = null;
 		
-		for (Master type : theList.getMasterIterable()) {
+		for (Master viewComponent : viewComponents.getMasterIterable()) {
 			
-			Widget widget = masterMap.get(type).getValue();
+			Widget widget = masterMap.get(viewComponent).getValue();
 			if (widget.equals(pairForAssignment.getValue())) {
-				correctMaster = type;
+				correctMaster = viewComponent;
 				break;
 			}
 			
@@ -156,7 +156,7 @@ public class TypeGenerator {
 			return null;
 		}
 		
-		return theList.getElement(correctMaster);
+		return viewComponents.getElement(correctMaster);
 		
 	}
 	
@@ -164,11 +164,11 @@ public class TypeGenerator {
 	 * This will currently only generate the base cases, i.e not types containing types
 	 * @param screenName
 	 */
-	public void generateFxmlForTypes(String screenName) {
+	public void generateFxmlForViewComponents(String screenName) {
 		
-		for (ViewComponent type : theList.getElementsIterable()) {
+		for (ViewComponent viewComponent : viewComponents.getElementsIterable()) {
 			
-			String fileName = String.format("%s-%s.fxml", screenName, type.getName());
+			String fileName = String.format("%s-%s.fxml", screenName, viewComponent.getName());
 			StringBuilder fxmlBuidler = new StringBuilder();
 			fxmlBuidler.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
 					"\n" + 
@@ -181,7 +181,7 @@ public class TypeGenerator {
 					"\n" +
 					"\n");
 			
-			WidgetGroup widgetGroup = (WidgetGroup) type.getWidget();
+			WidgetGroup widgetGroup = (WidgetGroup) viewComponent.getWidget();
 			fxmlBuidler.append(String.format(
 					"<AnchorPane xmlns:fx=\"http://javafx.com/fxml/1\" prefHeight=\"%d\" prefWidth=\"%d\" >\n" + 
 							"    <children>\n", 

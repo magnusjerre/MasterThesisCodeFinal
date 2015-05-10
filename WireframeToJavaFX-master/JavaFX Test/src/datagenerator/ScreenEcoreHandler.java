@@ -149,8 +149,8 @@ public class ScreenEcoreHandler {
 				
 				EObject instanceFromFeature = (EObject) instance.eGet(feature);
 				
-				if (!instanceTypeMatchesComponentExpectedType(instanceFromFeature.eClass(), iUseComponent)) {
-					throw new RuntimeException(String.format("Error! The type from the assignment doesn't match the expected type for the component %s", iUseComponent));
+				if (!instanceDataTypeMatchesComponentExpectedDataType(instanceFromFeature.eClass(), iUseComponent)) {
+					throw new RuntimeException(String.format("Error! The data type from the assignment doesn't match the expected data type for the component %s", iUseComponent));
 				}
 				
 				//Create and populate the component used 
@@ -208,12 +208,12 @@ public class ScreenEcoreHandler {
 				
 	}
 	
-	private static boolean instanceTypeMatchesComponentExpectedType(EClass instanceClass, String comopnentNamed) {
+	private static boolean instanceDataTypeMatchesComponentExpectedDataType(EClass instanceClass, String comopnentNamed) {
 		
 		EClass compClass = (EClass) ePackage.getEClassifier(comopnentNamed);
-		String expectedTypeName = compClass.getEAnnotations().get(0).getDetails().get("expectedType");
+		String expectedType = compClass.getEAnnotations().get(0).getDetails().get("expectedType");
 		
-		if (instanceClass.getName().equals(expectedTypeName)) {
+		if (instanceClass.getName().equals(expectedType)) {
 			return true;
 		}
 		

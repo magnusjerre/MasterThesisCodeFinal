@@ -113,7 +113,7 @@ public class SelectionEcoreGenerator {
 	
 	/**
 	 * Creates an EStructuralFeature of either EReference or EAttribute from the given classifier. The classifier can be of three different types:
-	 * CollectionTypeImpl, PrimitiveTypeImpl or EClassImpl. In case of a collection, the type of the elements will be used as the type for the
+	 * CollectionTypeImpl, PrimitiveTypeImpl or EClassImpl. In case of a collection, the data type of the elements will be used as the data type for the
 	 * structural feature and the upperbound will be set to unbound.
 	 * 
 	 * The name for the created structural feature is not set and must therefore be set later.

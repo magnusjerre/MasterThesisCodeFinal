@@ -3,7 +3,6 @@ package datagenerator;
 import javafx.event.Event;
 import javafx.scene.Group;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
@@ -14,12 +13,10 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
 import application.Constants;
 
 public class SelectionHandler {
-	
 	
 	private static SelectionHandler instance;
 	
