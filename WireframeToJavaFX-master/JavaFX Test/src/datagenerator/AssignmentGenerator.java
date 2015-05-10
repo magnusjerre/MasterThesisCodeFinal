@@ -14,28 +14,11 @@ import data.DataFactory;
 
 public class AssignmentGenerator {
 	
-	private static AssignmentGenerator instance = null;
-	
 	public DoubleList<Assignment, Master> assignments;
 	
-	public static AssignmentGenerator getInstance() {
-		
-		if (instance == null)
-			instance = new AssignmentGenerator();
-		
-		return instance;
-		
-	}
-	
-	private AssignmentGenerator() {
+	public AssignmentGenerator() {
 		
 		assignments = new DoubleList<Assignment, Master>();
-		
-	}
-	
-	public void clear() {
-		
-		assignments.clear();
 		
 	}
 	

@@ -46,6 +46,8 @@ import org.w3c.dom.Element
 import datagenerator.ContextGenerator
 import datagenerator.AssignmentGenerator
 import datagenerator.TypeGenerator
+import datagenerator.SelectionEcoreGenerator
+import datagenerator.NewGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -263,6 +265,7 @@ class Generator {
 		import application.AbstractNavigatorController
 		import application.AppController
 		import application.PropertyResult
+		import datagenerator.SelectionHandler
 		
 		/* Generated */
 		class ScreenNavigatorController«safeFileName» extends AbstractNavigatorController {
@@ -495,7 +498,7 @@ class Generator {
 		
 		var String eventType = "ActionEvent"
 		switch widget {
-			Label, TextArea : eventType = "MouseEvent"
+			WidgetGroup, Label, TextArea : eventType = "MouseEvent"
 		}
 		
 		val link = getPropertyForWidget(widget, "link")
@@ -510,6 +513,21 @@ class Generator {
 				«"\t"»/* Generated - "«widget.text»"*/
 					@FXML
 					def handle«eventType»«widget.id»(«eventType» event) {
+						var id = null as Object
+						«IF eventType == "MouseEvent"»
+						if(event.button == MouseButton.PRIMARY){
+						«ENDIF»			
+							val resource = getResourceForScreenFile(screenName + ".screen")
+							id = getPropertyForNode(event.source as Node, "id") 
+							if (id != null && id != PropertyResult.NO_SUCH_METHOD){
+								resource.performActionForWidgetId(id as String)
+							} 
+							resource.evaluateRules
+						«IF eventType == "MouseEvent"»
+						}
+						«ENDIF»
+						
+						SelectionHandler.getInstance.handleMouseEvent(id as String, event)
 						«IF eventType == "MouseEvent"»
 						if(event.button == MouseButton.PRIMARY){	
 						«ENDIF»			
@@ -527,11 +545,12 @@ class Generator {
 				«"\t"»/* Generated - "«widget.text»"*/
 					@FXML
 					def handle«eventType»«widget.id»(«eventType» event) {
+						var id = null as Object
 						«IF eventType == "MouseEvent"»
 						if(event.button == MouseButton.PRIMARY){
 						«ENDIF»			
 							val resource = getResourceForScreenFile(screenName + ".screen")
-							var id = getPropertyForNode(event.source as Node, "id") 
+							id = getPropertyForNode(event.source as Node, "id") 
 							if (id != null && id != PropertyResult.NO_SUCH_METHOD){
 								resource.performActionForWidgetId(id as String)
 							} 
@@ -540,6 +559,7 @@ class Generator {
 						}
 						«ENDIF»
 						
+						SelectionHandler.getInstance.handleMouseEvent(id as String, event)
 					}
 			'''
 		}
@@ -605,6 +625,7 @@ class Generator {
 					it += "layoutX" -> widgetGroup.x
 					it += "layoutY" -> widgetGroup.y
 					it += "id" -> widgetGroup.id
+					it += "onMousePressed" -> "#handleMouseEvent" + widgetGroup.id
 					it += "prefWidth" -> widgetGroup.measuredWidth
 					it += "prefHeight" -> widgetGroup.measuredHeight
 					it += "orientation" -> or
@@ -616,11 +637,13 @@ class Generator {
 			
 			(builder += "Group") => [
 				it += "id" -> widgetGroup.id
+				it += "onMousePressed" -> "#handleMouseEvent" + widgetGroup.id
 				it += "layoutX" -> widgetGroup.x
 				it += "layoutY" -> widgetGroup.y
 			]
 			
 		}
+		generateActionCode(widgetGroup)
 			
 	}
 
@@ -1378,17 +1401,20 @@ class Generator {
 				if (path.startsWith(screenFileLocation)){
 					val name = FilenameUtils.getBaseName(path) 
 					println("Generating FXML for " + name)
-					
-					DataGenerator.getInstance.clear
+					NewGenerator.getInstance.prepareGeneratorForScreen(name)
+//					DataGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
 					
-					DataGenerator.getInstance.generate(name)
+					
+//					DataGenerator.getInstance.generate(name)
 					
 				} 
 			]
 			
 		}
+		NewGenerator.getInstance.generateAll
+//		SelectionEcoreGenerator.getInstance.saveResource
 		println("Done.")
 	}
 }

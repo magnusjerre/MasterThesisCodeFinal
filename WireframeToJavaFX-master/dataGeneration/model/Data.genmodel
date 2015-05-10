@@ -25,5 +25,10 @@
       <genOperations ecoreOperation="Data.ecore#//Assignment/isPartOfViewComponent"/>
       <genOperations ecoreOperation="Data.ecore#//Assignment/isUsingViewComponent"/>
     </genClasses>
+    <genClasses ecoreClass="Data.ecore#//Selection">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Data.ecore#//Selection/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Data.ecore#//Selection/expectedType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Data.ecore#//Selection/layoutId"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

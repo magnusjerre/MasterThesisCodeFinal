@@ -8,6 +8,7 @@ import data.Assignment;
 import data.Context;
 import data.DataFactory;
 import data.DataPackage;
+import data.Selection;
 import data.ViewComponent;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -45,6 +46,13 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * @generated
 	 */
 	private EClass assignmentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass selectionEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -250,6 +258,42 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getSelection() {
+		return selectionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSelection_Name() {
+		return (EAttribute)selectionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSelection_ExpectedType() {
+		return (EAttribute)selectionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSelection_LayoutId() {
+		return (EAttribute)selectionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DataFactory getDataFactory() {
 		return (DataFactory)getEFactoryInstance();
 	}
@@ -290,6 +334,11 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		createEReference(assignmentEClass, ASSIGNMENT__PART_OF_COMPONENT);
 		createEOperation(assignmentEClass, ASSIGNMENT___IS_PART_OF_VIEW_COMPONENT);
 		createEOperation(assignmentEClass, ASSIGNMENT___IS_USING_VIEW_COMPONENT);
+
+		selectionEClass = createEClass(SELECTION);
+		createEAttribute(selectionEClass, SELECTION__NAME);
+		createEAttribute(selectionEClass, SELECTION__EXPECTED_TYPE);
+		createEAttribute(selectionEClass, SELECTION__LAYOUT_ID);
 	}
 
 	/**
@@ -344,6 +393,11 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEOperation(getAssignment__IsPartOfViewComponent(), ecorePackage.getEBoolean(), "isPartOfViewComponent", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getAssignment__IsUsingViewComponent(), ecorePackage.getEBoolean(), "isUsingViewComponent", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(selectionEClass, Selection.class, "Selection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSelection_Name(), ecorePackage.getEString(), "name", null, 0, 1, Selection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSelection_ExpectedType(), ecorePackage.getEString(), "expectedType", null, 0, 1, Selection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSelection_LayoutId(), ecorePackage.getEString(), "layoutId", null, 0, 1, Selection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

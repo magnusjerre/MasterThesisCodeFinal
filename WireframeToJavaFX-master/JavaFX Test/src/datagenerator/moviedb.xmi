@@ -15,7 +15,7 @@
       name="Kevin Spacey"
       birthdate="1959-07-26T00:00:00.000+0200"
       biography="As enigmatic as he is talented, Kevin Spacey has always kept the details of his private life closely guarded. As he explained in a 1998 interview with the London Evening Standard, &quot;the less you know about me, the easier it is to convince you that I am that character on screen. It allows an audience to come into a movie theatre and believe I am.."
-      movies="//@allMovies.0"
+      movies="//@allMovies.0 //@allMovies.7"
       portrait="kevinspacey.jpg"/>
   <allActors
       name="Lena Headey"
@@ -89,4 +89,10 @@
       synopsis="The notorious monster hunter is sent to Transylvania to stop Count Dracula who is using Dr. Frankenstein's research and a werewolf for some sinister purpose."
       actors="//@allActors.5 //@allActors.6"
       poster="vanhelsing.jpg"/>
+  <allMovies
+      title="House of Cards"
+      runtime="55"
+      synopsis="A Congressman works with his equally conniving wife to exact revenge on the people who betrayed him."
+      actors="//@allActors.1"
+      poster="houseofcards.jpg"/>
 </jerre.moviedb:Database>

@@ -36,12 +36,21 @@ public class ScreenEcoreGenerator {
 	private static final String ANNOTATION_SOURCE = "wireframe";
 	private int counter;
 	private String ASSIGNMENT_PREFIX = "a";
+	
+	List<Context> contexts;
+	List<Assignment> assignments;
+	List<ViewComponent> types;
+	
 	protected EPackage screenPackage;
 	private ResourceSet resSet;
 	
 	private Map<String, Map<String, EClassifier>> classesForXmis;
 	
-	public ScreenEcoreGenerator() {
+	public ScreenEcoreGenerator(List<Context> contexts, List<Assignment> assignments, List<ViewComponent> types) {
+		
+		this.contexts = contexts;
+		this.assignments = assignments;
+		this.types = types;
 		
 		counter = 1;
 		classesForXmis = new HashMap<String, Map<String,EClassifier>>();
@@ -77,7 +86,7 @@ public class ScreenEcoreGenerator {
 
 	private void addAssignmentsTo(EClass screenClass) {
 		
-		for (Assignment assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
+		for (Assignment assignment : assignments) {
 			addAssignmentTo(screenClass, assignment);
 		}
 	}
@@ -135,7 +144,7 @@ public class ScreenEcoreGenerator {
 
 	private void addViewComponentsToPackage(EPackage ePackage) {
 		
-		for (ViewComponent component : TypeGenerator.getInstance().theList.getElementsIterable()) {
+		for (ViewComponent component : types) {
 			
 			String typeName = createPrefixedComponentNameFromName(component.getName());
 			EClass componentClass = EcoreFactory.eINSTANCE.createEClass();
@@ -188,7 +197,7 @@ public class ScreenEcoreGenerator {
 		
 	}
 	
-	private EClassifier getClassifierNamed(String name) {
+	protected EClassifier getClassifierNamed(String name) {
 		
 		for (String key : classesForXmis.keySet()) {
 			for (Entry<String, EClassifier> entry : classesForXmis.get(key).entrySet()) {
@@ -225,7 +234,7 @@ public class ScreenEcoreGenerator {
 	
 	private void addContextsTo(EClass screenClass) {
 		
-		List<Context> allContexts = ContextGenerator.getInstance().getAllContexts();
+		List<Context> allContexts = contexts;
 		
 		while (screenClass.getEStructuralFeatures().size() != allContexts.size()) {
 			
@@ -238,7 +247,17 @@ public class ScreenEcoreGenerator {
 					EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 					eAnnotation.setSource(ANNOTATION_SOURCE);
 					
-					if (statement.startsWith("/")) {
+					if (statement.startsWith("#")) {
+						Resource resource = resSet.getResource(URI.createFileURI(Constants.GENERATED_DIRECTORY + "selectionModel.ecore"), true);
+						EStructuralFeature feature = EcoreFactory.eINSTANCE.createEReference();
+						feature.setName(name);
+						feature.setEType(((EPackage) resource.getContents().get(0)).getEClassifier("Selections"));
+						
+						feature.getEAnnotations().add(eAnnotation);
+						eAnnotation.getDetails().put("xmiLocation", Constants.GENERATED_DIRECTORY + "selectionModel.ecore");
+						screenClass.getEStructuralFeatures().add(feature);
+						
+					} else if (statement.startsWith("/")) {
 						Resource resource = resSet.getResource(URI.createFileURI(statement), true);
 						addClassesFromResource(statement, resource);
 						EObject value = resource.getContents().get(0);
@@ -301,7 +320,7 @@ public class ScreenEcoreGenerator {
 	 * @param classifier
 	 * @return EAttribute or EReference
 	 */
-	private EStructuralFeature createFeatureFromClassifier(EClassifier classifier) {
+	protected EStructuralFeature createFeatureFromClassifier(EClassifier classifier) {
 		
 		EStructuralFeature feature = null;
 		

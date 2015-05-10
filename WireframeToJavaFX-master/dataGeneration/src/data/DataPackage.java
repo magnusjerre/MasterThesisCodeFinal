@@ -251,6 +251,62 @@ public interface DataPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link data.impl.SelectionImpl <em>Selection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see data.impl.SelectionImpl
+	 * @see data.impl.DataPackageImpl#getSelection()
+	 * @generated
+	 */
+	int SELECTION = 3;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SELECTION__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Expected Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SELECTION__EXPECTED_TYPE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Layout Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SELECTION__LAYOUT_ID = 2;
+
+	/**
+	 * The number of structural features of the '<em>Selection</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SELECTION_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Selection</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SELECTION_OPERATION_COUNT = 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link data.ViewComponent <em>View Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -411,6 +467,49 @@ public interface DataPackage extends EPackage {
 	EOperation getAssignment__IsUsingViewComponent();
 
 	/**
+	 * Returns the meta object for class '{@link data.Selection <em>Selection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Selection</em>'.
+	 * @see data.Selection
+	 * @generated
+	 */
+	EClass getSelection();
+
+	/**
+	 * Returns the meta object for the attribute '{@link data.Selection#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see data.Selection#getName()
+	 * @see #getSelection()
+	 * @generated
+	 */
+	EAttribute getSelection_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link data.Selection#getExpectedType <em>Expected Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Expected Type</em>'.
+	 * @see data.Selection#getExpectedType()
+	 * @see #getSelection()
+	 * @generated
+	 */
+	EAttribute getSelection_ExpectedType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link data.Selection#getLayoutId <em>Layout Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Layout Id</em>'.
+	 * @see data.Selection#getLayoutId()
+	 * @see #getSelection()
+	 * @generated
+	 */
+	EAttribute getSelection_LayoutId();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -558,6 +657,40 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EOperation ASSIGNMENT___IS_USING_VIEW_COMPONENT = eINSTANCE.getAssignment__IsUsingViewComponent();
+
+		/**
+		 * The meta object literal for the '{@link data.impl.SelectionImpl <em>Selection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see data.impl.SelectionImpl
+		 * @see data.impl.DataPackageImpl#getSelection()
+		 * @generated
+		 */
+		EClass SELECTION = eINSTANCE.getSelection();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SELECTION__NAME = eINSTANCE.getSelection_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Expected Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SELECTION__EXPECTED_TYPE = eINSTANCE.getSelection_ExpectedType();
+
+		/**
+		 * The meta object literal for the '<em><b>Layout Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SELECTION__LAYOUT_ID = eINSTANCE.getSelection_LayoutId();
 
 	}
 

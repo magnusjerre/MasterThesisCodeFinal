@@ -21,31 +21,15 @@ import data.ViewComponent;
 
 public class TypeGenerator {
 	
-	private static TypeGenerator instance = null;
-	
 	public DoubleList<ViewComponent, Master> theList;
 	public HashMap<Master, Pair<Arrow, Widget>> masterMap;
 	
+	private DoubleList<Assignment, Master> assignments;
 	
-	private TypeGenerator() {
+	public TypeGenerator(DoubleList<Assignment, Master> assignments) {
 		
 		theList = new DoubleList<ViewComponent, Master>();
-		
-	}
-	
-	public static TypeGenerator getInstance() {
-		
-		if (instance == null)
-			instance = new TypeGenerator();
-		
-		return instance;
-		
-	}
-	
-	public void clear() {
-		
-		masterMap = null;
-		theList.clear();
+		this.assignments = assignments;
 		
 	}
 	
@@ -106,7 +90,7 @@ public class TypeGenerator {
 			return;
 		}
 		
-		for (Assignment assignment : AssignmentGenerator.getInstance().assignments.getElementsIterable()) {
+		for (Assignment assignment : assignments.getElementsIterable()) {
 			
 			if (shouldBePartOfViewComponent(assignment)) {
 				ViewComponent component = getComponentForAssignment(assignment);
@@ -135,7 +119,7 @@ public class TypeGenerator {
 	
 	private Widget getCorrectWidget2(Assignment assignment) {
 		
-		Pair<Arrow, Widget> assignmentPair = getPair(assignment, AssignmentGenerator.getInstance().assignments);
+		Pair<Arrow, Widget> assignmentPair = getPair(assignment, assignments);
 		Arrow arrow = assignmentPair.getKey();
 		Widget widget = assignmentPair.getValue();
 		return WidgetUtils.getSecondShallowestWidget(arrow, widget);
@@ -154,7 +138,7 @@ public class TypeGenerator {
 			return null;
 		}
 		
-		Master assignmentMaster = AssignmentGenerator.getInstance().assignments.getMaster(assignment);
+		Master assignmentMaster = assignments.getMaster(assignment);
 		Pair<Arrow, Widget> pairForAssignment = masterMap.get(assignmentMaster);
 		Master correctMaster = null;
 		

@@ -21,21 +21,23 @@ public class DataGenerator {
 	
 	public void clear() {
 		
-		ContextGenerator.getInstance().clear();
-		TypeGenerator.getInstance().clear();
-		AssignmentGenerator.getInstance().clear();
-		ListGenerator.getInstance().clear();
+//		ContextGenerator.getInstance().clear();
+//		TypeGenerator.getInstance().clear();
+//		AssignmentGenerator.getInstance().clear();
+//		ListGenerator.getInstance().clear();
 		
 	}
 	
 	public void generate(String name) {
 		
-		ContextGenerator cg = ContextGenerator.getInstance();
-		TypeGenerator.getInstance().setupAssignmentReferences();
-		TypeGenerator.getInstance().generateFxmlForTypes(name);
-		
-		ScreenEcoreGenerator seg = new ScreenEcoreGenerator();
-		seg.generateEcoreForScreen(name);
+//		ContextGenerator cg = ContextGenerator.getInstance();
+//		TypeGenerator.getInstance().setupAssignmentReferences();
+//		TypeGenerator.getInstance().generateFxmlForTypes(name);
+//		
+//		ScreenEcoreGenerator seg = new ScreenEcoreGenerator();
+//		seg.generateEcoreForScreen(name);
+//		
+//		SelectionEcoreGenerator.getInstance().addSelections(seg);
 		
 //		ListGenerator.getInstance().createList(seg.screenPackage);
 		

@@ -44,7 +44,7 @@ public class ScreenEcoreHandler {
 	public static ResourceSet resourceSet;
 	public static EPackage ePackage;
 	public static EFactory factory;
-	public EObject instance;
+	public static EObject instance;
 	public static String fileName;
 	
 	public static final String ANNOTATION_SOURCE = "wireframe";
@@ -52,11 +52,13 @@ public class ScreenEcoreHandler {
 	public ScreenEcoreHandler(String fileName) {
 		
 		this.fileName = fileName;
-		resourceSet = new ResourceSetImpl();
-		resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
-		
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+		if (resourceSet == null) {
+			resourceSet = new ResourceSetImpl();
+			resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
+			
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+		}
 		
 		URI uri = URI.createFileURI(fileName);
 		Resource firstScreen = resourceSet.getResource(uri, true);
@@ -78,14 +80,21 @@ public class ScreenEcoreHandler {
 			//Load and populate the instance with the xmi if the feature is specified to do so
 			String location = annotation.getDetails().get("xmiLocation");
 			if (location != null) {
-				Resource res = resourceSet.getResource(URI.createFileURI("/Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi"), true);
+				Resource res = resourceSet.getResource(URI.createFileURI(location), true);
 				EObject database = res.getContents().get(0);
-				instance.eSet(feature, database);
+				if (database instanceof EPackage) {
+					EObject selectionInstance = SelectionHandler.getInstance().selectionInstance;
+					instance.eSet(feature, selectionInstance);
+					System.out.println("featureName: " + feature.getName() + ", value: " + instance.eGet(feature));
+				} else {
+					instance.eSet(feature, database);
+				}
 			} 
 		
 			//Populate the instance with the value from the context's or assignment's ocl-statement
 			String ocl = annotation.getDetails().get("ocl");
 			if (ocl != null) {
+				EObject theInstance = instance;
 				Object result = OCLHandler.parseOCLStatement(resourceSet, instance, ocl);
 				if (feature.isMany()) {
 					@SuppressWarnings("unchecked")

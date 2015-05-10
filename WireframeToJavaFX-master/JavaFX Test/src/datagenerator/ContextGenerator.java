@@ -8,30 +8,14 @@ import data.DataFactory;
 
 public class ContextGenerator {
 	
-	private static ContextGenerator instance = null;
-
 	public List<Context> contexts;
 	
-	public static ContextGenerator getInstance() {
-		
-		if (instance == null)
-			instance = new ContextGenerator();
-		
-		return instance;
-		
-	}
-	
-	private ContextGenerator() {
+	public ContextGenerator() {
 		
 		contexts = new ArrayList<Context>();
 		
 	}
 
-	public void clear() {
-		
-		contexts.clear();
-	}
-	
 	public void generateDecorator(String[] strings) {
 		
 		if (strings.length != 1)
@@ -53,6 +37,21 @@ public class ContextGenerator {
 	public List<Context> getAllContexts() {
 		
 		return contexts;
+		
+	}
+	
+	public List<Context> getXMIContexts() {
+		
+		List<Context> objects = new ArrayList<Context>();
+		
+		for (Context context : contexts) {
+			
+			if (context.getStatement().startsWith("/")) {
+				objects.add(context);
+			}
+		}
+		
+		return objects;
 		
 	}
 
