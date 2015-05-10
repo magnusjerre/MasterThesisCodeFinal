@@ -7,14 +7,15 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.ocl.ecore.impl.CollectionTypeImpl;
+import org.eclipse.ocl.ecore.impl.PrimitiveTypeImpl;
 
 import application.Constants;
 import data.Selection;
@@ -25,15 +26,15 @@ public class SelectionEcoreGenerator {
 	private static final String ANNOTATION_SOURCE = "wireframe";
 	private static final String SELECTION_CLASS_NAME = "Selections";
 	
-	private static SelectionEcoreGenerator instance;
-	
 	private EPackage selectionPackage;
 	private ResourceSet resSet;
 	private EClass selectionsClass;
 	
-	ScreenEcoreGenerator screenEcoreGenerator;
+	NewGenerator newGenerator;
 	
-	private SelectionEcoreGenerator() {
+	public SelectionEcoreGenerator(NewGenerator newGenerator) {
+		
+		this.newGenerator = newGenerator;
 		
 		selectionPackage = EcoreFactory.eINSTANCE.createEPackage();
 		selectionPackage.setName(PACKAGE_NAME);
@@ -44,28 +45,12 @@ public class SelectionEcoreGenerator {
 		selectionsClass.setName(SELECTION_CLASS_NAME);
 		selectionPackage.getEClassifiers().add(selectionsClass);
 		
-		resSet = new ResourceSetImpl();
+		resSet = newGenerator.resSet;
 		resSet.getPackageRegistry().put(selectionPackage.getNsURI(), selectionPackage);
-		resSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-		resSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
 		
 	}
 	
-	public static SelectionEcoreGenerator getInstance() {
-		
-		if (instance == null) {
-			instance = new SelectionEcoreGenerator();
-		}
-		
-		return instance;
-		
-	}
-
-	
-	public void addSelections(ScreenEcoreGenerator seg) {
-		
-		screenEcoreGenerator = seg;
-		List<Selection> selections = SelectionGenerator.getInstance().selections;  
+	public void addSelections(List<Selection> selections) {
 		
 		for (Selection selection : selections) {
 			addSelection(selection);
@@ -84,8 +69,8 @@ public class SelectionEcoreGenerator {
 			return;
 		}
 		
-		EClassifier classifierForSelection = screenEcoreGenerator.getClassifierNamed(selection.getExpectedType());
-		EStructuralFeature feature = screenEcoreGenerator.createFeatureFromClassifier(classifierForSelection);
+		EClassifier classifierForSelection = newGenerator.getClassifierForName(selection.getExpectedType());
+		EStructuralFeature feature = createFeatureFromClassifier(classifierForSelection);
 		feature.setName(selection.getName());
 		feature.setEType(classifierForSelection);
 		
@@ -122,6 +107,93 @@ public class SelectionEcoreGenerator {
 			res.save(null);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * Creates an EStructuralFeature of either EReference or EAttribute from the given classifier. The classifier can be of three different types:
+	 * CollectionTypeImpl, PrimitiveTypeImpl or EClassImpl. In case of a collection, the type of the elements will be used as the type for the
+	 * structural feature and the upperbound will be set to unbound.
+	 * 
+	 * The name for the created structural feature is not set and must therefore be set later.
+	 * @param classifier
+	 * @return EAttribute or EReference
+	 */
+	protected EStructuralFeature createFeatureFromClassifier(EClassifier classifier) {
+		
+		EStructuralFeature feature = null;
+		
+		if (classifier instanceof CollectionTypeImpl) {
+			EClassifier elementType = ((CollectionTypeImpl) classifier).getElementType();
+			
+			if (isEDataType(elementType)) {
+				feature = EcoreFactory.eINSTANCE.createEAttribute();
+				EDataType eDataType = getEDataTypeFromClassifier(elementType);
+				feature.setEType(eDataType);
+			} else {
+				feature = EcoreFactory.eINSTANCE.createEReference();
+				feature.setEType(elementType);
+			}
+			
+			feature.setUpperBound(EStructuralFeature.UNBOUNDED_MULTIPLICITY);
+			
+		} else if (isEDataType(classifier)) {
+			feature = EcoreFactory.eINSTANCE.createEAttribute();
+			EDataType eDataType = getEDataTypeFromClassifier(classifier);
+			feature.setEType(eDataType);
+		} else {
+			feature = EcoreFactory.eINSTANCE.createEReference();
+			feature.setEType(classifier);
+		}
+		
+		return feature;
+		
+	}
+	
+	private boolean isEDataType(EClassifier eClassifier) {
+		
+		if (eClassifier instanceof PrimitiveTypeImpl) {
+			return true;
+		}
+		
+		if (eClassifier.getName().equals("EDate")) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Returns the corresponding EDataType for the primitive.
+	 * 
+	 * Using this method since the oclstdlib.ecore cannot be found.
+	 * @param classifier
+	 * @return
+	 */
+	private EDataType getEDataTypeFromClassifier(EClassifier classifier) {
+		
+		switch (classifier.getName()) {
+		
+			case "String":
+				return EcoreFactory.eINSTANCE.getEcorePackage().getEString();
+			case "EDate":
+				return EcoreFactory.eINSTANCE.getEcorePackage().getEDate();
+			case "Integer":
+				return EcoreFactory.eINSTANCE.getEcorePackage().getEIntegerObject();
+			case "Double":
+				return EcoreFactory.eINSTANCE.getEcorePackage().getEDoubleObject();
+			case "Long":
+				return EcoreFactory.eINSTANCE.getEcorePackage().getELongObject();
+			case "Byte":
+				return EcoreFactory.eINSTANCE.getEcorePackage().getEByteObject();
+			case "Boolean":
+				return EcoreFactory.eINSTANCE.getEcorePackage().getEBooleanObject();
+			case "Character":
+				return EcoreFactory.eINSTANCE.getEcorePackage().getECharacterObject();
+			default:
+				return null;
+				
 		}
 		
 	}

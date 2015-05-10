@@ -47,6 +47,7 @@ import datagenerator.ContextGenerator
 import datagenerator.AssignmentGenerator
 import datagenerator.TypeGenerator
 import datagenerator.SelectionEcoreGenerator
+import datagenerator.NewGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -1400,19 +1401,20 @@ class Generator {
 				if (path.startsWith(screenFileLocation)){
 					val name = FilenameUtils.getBaseName(path) 
 					println("Generating FXML for " + name)
-					
-					DataGenerator.getInstance.clear
+					NewGenerator.getInstance.prepareGeneratorForScreen(name)
+//					DataGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
 					
-					DataGenerator.getInstance.generate(name)
+					
+//					DataGenerator.getInstance.generate(name)
 					
 				} 
 			]
 			
 		}
-		
-		SelectionEcoreGenerator.getInstance.saveResource
+		NewGenerator.getInstance.generateAll
+//		SelectionEcoreGenerator.getInstance.saveResource
 		println("Done.")
 	}
 }
