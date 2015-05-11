@@ -43,7 +43,7 @@ public class ViewComponentGenerator {
 			throw new RuntimeException(String.format("Illegal number of lines in ViewComponent decorator. First line states: %s", strings[0]));
 		}
 		
-		String[] split = getNameAndDataType(strings[0]);
+		String[] split = DataUtils.extractNameAndType(strings[0]);
 		String name = split[0];
 		String dataType = split[1];
 
@@ -53,35 +53,6 @@ public class ViewComponentGenerator {
 		viewComponent.setWidget(masterMap.get(master).getValue());
 		viewComponents.add(viewComponent, master);
 
-	}
-	
-	/**
-	 * The first element is the name of the component, the second element is the name of the expected data type for the component.
-	 * @param string
-	 * @return
-	 */
-	private String[] getNameAndDataType(String string) {
-		
-		string = string.trim();
-		
-		String[] split = new String[]{string};
-		String name = null, dataType = null;
-		if (string.contains(":")) {	//Type declaration after colon
-			split = string.split(":");
-			name = split[0];
-			dataType = split[1];
-		} else if (string.contains(" ")) {	//Data type declaration before blank space, like normal java programming
-			split = string.split(" ");
-			name = split[1];
-			dataType = split[0];
-		} 
-
-		if (split.length != 2) {
-			throw new RuntimeException(String.format("Error! The component \"%s\" is either malformed or it doesn't declare a data type.", string));
-		}
-		
-		return new String[] {name.trim(), dataType.trim()};
-		
 	}
 	
 	public void setupAssignmentReferences() {
@@ -94,7 +65,7 @@ public class ViewComponentGenerator {
 			
 			if (shouldBePartOfViewComponent(assignment)) {
 				ViewComponent component = getViewComponentForAssignment(assignment);
-				setupConntection(assignment, component);
+				setupConnection(assignment, component);
 			}
 			
 		}
@@ -109,15 +80,15 @@ public class ViewComponentGenerator {
 		return true;
 	}
 
-	private void setupConntection(Assignment assignment, ViewComponent component) {
+	private void setupConnection(Assignment assignment, ViewComponent component) {
 		
 		component.getAssignments().add(assignment);
 		assignment.setPartOfComponent(component);
-		assignment.setWidget(getCorrectWidget2(assignment));
+		assignment.setWidget(getCorrectWidget(assignment));
 		
 	}
 	
-	private Widget getCorrectWidget2(Assignment assignment) {
+	private Widget getCorrectWidget(Assignment assignment) {
 		
 		Pair<Arrow, Widget> assignmentPair = getPair(assignment, assignments);
 		Arrow arrow = assignmentPair.getKey();
@@ -189,7 +160,7 @@ public class ViewComponentGenerator {
 			
 			for (Widget widget : widgetGroup.getWidgets()) {
 				
-				//Assume it is a label for now
+				//Defaults to type Label
 				String nodeType = "Label";
 				String height = "minHeight", width = "minWidth";
 				if (widget instanceof Image) {

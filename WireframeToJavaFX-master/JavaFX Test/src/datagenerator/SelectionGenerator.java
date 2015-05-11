@@ -33,7 +33,7 @@ public class SelectionGenerator {
 		Selection selection = DataFactory.eINSTANCE.createSelection();
 		
 		
-		String[] nameAndDataType = getNameAndType(strings[0]);
+		String[] nameAndDataType = DataUtils.extractNameAndType(strings[0]);
 		selection.setName(nameAndDataType[0]);
 		selection.setExpectedType(nameAndDataType[1]);
 		selection.setLayoutId(map.get(master).getValue().getId().toString());
@@ -41,35 +41,5 @@ public class SelectionGenerator {
 		selections.add(selection);
 		
 	}
-	
-	/**
-	 * The first element is the name of the component, the second element is the name of the expected data type for the component.
-	 * @param string
-	 * @return
-	 */
-	private String[] getNameAndType(String string) {
-		
-		string = string.trim();
-		
-		String[] split = new String[]{string};
-		String name = null, dataType = null;
-		if (string.contains(":")) {	//Type declaration after colon
-			split = string.split(":");
-			name = split[0];
-			dataType = split[1];
-		} else if (string.contains(" ")) {	//Type declaration before blank space, like normal java programming
-			split = string.split(" ");
-			name = split[1];
-			dataType = split[0];
-		} 
-
-		if (split.length != 2) {
-			throw new RuntimeException(String.format("Error! The component \"%s\" is either malformed or it doesn't declare a type.", string));
-		}
-		
-		return new String[] {name.trim(), dataType.trim()};
-		
-	}
-	
 
 }

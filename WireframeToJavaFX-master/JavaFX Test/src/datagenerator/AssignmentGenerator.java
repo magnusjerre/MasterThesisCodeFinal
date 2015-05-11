@@ -38,14 +38,14 @@ public class AssignmentGenerator {
 			assignment.setUsingViewComponentNamed(strings[1].trim());
 		}
 		
-		assignment.setWidget(getCorrectWidget2(assignment, map.get(master)));
+		assignment.setWidget(getCorrectWidget(assignment, map.get(master)));
 		
 		//Leave the rest of the properties unassigned for now. Will be assigned later in the program flow.
 		
 		assignments.add(assignment, master);
 	}
 	
-	private Widget getCorrectWidget2(Assignment assignment, Pair<Arrow, Widget> pair) {
+	private Widget getCorrectWidget(Assignment assignment, Pair<Arrow, Widget> pair) {
 		
 		if (pair.getValue() instanceof WidgetGroup) {
 			WidgetGroup widgetGroup = (WidgetGroup) pair.getValue();
