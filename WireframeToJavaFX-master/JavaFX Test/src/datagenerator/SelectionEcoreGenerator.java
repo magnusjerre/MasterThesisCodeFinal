@@ -17,6 +17,12 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import application.Constants;
 import data.Selection;
 
+/**
+ * The SelectionEcoreGenerator class is responsible creating and saving an ecore containing
+ * all the selections for the entire story.
+ * @author Magnus Jerre
+ *
+ */
 public class SelectionEcoreGenerator {
 	
 	private static final String PACKAGE_NAME = "selectionModel";
@@ -55,6 +61,16 @@ public class SelectionEcoreGenerator {
 		
 	}
 
+	/**
+	 * Adds the selection to the epackage. Each selection has a variable name and a type, as well a
+	 * an EAnnotation associated with it. The annotation includes the layoutId for each element that 
+	 * will be able to affect the value stored for the specific selection. 
+	 * 
+	 * If the selection doesn't already exist, it is added to the selectionsClass. If it already 
+	 * exists, the selection's annotation list is updated with another member, the layoutId for the 
+	 * element affecting the selection.
+	 * @param selection
+	 */
 	private void addSelection(Selection selection) {
 		
 		if (featureNameExists(selection.getName())) {
@@ -92,7 +108,9 @@ public class SelectionEcoreGenerator {
 		
 	}
 	
-	
+	/**
+	 * Saves the selection package as an ecore file named selectionModel.ecore
+	 */
 	public void saveResource() {
 		
 		URI uri = URI.createFileURI(String.format("%s%s.ecore", Constants.GENERATED_DIRECTORY, selectionPackage.getName()));

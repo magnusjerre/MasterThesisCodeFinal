@@ -1,10 +1,7 @@
 package datagenerator;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -29,6 +26,34 @@ import data.Assignment;
 import data.Context;
 import data.ViewComponent;
 
+/**
+ * The ScreenEcoreGenerator is responsible for generating the ecore file for a specific screen file.
+ * 
+ * The ecore file is structured such that the screen filename is used as the name for the screen class.
+ * The fields of the screen class are all the contexts as well as the top-level assignments for the
+ * screen. 
+ * 
+ * In addition to the screen class, classes for each of the different ViewComponents are created. The
+ * fields of each ViewComponent class are the assignments that are part of it.
+ * 
+ * Each field, or EStructuralFeature, is annotated with extra information, such as the statement, 
+ * layoutId and useViewComponent when necessary. These annotations are used during runtime to load
+ * the data for the prototype.
+ * 
+ * First, the screen EClass is created, then all the contexts are added as fields for the screen EClass. 
+ * The contexts are added in a way such that their order is an allowable order of execution when 
+ * traversing through all the fields of the screen EClass. 
+ * 
+ * After all contexts have been added, the different ViewComponents will be added as separate EClasses. 
+ * Each assignment that is part of the ViewComponent will be added as fields to the EClass.
+ * 
+ * After the ViewComponents have been handled, the top-level assignments will be added as fields to 
+ * the screen EClass.
+ * 
+ * Finally the EPackage will be saved as an ecore file.
+ * @author Magnus Jerre
+ *
+ */
 public class ScreenEcoreGenerator {
 	
 	private static final String ANNOTATION_SOURCE = "wireframe";

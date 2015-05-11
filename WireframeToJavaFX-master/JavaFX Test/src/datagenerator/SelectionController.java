@@ -16,6 +16,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import application.Constants;
 
+/**
+ * The SelectionController is responsible for assigning the correct value to the selection
+ * selected during runtime.
+ * @author Magnus Jerre
+ *
+ */
 public class SelectionController {
 	
 	private static SelectionController instance;
@@ -79,9 +85,13 @@ public class SelectionController {
 			
 		}
 		
-		
 	}
 	
+	/**
+	 * Returns the EObject used to populate the element with the given id. 
+	 * @param id
+	 * @return
+	 */
 	private EObject getEObjectForGroup(String id) {
 		
 		EObject eInstance = ScreenEcoreController.instance;
