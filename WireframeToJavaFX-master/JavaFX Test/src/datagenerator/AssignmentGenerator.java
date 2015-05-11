@@ -12,15 +12,14 @@ import com.wireframesketcher.model.WidgetGroup;
 import data.Assignment;
 import data.DataFactory;
 
+/**
+ * Responsible for creating and storing all the Assignment decorators for a specific screen file.
+ * @author Magnus Jerre
+ *
+ */
 public class AssignmentGenerator {
 	
-	public DoubleList<Assignment, Master> assignments;
-	
-	public AssignmentGenerator() {
-		
-		assignments = new DoubleList<Assignment, Master>();
-		
-	}
+	public DoubleList<Assignment, Master> assignments = new DoubleList<>();
 	
 	public void generateDecorator(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
 		
@@ -45,6 +44,17 @@ public class AssignmentGenerator {
 		assignments.add(assignment, master);
 	}
 	
+	/**
+	 * Depending on what type of widget the Assignment is pointing at, a widget is returned. 
+	 * If the assignment point at a widget group named list, the widget group itself will be returned.
+	 * If the assignment is using a ViewComponent, the widget group the assignment is pointing to will be returned.
+	 * Otherwise the widget returned will be the deepest widget inside the widget group. If it isn't pointing at
+	 * a widget group, the widget pointed to will be returned.
+	 * 
+	 * @param assignment
+	 * @param pair
+	 * @return The widget the assignment is pointing to.
+	 */
 	private Widget getCorrectWidget(Assignment assignment, Pair<Arrow, Widget> pair) {
 		
 		if (pair.getValue() instanceof WidgetGroup) {
@@ -59,7 +69,6 @@ public class AssignmentGenerator {
 		} 
 		
 		return WidgetUtils.getDeepestWidget(pair.getKey(), pair.getValue());
-		
 		
 	}
 

@@ -19,16 +19,20 @@ import data.Assignment;
 import data.DataFactory;
 import data.ViewComponent;
 
+/**
+ * Responsible for creating and storing all the ViewComponent decorators for a specific screen file.
+ * @author Magnus Jerre
+ *
+ */
 public class ViewComponentGenerator {
 	
-	public DoubleList<ViewComponent, Master> viewComponents;
+	public DoubleList<ViewComponent, Master> viewComponents = new DoubleList<ViewComponent, Master>();
 	public HashMap<Master, Pair<Arrow, Widget>> masterMap;
 	
 	private DoubleList<Assignment, Master> assignments;
 	
 	public ViewComponentGenerator(DoubleList<Assignment, Master> assignments) {
 		
-		viewComponents = new DoubleList<ViewComponent, Master>();
 		this.assignments = assignments;
 		
 	}
@@ -55,6 +59,9 @@ public class ViewComponentGenerator {
 
 	}
 	
+	/**
+	 * Creates the necessary references between the assignments that should be part of specific ViewComponents.
+	 */
 	public void setupAssignmentReferences() {
 		
 		if (viewComponents.size() == 0) {
@@ -80,6 +87,12 @@ public class ViewComponentGenerator {
 		return true;
 	}
 
+	/**
+	 * Adds a reference from the Assignment to the ViewComponent and vice versa. In addition, the assignment's widget
+	 * is updated so that it correctly points to the widget for the ViewComponent.
+	 * @param assignment
+	 * @param component
+	 */
 	private void setupConnection(Assignment assignment, ViewComponent component) {
 		
 		component.getAssignments().add(assignment);
@@ -88,6 +101,11 @@ public class ViewComponentGenerator {
 		
 	}
 	
+	/**
+	 * Return the correct widget for the Assignment that is part of a ViewComponent.
+	 * @param assignment
+	 * @return
+	 */
 	private Widget getCorrectWidget(Assignment assignment) {
 		
 		Pair<Arrow, Widget> assignmentPair = getPair(assignment, assignments);
@@ -132,7 +150,7 @@ public class ViewComponentGenerator {
 	}
 	
 	/**
-	 * This will currently only generate the base cases, i.e not types containing types
+	 * Creates and saves a fxml-file for the ViewComponent.
 	 * @param screenName
 	 */
 	public void generateFxmlForViewComponents(String screenName) {

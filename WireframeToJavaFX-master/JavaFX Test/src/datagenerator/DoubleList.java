@@ -3,6 +3,15 @@ package datagenerator;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The DoubleList class contains two lists that synchronously add, remove and clear. This means that 
+ * the lists will always be of the same size, and that an element at position 1 in the elements list 
+ * hase a corresponding element at position 1 in the elementsAsMaster list.
+ * @author Magnus Jerre
+ *
+ * @param <E>
+ * @param <M>
+ */
 public class DoubleList <E, M> {
 	
 	List<E> elements;

@@ -12,17 +12,15 @@ import com.wireframesketcher.model.Widget;
 
 import data.DataFactory;
 import data.Selection;
-
+/**
+ * Responsible for creating and storing all the Selection decorators for a specific screen file.
+ * @author Magnus Jerre
+ *
+ */
 public class SelectionGenerator {
 	
-	public List<Selection> selections; 
-	
-	public SelectionGenerator() {
-		
-		selections = new ArrayList<Selection>();
-		
-	}
-	
+	public List<Selection> selections = new ArrayList<Selection>(); 
+
 	public void generateDecorator(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
 		
 		if (strings.length != 1) {

@@ -64,7 +64,7 @@ public class DataGenerationContainer {
 	 * Dynamically creates an ecore file for the screen file and saves it.
 	 */
 	public void createEcore() {
-		ScreenEcoreGenerator seg = new ScreenEcoreGenerator(contextGenerator.getAllContexts(), assignmentGenerator.assignments.elements, viewComponentGenerator.viewComponents.elements);
+		ScreenEcoreGenerator seg = new ScreenEcoreGenerator(contextGenerator.contexts, assignmentGenerator.assignments.elements, viewComponentGenerator.viewComponents.elements);
 		seg.generateEcoreForScreen(screenName);
 	}
 	
