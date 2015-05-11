@@ -21,9 +21,9 @@ import com.wireframesketcher.model.Widget;
 
 import data.Context;
 
-public class NewGenerator {
+public class DataGenerator {
 	
-	private static NewGenerator instance = null;
+	private static DataGenerator instance = null;
 	
 	private Map<String, DataGenerationContainer> storyMap;
 	private Map<String, Map<String, EClass>> classesForXmis;
@@ -32,7 +32,7 @@ public class NewGenerator {
 	
 	ResourceSet resSet;
 	
-	private NewGenerator() {
+	private DataGenerator() {
 		
 		storyMap = new HashMap<String, DataGenerationContainer>();
 		classesForXmis = new HashMap<String, Map<String,EClass>>();
@@ -43,10 +43,10 @@ public class NewGenerator {
 		
 	}
 	
-	public static NewGenerator getInstance() {
+	public static DataGenerator getInstance() {
 		
 		if (instance == null) {
-			instance = new NewGenerator();
+			instance = new DataGenerator();
 		}
 		
 		return instance;

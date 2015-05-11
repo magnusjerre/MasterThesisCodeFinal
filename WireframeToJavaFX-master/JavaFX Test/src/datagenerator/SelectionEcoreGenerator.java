@@ -27,9 +27,9 @@ public class SelectionEcoreGenerator {
 	private ResourceSet resSet;
 	private EClass selectionsClass;
 	
-	NewGenerator newGenerator;
+	DataGenerator newGenerator;
 	
-	public SelectionEcoreGenerator(NewGenerator newGenerator) {
+	public SelectionEcoreGenerator(DataGenerator newGenerator) {
 		
 		this.newGenerator = newGenerator;
 		

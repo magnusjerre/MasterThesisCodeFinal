@@ -176,7 +176,7 @@ public class ScreenEcoreGenerator {
 		String statement = assignment.getStatement();
 		String viewComponentDataType = componentClass.getEAnnotations().get(0).getDetails().get("expectedType");
 		
-		EClassifier expectedComponentClassifier = NewGenerator.getInstance().getClassifierForName(viewComponentDataType);
+		EClassifier expectedComponentClassifier = DataGenerator.getInstance().getClassifierForName(viewComponentDataType);
 		EClassifier assignmentClassifier = OCLHandler.getClassifierForStatement2(resSet, expectedComponentClassifier, statement);
 		EStructuralFeature feature = DataUtils.createFeatureFromClassifier(assignmentClassifier);
 		

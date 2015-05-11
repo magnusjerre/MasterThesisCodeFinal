@@ -41,7 +41,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import application.Constants;
 
-public class ScreenEcoreHandler {
+public class ScreenEcoreController {
 	
 	public static ResourceSet resourceSet;
 	public static EPackage ePackage;
@@ -51,7 +51,7 @@ public class ScreenEcoreHandler {
 	
 	public static final String ANNOTATION_SOURCE = "wireframe";
 	
-	public ScreenEcoreHandler(String fileName) {
+	public ScreenEcoreController(String fileName) {
 		
 		this.fileName = fileName;
 		if (resourceSet == null) {
@@ -85,7 +85,7 @@ public class ScreenEcoreHandler {
 				Resource res = resourceSet.getResource(URI.createFileURI(location), true);
 				EObject database = res.getContents().get(0);
 				if (database instanceof EPackage) {
-					EObject selectionInstance = SelectionHandler.getInstance().selectionInstance;
+					EObject selectionInstance = SelectionController.getInstance().selectionInstance;
 					instance.eSet(feature, selectionInstance);
 					System.out.println("featureName: " + feature.getName() + ", value: " + instance.eGet(feature));
 				} else {

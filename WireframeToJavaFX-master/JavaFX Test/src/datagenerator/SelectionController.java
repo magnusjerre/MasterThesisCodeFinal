@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import application.Constants;
 
-public class SelectionHandler {
+public class SelectionController {
 	
-	private static SelectionHandler instance;
+	private static SelectionController instance;
 	
 	public ResourceSet resSet;
 	public EPackage selectionPacakge;
@@ -28,10 +28,10 @@ public class SelectionHandler {
 	
 	public static final String SELECTION_MODEL_SIMPLE_FILE_NAME = "selectionModel.ecore";
 	
-	private SelectionHandler() {
+	private SelectionController() {
 		
 		
-		resSet = ScreenEcoreHandler.resourceSet;
+		resSet = ScreenEcoreController.resourceSet;
 
 		URI uri = URI.createFileURI(Constants.GENERATED_DIRECTORY + SELECTION_MODEL_SIMPLE_FILE_NAME);
 		Resource firstScreen = resSet.getResource(uri, true);
@@ -43,10 +43,10 @@ public class SelectionHandler {
 		
 	}
 	
-	public static SelectionHandler getInstance() {
+	public static SelectionController getInstance() {
 		
 		if (instance == null) {
-			instance = new SelectionHandler();
+			instance = new SelectionController();
 		}
 		
 		return instance;
@@ -84,7 +84,7 @@ public class SelectionHandler {
 	
 	private EObject getEObjectForGroup(String id) {
 		
-		EObject eInstance = ScreenEcoreHandler.instance;
+		EObject eInstance = ScreenEcoreController.instance;
 		
 		for (EStructuralFeature feature : eInstance.eClass().getEStructuralFeatures()) {
 			
