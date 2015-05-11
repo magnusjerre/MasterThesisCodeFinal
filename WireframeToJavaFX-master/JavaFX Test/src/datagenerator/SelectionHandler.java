@@ -68,12 +68,11 @@ public class SelectionHandler {
 				if (id.equals(entry.getValue().replace("#", ""))) {
 					Object selectedItem = null;
 					if (event.getSource() instanceof ListView) {
-						selectedItem = ((ListView) event.getSource()).getSelectionModel().getSelectedItem();
+						selectedItem = ((ListView<?>) event.getSource()).getSelectionModel().getSelectedItem();
 					} else if (event.getSource() instanceof Group) {
 						selectedItem = getEObjectForGroup(id);
 					}
 					selectionInstance.eSet(feature, selectedItem);
-					System.out.println("cake");
 				}
 				
 			}

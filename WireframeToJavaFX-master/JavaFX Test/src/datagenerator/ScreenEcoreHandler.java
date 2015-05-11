@@ -6,8 +6,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javafx.fxml.FXMLLoader;
@@ -134,15 +136,14 @@ public class ScreenEcoreHandler {
 		} else {
 			
 			if (feature.isMany()) {
-				@SuppressWarnings("unchecked")
-				List<Object> listValues = (List<Object>) instance.eGet(feature);
-				
 				EClass iUseComponentClass = (EClass) ePackage.getEClassifier(iUseComponent);
 				
-				ListView listView = (ListView) node.lookup(iLayoutId);
 				String simpleFileName = getSimpleName(fileName);
 				String componentName = String.format("%s-%s.fxml", simpleFileName, iUseComponent);
-				ListController lc = new ListController(listView, componentName, iUseComponentClass);
+				
+				@SuppressWarnings("unchecked")
+				List<Object> listValues = (List<Object>) instance.eGet(feature);
+				ListController<Object> lc = new ListController<>(node.lookup(iLayoutId), componentName, iUseComponentClass);
 				lc.obsList.addAll(listValues);
 				
 			} else {
@@ -250,9 +251,8 @@ public class ScreenEcoreHandler {
 			((ImageView) node).setImage(new Image(uri));
 		} else if (node instanceof ListView) {
 			
-			ListView lv = (ListView) node;
-			ListController lc = new ListController(lv, "simple_strings.fxml", null);
-			lc.obsList.addAll((Collection<Object>) result);
+			ListController<String> lc = new ListController<>(node, "simple_strings.fxml", null);
+			lc.obsList.addAll((Collection<String>) result);
 			
 		}
 		
