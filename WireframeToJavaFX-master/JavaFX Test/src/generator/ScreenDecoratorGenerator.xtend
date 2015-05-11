@@ -89,17 +89,14 @@ class ScreenDecoratorGenerator {
 	}
 	
 	def generateDecoratorType(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-//		TypeGenerator.getInstance.generateDecorator(strings, master, map)
 		DataGenerator.getInstance.generateViewComponentDecorator(strings, master, map);
 	}
 	
 	def generateDecoratorAssignment(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-//		AssignmentGenerator.getInstance.generateDecorator(strings, master, map)
 		DataGenerator.getInstance.generateAssignmentDecorator(strings, master, map);
 	}
 	
 	def generateDecoratorContext(String[] strings, Master master, HashMap<Master, Pair<Arrow, Widget>> map) {
-//		ContextGenerator.getInstance.generateDecorator(strings);
 		DataGenerator.getInstance.generateContextDecorator(strings);
 	}
 
