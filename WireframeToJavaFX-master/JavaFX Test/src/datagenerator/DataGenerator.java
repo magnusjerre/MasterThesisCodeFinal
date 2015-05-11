@@ -21,6 +21,29 @@ import com.wireframesketcher.model.Widget;
 
 import data.Context;
 
+/**
+ * The DataGenerator class is responsible for managing the different data decorators for all the screens in the story.
+ * Implemented as a singleton so that it's easy to store the different decorators in memory when they are encountered
+ * in ScreenDecoratorGenerator.
+ * 
+ * DataGenerator works by first adding all data decorator elements for each screen into separate 
+ * DataGenerationContainers without any special processing other than assigning the value to the different data 
+ * decorator objects. Note that before starting to read the next screen-file, a call to prepareGeneratorForScreen is 
+ * necessary so that a new DataGenerationContainer can be created for the new screen file.
+ * 
+ * The second step is to load all xmi-files the story is going to use, these are the ones defined as contexts 
+ * starting with a slash "/". After all xmi-files have been loaded, each class defined inside the xmi-files' ecore file
+ * are added to a map for easy retrieval. Before any other contexts (or Assignments, ViewComponents) are processed, 
+ * all selections must be processed and stored in an ecore in order to verify and get the correct type for the 
+ * selection. This is necessary for the contexts that are dependant on some selection, otherwise the contexts' type 
+ * (and subsequent Assignments) can't be verified.
+ * 
+ * When the xmi-files have been loaded, classes stored and selections saved as an ecore file, the ecore files for each 
+ * of the screens in the story are created and saved.
+ * 
+ * @author Magnus Jerre
+ *
+ */
 public class DataGenerator {
 	
 	private static DataGenerator instance = null;
@@ -52,6 +75,11 @@ public class DataGenerator {
 		return instance;
 	}
 	
+	/**
+	 * This method should be called whenever a new screen file will be processed. It's responsible for creating a new 
+	 * DataGenerationContainer to use with the new screen.
+	 * @param screenName
+	 */
 	public void prepareGeneratorForScreen(String screenName) {
 		
 		DataGenerationContainer dgc = new DataGenerationContainer(screenName, resSet);
@@ -80,28 +108,18 @@ public class DataGenerator {
 		currentContainer.getValue().generateSelectionComponentDecorator(strings, master, map);
 	}
 	
-	public void addClassForXmi(String xmiFile, EClass newClass) {
-		
-		Map<String, EClass> classesForXmi = classesForXmis.get(xmiFile);
-		if (classesForXmi == null) {
-			classesForXmi = new HashMap<String, EClass>();
-		}
-		
-		if (classesForXmi.get(newClass.getName()) == null) {
-			classesForXmi.put(newClass.getName(), newClass);
-		}
-		
-	}
-
 	public void generateAll() {
 		
 		loadXmis();
 		addClassesForXmis();
-		generateSelectionsEcoreFile();
-		generateEcoreFiles();
+		generateAndSaveSelectionsEcoreFile();
+		generateScreenEcoreFiles();
 		
 	}
 	
+	/**
+	 * Loads each unique xmi-file used in the story.
+	 */
 	private void loadXmis() {
 		
 		for (Context xmiContext : currentContainer.getValue().contextGenerator.getXMIContexts()) {
@@ -110,6 +128,10 @@ public class DataGenerator {
 		
 	}
 	
+	/**
+	 * Adds all the classes for each loaded xmi-file into the map containing the name of the xmi-file and a new map
+	 * containing the name of the EClass and the actual EClass.
+	 */
 	private void addClassesForXmis() {
 		
 		for (Resource resource : resSet.getResources()) {
@@ -127,8 +149,12 @@ public class DataGenerator {
 		}
 		
 	}
-
-	private void generateSelectionsEcoreFile() {
+	
+	/**
+	 * Searches through all DataGenerationContainers for Selections. Each selection is added to the generator. After all
+	 * Selections have been found and processed, the ecore file is saved as SelectionModel.ecore
+	 */
+	private void generateAndSaveSelectionsEcoreFile() {
 		
 		SelectionEcoreGenerator seg = new SelectionEcoreGenerator(this);
 		
@@ -140,7 +166,7 @@ public class DataGenerator {
 		
 	}
 
-	private void generateEcoreFiles() {
+	private void generateScreenEcoreFiles() {
 		
 		for (DataGenerationContainer dgc : storyMap.values()) {
 			dgc.setup();
@@ -151,7 +177,8 @@ public class DataGenerator {
 	
 	/**
 	 * @param expectedType
-	 * @return First Eclass with the same name as the input parameter
+	 * @return First EClass with the same name as the input parameter. If there exist several different classes with 
+	 * the same name, only the first class encountered will be returned. 
 	 */
 	public EClassifier getClassifierForName(String expectedType) {
 		
@@ -168,6 +195,5 @@ public class DataGenerator {
 		
 		return null;
 	}
-	
 	
 }

@@ -9,6 +9,12 @@ import com.wireframesketcher.model.Arrow;
 import com.wireframesketcher.model.Master;
 import com.wireframesketcher.model.Widget;
 
+/**
+ * The DataGenerationContainer class is a container for storing the Context-, Assignment-, ViewComponent- and SelectionGenerator for a specific screen file.
+ * It also provides a method for generating an ecore file for the specific screen file.
+ * @author Magnus Jerre
+ *
+ */
 public class DataGenerationContainer {
 	
 	private String screenName;
@@ -18,12 +24,9 @@ public class DataGenerationContainer {
 	ViewComponentGenerator viewComponentGenerator;
 	SelectionGenerator selectionGenerator;
 	
-	ResourceSet resSet;
-	
 	public DataGenerationContainer(String screenName, ResourceSet resSet) {
 		
 		this.screenName = screenName;
-		this.resSet = resSet;
 		
 		contextGenerator = new ContextGenerator();
 		assignmentGenerator = new AssignmentGenerator();
@@ -48,12 +51,18 @@ public class DataGenerationContainer {
 		selectionGenerator.generateDecorator(strings, master, map);
 	}
 	
+	/**
+	 * The setup method is responsible for setting up the references between Assignments and ViewComponents for the screen.
+	 */
 	public void setup() {
 		
 		viewComponentGenerator.setupAssignmentReferences();
 		viewComponentGenerator.generateFxmlForViewComponents(screenName);
 	}
 
+	/**
+	 * Dynamically creates an ecore file for the screen file and saves it.
+	 */
 	public void createEcore() {
 		ScreenEcoreGenerator seg = new ScreenEcoreGenerator(contextGenerator.getAllContexts(), assignmentGenerator.assignments.elements, viewComponentGenerator.viewComponents.elements);
 		seg.generateEcoreForScreen(screenName);
