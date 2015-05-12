@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import application.Constants;
+import application.LocationUtils;
 import data.Selection;
 
 /**
@@ -113,7 +114,11 @@ public class SelectionEcoreGenerator {
 	 */
 	public void saveResource() {
 		
-		URI uri = URI.createFileURI(String.format("%s%s.ecore", Constants.GENERATED_DIRECTORY, selectionPackage.getName()));
+//		URI uri = URI.createFileURI(String.format("%s%s.ecore", Constants.GENERATED_DIRECTORY, selectionPackage.getName()));
+		
+		
+		
+		URI uri = URI.createFileURI(LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, selectionPackage.getName() + ".ecore"));
 		ResourceSet resSet = new ResourceSetImpl();
 		Resource res = resSet.createResource(uri);
 		res.getContents().add(selectionPackage);

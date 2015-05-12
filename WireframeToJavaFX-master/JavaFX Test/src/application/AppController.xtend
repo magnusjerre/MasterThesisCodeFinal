@@ -181,7 +181,8 @@ class AppController extends Application {
 
 	
 		// Save the scene in the map along with the screen file checksum
-		val fxmlFile = new File(Constants.GENERATED_DIRECTORY + fileName + ".fxml")
+//		val fxmlFile = new File(Constants.GENERATED_DIRECTORY + fileName + ".fxml")
+		val fxmlFile = new File(LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileName + ".fxml"))
 		if (!fxmlFile.exists) {
 			throw new FileNotFoundException(
 				"Generate should have created the file " + fxmlFile + ".fxml - Check write permissions")
@@ -199,7 +200,8 @@ class AppController extends Application {
 				it.invoke(finalConstructor, resource)
 			}
 		]
-		val seh = new ScreenEcoreController(Constants.GENERATED_DIRECTORY + fileName + ".ecore")
+//		val seh = new ScreenEcoreController(Constants.GENERATED_DIRECTORY + fileName + ".ecore")
+		val seh = new ScreenEcoreController(fileName)
 		seh.assignValues(getRoot)
 
 		stage.setScene(scene)

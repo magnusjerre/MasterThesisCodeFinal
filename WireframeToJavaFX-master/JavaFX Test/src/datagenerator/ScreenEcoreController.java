@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import application.Constants;
+import application.LocationUtils;
 
 /**
  * This class is responsible for populating a specific screen with the data it's supposed to display. First it will
@@ -53,13 +54,15 @@ public class ScreenEcoreController {
 	public static EPackage ePackage;
 	public static EFactory factory;
 	public static EObject instance;
-	public static String fileName;
+//	public static String fileName;
+	public static String fileNameSimple;
 	
 	public static final String ANNOTATION_SOURCE = "wireframe";
 	
 	public ScreenEcoreController(String fileName) {
 		
-		this.fileName = fileName;
+//		this.fileName = fileName;
+		fileNameSimple = fileName;
 		if (resourceSet == null) {
 			resourceSet = new ResourceSetImpl();
 			resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
@@ -68,7 +71,8 @@ public class ScreenEcoreController {
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
 		}
 		
-		URI uri = URI.createFileURI(fileName);
+//		URI uri = URI.createFileURI(fileName);
+		URI uri = URI.createFileURI(LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileName + ".ecore"));
 		Resource firstScreen = resourceSet.getResource(uri, true);
 		ePackage = (EPackage) firstScreen.getContents().get(0);
 		
@@ -174,7 +178,8 @@ public class ScreenEcoreController {
 			if (feature.isMany()) {
 				EClass iUseComponentClass = (EClass) ePackage.getEClassifier(iUseComponent);
 				
-				String simpleFileName = getSimpleName(fileName);
+//				String simpleFileName = getSimpleName(fileName);
+				String simpleFileName = fileNameSimple;
 				String componentName = String.format("%s-%s.fxml", simpleFileName, iUseComponent);
 				
 				@SuppressWarnings("unchecked")
@@ -204,7 +209,9 @@ public class ScreenEcoreController {
 				
 				try {
 					//Load fxml for ViewComponent
-					String componentFxmlLocation = getFxmlLocationForComponent(iUseComponent);
+//					String componentFxmlLocation = getFxmlLocationForComponent(iUseComponent);
+					String componentFxmlLocation = LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileNameSimple + "-" + iUseComponent + ".fxml");
+					//String.format("%s%s-%s.fxml", Constants.GENERATED_DIRECTORY, screenName, iUseComponent);
 					URL url = new File(componentFxmlLocation).toURI().toURL();
 					Node componentNode = FXMLLoader.load(url);
 					
@@ -239,13 +246,13 @@ public class ScreenEcoreController {
 		
 	}
 	
-	private static String getSimpleName(String fileLocation) {
-		
-		String removedPath = fileLocation.replace(Constants.GENERATED_DIRECTORY, "");
-		String removedFileEnding = removedPath.replace(".ecore", "");
-		return removedFileEnding;
-				
-	}
+//	private static String getSimpleName(String fileLocation) {
+//		
+//		String removedPath = fileLocation.replace(Constants.GENERATED_DIRECTORY, "");
+//		String removedFileEnding = removedPath.replace(".ecore", "");
+//		return removedFileEnding;
+//				
+//	}
 	
 	private static boolean instanceDataTypeMatchesComponentExpectedDataType(EClass instanceClass, String comopnentNamed) {
 		
@@ -260,12 +267,12 @@ public class ScreenEcoreController {
 		
 	}
 
-	private static String getFxmlLocationForComponent(String iUseComponent) {
-		File componentFxmlFile = new File(fileName);
-		String screenName = componentFxmlFile.getName().replace(".ecore", "");
-		String componentFxmlLocation = String.format("%s%s-%s.fxml", Constants.GENERATED_DIRECTORY, screenName, iUseComponent);
-		return componentFxmlLocation;
-	}
+//	private static String getFxmlLocationForComponent(String iUseComponent) {
+//		File componentFxmlFile = new File(fileName);
+//		String screenName = componentFxmlFile.getName().replace(".ecore", "");
+//		String componentFxmlLocation = String.format("%s%s-%s.fxml", Constants.GENERATED_DIRECTORY, screenName, iUseComponent);
+//		return componentFxmlLocation;
+//	}
 	
 	/**
 	 * This method assigns the value from the result parameter to the JavaFX view element in the node parameter.
@@ -332,7 +339,7 @@ public class ScreenEcoreController {
 		String[] possibleLocations = new String[] {
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/images/" + fileName,
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + fileName,
-				 Constants.GENERATED_DIRECTORY + fileName
+				 LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileName)
 		};
 		
 		for (int i = 0; i < possibleLocations.length; i++) {
