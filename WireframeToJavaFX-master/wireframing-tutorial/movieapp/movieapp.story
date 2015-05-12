@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <story:Storyboard xmlns:story="http://wireframesketcher.com/1.0/model/story">
-  <panels id="7TAM_lrOAftc3jCaiAQLy3HM-ek=" x="675" y="75">
-    <screen href="advancedlist2.screen#/"/>
-  </panels>
   <panels id="VAdFkLRfCXHNXFLD2styInVow00=" x="375" y="375">
     <screen href="firstscreen.screen#/"/>
+  </panels>
+  <panels id="7TAM_lrOAftc3jCaiAQLy3HM-ek=" x="675" y="75">
+    <screen href="advancedlist2.screen#/"/>
   </panels>
   <panels id="kjLh3-KbkXswTGIKAgm7bTRApco=" x="975" y="75">
     <screen href="superadvanced.screen#/"/>
