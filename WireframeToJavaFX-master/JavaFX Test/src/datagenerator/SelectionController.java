@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import application.Constants;
+import application.LocationUtils;
 
 /**
  * The SelectionController is responsible for assigning the correct value to the selection
@@ -39,7 +40,13 @@ public class SelectionController {
 		
 		resSet = ScreenEcoreController.resourceSet;
 
-		URI uri = URI.createFileURI(Constants.GENERATED_DIRECTORY + SELECTION_MODEL_SIMPLE_FILE_NAME);
+//		URI uri = URI.createFileURI(Constants.GENERATED_DIRECTORY + SELECTION_MODEL_SIMPLE_FILE_NAME);
+		
+		
+		
+		
+		
+		URI uri = URI.createFileURI(LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, SELECTION_MODEL_SIMPLE_FILE_NAME));
 		Resource firstScreen = resSet.getResource(uri, true);
 		selectionPacakge = (EPackage) firstScreen.getContents().get(0);
 		

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.ocl.ecore.impl.CollectionTypeImpl;
 
 import application.Constants;
+import application.LocationUtils;
 
 import com.wireframesketcher.model.Widget;
 
@@ -232,7 +233,9 @@ public class ScreenEcoreGenerator {
 	}
 
 	private void saveAsResource(EPackage screenPackage) {
-		URI uri = URI.createFileURI(String.format("%s%s.ecore", Constants.GENERATED_DIRECTORY, screenPackage.getName()));
+//		URI uri = URI.createFileURI(String.format("%s%s.ecore", Constants.GENERATED_DIRECTORY, screenPackage.getName()));
+		URI uri = URI.createFileURI(LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, screenPackage.getName() + ".ecore"));
+		
 		ResourceSet resSet = new ResourceSetImpl();
 		Resource res = resSet.createResource(uri);
 		res.getContents().add(screenPackage);
@@ -280,13 +283,22 @@ public class ScreenEcoreGenerator {
 					eAnnotation.setSource(ANNOTATION_SOURCE);
 					
 					if (statement.startsWith("#")) {	//A hashtag means that the context is reliant on the selection model
-						Resource resource = resSet.getResource(URI.createFileURI(Constants.GENERATED_DIRECTORY + "selectionModel.ecore"), true);
+//						Resource resource = resSet.getResource(URI.createFileURI(Constants.GENERATED_DIRECTORY + "selectionModel.ecore"), true);
+						
+						
+						
+						
+						Resource resource = resSet.getResource(URI.createFileURI(LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, "selectionModel.ecore")), true);
 						EStructuralFeature feature = EcoreFactory.eINSTANCE.createEReference();
 						feature.setName(name);
 						feature.setEType(((EPackage) resource.getContents().get(0)).getEClassifier("Selections"));
 						
 						feature.getEAnnotations().add(eAnnotation);
-						eAnnotation.getDetails().put("xmiLocation", Constants.GENERATED_DIRECTORY + "selectionModel.ecore");
+//						eAnnotation.getDetails().put("xmiLocation", Constants.GENERATED_DIRECTORY + "selectionModel.ecore");
+						
+						
+						
+						eAnnotation.getDetails().put("xmiLocation", LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, "selectionModel.ecore"));
 						screenClass.getEStructuralFeatures().add(feature);
 						
 					} else if (statement.startsWith("/")) {	//Starting with a slash means that the context is loading a file

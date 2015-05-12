@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 import application.Constants;
+import application.LocationUtils;
 
 import com.wireframesketcher.model.Arrow;
 import com.wireframesketcher.model.Image;
@@ -232,7 +233,11 @@ public class ViewComponentGenerator {
 			
 			FileWriter fw = null;
 			try {
-				fw = new FileWriter(new File(Constants.GENERATED_DIRECTORY + fileName));
+//				fw = new FileWriter(new File(Constants.GENERATED_DIRECTORY + fileName));
+				
+				
+				fw = new FileWriter(new File(LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileName)));
+				
 				fw.write(fxmlBuidler.toString());
 				fw.flush();
 			} catch (IOException e) {

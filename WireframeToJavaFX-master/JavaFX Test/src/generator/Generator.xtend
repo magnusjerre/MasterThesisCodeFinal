@@ -42,6 +42,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.w3c.dom.Element
 import datagenerator.DataGenerator
+import application.LocationUtils
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -229,9 +230,9 @@ class Generator {
 	* @param screen The screen that is to be generated*/
 	def void generate(Screen screen, String fileName) {
 		filename = fileName
-		navigatorControllerFile = new File(
-			Constants.GENERATED_DIRECTORY + "ScreenNavigatorController" + fileName +
-				".xtend");
+		navigatorControllerFile = new File(LocationUtils.getFilePathSrc(
+			LocationUtils.GENERATED_PACKAGE, "ScreenNavigatorController" + fileName + 
+			".xtend"))
 		navigatorControllerFile.createNewFile()
 		writer = new BufferedWriter(new FileWriter(navigatorControllerFile))
 		var calendar = Calendar.instance
@@ -322,11 +323,10 @@ class Generator {
 
 		// Save fxml
 		if (fileName == null || fileName == "") {
-			save(Constants.GENERATED_DIRECTORY, "untitled.fxml")
-			println("Saved file as " + Constants.GENERATED_DIRECTORY + "untitled.fxml")
+			save(LocationUtils.getPakcageFolder(LocationUtils.GENERATED_PACKAGE), "untitled.fxml");
+			println("Saved file as " + LocationUtils.getPakcageFolder(LocationUtils.GENERATED_PACKAGE) + "untitled.fxml")
 		} else {
-			save(Constants.GENERATED_DIRECTORY, fileName + ".fxml")
-//			println("Saved file as " + Constants.FXML_DIRECTORY + fileName + ".fxml")
+			save(LocationUtils.getPakcageFolder(LocationUtils.GENERATED_PACKAGE), fileName + ".fxml")
 		}
 
 	}
@@ -801,7 +801,7 @@ class Generator {
 			fileName = path.substring(index + 1);
 		}
 		
-		if (new File(Constants.GENERATED_DIRECTORY + fileName).exists) {	//Use current directory (src/application)
+		if (new File(LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileName)).exists) {	//Use current directory (src/application)
 			path = fileName
 		} else if (new File("../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/" + fileName).exists){
 			//Use Wireframesketcher project directory as resource
@@ -1314,7 +1314,7 @@ class Generator {
 		
 		// Delete all generated files
 		try {
-			val directory = new File(Constants.PROJECT_DIR  + Constants.SUB_PROJECT_NAME)
+			val directory = new File(LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME))
 			for (File fileEntry : directory.listFiles()) {
 				if (!fileEntry.isDirectory()) {
 					if (fileEntry.name.endsWith(".ecore")) {
@@ -1335,7 +1335,7 @@ class Generator {
 		}
 		// Delete all FXML files and ScreenNavigatorController* 
 		try {
-			val directory = new File(Constants.GENERATED_DIRECTORY)
+			val directory = new File(LocationUtils.getPakcageFolder(LocationUtils.GENERATED_PACKAGE))
 			for (File fileEntry : directory.listFiles()) {
 				if (!fileEntry.isDirectory()) {
 					if (fileEntry.name.endsWith(".fxml")) {
@@ -1370,7 +1370,7 @@ class Generator {
 		for (i : 0 ..< resSet.resources.size) {
 			resSet.resources.get(i).contents.filter(Screen).forEach [
 				val path = EcoreUtil.getURI(it).path
-				val screenFileLocation = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME
+				val screenFileLocation = LocationUtils.getWireframeProjectLocation(Constants.SUB_PROJECT_NAME)
 				// Ignore screen files in other folders (like assets)
 				if (path.startsWith(screenFileLocation)) {
 					val name = FilenameUtils.getBaseName(path)
@@ -1390,18 +1390,14 @@ class Generator {
 		for (i : 0..< resSet.resources.size){
 			resSet.resources.get(i).contents.filter(Screen).forEach[
 				val path = EcoreUtil.getURI(it).path
-				val screenFileLocation = Constants.PROJECT_DIR  + Constants.SUB_PROJECT_NAME
+				val screenFileLocation = LocationUtils.getWireframeProjectLocation(Constants.SUB_PROJECT_NAME)
 				// Ignore screen files in other folders (like assets)
 				if (path.startsWith(screenFileLocation)){
 					val name = FilenameUtils.getBaseName(path) 
 					println("Generating FXML for " + name)
 					DataGenerator.getInstance.prepareGeneratorForScreen(name)
-//					DataGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
-					
-					
-//					DataGenerator.getInstance.generate(name)
 					
 				} 
 			]

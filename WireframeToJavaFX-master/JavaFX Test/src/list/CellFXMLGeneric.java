@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import application.Constants;
+import application.LocationUtils;
 import datagenerator.OCLHandler;
 import datagenerator.ScreenEcoreController;
 
@@ -30,10 +30,10 @@ public class CellFXMLGeneric {
 		
 		try {
 			
-			String path = Constants.GEN_DIRECTORY + resourceName;
+			String path = "/" + LocationUtils.GENERATED_PACKAGE + "/" + resourceName;
 			URL pathURl = getClass().getResource(path);
 			if (pathURl == null) {
-				path = Constants.LIST_DIRECTORY + resourceName;
+				path = "/" + LocationUtils.LIST_PACKAGE + "/" + resourceName;
 			}
 			
 			

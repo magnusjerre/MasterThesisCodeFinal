@@ -780,8 +780,9 @@ abstract class AbstractNavigatorController {
 		// If there are any actions for the button. Perform them 
 		event.performActionForEvent
 		
-		var fxmlFile = new File(
-		Constants.GENERATED_DIRECTORY + nextScreen + ".fxml" )
+//		var fxmlFile = new File(
+//		Constants.GENERATED_DIRECTORY + nextScreen + ".fxml" )
+		var fxmlFile = new File(LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, nextScreen + ".fxml"))
 		if (fxmlFile.exists) {
 			checksum = MD5Checksum.checkSum(fxmlFile.absolutePath)
 		}
@@ -831,7 +832,8 @@ abstract class AbstractNavigatorController {
 			
 			nextScreen.evaluateRulesForScreen
 		
-		val seh = new ScreenEcoreController(Constants.GENERATED_DIRECTORY + nextScreen + ".ecore")
+//		val seh = new ScreenEcoreController(Constants.GENERATED_DIRECTORY + nextScreen + ".ecore")
+		val seh = new ScreenEcoreController(nextScreen)
 		seh.assignValues(appController.getRoot)	
 	
 		stage.setScene(scene);

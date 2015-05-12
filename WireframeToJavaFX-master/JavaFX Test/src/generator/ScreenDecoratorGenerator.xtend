@@ -25,11 +25,8 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
-import datagenerator.AssignmentGenerator
-import datagenerator.ContextGenerator
-import datagenerator.SelectionGenerator
-import datagenerator.ViewComponentGenerator
 import datagenerator.DataGenerator
+import application.LocationUtils
 
 /** A singleton class that parse and generate screendecorator models */
 class ScreenDecoratorGenerator {
@@ -224,7 +221,7 @@ class ScreenDecoratorGenerator {
 		val screenName = FilenameUtils.getBaseName(screenResourcePath).toLowerCase
 		
 		// for alle ecore filer let etter feature med navn feature
-		val directory = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/"
+		val directory = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME)
 		val appName = Constants.SUB_PROJECT_NAME
 		
 		val screenEcorePath = directory + screenName + ".ecore"
@@ -246,7 +243,7 @@ class ScreenDecoratorGenerator {
 		val widgetModelName = screenName + "Id" + widget.id 
 		
 		// for alle ecore filer let etter feature med navn feature
-		val directory = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/"
+		val directory = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME)
 		val widgetEcorePath = directory + widgetModelName + ".ecore"
 		
 		
@@ -351,7 +348,7 @@ class ScreenDecoratorGenerator {
 		} else { 
 			// There is no decorator resource. Create it.
 			val resourceSet = ResourceSetHandler.instance.resourceSet
-			val directory = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/"
+			val directory = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME)
 			val path = directory + screenName + ".screendecorator"
 			val resource = resourceSet.createResource(URI.createFileURI(path))
 			
@@ -384,8 +381,7 @@ class ScreenDecoratorGenerator {
 			widgetContainerDecorator.viewRules.add(viewRule)
 			decoratorModel.decorators.add(widgetContainerDecorator)
 
-		
-			val storyboardModelPath = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + Constants.SUB_PROJECT_NAME + ".ecore"
+			val storyboardModelPath = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + Constants.SUB_PROJECT_NAME + ".ecore"
 			val storyboardDecorator = factory.createStoryboardDecorator
 			storyboardDecorator.storyboard = ResourceSetHandler.instance.storyboardResource.contents.get(0) as Storyboard
 			val file = new File(storyboardModelPath)
@@ -479,7 +475,7 @@ class ScreenDecoratorGenerator {
 		} else { 
 			// No screen decorator file
 			val resourceSet = ResourceSetHandler.instance.resourceSet
-			val directory = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/"
+			val directory = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME)
 			val path = directory + screenName + ".screendecorator"
 			val resource = resourceSet.createResource(URI.createFileURI(path))
 			
@@ -513,7 +509,7 @@ class ScreenDecoratorGenerator {
 			widgetDecorator.viewRules.add(viewRule)
 			decoratorModel.decorators.add(widgetDecorator)
 
-			val screenModelPath = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + screenName + ".ecore"
+			val screenModelPath = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + screenName + ".ecore"
 			var file = new File(screenModelPath)
 			val screenDecorator = factory.createWidgetContainerDecorator
 			if (file.exists){
@@ -522,8 +518,7 @@ class ScreenDecoratorGenerator {
 			}
 			screenDecorator.widgetContainer = widget.eContainer as Screen
 		
-		
-			val storyboardModelPath = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + Constants.SUB_PROJECT_NAME + ".ecore"
+			val storyboardModelPath = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + Constants.SUB_PROJECT_NAME + ".ecore"
 			val storyboardDecorator = factory.createStoryboardDecorator
 			storyboardDecorator.storyboard = ResourceSetHandler.instance.storyboardResource.contents.get(0) as Storyboard
 			file = new File(storyboardModelPath)
@@ -541,7 +536,7 @@ class ScreenDecoratorGenerator {
 	}
 	
 	def getDecoratorResourceForScreenName(String screenName){
-		val directory = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/"
+		val directory = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME)
 		val path = directory + screenName + ".screendecorator"
 		getDecoratorResourceForPath(path)
 	}
@@ -605,7 +600,7 @@ class ScreenDecoratorGenerator {
 			// There is no decorator resource. Create it.
 			
 			val resourceSet = ResourceSetHandler.instance.resourceSet
-			val directory = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/"
+			val directory = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME)
 			val path = directory + screenName + ".screendecorator"
 			
 			val resource = resourceSet.createResource(URI.createFileURI(path))
@@ -619,8 +614,7 @@ class ScreenDecoratorGenerator {
 			widgetDecorator.widget = widget
 			widgetDecorator.actions.add(scriptAction)
 			
-			
-			val screenModelPath = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + screenName + ".ecore"
+			val screenModelPath = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + screenName + ".ecore"
 			var file = new File(screenModelPath)
 			val screenDecorator = factory.createWidgetContainerDecorator
 			if (file.exists){
@@ -629,8 +623,7 @@ class ScreenDecoratorGenerator {
 			}
 			screenDecorator.widgetContainer = widget.eContainer as Screen
 		
-		
-			val storyboardModelPath = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + Constants.SUB_PROJECT_NAME + ".ecore"
+			val storyboardModelPath = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + Constants.SUB_PROJECT_NAME + ".ecore"
 			val storyboardDecorator = factory.createStoryboardDecorator
 			storyboardDecorator.storyboard = ResourceSetHandler.instance.storyboardResource.contents.get(0) as Storyboard
 			file = new File(storyboardModelPath)
@@ -668,8 +661,7 @@ class ScreenDecoratorGenerator {
 	def getEcoreResourceForScreen(Screen screen){
 		val screenResourcePath = screen.eResource.URI.path
 		val screenName = FilenameUtils.getBaseName(screenResourcePath).toLowerCase
-		var ecoreFilePath = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME 
-			+ "/"+ screenName + ".ecore"
+		val ecoreFilePath = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + screenName + ".ecore"
 		return getEcoreResourceForPath(ecoreFilePath)
 	}
 	
@@ -677,8 +669,7 @@ class ScreenDecoratorGenerator {
 		val screenResourcePath = widget.eContainer.eResource.URI.path
 		val screenName = FilenameUtils.getBaseName(screenResourcePath).toLowerCase
 		val widgetDataFileName = screenName + "Id" + widget.id 
-		var ecoreFilePath = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME 
-			+ "/"+ widgetDataFileName + ".ecore"
+		val ecoreFilePath = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + widgetDataFileName + ".ecore"
 		return getEcoreResourceForPath(ecoreFilePath)
 	}
 	
@@ -694,19 +685,16 @@ class ScreenDecoratorGenerator {
 	private def ecoreModelForScreenExist(Screen screen){
 		val screenResourcePath = screen.eResource.URI.path
 		val screenName = FilenameUtils.getBaseName(screenResourcePath).toLowerCase
-		var ecoreFilePath = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME 
-			+ "/"+ screenName + ".ecore"
+		val ecoreFilePath = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + screenName + ".ecore"
 			
 		return ecoreDataFileExist(ecoreFilePath)
 	}
 	
 	private def ecoreModelForWidgetExist(Widget widget){
-//		val fileName = 
 		val screenResourcePath = widget.eContainer.eResource.URI.path
 		val screenName = FilenameUtils.getBaseName(screenResourcePath).toLowerCase
 		val widgetDataFileName = screenName + "Id" + widget.id 
-		var ecoreFilePath = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME 
-			+ "/"+ widgetDataFileName + ".ecore"
+		val ecoreFilePath = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + widgetDataFileName + ".ecore"
 			
 		return ecoreDataFileExist(ecoreFilePath)
 	}
@@ -724,8 +712,7 @@ class ScreenDecoratorGenerator {
 	def createEcoreData(String[] data, String ecoreName) {
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl)
 		val resourceSet = ResourceSetHandler.instance.resourceSet // new ResourceSetImpl
-		var ecoreFilePath = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME 
-			+ "/"+ ecoreName + ".ecore"
+		val ecoreFilePath = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + ecoreName + ".ecore"
 		var Resource ecoreResource = null
 		if (ecoreName == null) {
 			println("Cannot create ScreenDecorator data for ecoreName = null")
