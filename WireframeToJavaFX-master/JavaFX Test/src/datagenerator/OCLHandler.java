@@ -11,8 +11,21 @@ import org.eclipse.ocl.ecore.OCL.Query;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.helper.OCLHelper;
 
+/**
+ * This class provides two static methods, one for retrieving the data from an OCL-statement and
+ * another for retrieving the Type from an OCL-statement.
+ * @author Magnus Jerre
+ *
+ */
 public class OCLHandler {
 	
+	/**
+	 * Returns the data from an OCL-statement.
+	 * @param resourceSet
+	 * @param instanceRoot
+	 * @param queryExpr
+	 * @return
+	 */
 	public static Object parseOCLStatement(ResourceSet resourceSet, EObject instanceRoot, String queryExpr) {
 		
 		OCL.initialize(resourceSet);
@@ -31,7 +44,14 @@ public class OCLHandler {
 		return null;
 	}
 	
-	public static EClassifier getClassifierForStatement2(ResourceSet resourceSet, EClassifier instanceRoot, String query) {
+	/**
+	 * Returns the classifier from an OCL-statement.
+	 * @param resourceSet
+	 * @param instanceRoot
+	 * @param query
+	 * @return
+	 */
+	public static EClassifier getClassifierForStatement(ResourceSet resourceSet, EClassifier instanceRoot, String query) {
 		
 		OCL.initialize(resourceSet);
 		OCL ocl = OCL.newInstance(EcoreEnvironmentFactory.INSTANCE);

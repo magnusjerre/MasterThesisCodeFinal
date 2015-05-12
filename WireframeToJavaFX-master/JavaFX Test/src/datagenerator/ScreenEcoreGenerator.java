@@ -126,7 +126,7 @@ public class ScreenEcoreGenerator {
 
 		String statement = assignment.getStatement();
 		
-		EClassifier eClassifier = OCLHandler.getClassifierForStatement2(resSet, screenClass, statement);
+		EClassifier eClassifier = OCLHandler.getClassifierForStatement(resSet, screenClass, statement);
 		if (eClassifier == null) {
 			throw new RuntimeException("Illegal statement, aborting...: " + statement);
 		}
@@ -216,7 +216,7 @@ public class ScreenEcoreGenerator {
 		String viewComponentDataType = componentClass.getEAnnotations().get(0).getDetails().get("expectedType");
 		
 		EClassifier expectedComponentClassifier = DataGenerator.getInstance().getClassifierForName(viewComponentDataType);
-		EClassifier assignmentClassifier = OCLHandler.getClassifierForStatement2(resSet, expectedComponentClassifier, statement);
+		EClassifier assignmentClassifier = OCLHandler.getClassifierForStatement(resSet, expectedComponentClassifier, statement);
 		EStructuralFeature feature = DataUtils.createFeatureFromClassifier(assignmentClassifier);
 		
 		String useComponent = assignment.getUsingViewComponentNamed();
@@ -302,7 +302,7 @@ public class ScreenEcoreGenerator {
 						screenClass.getEStructuralFeatures().add(eFeature);
 					} else {
 						
-						EClassifier newType = OCLHandler.getClassifierForStatement2(resSet, screenClass, statement);
+						EClassifier newType = OCLHandler.getClassifierForStatement(resSet, screenClass, statement);
 						if (newType != null) {
 							EStructuralFeature eFeature = DataUtils.createFeatureFromClassifier(newType);
 							eFeature.setName(name);

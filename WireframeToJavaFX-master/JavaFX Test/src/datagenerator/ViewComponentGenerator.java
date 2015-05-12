@@ -21,6 +21,9 @@ import data.ViewComponent;
 
 /**
  * Responsible for creating and storing all the ViewComponent decorators for a specific screen file.
+ * 
+ * Each ViewComponent will have an fxml file associated with it which describes how the viewcomponent 
+ * will be displayed.
  * @author Magnus Jerre
  *
  */
