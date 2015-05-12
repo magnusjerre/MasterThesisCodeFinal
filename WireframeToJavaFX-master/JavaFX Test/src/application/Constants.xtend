@@ -18,7 +18,7 @@ abstract class Constants {
 	public static final val enableDebugLines = false
 	/** Dev only. Dictates the javafx layout style. This should be handled by the generator. */
 	public static final val layoutStyle = LayoutStyle.AnchorPane 
-	public static final val LIST_DIRECTORY = "/list/"
+//	public static final val LIST_DIRECTORY = "/list/"
 	public static final val GEN_DIRECTORY = "/generated/"
 	
 }
