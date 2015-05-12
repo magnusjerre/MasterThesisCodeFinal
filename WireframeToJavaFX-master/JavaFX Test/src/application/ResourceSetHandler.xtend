@@ -163,7 +163,7 @@ class ResourceSetHandler {
 		}
 	}
 	def getXMIFile() {
-		val directory = Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/"
+		val directory = LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) 
 		val xmiFile = new File(directory + Constants.SUB_PROJECT_NAME + ".xmi");
 
 		if (xmiFile.exists) {
@@ -212,7 +212,7 @@ class ResourceSetHandler {
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl)
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("xmi", new XMIResourceFactoryImpl)
 
-		val directory = new File(Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/");
+		val directory = new File(LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME))
 
 		/* Load the .story file and parse which screen files and decorators files apply. 
 		 * Load everything in the same resource set - eliminate proxies */
@@ -235,7 +235,6 @@ class ResourceSetHandler {
 					// Each panel has a screen file - assuming just one Storyboard
 					// Subtract the storyboard file
 					val numberOfScreenFiles = resSet.resources.size - 1
-//					val numberOfScreenFiles = res.contents.filter(Storyboard).get(0).panels.length
 					
 					/* This includes any assets (Asset.screen) that are used. 
 					 * We do want to resolve them into the reosurce set

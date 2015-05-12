@@ -337,9 +337,9 @@ public class ScreenEcoreController {
 	 */
 	private static File fileLocation(String fileName) {
 		String[] possibleLocations = new String[] {
-				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/images/" + fileName,
-				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/" + fileName,
-				 LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileName)
+				LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + "images/" + fileName,
+				LocationUtils.getWireframeProjectFolder(Constants.SUB_PROJECT_NAME) + fileName,
+				LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileName)
 		};
 		
 		for (int i = 0; i < possibleLocations.length; i++) {

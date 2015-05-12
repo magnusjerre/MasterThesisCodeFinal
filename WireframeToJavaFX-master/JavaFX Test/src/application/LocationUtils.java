@@ -42,6 +42,18 @@ public class LocationUtils {
 		return getInstance().srcFolderLocation + thePackage + "/" + fileName;
 
 	}
+	
+	public static String getWireframeProjectLocation(String project) {
+		
+		return getInstance().wireframeFolderLocation + project;
+		
+	}
+	
+	public static String getWireframeProjectFolder(String project) {
+		
+		return getInstance().wireframeFolderLocation + project + "/";
+		
+	}
 
 	private static void setupPaths(LocationUtils theInstance) {
 
