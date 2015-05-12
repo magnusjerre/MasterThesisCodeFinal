@@ -39,7 +39,15 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import application.Constants;
 
-public class ScreenEcoreHandler {
+/**
+ * This class is responsible for populating a specific screen with the data it's supposed to display. First it will
+ * go through each field for the screen class and load the data into the fields. After all the fields have been 
+ * populated with data, each assignment will assign its value to its view elements in the JavaFX program.
+ * 
+ * @author Magnus Jerre
+ *
+ */
+public class ScreenEcoreController {
 	
 	public static ResourceSet resourceSet;
 	public static EPackage ePackage;
@@ -49,7 +57,7 @@ public class ScreenEcoreHandler {
 	
 	public static final String ANNOTATION_SOURCE = "wireframe";
 	
-	public ScreenEcoreHandler(String fileName) {
+	public ScreenEcoreController(String fileName) {
 		
 		this.fileName = fileName;
 		if (resourceSet == null) {
@@ -72,6 +80,15 @@ public class ScreenEcoreHandler {
 		
 	}
 
+	/**
+	 * Populates the instance with the data that each field specify in their annotations.
+	 * 
+	 * If the annotations contain a detail named xmiLocation, the xmi file specified by the detail
+	 * must be loaded.
+	 * 
+	 * If the annotations contain a detail named ocl, the statement specified by the detail will
+	 * be executed on the instance.
+	 */
 	private void populateInstance() {
 		for (EStructuralFeature feature : instance.eClass().getEStructuralFeatures()) {
 			
@@ -83,7 +100,7 @@ public class ScreenEcoreHandler {
 				Resource res = resourceSet.getResource(URI.createFileURI(location), true);
 				EObject database = res.getContents().get(0);
 				if (database instanceof EPackage) {
-					EObject selectionInstance = SelectionHandler.getInstance().selectionInstance;
+					EObject selectionInstance = SelectionController.getInstance().selectionInstance;
 					instance.eSet(feature, selectionInstance);
 					System.out.println("featureName: " + feature.getName() + ", value: " + instance.eGet(feature));
 				} else {
@@ -111,13 +128,34 @@ public class ScreenEcoreHandler {
 	}
 	
 	public void assignValues(Parent root) {
+
 		for (EStructuralFeature feature : instance.eClass().getEStructuralFeatures()) {
 			assignComponents(root, instance, feature);
-			
 		}
 		
 	}
 	
+	/**
+	 * This method assigns the value for each assignment field to the correct JavaFX view element.
+	 * 
+	 * It works in a recursive manner. The base case is when the assignment doesn't use a ViewComponent.
+	 * A call to handleResultCorrectly is made, and the value is assigned to the node given to 
+	 * handleResultCorrectly.
+	 * 
+	 * If the base case is not yet applicable some more work must be done. The first is to check whether
+	 * the assignment is dealing with a list or not. If it is, a ListView controller is assigned to the
+	 * ListView and the data is added to the ListView. Otherwise, it is not a list, just an assignment 
+	 * that uses a ViewComponent.
+	 * 
+	 * When the assignment uses a ViewComponent, the ViewComponent's EClass is used to create a ViewComponent
+	 * instance containing the data for each of its Assignments. After the ViewComponent has been populated
+	 * with data, its fxml file is loaded and added as a child to its parent. A recursive call to 
+	 * assignComponents is then made.
+	 * 
+	 * @param node
+	 * @param instance
+	 * @param feature
+	 */
 	public static void assignComponents(Node node, EObject instance, EStructuralFeature feature) {
 		
 		EAnnotation iAnnotation = feature.getEAnnotation("wireframe");
@@ -134,23 +172,22 @@ public class ScreenEcoreHandler {
 		} else {
 			
 			if (feature.isMany()) {
-				@SuppressWarnings("unchecked")
-				List<Object> listValues = (List<Object>) instance.eGet(feature);
-				
 				EClass iUseComponentClass = (EClass) ePackage.getEClassifier(iUseComponent);
 				
-				ListView listView = (ListView) node.lookup(iLayoutId);
 				String simpleFileName = getSimpleName(fileName);
 				String componentName = String.format("%s-%s.fxml", simpleFileName, iUseComponent);
-				ListController lc = new ListController(listView, componentName, iUseComponentClass);
+				
+				@SuppressWarnings("unchecked")
+				List<Object> listValues = (List<Object>) instance.eGet(feature);
+				ListController<Object> lc = new ListController<>(node.lookup(iLayoutId), componentName, iUseComponentClass);
 				lc.obsList.addAll(listValues);
 				
 			} else {
 				
 				EObject instanceFromFeature = (EObject) instance.eGet(feature);
 				
-				if (!instanceTypeMatchesComponentExpectedType(instanceFromFeature.eClass(), iUseComponent)) {
-					throw new RuntimeException(String.format("Error! The type from the assignment doesn't match the expected type for the component %s", iUseComponent));
+				if (!instanceDataTypeMatchesComponentExpectedDataType(instanceFromFeature.eClass(), iUseComponent)) {
+					throw new RuntimeException(String.format("Error! The data type from the assignment doesn't match the expected data type for the component %s", iUseComponent));
 				}
 				
 				//Create and populate the component used 
@@ -166,10 +203,12 @@ public class ScreenEcoreHandler {
 				}
 				
 				try {
+					//Load fxml for ViewComponent
 					String componentFxmlLocation = getFxmlLocationForComponent(iUseComponent);
 					URL url = new File(componentFxmlLocation).toURI().toURL();
 					Node componentNode = FXMLLoader.load(url);
 					
+					//Assign values for the ViewComponent to the different JavaFX view elements
 					for (EStructuralFeature cFeature : componentInstance.eClass().getEStructuralFeatures()) {
 						
 						String cLayoutId = cFeature.getEAnnotation("wireframe").getDetails().get("layoutId");
@@ -208,12 +247,12 @@ public class ScreenEcoreHandler {
 				
 	}
 	
-	private static boolean instanceTypeMatchesComponentExpectedType(EClass instanceClass, String comopnentNamed) {
+	private static boolean instanceDataTypeMatchesComponentExpectedDataType(EClass instanceClass, String comopnentNamed) {
 		
 		EClass compClass = (EClass) ePackage.getEClassifier(comopnentNamed);
-		String expectedTypeName = compClass.getEAnnotations().get(0).getDetails().get("expectedType");
+		String expectedType = compClass.getEAnnotations().get(0).getDetails().get("expectedType");
 		
-		if (instanceClass.getName().equals(expectedTypeName)) {
+		if (instanceClass.getName().equals(expectedType)) {
 			return true;
 		}
 		
@@ -228,6 +267,13 @@ public class ScreenEcoreHandler {
 		return componentFxmlLocation;
 	}
 	
+	/**
+	 * This method assigns the value from the result parameter to the JavaFX view element in the node parameter.
+	 * 
+	 * This method will only work when the result should not use a ViewComponent. 
+	 * @param node
+	 * @param result
+	 */
 	public static void handleResultCorrectly(Node node, Object result) {
 		
 		if (node instanceof Label) {
@@ -249,11 +295,8 @@ public class ScreenEcoreHandler {
 			String uri = imageFile.toURI().toString();
 			((ImageView) node).setImage(new Image(uri));
 		} else if (node instanceof ListView) {
-			
-			ListView lv = (ListView) node;
-			ListController lc = new ListController(lv, "simple_strings.fxml", null);
-			lc.obsList.addAll((Collection<Object>) result);
-			
+			ListController<String> lc = new ListController<>(node, "simple_strings.fxml", null);
+			lc.obsList.addAll((Collection<String>) result);
 		}
 		
 	}
@@ -280,6 +323,11 @@ public class ScreenEcoreHandler {
 		return null;
 	}
 	
+	/**
+	 * Returns the location for the file named fileName
+	 * @param fileName
+	 * @return
+	 */
 	private static File fileLocation(String fileName) {
 		String[] possibleLocations = new String[] {
 				 Constants.PROJECT_DIR + Constants.SUB_PROJECT_NAME + "/images/" + fileName,

@@ -3,7 +3,6 @@ package datagenerator;
 import javafx.event.Event;
 import javafx.scene.Group;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
@@ -14,14 +13,18 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
 import application.Constants;
 
-public class SelectionHandler {
+/**
+ * The SelectionController is responsible for assigning the correct value to the selection
+ * selected during runtime.
+ * @author Magnus Jerre
+ *
+ */
+public class SelectionController {
 	
-	
-	private static SelectionHandler instance;
+	private static SelectionController instance;
 	
 	public ResourceSet resSet;
 	public EPackage selectionPacakge;
@@ -31,10 +34,10 @@ public class SelectionHandler {
 	
 	public static final String SELECTION_MODEL_SIMPLE_FILE_NAME = "selectionModel.ecore";
 	
-	private SelectionHandler() {
+	private SelectionController() {
 		
 		
-		resSet = ScreenEcoreHandler.resourceSet;
+		resSet = ScreenEcoreController.resourceSet;
 
 		URI uri = URI.createFileURI(Constants.GENERATED_DIRECTORY + SELECTION_MODEL_SIMPLE_FILE_NAME);
 		Resource firstScreen = resSet.getResource(uri, true);
@@ -46,10 +49,10 @@ public class SelectionHandler {
 		
 	}
 	
-	public static SelectionHandler getInstance() {
+	public static SelectionController getInstance() {
 		
 		if (instance == null) {
-			instance = new SelectionHandler();
+			instance = new SelectionController();
 		}
 		
 		return instance;
@@ -71,24 +74,27 @@ public class SelectionHandler {
 				if (id.equals(entry.getValue().replace("#", ""))) {
 					Object selectedItem = null;
 					if (event.getSource() instanceof ListView) {
-						selectedItem = ((ListView) event.getSource()).getSelectionModel().getSelectedItem();
+						selectedItem = ((ListView<?>) event.getSource()).getSelectionModel().getSelectedItem();
 					} else if (event.getSource() instanceof Group) {
 						selectedItem = getEObjectForGroup(id);
 					}
 					selectionInstance.eSet(feature, selectedItem);
-					System.out.println("cake");
 				}
 				
 			}
 			
 		}
 		
-		
 	}
 	
+	/**
+	 * Returns the EObject used to populate the element with the given id. 
+	 * @param id
+	 * @return
+	 */
 	private EObject getEObjectForGroup(String id) {
 		
-		EObject eInstance = ScreenEcoreHandler.instance;
+		EObject eInstance = ScreenEcoreController.instance;
 		
 		for (EStructuralFeature feature : eInstance.eClass().getEStructuralFeatures()) {
 			

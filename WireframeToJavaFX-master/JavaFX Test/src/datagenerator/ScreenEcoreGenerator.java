@@ -1,16 +1,12 @@
 package datagenerator;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -21,7 +17,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.ocl.ecore.impl.CollectionTypeImpl;
-import org.eclipse.ocl.ecore.impl.PrimitiveTypeImpl;
 
 import application.Constants;
 
@@ -31,6 +26,34 @@ import data.Assignment;
 import data.Context;
 import data.ViewComponent;
 
+/**
+ * The ScreenEcoreGenerator is responsible for generating the ecore file for a specific screen file.
+ * 
+ * The ecore file is structured such that the screen filename is used as the name for the screen class.
+ * The fields of the screen class are all the contexts as well as the top-level assignments for the
+ * screen. 
+ * 
+ * In addition to the screen class, classes for each of the different ViewComponents are created. The
+ * fields of each ViewComponent class are the assignments that are part of it.
+ * 
+ * Each field, or EStructuralFeature, is annotated with extra information, such as the statement, 
+ * layoutId and useViewComponent when necessary. These annotations are used during runtime to load
+ * the data for the prototype.
+ * 
+ * First, the screen EClass is created, then all the contexts are added as fields for the screen EClass. 
+ * The contexts are added in a way such that their order is an allowable order of execution when 
+ * traversing through all the fields of the screen EClass. 
+ * 
+ * After all contexts have been added, the different ViewComponents will be added as separate EClasses. 
+ * Each assignment that is part of the ViewComponent will be added as fields to the EClass.
+ * 
+ * After the ViewComponents have been handled, the top-level assignments will be added as fields to 
+ * the screen EClass.
+ * 
+ * Finally the EPackage will be saved as an ecore file.
+ * @author Magnus Jerre
+ *
+ */
 public class ScreenEcoreGenerator {
 	
 	private static final String ANNOTATION_SOURCE = "wireframe";
@@ -39,21 +62,18 @@ public class ScreenEcoreGenerator {
 	
 	List<Context> contexts;
 	List<Assignment> assignments;
-	List<ViewComponent> types;
+	List<ViewComponent> viewComponents;
 	
 	protected EPackage screenPackage;
 	private ResourceSet resSet;
 	
-	private Map<String, Map<String, EClassifier>> classesForXmis;
-	
-	public ScreenEcoreGenerator(List<Context> contexts, List<Assignment> assignments, List<ViewComponent> types) {
+	public ScreenEcoreGenerator(List<Context> contexts, List<Assignment> assignments, List<ViewComponent> viewComponents) {
 		
 		this.contexts = contexts;
 		this.assignments = assignments;
-		this.types = types;
+		this.viewComponents = viewComponents;
 		
 		counter = 1;
-		classesForXmis = new HashMap<String, Map<String,EClassifier>>();
 		
 	}
 	
@@ -91,6 +111,13 @@ public class ScreenEcoreGenerator {
 		}
 	}
 	
+	/**
+	 * This method is responsible for adding the appropriate assignments to the screen class. Only top-
+	 * level Assignments should be added to the screen class. A top level Assignment is an Assignment
+	 * that is not part of a ViewComponent.
+	 * @param screenClass
+	 * @param assignment
+	 */
 	private void addAssignmentTo(EClass screenClass, Assignment assignment) {
 		
 		if (assignment.isPartOfViewComponent()) {
@@ -99,12 +126,12 @@ public class ScreenEcoreGenerator {
 
 		String statement = assignment.getStatement();
 		
-		EClassifier eClassifier = OCLHandler.getClassifierForStatement2(resSet, screenClass, statement);
+		EClassifier eClassifier = OCLHandler.getClassifierForStatement(resSet, screenClass, statement);
 		if (eClassifier == null) {
 			throw new RuntimeException("Illegal statement, aborting...: " + statement);
 		}
 		
-		EStructuralFeature eFeature = createFeatureFromClassifier(eClassifier);
+		EStructuralFeature eFeature = DataUtils.createFeatureFromClassifier(eClassifier);
 		
 		String eFeatureName = createAssignmentNameFromStatement(statement);
 		eFeature.setName(eFeatureName);
@@ -122,10 +149,10 @@ public class ScreenEcoreGenerator {
 			}
 			
 			String expectedTypeForComponent = compForAssignment.getEAnnotations().get(0).getDetails().get("expectedType");
-			if (assignmentProducesWrongTypeForComponent(eClassifier, expectedTypeForComponent)) {
-				throw new RuntimeException(String.format("Error! Component \"%s\" expects input of type \"%s\". Assignment \"%s\" produces type \"%s\".", compName, expectedTypeForComponent, statement, eClassifier.getName()));
+			if (assignmentProducesWrongDataTypeForComponent(eClassifier, expectedTypeForComponent)) {
+				throw new RuntimeException(String.format("Error! Component \"%s\" expects input of data type \"%s\". Assignment \"%s\" produces data type \"%s\".", compName, expectedTypeForComponent, statement, eClassifier.getName()));
 			}
-			eAnnotation.getDetails().put("useComponent", createPrefixedComponentNameFromName(compName));
+			eAnnotation.getDetails().put("useComponent", compName);
 		}
 		
 		eFeature.getEAnnotations().add(eAnnotation);
@@ -133,7 +160,7 @@ public class ScreenEcoreGenerator {
 		
 	}
 	
-	private boolean assignmentProducesWrongTypeForComponent(EClassifier eClassifier, String expectedTypeForComponent) {
+	private boolean assignmentProducesWrongDataTypeForComponent(EClassifier eClassifier, String expectedTypeForComponent) {
 		
 		if (eClassifier instanceof CollectionTypeImpl) {
 			CollectionTypeImpl cti = (CollectionTypeImpl) eClassifier;
@@ -142,18 +169,25 @@ public class ScreenEcoreGenerator {
 		return !eClassifier.getName().equals(expectedTypeForComponent);
 	}
 
+	/**
+	 * This method is responsible for adding all the ViewComponents to the screen package. Each ViewComponent
+	 * will be its own EClass containing Assignments. 
+	 * 
+	 * The type for the ViewComponent is specified by the user and must exist as part of the xmi-files.
+	 * @param ePackage
+	 */
 	private void addViewComponentsToPackage(EPackage ePackage) {
 		
-		for (ViewComponent component : types) {
+		for (ViewComponent component : viewComponents) {
 			
-			String typeName = createPrefixedComponentNameFromName(component.getName());
+			String viewComponentName = component.getName();
 			EClass componentClass = EcoreFactory.eINSTANCE.createEClass();
-			componentClass.setName(typeName);
+			componentClass.setName(viewComponentName);
 
-			String typeType = component.getExpectedType();
+			String viewComponentDataType = component.getExpectedType();
 			EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
 			annotation.setSource(ANNOTATION_SOURCE);
-			annotation.getDetails().put("expectedType", typeType);
+			annotation.getDetails().put("expectedType", viewComponentDataType);
 			componentClass.getEAnnotations().add(annotation);
 			
 			ePackage.getEClassifiers().add(componentClass);
@@ -179,34 +213,21 @@ public class ScreenEcoreGenerator {
 		annotation.getDetails().put("layoutId", "#" + aWidget.getId());
 		
 		String statement = assignment.getStatement();
-		String compType = componentClass.getEAnnotations().get(0).getDetails().get("expectedType");
+		String viewComponentDataType = componentClass.getEAnnotations().get(0).getDetails().get("expectedType");
 		
-		EClassifier expectedComponentClassifier = getClassifierNamed(compType);
-		EClassifier assignmentClassifier = OCLHandler.getClassifierForStatement2(resSet, expectedComponentClassifier, statement);
-		EStructuralFeature feature = createFeatureFromClassifier(assignmentClassifier);
+		EClassifier expectedComponentClassifier = DataGenerator.getInstance().getClassifierForName(viewComponentDataType);
+		EClassifier assignmentClassifier = OCLHandler.getClassifierForStatement(resSet, expectedComponentClassifier, statement);
+		EStructuralFeature feature = DataUtils.createFeatureFromClassifier(assignmentClassifier);
 		
 		String useComponent = assignment.getUsingViewComponentNamed();
 		if (useComponent != null) {
-			annotation.getDetails().put("useComponent", createPrefixedComponentNameFromName(useComponent));
+			annotation.getDetails().put("useComponent", useComponent);
 		}
 		
 		feature.setName(assignmentName);
 		
 		feature.getEAnnotations().add(annotation);
 		componentClass.getEStructuralFeatures().add(feature);
-		
-	}
-	
-	protected EClassifier getClassifierNamed(String name) {
-		
-		for (String key : classesForXmis.keySet()) {
-			for (Entry<String, EClassifier> entry : classesForXmis.get(key).entrySet()) {
-				if (entry.getKey().equals(name)) {
-					return entry.getValue();
-				}
-			}
-		}
-		return null;
 		
 	}
 
@@ -232,6 +253,17 @@ public class ScreenEcoreGenerator {
 		return screenPackage;
 	}
 	
+	/**
+	 * This method is responsible for adding all the contexts in the correct order to the screen class.
+	 * 
+	 * In order for the contexts to be added in the correct order, this method simply tries to get the 
+	 * type for the context statement. If no type is returned, it's obvious that the context needs some
+	 * more information in order to retrieve the type, therefore the context is not added the screen class.
+	 * However, if a type is returned, the context has enough information to retrieve the type and can
+	 * therefore be safely added to the screen context. This is repeated until the number of fields in 
+	 * the screen class matches the number of contexts for the screen.
+	 * @param screenClass
+	 */
 	private void addContextsTo(EClass screenClass) {
 		
 		List<Context> allContexts = contexts;
@@ -247,7 +279,7 @@ public class ScreenEcoreGenerator {
 					EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 					eAnnotation.setSource(ANNOTATION_SOURCE);
 					
-					if (statement.startsWith("#")) {
+					if (statement.startsWith("#")) {	//A hashtag means that the context is reliant on the selection model
 						Resource resource = resSet.getResource(URI.createFileURI(Constants.GENERATED_DIRECTORY + "selectionModel.ecore"), true);
 						EStructuralFeature feature = EcoreFactory.eINSTANCE.createEReference();
 						feature.setName(name);
@@ -257,9 +289,8 @@ public class ScreenEcoreGenerator {
 						eAnnotation.getDetails().put("xmiLocation", Constants.GENERATED_DIRECTORY + "selectionModel.ecore");
 						screenClass.getEStructuralFeatures().add(feature);
 						
-					} else if (statement.startsWith("/")) {
+					} else if (statement.startsWith("/")) {	//Starting with a slash means that the context is loading a file
 						Resource resource = resSet.getResource(URI.createFileURI(statement), true);
-						addClassesFromResource(statement, resource);
 						EObject value = resource.getContents().get(0);
 						EClass type = value.eClass();
 						
@@ -271,9 +302,9 @@ public class ScreenEcoreGenerator {
 						screenClass.getEStructuralFeatures().add(eFeature);
 					} else {
 						
-						EClassifier newType = OCLHandler.getClassifierForStatement2(resSet, screenClass, statement);
+						EClassifier newType = OCLHandler.getClassifierForStatement(resSet, screenClass, statement);
 						if (newType != null) {
-							EStructuralFeature eFeature = createFeatureFromClassifier(newType);
+							EStructuralFeature eFeature = DataUtils.createFeatureFromClassifier(newType);
 							eFeature.setName(name);
 							eFeature.getEAnnotations().add(eAnnotation);
 							eAnnotation.getDetails().put("ocl", statement);
@@ -289,115 +320,7 @@ public class ScreenEcoreGenerator {
 		}
 		
 	}
-	
-	private void addClassesFromResource(String resourceName, Resource resource) {
-		
-		Map<String, EClassifier> entry = classesForXmis.get(resourceName);
-		if (entry == null) {
-			entry = new HashMap<String, EClassifier>();
-		
-			for (EObject content : resource.getContents()) {
-				
-				EPackage thePackage = content.eClass().getEPackage();
-				for (EClassifier classifier : thePackage.getEClassifiers()) {
-					entry.put(classifier.getName(), classifier);
-				}
-				
-			}
-			
-			classesForXmis.put(resourceName, entry);
-			
-		}
-		
-	}
 
-	/**
-	 * Creates an EStructuralFeature of either EReference or EAttribute from the given classifier. The classifier can be of three different types:
-	 * CollectionTypeImpl, PrimitiveTypeImpl or EClassImpl. In case of a collection, the type of the elements will be used as the type for the
-	 * structural feature and the upperbound will be set to unbound.
-	 * 
-	 * The name for the created structural feature is not set and must therefore be set later.
-	 * @param classifier
-	 * @return EAttribute or EReference
-	 */
-	protected EStructuralFeature createFeatureFromClassifier(EClassifier classifier) {
-		
-		EStructuralFeature feature = null;
-		
-		if (classifier instanceof CollectionTypeImpl) {
-			EClassifier elementType = ((CollectionTypeImpl) classifier).getElementType();
-			
-			if (isEDataType(elementType)) {
-				feature = EcoreFactory.eINSTANCE.createEAttribute();
-				EDataType eDataType = getEDataTypeFromClassifier(elementType);
-				feature.setEType(eDataType);
-			} else {
-				feature = EcoreFactory.eINSTANCE.createEReference();
-				feature.setEType(elementType);
-			}
-			
-			feature.setUpperBound(EStructuralFeature.UNBOUNDED_MULTIPLICITY);
-			
-		} else if (isEDataType(classifier)) {
-			feature = EcoreFactory.eINSTANCE.createEAttribute();
-			EDataType eDataType = getEDataTypeFromClassifier(classifier);
-			feature.setEType(eDataType);
-		} else {
-			feature = EcoreFactory.eINSTANCE.createEReference();
-			feature.setEType(classifier);
-		}
-		
-		return feature;
-		
-	}
-	
-	private boolean isEDataType(EClassifier eClassifier) {
-		
-		if (eClassifier instanceof PrimitiveTypeImpl) {
-			return true;
-		}
-		
-		if (eClassifier.getName().equals("EDate")) {
-			return true;
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Returns the corresponding EDataType for the primitive.
-	 * 
-	 * Using this method since the oclstdlib.ecore cannot be found.
-	 * @param classifier
-	 * @return
-	 */
-	private EDataType getEDataTypeFromClassifier(EClassifier classifier) {
-		
-		switch (classifier.getName()) {
-		
-			case "String":
-				return EcoreFactory.eINSTANCE.getEcorePackage().getEString();
-			case "EDate":
-				return EcoreFactory.eINSTANCE.getEcorePackage().getEDate();
-			case "Integer":
-				return EcoreFactory.eINSTANCE.getEcorePackage().getEIntegerObject();
-			case "Double":
-				return EcoreFactory.eINSTANCE.getEcorePackage().getEDoubleObject();
-			case "Long":
-				return EcoreFactory.eINSTANCE.getEcorePackage().getELongObject();
-			case "Byte":
-				return EcoreFactory.eINSTANCE.getEcorePackage().getEByteObject();
-			case "Boolean":
-				return EcoreFactory.eINSTANCE.getEcorePackage().getEBooleanObject();
-			case "Character":
-				return EcoreFactory.eINSTANCE.getEcorePackage().getECharacterObject();
-			default:
-				return null;
-				
-		}
-		
-	}
-	
 	private boolean containsEStructuralFeature(String name, EClass screenClass) {
 
 		for (EStructuralFeature eStructuralFeature : screenClass.getEStructuralFeatures()) {
@@ -412,29 +335,30 @@ public class ScreenEcoreGenerator {
 		
 	}
 	
-	private String clipAtSequence(String sequence, String string) {
-		
-		int indexOfSequence = string.indexOf(sequence);
-		
-		if (indexOfSequence == -1) {
-			return string;
-		}
-		
-		return string.substring(0, indexOfSequence);
-	}
-	
+	/**
+	 * The input statement will be cut at the first instance of -> or (. After that, the 
+	 * remaining statement will be split into several words on the . character. The first letter
+	 * in each word, except the first word, will be capitalized, making it easier to read the 
+	 * reference name. Finally a number from the counter will be appended to ensure no 
+	 * names are the same.
+	 *   
+	 * Example, the statement: 
+	 * db.allActors->at(1)
+	 * will result in the following:
+	 * dbAllActors2
+	 * @param statement
+	 * @return Creates a new string without the ->, ( or . characters. 
+	 */
 	private String createReferenceName(String statement) {
 		
-		statement = clipAtSequence("->", statement);
-		statement = clipAtSequence("(", statement);
+		statement = DataUtils.clipAtSequence("->", statement);
+		statement = DataUtils.clipAtSequence("(", statement);
 		
 		String[] split = statement.split("\\.");
 		
 		String out = split[0];
 		for (int i = 1; i < split.length; i++) {
-			String upperCase = split[i].toUpperCase();
-			split[i] = upperCase.charAt(0) + split[i].substring(1);
-			out += split[i];
+			out += DataUtils.capitalizeFirst(split[i]);
 		}
 		out += counter;
 		counter++;
@@ -442,31 +366,24 @@ public class ScreenEcoreGenerator {
 		
 	}
 	
+	/**
+	 * Assignments will start with the lower case character 'a'. This is so that it's easy to understand
+	 * which fields are assignments and which are contexts.
+	 * @param statement
+	 * @return
+	 */
 	private String createAssignmentNameFromStatement(String statement) {
 		
 		String res = createReferenceName(statement);
-		return ASSIGNMENT_PREFIX + capitalizeFirst(res);
+		return ASSIGNMENT_PREFIX + DataUtils.capitalizeFirst(res);
 		
 	}
 	
-	private String capitalizeFirst(String string) {
-		
-		if (string.length() < 2) {
-			return string.toUpperCase();
-		}
-		
-		String capitalized = string.toUpperCase();
-		String output = capitalized.charAt(0) + string.substring(1);
-		return output;
-		
-	}
-
-	private String createPrefixedComponentNameFromName(String string) {
-		
-		return string;
-		
-	}
-	
+	/**
+	 * This method creates a new string starting with the # character and the id number from the Assignment widget.
+	 * @param assignment
+	 * @return
+	 */
 	private String getAssignmentId(Assignment assignment) {
 		
 		return "#" + assignment.getWidget().getId();

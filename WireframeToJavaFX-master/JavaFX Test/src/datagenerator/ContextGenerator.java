@@ -6,15 +6,14 @@ import java.util.List;
 import data.Context;
 import data.DataFactory;
 
+/**
+ * Responsible for creating and storing all the Context decorators for a specific screen file.
+ * @author Magnus Jerre
+ *
+ */
 public class ContextGenerator {
 	
-	public List<Context> contexts;
-	
-	public ContextGenerator() {
-		
-		contexts = new ArrayList<Context>();
-		
-	}
+	public List<Context> contexts = new ArrayList<Context>();
 
 	public void generateDecorator(String[] strings) {
 		
@@ -34,12 +33,11 @@ public class ContextGenerator {
 
 	}
 	
-	public List<Context> getAllContexts() {
-		
-		return contexts;
-		
-	}
-	
+	/**
+	 * Creates a new list containing only the Contexts that are directly referencing an xmi-file. Their
+	 * statements start with a slash "/".
+	 * @return
+	 */
 	public List<Context> getXMIContexts() {
 		
 		List<Context> objects = new ArrayList<Context>();

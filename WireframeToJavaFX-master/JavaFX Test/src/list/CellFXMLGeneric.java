@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import application.Constants;
 import datagenerator.OCLHandler;
-import datagenerator.ScreenEcoreHandler;
+import datagenerator.ScreenEcoreController;
 
 public class CellFXMLGeneric {
 	
@@ -55,14 +55,14 @@ public class CellFXMLGeneric {
 			if ((viewComponentEClass != null) && (object instanceof EObject)) {
 				EObject listElement = (EObject) object;
 
-				EObject newInstance = ScreenEcoreHandler.ePackage.getEFactoryInstance().create(viewComponentEClass);
+				EObject newInstance = ScreenEcoreController.ePackage.getEFactoryInstance().create(viewComponentEClass);
 				populateInstance(listElement, newInstance);
 				
 				EStructuralFeature aFeature = getFeatureForId(child.getId());
-				ScreenEcoreHandler.assignComponents(child, newInstance, aFeature);
+				ScreenEcoreController.assignComponents(child, newInstance, aFeature);
 			} else {
 				
-				ScreenEcoreHandler.handleResultCorrectly(child, object);
+				ScreenEcoreController.handleResultCorrectly(child, object);
 				
 			}
 			
@@ -75,7 +75,7 @@ public class CellFXMLGeneric {
 			
 			EAnnotation iuccAnnotation = iuccFeature.getEAnnotation("wireframe");
 			String iuccOcl = iuccAnnotation.getDetails().get("ocl");
-			Object result = OCLHandler.parseOCLStatement(ScreenEcoreHandler.resourceSet, elementEObject, iuccOcl);
+			Object result = OCLHandler.parseOCLStatement(ScreenEcoreController.resourceSet, elementEObject, iuccOcl);
 			if (iuccFeature.isMany())
 			{
 				List<Object> lst = (List<Object>) newInstance.eGet(iuccFeature);

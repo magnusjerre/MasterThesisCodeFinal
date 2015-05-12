@@ -5,7 +5,7 @@ import org.eclipse.emf.ecore.EClass;
 import javafx.scene.control.ListCell;
 import list.CellFXMLGeneric;
 
-public class ListCellImpl extends ListCell<Object> {
+public class ListCellImpl<T> extends ListCell<T> {
 	
 	public String location;
 	public EClass eClass;
@@ -19,12 +19,12 @@ public class ListCellImpl extends ListCell<Object> {
 	}
     
     @Override
-    public void updateItem(Object object, boolean empty) {
+    public void updateItem(T t, boolean empty) {
     	
-        super.updateItem(object, empty);
-        if (object != null) {
+        super.updateItem(t, empty);
+        if (t != null) {
             CellFXMLGeneric cFXML = new CellFXMLGeneric(location, eClass);
-            cFXML.setInfo(object);
+            cFXML.setInfo(t);
             setGraphic(cFXML.getPane());
         }
         

@@ -6,18 +6,10 @@
       <widgets ref="5" width="865" height="33" text="db = /Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi"/>
     </overrides>
   </widgets>
-  <widgets xsi:type="model:Master" id="3" x="264" y="128" width="89" measuredWidth="89" measuredHeight="49">
+  <widgets xsi:type="model:Master" id="3" x="264" y="128" width="177" measuredWidth="177" measuredHeight="49">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
     <overrides>
-      <widgets ref="7" width="89" height="49" text="movie&#xA;movieComp"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Master" id="4" x="264" y="48" width="185" measuredWidth="185" measuredHeight="31">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
-    <overrides>
-      <widgets ref="5" width="185" height="31" text="movie = db.allMovies->at(4)">
-        <attributes key="textAlignment" value="Left"/>
-      </widgets>
+      <widgets ref="7" width="177" height="49" text="db.allMovies->at(4)&#xA;movieComp"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:WidgetGroup" id="8" x="24" y="48" measuredWidth="143" measuredHeight="65">

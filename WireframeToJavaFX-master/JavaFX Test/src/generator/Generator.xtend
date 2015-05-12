@@ -23,8 +23,6 @@ import com.wireframesketcher.model.TextField
 import com.wireframesketcher.model.VLine
 import com.wireframesketcher.model.Widget
 import com.wireframesketcher.model.WidgetGroup
-import datagenerator.DataGenerator
-import datagenerator.ListGenerator
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -43,11 +41,7 @@ import org.apache.commons.io.FilenameUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.w3c.dom.Element
-import datagenerator.ContextGenerator
-import datagenerator.AssignmentGenerator
-import datagenerator.TypeGenerator
-import datagenerator.SelectionEcoreGenerator
-import datagenerator.NewGenerator
+import datagenerator.DataGenerator
 
 /**
  * Retrieves the EMF model data from a screen file and generates a corresponding FXML file.
@@ -265,7 +259,7 @@ class Generator {
 		import application.AbstractNavigatorController
 		import application.AppController
 		import application.PropertyResult
-		import datagenerator.SelectionHandler
+		import datagenerator.SelectionController
 		
 		/* Generated */
 		class ScreenNavigatorController«safeFileName» extends AbstractNavigatorController {
@@ -527,7 +521,7 @@ class Generator {
 						}
 						«ENDIF»
 						
-						SelectionHandler.getInstance.handleMouseEvent(id as String, event)
+						SelectionController.getInstance.handleMouseEvent(id as String, event)
 						«IF eventType == "MouseEvent"»
 						if(event.button == MouseButton.PRIMARY){	
 						«ENDIF»			
@@ -559,7 +553,7 @@ class Generator {
 						}
 						«ENDIF»
 						
-						SelectionHandler.getInstance.handleMouseEvent(id as String, event)
+						SelectionController.getInstance.handleMouseEvent(id as String, event)
 					}
 			'''
 		}
@@ -1401,7 +1395,7 @@ class Generator {
 				if (path.startsWith(screenFileLocation)){
 					val name = FilenameUtils.getBaseName(path) 
 					println("Generating FXML for " + name)
-					NewGenerator.getInstance.prepareGeneratorForScreen(name)
+					DataGenerator.getInstance.prepareGeneratorForScreen(name)
 //					DataGenerator.getInstance.clear
 					
 					fxmlGenerator.generate(it, name)
@@ -1413,7 +1407,7 @@ class Generator {
 			]
 			
 		}
-		NewGenerator.getInstance.generateAll
+		DataGenerator.getInstance.generateAll
 //		SelectionEcoreGenerator.getInstance.saveResource
 		println("Done.")
 	}

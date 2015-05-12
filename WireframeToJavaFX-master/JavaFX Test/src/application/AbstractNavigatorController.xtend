@@ -3,7 +3,6 @@ package application
 import com.wireframesketcher.model.Screen
 import com.wireframesketcher.model.Widget
 import com.wireframesketcher.model.story.Storyboard
-import datagenerator.ScreenEcoreHandler
 import java.io.File
 import java.io.FileNotFoundException
 import java.lang.reflect.Method
@@ -29,6 +28,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.resource.Resource
+import datagenerator.ScreenEcoreController
 
 /** Used to indicate if the methods <code>getPropertyForNode()</code> or 
  * <code>setPropertyForNode()</code> was successful in invoking the property.
@@ -831,7 +831,7 @@ abstract class AbstractNavigatorController {
 			
 			nextScreen.evaluateRulesForScreen
 		
-		val seh = new ScreenEcoreHandler(Constants.GENERATED_DIRECTORY + nextScreen + ".ecore")
+		val seh = new ScreenEcoreController(Constants.GENERATED_DIRECTORY + nextScreen + ".ecore")
 		seh.assignValues(appController.getRoot)	
 	
 		stage.setScene(scene);

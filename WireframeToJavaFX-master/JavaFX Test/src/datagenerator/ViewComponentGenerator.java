@@ -19,16 +19,23 @@ import data.Assignment;
 import data.DataFactory;
 import data.ViewComponent;
 
-public class TypeGenerator {
+/**
+ * Responsible for creating and storing all the ViewComponent decorators for a specific screen file.
+ * 
+ * Each ViewComponent will have an fxml file associated with it which describes how the viewcomponent 
+ * will be displayed.
+ * @author Magnus Jerre
+ *
+ */
+public class ViewComponentGenerator {
 	
-	public DoubleList<ViewComponent, Master> theList;
+	public DoubleList<ViewComponent, Master> viewComponents = new DoubleList<ViewComponent, Master>();
 	public HashMap<Master, Pair<Arrow, Widget>> masterMap;
 	
 	private DoubleList<Assignment, Master> assignments;
 	
-	public TypeGenerator(DoubleList<Assignment, Master> assignments) {
+	public ViewComponentGenerator(DoubleList<Assignment, Master> assignments) {
 		
-		theList = new DoubleList<ViewComponent, Master>();
 		this.assignments = assignments;
 		
 	}
@@ -40,61 +47,35 @@ public class TypeGenerator {
 		}
 		
 		if (strings.length > 1 || strings.length < 1) {
-			throw new RuntimeException(String.format("Illegal number of lines in Type decorator. First line states: %s", strings[0]));
+			throw new RuntimeException(String.format("Illegal number of lines in ViewComponent decorator. First line states: %s", strings[0]));
 		}
 		
-		String[] split = getNameAndType(strings[0]);
+		String[] split = DataUtils.extractNameAndType(strings[0]);
 		String name = split[0];
-		String type = split[1];
+		String dataType = split[1];
 
 		ViewComponent viewComponent = DataFactory.eINSTANCE.createViewComponent();
 		viewComponent.setName(name);
-		viewComponent.setExpectedType(type);
+		viewComponent.setExpectedType(dataType);
 		viewComponent.setWidget(masterMap.get(master).getValue());
-		theList.add(viewComponent, master);
+		viewComponents.add(viewComponent, master);
 
 	}
 	
 	/**
-	 * The first element is the name of the component, the second element is the name of the expected type for the component.
-	 * @param string
-	 * @return
+	 * Creates the necessary references between the assignments that should be part of specific ViewComponents.
 	 */
-	private String[] getNameAndType(String string) {
-		
-		string = string.trim();
-		
-		String[] split = new String[]{string};
-		String name = null, type = null;
-		if (string.contains(":")) {	//Type declaration after colon
-			split = string.split(":");
-			name = split[0];
-			type = split[1];
-		} else if (string.contains(" ")) {	//Type declaration before blank space, like normal java programming
-			split = string.split(" ");
-			name = split[1];
-			type = split[0];
-		} 
-
-		if (split.length != 2) {
-			throw new RuntimeException(String.format("Error! The component \"%s\" is either malformed or it doesn't declare a type.", string));
-		}
-		
-		return new String[] {name.trim(), type.trim()};
-		
-	}
-	
 	public void setupAssignmentReferences() {
 		
-		if (theList.size() == 0) {
+		if (viewComponents.size() == 0) {
 			return;
 		}
 		
 		for (Assignment assignment : assignments.getElementsIterable()) {
 			
 			if (shouldBePartOfViewComponent(assignment)) {
-				ViewComponent component = getComponentForAssignment(assignment);
-				setupConntection(assignment, component);
+				ViewComponent component = getViewComponentForAssignment(assignment);
+				setupConnection(assignment, component);
 			}
 			
 		}
@@ -103,21 +84,32 @@ public class TypeGenerator {
 	
 	private boolean shouldBePartOfViewComponent(Assignment assignment) {
 		
-		if (getComponentForAssignment(assignment) == null) {
+		if (getViewComponentForAssignment(assignment) == null) {
 			return false;
 		}
 		return true;
 	}
 
-	private void setupConntection(Assignment assignment, ViewComponent component) {
+	/**
+	 * Adds a reference from the Assignment to the ViewComponent and vice versa. In addition, the assignment's widget
+	 * is updated so that it correctly points to the widget for the ViewComponent.
+	 * @param assignment
+	 * @param component
+	 */
+	private void setupConnection(Assignment assignment, ViewComponent component) {
 		
 		component.getAssignments().add(assignment);
 		assignment.setPartOfComponent(component);
-		assignment.setWidget(getCorrectWidget2(assignment));
+		assignment.setWidget(getCorrectWidget(assignment));
 		
 	}
 	
-	private Widget getCorrectWidget2(Assignment assignment) {
+	/**
+	 * Return the correct widget for the Assignment that is part of a ViewComponent.
+	 * @param assignment
+	 * @return
+	 */
+	private Widget getCorrectWidget(Assignment assignment) {
 		
 		Pair<Arrow, Widget> assignmentPair = getPair(assignment, assignments);
 		Arrow arrow = assignmentPair.getKey();
@@ -132,7 +124,7 @@ public class TypeGenerator {
 		
 	}
 
-	private ViewComponent getComponentForAssignment(Assignment assignment) {
+	private ViewComponent getViewComponentForAssignment(Assignment assignment) {
 
 		if (masterMap == null) {
 			return null;
@@ -142,11 +134,11 @@ public class TypeGenerator {
 		Pair<Arrow, Widget> pairForAssignment = masterMap.get(assignmentMaster);
 		Master correctMaster = null;
 		
-		for (Master type : theList.getMasterIterable()) {
+		for (Master viewComponent : viewComponents.getMasterIterable()) {
 			
-			Widget widget = masterMap.get(type).getValue();
+			Widget widget = masterMap.get(viewComponent).getValue();
 			if (widget.equals(pairForAssignment.getValue())) {
-				correctMaster = type;
+				correctMaster = viewComponent;
 				break;
 			}
 			
@@ -156,19 +148,19 @@ public class TypeGenerator {
 			return null;
 		}
 		
-		return theList.getElement(correctMaster);
+		return viewComponents.getElement(correctMaster);
 		
 	}
 	
 	/**
-	 * This will currently only generate the base cases, i.e not types containing types
+	 * Creates and saves a fxml-file for the ViewComponent.
 	 * @param screenName
 	 */
-	public void generateFxmlForTypes(String screenName) {
+	public void generateFxmlForViewComponents(String screenName) {
 		
-		for (ViewComponent type : theList.getElementsIterable()) {
+		for (ViewComponent viewComponent : viewComponents.getElementsIterable()) {
 			
-			String fileName = String.format("%s-%s.fxml", screenName, type.getName());
+			String fileName = String.format("%s-%s.fxml", screenName, viewComponent.getName());
 			StringBuilder fxmlBuidler = new StringBuilder();
 			fxmlBuidler.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
 					"\n" + 
@@ -181,7 +173,7 @@ public class TypeGenerator {
 					"\n" +
 					"\n");
 			
-			WidgetGroup widgetGroup = (WidgetGroup) type.getWidget();
+			WidgetGroup widgetGroup = (WidgetGroup) viewComponent.getWidget();
 			fxmlBuidler.append(String.format(
 					"<AnchorPane xmlns:fx=\"http://javafx.com/fxml/1\" prefHeight=\"%d\" prefWidth=\"%d\" >\n" + 
 							"    <children>\n", 
@@ -189,7 +181,7 @@ public class TypeGenerator {
 			
 			for (Widget widget : widgetGroup.getWidgets()) {
 				
-				//Assume it is a label for now
+				//Defaults to type Label
 				String nodeType = "Label";
 				String height = "minHeight", width = "minWidth";
 				if (widget instanceof Image) {
