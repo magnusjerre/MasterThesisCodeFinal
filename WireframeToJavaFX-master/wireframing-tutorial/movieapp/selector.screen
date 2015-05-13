@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
-  <widgets xsi:type="model:Master" id="1" x="336" y="16" measuredWidth="865" measuredHeight="33">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
-    <overrides>
-      <widgets ref="5" width="865" height="33" text="db = /Users/Magnus/Master/Workspace_final/MasterThesisCodeFinal/WireframeToJavaFX-master/JavaFX Test/src/datagenerator/moviedb.xmi"/>
-    </overrides>
-  </widgets>
   <widgets xsi:type="model:Label" id="2" x="32" y="48" text="Actorname 1" measuredWidth="156" measuredHeight="36">
     <font size="24px" bold="true"/>
   </widgets>
@@ -48,6 +42,12 @@
   </widgets>
   <widgets xsi:type="model:Label" id="31" x="48" y="160" text="Cake labe" measuredWidth="64" measuredHeight="23">
     <font/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="32" x="336" y="24" measuredWidth="233" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="233" height="33" text="db = /datagenerator/moviedb.xmi"/>
+    </overrides>
   </widgets>
   <hRuler>
     <guides position="251"/>
