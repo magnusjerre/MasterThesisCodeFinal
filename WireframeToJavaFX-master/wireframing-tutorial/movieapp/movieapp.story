@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <story:Storyboard xmlns:story="http://wireframesketcher.com/1.0/model/story">
+  <panels id="3vzEb3eeV-zaGVsaxmCVYCz9JZc=" x="75" y="675">
+    <screen href="selector2.screen#/"/>
+  </panels>
   <panels id="VAdFkLRfCXHNXFLD2styInVow00=" x="375" y="375">
     <screen href="firstscreen.screen#/"/>
   </panels>
@@ -20,5 +23,8 @@
   </panels>
   <panels id="w4i8yKt_bZRNTsEOYjxPmw5eNWw=" x="675" y="375">
     <screen href="secondscreen.screen#/"/>
+  </panels>
+  <panels id="hOEUBXvofwbNjF6b27P9yKwDhU0=" x="375" y="675">
+    <screen href="theselected.screen#/"/>
   </panels>
 </story:Storyboard>

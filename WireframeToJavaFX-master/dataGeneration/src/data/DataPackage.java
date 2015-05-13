@@ -159,13 +159,22 @@ public interface DataPackage extends EPackage {
 	int CONTEXT_FEATURE_COUNT = 2;
 
 	/**
+	 * The operation id for the '<em>Is Statement Xmi Location</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTEXT___IS_STATEMENT_XMI_LOCATION = 0;
+
+	/**
 	 * The number of operations of the '<em>Context</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTEXT_OPERATION_COUNT = 0;
+	int CONTEXT_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link data.impl.AssignmentImpl <em>Assignment</em>}' class.
@@ -393,6 +402,16 @@ public interface DataPackage extends EPackage {
 	EAttribute getContext_Statement();
 
 	/**
+	 * Returns the meta object for the '{@link data.Context#isStatementXmiLocation() <em>Is Statement Xmi Location</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Statement Xmi Location</em>' operation.
+	 * @see data.Context#isStatementXmiLocation()
+	 * @generated
+	 */
+	EOperation getContext__IsStatementXmiLocation();
+
+	/**
 	 * Returns the meta object for class '{@link data.Assignment <em>Assignment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -599,6 +618,14 @@ public interface DataPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CONTEXT__STATEMENT = eINSTANCE.getContext_Statement();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Statement Xmi Location</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CONTEXT___IS_STATEMENT_XMI_LOCATION = eINSTANCE.getContext__IsStatementXmiLocation();
 
 		/**
 		 * The meta object literal for the '{@link data.impl.AssignmentImpl <em>Assignment</em>}' class.

@@ -16,6 +16,7 @@
     <genClasses ecoreClass="Data.ecore#//Context">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Data.ecore#//Context/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Data.ecore#//Context/statement"/>
+      <genOperations ecoreOperation="Data.ecore#//Context/isStatementXmiLocation"/>
     </genClasses>
     <genClasses ecoreClass="Data.ecore#//Assignment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Data.ecore#//Assignment/statement"/>

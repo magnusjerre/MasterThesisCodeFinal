@@ -74,4 +74,13 @@ public interface Context extends EObject {
 	 */
 	void setStatement(String value);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return getStatement().startsWith(\"/\");'"
+	 * @generated
+	 */
+	boolean isStatementXmiLocation();
+
 } // Context

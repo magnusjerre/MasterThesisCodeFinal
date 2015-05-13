@@ -195,6 +195,15 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EOperation getContext__IsStatementXmiLocation() {
+		return contextEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getAssignment() {
 		return assignmentEClass;
 	}
@@ -326,6 +335,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		contextEClass = createEClass(CONTEXT);
 		createEAttribute(contextEClass, CONTEXT__NAME);
 		createEAttribute(contextEClass, CONTEXT__STATEMENT);
+		createEOperation(contextEClass, CONTEXT___IS_STATEMENT_XMI_LOCATION);
 
 		assignmentEClass = createEClass(ASSIGNMENT);
 		createEAttribute(assignmentEClass, ASSIGNMENT__STATEMENT);
@@ -383,6 +393,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		initEClass(contextEClass, Context.class, "Context", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getContext_Name(), ecorePackage.getEString(), "name", null, 0, 1, Context.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getContext_Statement(), ecorePackage.getEString(), "statement", null, 0, 1, Context.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getContext__IsStatementXmiLocation(), ecorePackage.getEBoolean(), "isStatementXmiLocation", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAssignment_Statement(), ecorePackage.getEString(), "statement", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

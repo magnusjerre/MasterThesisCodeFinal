@@ -122,8 +122,12 @@ public class DataGenerator {
 	 */
 	private void loadXmis() {
 		
-		for (Context xmiContext : currentContainer.getValue().contextGenerator.getXMIContexts()) {
-			resSet.getResource(URI.createFileURI(xmiContext.getStatement()), true);
+		for (DataGenerationContainer container : storyMap.values()) {
+			for (Context context : container.contextGenerator.contexts) {
+				if (context.isStatementXmiLocation()) {
+					resSet.getResource(URI.createFileURI(context.getStatement()), true);
+				}
+			}
 		}
 		
 	}
