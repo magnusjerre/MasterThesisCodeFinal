@@ -801,12 +801,15 @@ class Generator {
 			fileName = path.substring(index + 1);
 		}
 		
-		if (new File(LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileName)).exists) {	//Use current directory (src/application)
+		var insideSrc = LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileName)
+		var insideWireframeProject = LocationUtils.getWireframeProjectLocation(Constants.SUB_PROJECT_NAME) + "/" + fileName
+		var insideWireframeProjectImages = LocationUtils.getWireframeProjectLocation(Constants.SUB_PROJECT_NAME) + "/images/" + fileName
+		if (new File(insideSrc).exists) {	//Use current directory (src/application)
 			path = fileName
-		} else if (new File("../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/" + fileName).exists){
+		} else if (new File(insideWireframeProject).exists){
 			//Use Wireframesketcher project directory as resource
 			path = "../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/" + fileName	
-		} else if (new File("../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/images/" + fileName).exists) {	//look for image folder inside project
+		} else if (new File(insideWireframeProjectImages).exists) {	//look for image folder inside project
 			path = "../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/images/" + fileName
 		} else {
 			path = "default.jpg"
