@@ -74,7 +74,7 @@ public class DataUtils {
 		switch (instanceClassifierName) {
 			case "java.lang.String":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getEString();
-			case "java.lang.EDate":
+			case "java.util.Date":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getEDate();
 			case "java.lang.Integer":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getEIntegerObject();
