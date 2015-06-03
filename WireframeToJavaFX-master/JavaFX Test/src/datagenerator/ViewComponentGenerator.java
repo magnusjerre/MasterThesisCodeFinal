@@ -10,6 +10,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 import application.Constants;
@@ -224,9 +225,11 @@ public class ViewComponentGenerator {
 					height = "fitHeight";
 					width = "fitWidth";
 					element = String.format(
-							"        <%s layoutX=\"%d\" layoutY=\"%d\" %s=\"%d\" %s=\"%d\" fx:id=\"%d\" />" +
+							"        <%s layoutX=\"%d\" layoutY=\"%d\" %s=\"%d\" %s=\"%d\" fx:id=\"%d\" >" +
 									"\n",
 									nodeType, widget.getX(), widget.getY(), height, widget.getMeasuredHeight(), width, widget.getMeasuredWidth(), widget.getId().intValue());
+					element += setupImage(((Image)widget).getSrc());
+					element += String.format("		</%s>\n", nodeType);
 				} 
 				
 				
@@ -319,6 +322,42 @@ public class ViewComponentGenerator {
 		
 		return fontstart + fontString + fontEnd;
 	
+	}
+	
+	private String setupImage(URI uri) {
+		
+		if (uri == null) {
+			return "";
+		}
+		String path = "";
+		path = uri.path();
+		
+		int index = path.lastIndexOf("/");
+		String fileName = path.substring(index + 1);
+		
+		String insideSrc = LocationUtils.getFilePathSrc(LocationUtils.GENERATED_PACKAGE, fileName);
+		String insideWireframeProject = LocationUtils.getWireframeProjectLocation(Constants.SUB_PROJECT_NAME) + "/" + fileName;
+		String insideWireframeProjectImages = LocationUtils.getWireframeProjectLocation(Constants.SUB_PROJECT_NAME) + "/images/" + fileName;
+		
+		if (new File(insideSrc).exists()) {	//Use current directory (src/application)
+			path = fileName;
+		} else if (new File(insideWireframeProject).exists()){
+			//Use Wireframesketcher project directory as resource
+			path = "../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/" + fileName;	
+		} else if (new File(insideWireframeProjectImages).exists()) {	//look for image folder inside project
+			path = "../../../wireframing-tutorial/" + Constants.SUB_PROJECT_NAME + "/images/" + fileName;
+		} else {
+			path = "default.jpg";
+		}
+		
+		String location = path;
+		
+		String imageStart = 			"			<image>\n";
+		String image = String.format(	"				<Image url=\"%s\" />\n", "@" + location);
+		String imageEnd = 				"			</image>\n";
+		
+		return imageStart + image + imageEnd;
+		
 	}
 	
 }

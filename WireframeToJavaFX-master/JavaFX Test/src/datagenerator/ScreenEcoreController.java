@@ -310,6 +310,20 @@ public class ScreenEcoreController {
 	
 	private static String getStringRepresentation(Object object) {
 		
+		if (object instanceof Collection){
+			Collection<Object> coll = (Collection<Object>) object;
+			int currentPos = 0;
+			StringBuilder out = new StringBuilder();
+			for (Object o : coll) {
+				out.append(o.toString());
+				currentPos++;
+				if (currentPos < coll.size()) {
+					out.append(", ");
+				}
+			}
+			return out.toString();
+		}
+		
 		if (object instanceof String) {
 			return object.toString();
 		}
