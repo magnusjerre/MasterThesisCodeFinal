@@ -1,7 +1,9 @@
 package datagenerator;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.ocl.ecore.impl.CollectionTypeImpl;
@@ -24,8 +26,12 @@ public class DataUtils {
 		
 		if (classifier instanceof CollectionTypeImpl) {
 			EClassifier elementType = ((CollectionTypeImpl) classifier).getElementType();
-			
-			if (isEDataType(elementType)) {
+//			EAttribute attrib = EcoreFactory.eINSTANCE.createEAttribute();
+//			attrib.setEType(EcoreFactory.eINSTANCE.createEEnum());
+			if (elementType instanceof EEnum) {
+				feature = EcoreFactory.eINSTANCE.createEAttribute();
+				feature.setEType(elementType);
+			} else if (isEDataType(elementType)) {
 				feature = EcoreFactory.eINSTANCE.createEAttribute();
 				EDataType eDataType = getEDataTypeFromClassifier(elementType);
 				feature.setEType(eDataType);
@@ -56,6 +62,10 @@ public class DataUtils {
 		}
 		
 		if ("EDate".equals(eClassifier.getName())) {
+			return true;
+		}
+		
+		if (eClassifier instanceof EEnum) {
 			return true;
 		}
 		
