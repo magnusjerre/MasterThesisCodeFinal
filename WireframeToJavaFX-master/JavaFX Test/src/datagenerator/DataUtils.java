@@ -70,24 +70,23 @@ public class DataUtils {
 	 * @return
 	 */
 	public static EDataType getEDataTypeFromClassifier(EClassifier classifier) {
-		
-		switch (classifier.getName()) {
-		
-			case "String":
+		String instanceClassifierName = classifier.getInstanceClassName();
+		switch (instanceClassifierName) {
+			case "java.lang.String":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getEString();
-			case "EDate":
+			case "java.lang.EDate":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getEDate();
-			case "Integer":
+			case "java.lang.Integer":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getEIntegerObject();
-			case "Double":
+			case "java.lang.Double":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getEDoubleObject();
-			case "Long":
+			case "java.lang.Long":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getELongObject();
-			case "Byte":
+			case "java.lang.Byte":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getEByteObject();
-			case "Boolean":
+			case "java.lang.Boolean":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getEBooleanObject();
-			case "Character":
+			case "java.lang.Character":
 				return EcoreFactory.eINSTANCE.getEcorePackage().getECharacterObject();
 			default:
 				return null;

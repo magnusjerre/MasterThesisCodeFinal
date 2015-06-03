@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -144,7 +145,8 @@ public class DataGenerator {
 				Map<String, EClass> classesForXmi = new HashMap<String, EClass>();
 				
 				for (EClassifier classifier : resourcePackage.getEClassifiers()) {
-					classesForXmi.put(classifier.getName(), (EClass) classifier);
+					if (classifier instanceof EClass)
+						classesForXmi.put(classifier.getName(), (EClass) classifier);
 				}
 				
 				classesForXmis.put(resourcePackage.getNsURI(), classesForXmi);
