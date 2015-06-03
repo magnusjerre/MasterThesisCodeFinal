@@ -363,6 +363,12 @@ public class ScreenEcoreGenerator {
 	 */
 	private String createReferenceName(String statement) {
 		
+		if (statement.contains("concat")) {
+			String out = "concatStatment" + counter;
+			counter++;
+			return out;
+		}
+		
 		statement = DataUtils.clipAtSequence("->", statement);
 		statement = DataUtils.clipAtSequence("(", statement);
 		

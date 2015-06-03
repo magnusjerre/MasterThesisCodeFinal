@@ -903,6 +903,8 @@ class Generator {
 				if(widget.rotation != null) it += "rotate" -> widget.rotation
 				it += "alignment" -> if (widget.textAlignment.toString.toUpperCase == "CENTER") "CENTER" else "CENTER_" + widget.textAlignment.toString.toUpperCase
 				it += "textAlignment" -> widget.textAlignment.toString.toUpperCase
+				it += "prefWidth" -> widget.measuredWidth
+				it += "wrapText" -> true
 				it += "id" -> widget.id
 				it += "text" -> escapeText(widget.text.replace("\\n", "\n"))
 				(it += "font") => [

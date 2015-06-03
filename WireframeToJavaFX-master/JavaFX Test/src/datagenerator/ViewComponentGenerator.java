@@ -5,6 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+
 import org.eclipse.xtext.xbase.lib.Pair;
 
 import application.Constants;
@@ -12,7 +17,9 @@ import application.LocationUtils;
 
 import com.wireframesketcher.model.Arrow;
 import com.wireframesketcher.model.Image;
+import com.wireframesketcher.model.Label;
 import com.wireframesketcher.model.Master;
+import com.wireframesketcher.model.TextArea;
 import com.wireframesketcher.model.Widget;
 import com.wireframesketcher.model.WidgetGroup;
 
@@ -171,6 +178,7 @@ public class ViewComponentGenerator {
 					"<?import javafx.scene.control.*?>\n" + 
 					"<?import javafx.scene.layout.*?>\n" +
 					"<?import javafx.scene.image.*?>" +
+					"<?import javafx.scene.text.*?>" +
 					"\n" +
 					"\n");
 			
@@ -183,18 +191,44 @@ public class ViewComponentGenerator {
 			for (Widget widget : widgetGroup.getWidgets()) {
 				
 				//Defaults to type Label
-				String nodeType = "Label";
+				String nodeType = "";
 				String height = "minHeight", width = "minWidth";
-				if (widget instanceof Image) {
+				String element = "";
+				if (widget instanceof Label) {
+					nodeType = "Label";
+					height = "prefHeight";
+					width = "prefWidth";
+					String textColor = "black";
+					if (((Label) widget).getForeground() != null) {
+						textColor = ((Label) widget).getForeground().toString();
+					}
+					element = String.format(
+							"        <%s layoutX=\"%d\" layoutY=\"%d\" %s=\"%d\" fx:id=\"%d\" text=\"%s\" wrapText=\"true\" textFill=\"%s\">" +
+									"\n",
+									nodeType, widget.getX(), widget.getY(), width, widget.getMeasuredWidth(), widget.getId().intValue(), widget.getText(), textColor);
+					
+					element += setupFont(((Label) widget).getFont());
+					element += String.format("		</%s>\n", nodeType);
+				} else if (widget instanceof TextArea) {
+					nodeType = "TextArea";
+					height = "prefHeight";
+					width = "prefWidth";
+					element = String.format(
+							"        <%s layoutX=\"%d\" layoutY=\"%d\" %s=\"%d\" %s=\"%d\" fx:id=\"%d\" text=\"%s\">" +
+									"\n",
+									nodeType, widget.getX(), widget.getY(), height, widget.getMeasuredHeight(), width, widget.getMeasuredWidth(), widget.getId().intValue(), widget.getText());
+					element += setupFont(((TextArea) widget).getFont());
+					element += String.format("		</%s>\n", nodeType);
+				} else if (widget instanceof Image) {
 					nodeType = "ImageView";
 					height = "fitHeight";
 					width = "fitWidth";
+					element = String.format(
+							"        <%s layoutX=\"%d\" layoutY=\"%d\" %s=\"%d\" %s=\"%d\" fx:id=\"%d\" />" +
+									"\n",
+									nodeType, widget.getX(), widget.getY(), height, widget.getMeasuredHeight(), width, widget.getMeasuredWidth(), widget.getId().intValue());
 				} 
 				
-				String element = String.format(
-						"        <%s layoutX=\"%d\" layoutY=\"%d\" %s=\"%d\" %s=\"%d\" fx:id=\"%d\" />" +
-								"\n",
-								nodeType, widget.getX(), widget.getY(), height, widget.getMeasuredHeight(), width, widget.getMeasuredWidth(), widget.getId().intValue());
 				
 				if (widget instanceof WidgetGroup) {
 					
@@ -255,6 +289,36 @@ public class ViewComponentGenerator {
 			}
 		}
 		
+	}
+
+	
+	private String setupFont(com.wireframesketcher.model.Font theFont) {
+		
+		String fontFace = "System";
+		// If font size is null assume 12 
+		int fontSize = 12;
+		if (null != theFont.getSize()) {
+			fontSize = theFont.getSize().getSize();
+		}
+
+		/** In order to get correct font names for the various weights (bold, semi-bold, 
+		 * thin etc) and postures (italic, regular) we create an intermediate font variable using
+		 * the screen's font face and then get the correct full name from it. */
+		if (theFont.getBold() != null && theFont.getBold()) {
+			fontFace += " BOLD";
+		}
+		if (theFont.getItalic() != null && theFont.getItalic()) { 
+			fontFace += " ITALIC";
+		}
+		
+		String fontstart = "			<font>"	+
+				"\n";
+		String fontString = String.format("					<Font name=\"%s\" size=\"%d\" />\n", fontFace, fontSize);
+		String fontEnd = "			</font>"	+
+				"\n"; 
+		
+		return fontstart + fontString + fontEnd;
+	
 	}
 	
 }
