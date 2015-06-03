@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="imdb" nsURI="http://jerre.imdb" nsPrefix="jerre.imdb">
+  <eClassifiers xsi:type="ecore:EClass" name="Person">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Movie">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="runtime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="poster" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rating" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userReviews" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="criticReviews" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userRatings" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="synopsis" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="metaScore" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="director" eType="#//Person"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="writers" upperBound="-1"
+        eType="#//Person"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actors" upperBound="-1"
+        eType="#//Person"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="metacriticReviews" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="genres" upperBound="-1"
+        eType="#//Genre"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="age" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Genre">
+    <eLiterals name="Adventure"/>
+    <eLiterals name="SciFi" value="1" literal="SciFi"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="db">
+    <eOperations name="sam" eType="#//Person">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="return getAllActors().get(0);"/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allDirectors" upperBound="-1"
+        eType="#//Person" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allWriters" upperBound="-1"
+        eType="#//Person" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allActors" upperBound="-1"
+        eType="#//Person" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allMovies" upperBound="-1"
+        eType="#//Movie" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bestOf2014" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allStaffLists" upperBound="-1"
+        eType="#//StaffList" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allUsers" upperBound="-1"
+        eType="#//User" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StaffList">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="coverPhoto" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="User">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ratedMovies" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

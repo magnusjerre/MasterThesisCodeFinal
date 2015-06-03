@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Image" id="102" x="354" y="363" measuredWidth="65" measuredHeight="57" src="images/imdb-star-rating.png"/>
+  <widgets xsi:type="model:Image" id="2" x="104" y="176" measuredWidth="1008" measuredHeight="84" src="images/imdb-header.png"/>
+  <widgets xsi:type="model:Image" id="65" x="793" y="279" measuredWidth="302" measuredHeight="198" src="images/imdb-quick-links.png"/>
+  <widgets xsi:type="model:Label" id="4" x="756" y="229" text="00" measuredWidth="22" measuredHeight="24" foreground="#ffffff">
+    <font size="13px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="5" x="978" y="229" width="95" text="Username" measuredWidth="95" measuredHeight="24" foreground="#ffffff">
+    <font size="13px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="6" x="354" y="286" text="Interstellar" measuredWidth="126" measuredHeight="38">
+    <font size="26px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="7" x="354" y="323" text="00" measuredWidth="20" measuredHeight="21" foreground="#cccccc">
+    <font size="11px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="8" x="389" y="323" text="000" measuredWidth="26" measuredHeight="21" foreground="#cccccc">
+    <font size="11px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="9" x="414" y="323" text="mins" measuredWidth="32" measuredHeight="21" foreground="#cccccc">
+    <font size="11px"/>
+  </widgets>
+  <widgets xsi:type="model:VLine" id="10" x="441" y="328" height="12" measuredWidth="6" measuredHeight="12" foreground="#cccccc"/>
+  <widgets xsi:type="model:VLine" id="11" x="373" y="328" height="12" measuredWidth="6" measuredHeight="12" foreground="#cccccc"/>
+  <widgets xsi:type="model:VLine" id="12" x="557" y="328" height="12" measuredWidth="6" measuredHeight="12" foreground="#cccccc"/>
+  <widgets xsi:type="model:Image" id="13" x="126" y="282" width="212" height="316" measuredWidth="212" measuredHeight="316"/>
+  <widgets xsi:type="model:Label" id="14" x="354" y="448" width="390" text="The synopsis goes here" measuredWidth="390" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="15" x="354" y="492" width="62" text="Director:" measuredWidth="62" measuredHeight="25" foreground="#666666">
+    <font size="14px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="16" x="354" y="512" width="60" text="Writers:" measuredWidth="60" measuredHeight="25" foreground="#666666">
+    <font size="14px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="17" x="354" y="532" text="Stars:" measuredWidth="46" measuredHeight="25" foreground="#666666">
+    <font size="14px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="18" x="428" y="492" width="308" text="Directors name" measuredWidth="308" measuredHeight="25" foreground="#3d85c6">
+    <font size="14px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="19" x="422" y="512" width="308" text="Writers' name" measuredWidth="308" measuredHeight="25" foreground="#3d85c6">
+    <font size="14px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="20" x="408" y="532" width="308" text="Stars' name and others" measuredWidth="308" measuredHeight="25" foreground="#3d85c6">
+    <font size="14px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="21" x="146" y="602" width="308" text="Contact the Filmmakers on IMDbPro" measuredWidth="308" measuredHeight="19" foreground="#3d85c6">
+    <font size="9px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="22" x="568" y="322" width="176" text="Release date" measuredWidth="176" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="23" x="491" y="295" width="252" text="Release year" measuredWidth="252" measuredHeight="26" foreground="#3d85c6">
+    <font size="16px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="24" x="375" y="384" text="0.0" measuredWidth="29" measuredHeight="26">
+    <font size="16px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="25" x="424" y="382" width="48" text="Ratings:" measuredWidth="48" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="26" x="424" y="400" width="52" text="Reviews:" measuredWidth="52" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="27" x="495" y="382" width="48" text="/10 from" measuredWidth="48" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="29" x="476" y="382" width="18" text="0.0" measuredWidth="18" measuredHeight="23" foreground="#666666">
+    <font bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="30" x="547" y="382" width="46" text="many" measuredWidth="46" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="31" x="596" y="382" width="36" text="users" measuredWidth="36" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="32" x="636" y="382" width="66" text="Metascore:" measuredWidth="66" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="33" x="703" y="382" width="14" text="00" measuredWidth="14" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="34" x="718" y="382" width="28" text="/100" measuredWidth="28" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="35" x="663" y="400" width="80" text="Metacritic.com" measuredWidth="80" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="36" x="633" y="400" width="66" text="from" measuredWidth="66" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="37" x="615" y="400" width="14" text="00" measuredWidth="14" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:VLine" id="38" x="542" y="406" height="12" measuredWidth="6" measuredHeight="12" foreground="#cccccc"/>
+  <widgets xsi:type="model:VLine" id="39" x="605" y="406" height="12" measuredWidth="6" measuredHeight="12" foreground="#cccccc"/>
+  <widgets xsi:type="model:Label" id="40" x="575" y="400" width="36" text="critic" measuredWidth="36" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="41" x="551" y="400" width="26" text="000" measuredWidth="26" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="42" x="514" y="400" width="28" text="user" measuredWidth="28" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="43" x="479" y="400" width="36" text="0000" measuredWidth="36" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="44" x="425" y="359" width="90" text="Your rating:" measuredWidth="90" measuredHeight="25" foreground="#666666">
+    <font size="14px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="47" x="516" y="589" width="120" text="Watch Trailer" measuredWidth="120" measuredHeight="27">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="48" x="644" y="589" width="76" text="Share..." measuredWidth="76" measuredHeight="27">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="49" x="352" y="589" width="120" text="+ Watchlist" measuredWidth="120" measuredHeight="27">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="50" x="471" y="589" height="27" text=">" measuredWidth="28" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="51" x="805" y="323" width="132" text="Full Cast and Crew" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="52" x="944" y="323" width="132" text="Plot Summary" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="53" x="944" y="342" width="132" text="Parents Guide" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="54" x="944" y="361" width="132" text="User Reviews" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="55" x="944" y="380" width="132" text="Release Dates" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="56" x="944" y="399" width="132" text="Company Credits" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="57" x="805" y="342" width="132" text="Trivia" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="58" x="805" y="361" width="132" text="Quotes" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="59" x="805" y="380" width="132" text="Awards" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="60" x="805" y="399" width="132" text="Message Board" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="61" x="805" y="290" width="132" text="Quick Links" measuredWidth="132" measuredHeight="29" foreground="#bf9000">
+    <font size="18px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="62" x="819" y="445" width="132" text="Explore More" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="63" x="453" y="323" width="104" text="genres" measuredWidth="104" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Image" id="64" x="515" y="361" measuredWidth="207" measuredHeight="19" src="images/rating.png"/>
+  <widgets xsi:type="model:Master" id="66" x="1504" y="346" height="34" measuredWidth="270" measuredHeight="34">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="270" height="34" text="db = /datagenerator/imdb.xmi"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="67" x="1504" y="395" width="352" measuredWidth="352" measuredHeight="34">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="352" height="34" text="movie = db.allMovies->select(title = 'Interstellar')->at(1)"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="68" x="112" y="696" measuredWidth="158" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="158" height="37" text="movie.poster"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="69" x="240" y="568" width="8" height="129" measuredWidth="8" measuredHeight="129" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="70" x="1144" y="176" measuredWidth="158" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="158" height="37" text="user.username"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="71" x="1504" y="440" measuredWidth="270" measuredHeight="34">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
+    <overrides>
+      <widgets ref="5" width="270" height="34" text="user = db.allUsers->at(1)"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="72" x="768" y="96" measuredWidth="158" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="158" height="37" text="user.ratedMovies->size()"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="75" x="1024" y="201" width="121" height="40" measuredWidth="121" measuredHeight="40" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Arrow" id="76" x="768" y="132" width="38" height="109" measuredWidth="38" measuredHeight="109" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="77" x="325" y="96" measuredWidth="104" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="104" height="37" text="movie.title"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="78" x="378" y="132" width="8" height="166" measuredWidth="8" measuredHeight="166" foreground="#666666" lineStyle="dashed" left="false" right="true"/>
+  <widgets xsi:type="model:Master" id="79" x="465" y="96" width="128" measuredWidth="128" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="128" height="37" text="movie.releaseDate"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="80" x="518" y="132" width="8" height="166" measuredWidth="8" measuredHeight="166" foreground="#666666" lineStyle="dashed" left="false" right="true"/>
+  <widgets xsi:type="model:Master" id="81" x="146" y="104" measuredWidth="128" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="128" height="37" text="movie.age"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="82" x="225" y="140" width="136" height="194" measuredWidth="136" measuredHeight="194" foreground="#666666" lineStyle="dashed" left="false" right="true"/>
+  <widgets xsi:type="model:Master" id="83" x="403" y="32" measuredWidth="128" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="128" height="37" text="movie.runtime"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="84" x="403" y="68" width="50" height="261" measuredWidth="50" measuredHeight="261" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="85" x="615" y="96" measuredWidth="128" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="128" height="37" text="movie.releaseDate"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="86" x="628" y="132" width="8" height="197" measuredWidth="8" measuredHeight="197" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="87" x="4" y="297" measuredWidth="101" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="101" height="37" text="movie.rating"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="89" x="4" y="352" measuredWidth="101" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="101" height="37" text="movie.rating"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="90" x="104" y="320" width="376" height="69" measuredWidth="376" measuredHeight="69" foreground="#666666" lineStyle="dashed" left="false" right="true"/>
+  <widgets xsi:type="model:Arrow" id="91" x="104" y="368" width="282" height="28" measuredWidth="282" measuredHeight="28" foreground="#666666" lineStyle="dashed" left="false" right="true"/>
+  <widgets xsi:type="model:Master" id="92" x="610" y="660" measuredWidth="147" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="147" height="37" text="movie.director.name"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="93" x="504" y="504" width="169" height="157" measuredWidth="169" measuredHeight="157" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="94" x="856" y="684" width="168" measuredWidth="168" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="168" height="37" text="movie.metacriticReviews"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="95" x="628" y="417" width="239" height="268" measuredWidth="239" measuredHeight="268" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="96" x="848" y="736" measuredWidth="168" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="168" height="37" text="movie.criticReviews"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="97" x="562" y="409" width="297" height="328" measuredWidth="297" measuredHeight="328" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="98" x="385" y="732" measuredWidth="168" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="168" height="37" text="movie.userReviews"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="99" x="433" y="409" width="61" height="324" measuredWidth="61" measuredHeight="324" foreground="#666666" lineStyle="dashed" left="false" right="true" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="100" x="984" y="104" measuredWidth="168" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="168" height="37" text="movie.metaScore"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="101" x="712" y="132" width="273" height="257" measuredWidth="273" measuredHeight="257" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="103" x="557" y="32" measuredWidth="309" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="309" height="37" text="movie.genres"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="104" x="480" y="68" width="154" height="266" measuredWidth="154" measuredHeight="266" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="105" x="518" y="824" measuredWidth="168" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="168" height="37" text="movie.actors.name"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="106" x="525" y="544" width="67" height="281" measuredWidth="67" measuredHeight="281" foreground="#666666" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="107" x="967" y="48" measuredWidth="128" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="128" height="37" text="movie.userRatings"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="108" x="557" y="84" width="444" height="305" measuredWidth="444" measuredHeight="305" foreground="#666666" lineStyle="dashed" direction="bottom"/>
+  <hRuler>
+    <guides position="1230"/>
+  </hRuler>
+  <vRuler>
+    <guides position="647"/>
+  </vRuler>
+  <font size="12px"/>
+</model:Screen>

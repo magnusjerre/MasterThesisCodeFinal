@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="ASCII"?>
+<jerre.imdb:db
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jerre.imdb="http://jerre.imdb"
+    xsi:schemaLocation="http://jerre.imdb imdb.ecore">
+  <allDirectors
+      name="Christopher Nolan"/>
+  <allDirectors
+      name="Richard Linklater"/>
+  <allDirectors
+      name="David Fincher"/>
+  <allDirectors
+      name="James Gunn"/>
+  <allWriters
+      name="Jonathan Nolan"/>
+  <allWriters
+      name="Christopher Nolan"/>
+  <allActors
+      name="Matthew McConaughey"/>
+  <allActors
+      name="Anne Hathaway"/>
+  <allActors
+      name="Jessica Chastain"/>
+  <allActors
+      name="Mackenzie Foy"/>
+  <allActors
+      name="Ellar Coltrane"/>
+  <allActors
+      name="Patricia Arquette"/>
+  <allActors
+      name="Ethan Hawke"/>
+  <allActors
+      name="Elijah Smith"/>
+  <allActors
+      name="Ben Affleck"/>
+  <allActors
+      name="Rosamund Pike"/>
+  <allActors
+      name="Neil Patrick Harris"/>
+  <allActors
+      name="Tyler Perry"/>
+  <allActors
+      name="Chris Pratt"/>
+  <allActors
+      name="Vin Diesel"/>
+  <allActors
+      name="Bradley Cooper"/>
+  <allActors
+      name="Zoe Saldana"/>
+  <allMovies
+      title="Interstellar"
+      releaseDate="2014-11-07T00:00:00.000+0100"
+      runtime="169"
+      poster="interstellar.jpg"
+      rating="8.7"
+      userReviews="2327"
+      criticReviews="656"
+      userRatings="631961"
+      synopsis="A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival."
+      metaScore="74"
+      director="//@allDirectors.0"
+      writers="//@allWriters.0 //@allWriters.1"
+      actors="//@allActors.0 //@allActors.1 //@allActors.2 //@allActors.3"
+      metacriticReviews="46"
+      age="11">
+    <genres>Adventure</genres>
+    <genres>SciFi</genres>
+  </allMovies>
+  <allMovies
+      title="Boyhood"
+      releaseDate="2014-08-22T00:00:00.000+0200"
+      runtime="165"
+      poster="boyhood.jpg"
+      rating="8.1"
+      synopsis="The life of Mason, from early childhood to his arrival at college."
+      director="//@allDirectors.1"
+      actors="//@allActors.4 //@allActors.5 //@allActors.6 //@allActors.7"/>
+  <allMovies
+      title="Gone Girl"
+      runtime="149"
+      poster="gone-girl.jpg"
+      rating="8.2"
+      synopsis="With his wife's disappearance having become the focus of an intense media circus, a man sees the spotlight turned on him when it's suspected that he may not be innocent."
+      director="//@allDirectors.2"
+      actors="//@allActors.8 //@allActors.9 //@allActors.10 //@allActors.11"/>
+  <allMovies
+      title="Guardians of the Galaxy"
+      releaseDate="2014-08-01T00:00:00.000+0200"
+      runtime="121"
+      poster="guardians-of-the-galaxy.jpg"
+      rating="8.1"
+      synopsis="A group of intergalactic criminals are forced to work together to stop a fanatical warrior from taking control of the universe."
+      director="//@allDirectors.3"
+      actors="//@allActors.12 //@allActors.13 //@allActors.14 //@allActors.15"/>
+  <bestOf2014>IMDb Countdown</bestOf2014>
+  <bestOf2014>In Memoriam</bestOf2014>
+  <bestOf2014>Top 10 Stars</bestOf2014>
+  <bestOf2014>Top 100 Stars</bestOf2014>
+  <bestOf2014>Top 10 Breakout Stars</bestOf2014>
+  <bestOf2014>Top 10 Movers and Shakers</bestOf2014>
+  <bestOf2014>Top Movies</bestOf2014>
+  <bestOf2014>Top TV Shows</bestOf2014>
+  <bestOf2014>Top 25 Box Office</bestOf2014>
+  <bestOf2014>Col Needham's Top 10 Films</bestOf2014>
+  <bestOf2014>Keith Simanton's Top 10 Films</bestOf2014>
+  <bestOf2014>Ray Suber's Top 10 Films</bestOf2014>
+  <bestOf2014>Top User-Rated TV Shows</bestOf2014>
+  <bestOf2014>Top 10 Most-Viewed Trailers</bestOf2014>
+  <bestOf2014>Melanie McFarland's Top 10 TV Episodes</bestOf2014>
+  <bestOf2014>Top 10 Box Office Success Stories</bestOf2014>
+  <bestOf2014>Top 10 Character Deaths</bestOf2014>
+  <allStaffLists
+      coverPhoto="best-kids-movies-of-2014.jpg"
+      name="Best Kids Movies of 2014"
+      description="a list of 10 titles by EricGreene created 5 months ago"/>
+  <allStaffLists
+      coverPhoto="thobillys-best-of-2014.jpg"
+      name="thobilly's Best of 2014"
+      description="a list of 25 titles by thobilly created 5 months ago"/>
+  <allStaffLists
+      coverPhoto="2014-best-tv-and-movies-for-kids.jpg"
+      name="2014: Best TV and Movies for Kids"
+      description="a list of 10 titles by VideoJordan created 6 months ago"/>
+  <allStaffLists
+      coverPhoto="best-of-2014.jpg"
+      name="Best of 2014"
+      description="a list of 11 titles by buraczyn created 5 months ago"/>
+  <allStaffLists
+      coverPhoto="best-characters-of-2014-imho.jpg"
+      name="Best Characters of 2014 (IMHO)"
+      description="a list of 8 characters by lindsayg-421-467019 created 5 months ago"/>
+  <allStaffLists
+      coverPhoto="best-of-2014.jpg"
+      name="My top 15 2014 Movies"
+      description="a list of 15 title by linazap created 5 months ago"/>
+  <allStaffLists
+      coverPhoto="scottmos-top-10-of-2014.jpg"
+      name="scottmo's top 10 of 2014"
+      description="a list of 10 titles by scottmo-imdb created 6 months ago"/>
+  <allUsers
+      username="Magnus Jerre">
+    <ratedMovies>a</ratedMovies>
+    <ratedMovies>aa</ratedMovies>
+    <ratedMovies>aaaaa</ratedMovies>
+    <ratedMovies>aaaaaaaa</ratedMovies>
+    <ratedMovies>aaaaaaaaaa</ratedMovies>
+    <ratedMovies>aaaaaaaaa</ratedMovies>
+    <ratedMovies>aaaaaaaaaaaaaaa</ratedMovies>
+    <ratedMovies>bbbb</ratedMovies>
+    <ratedMovies>b</ratedMovies>
+    <ratedMovies>bbbbb</ratedMovies>
+    <ratedMovies>bbb</ratedMovies>
+    <ratedMovies>bb</ratedMovies>
+    <ratedMovies>bbbbbb</ratedMovies>
+    <ratedMovies>bbbbbbbbbbbb</ratedMovies>
+    <ratedMovies>cccccccccccccc</ratedMovies>
+    <ratedMovies>ccccccccccc</ratedMovies>
+    <ratedMovies>ccccc</ratedMovies>
+    <ratedMovies>cccccc</ratedMovies>
+    <ratedMovies>ccccccc</ratedMovies>
+    <ratedMovies>cccccccc</ratedMovies>
+    <ratedMovies>ccccccccc</ratedMovies>
+    <ratedMovies>cccccccccccc</ratedMovies>
+    <ratedMovies>c</ratedMovies>
+    <ratedMovies>cc</ratedMovies>
+    <ratedMovies>ccc</ratedMovies>
+    <ratedMovies>cccc</ratedMovies>
+    <ratedMovies>cccccccccc</ratedMovies>
+    <ratedMovies>ccccccccccccccd</ratedMovies>
+    <ratedMovies>ddd</ratedMovies>
+    <ratedMovies>d</ratedMovies>
+    <ratedMovies>dd</ratedMovies>
+    <ratedMovies>dddd</ratedMovies>
+    <ratedMovies>ddddd</ratedMovies>
+    <ratedMovies>dddddd</ratedMovies>
+    <ratedMovies>dddddddddd</ratedMovies>
+    <ratedMovies>e</ratedMovies>
+    <ratedMovies>ee</ratedMovies>
+    <ratedMovies></ratedMovies>
+    <ratedMovies>eee</ratedMovies>
+    <ratedMovies>eeee</ratedMovies>
+    <ratedMovies>eeeee</ratedMovies>
+    <ratedMovies>eeeeeeee</ratedMovies>
+    <ratedMovies>eeeeeeeeeeeee</ratedMovies>
+    <ratedMovies>eeeeeeeeee</ratedMovies>
+    <ratedMovies>eeeeq</ratedMovies>
+    <ratedMovies>www</ratedMovies>
+    <ratedMovies>wwww</ratedMovies>
+    <ratedMovies>ww</ratedMovies>
+    <ratedMovies>wwwwww</ratedMovies>
+    <ratedMovies>wwwwwwww</ratedMovies>
+    <ratedMovies>wwwwwwwwqqq</ratedMovies>
+    <ratedMovies>tt</ratedMovies>
+    <ratedMovies>y</ratedMovies>
+    <ratedMovies>u</ratedMovies>
+    <ratedMovies>io</ratedMovies>
+    <ratedMovies>p</ratedMovies>
+    <ratedMovies>l</ratedMovies>
+    <ratedMovies>k</ratedMovies>
+    <ratedMovies>lk</ratedMovies>
+    <ratedMovies>ll</ratedMovies>
+    <ratedMovies>jhf</ratedMovies>
+    <ratedMovies>fg</ratedMovies>
+    <ratedMovies>hdf</ratedMovies>
+    <ratedMovies>xz</ratedMovies>
+    <ratedMovies>sd</ratedMovies>
+    <ratedMovies>GBS</ratedMovies>
+    <ratedMovies>VV</ratedMovies>
+    <ratedMovies>zx</ratedMovies>
+    <ratedMovies>cvbnm</ratedMovies>
+    <ratedMovies>hgd</ratedMovies>
+    <ratedMovies>ser</ratedMovies>
+    <ratedMovies>trw</ratedMovies>
+    <ratedMovies>g</ratedMovies>
+    <ratedMovies>ydhgf</ratedMovies>
+    <ratedMovies>bf</ratedMovies>
+    <ratedMovies>ggf</ratedMovies>
+    <ratedMovies>h</ratedMovies>
+    <ratedMovies>uji</ratedMovies>
+    <ratedMovies>ko</ratedMovies>
+    <ratedMovies>lykruyet</ratedMovies>
+    <ratedMovies>df</ratedMovies>
+    <ratedMovies>gsfgsdfg</ratedMovies>
+    <ratedMovies>aaaaswqe</ratedMovies>
+    <ratedMovies>dsad</ratedMovies>
+    <ratedMovies>cdsf</ratedMovies>
+    <ratedMovies>gt</ratedMovies>
+    <ratedMovies>rzxc</ratedMovies>
+    <ratedMovies>de</ratedMovies>
+    <ratedMovies>gyjfg</ratedMovies>
+    <ratedMovies>jhnxvb</ratedMovies>
+    <ratedMovies>bhs</ratedMovies>
+    <ratedMovies>fgsdfg</ratedMovies>
+    <ratedMovies>hytr</ratedMovies>
+    <ratedMovies>it</ratedMovies>
+    <ratedMovies>gaaa</ratedMovies>
+  </allUsers>
+</jerre.imdb:db>
