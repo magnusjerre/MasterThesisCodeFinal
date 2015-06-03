@@ -59,7 +59,8 @@ public class CellFXMLGeneric {
 				populateInstance(listElement, newInstance);
 				
 				EStructuralFeature aFeature = getFeatureForId(child.getId());
-				ScreenEcoreController.assignComponents(child, newInstance, aFeature);
+				if (aFeature != null)
+					ScreenEcoreController.assignComponents(child, newInstance, aFeature);
 			} else {
 				
 				ScreenEcoreController.handleResultCorrectly(child, object);
