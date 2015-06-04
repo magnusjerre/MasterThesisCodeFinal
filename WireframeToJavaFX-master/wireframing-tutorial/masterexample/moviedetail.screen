@@ -9,7 +9,7 @@
   <widgets xsi:type="model:Label" id="5" x="978" y="229" width="95" text="Username" measuredWidth="95" measuredHeight="24" foreground="#ffffff">
     <font size="13px"/>
   </widgets>
-  <widgets xsi:type="model:Label" id="6" x="354" y="286" text="Interstellar" measuredWidth="126" measuredHeight="38">
+  <widgets xsi:type="model:Label" id="6" x="354" y="286" width="198" text="Title" measuredWidth="198" measuredHeight="38">
     <font size="26px"/>
   </widgets>
   <widgets xsi:type="model:Label" id="7" x="354" y="323" text="00" measuredWidth="20" measuredHeight="21" foreground="#cccccc">
@@ -52,7 +52,7 @@
   <widgets xsi:type="model:Label" id="22" x="568" y="322" width="176" text="Release date" measuredWidth="176" measuredHeight="23" foreground="#3d85c6">
     <font size="12px" bold="false"/>
   </widgets>
-  <widgets xsi:type="model:Label" id="23" x="491" y="295" width="252" text="Release year" measuredWidth="252" measuredHeight="26" foreground="#3d85c6">
+  <widgets xsi:type="model:Label" id="23" x="556" y="292" width="189" text="Release year" measuredWidth="189" measuredHeight="26" foreground="#3d85c6">
     <font size="16px" bold="false"/>
   </widgets>
   <widgets xsi:type="model:Label" id="24" x="375" y="384" text="0.0" measuredWidth="29" measuredHeight="26">
@@ -162,7 +162,7 @@
   <widgets xsi:type="model:Label" id="63" x="453" y="323" width="104" text="genres" measuredWidth="104" measuredHeight="23" foreground="#3d85c6">
     <font size="12px" bold="false"/>
   </widgets>
-  <widgets xsi:type="model:Image" id="64" x="515" y="361" measuredWidth="207" measuredHeight="19" src="images/rating.png"/>
+  <widgets xsi:type="model:Image" id="64" x="515" y="361" measuredWidth="144" measuredHeight="14" src="images/rating.png"/>
   <widgets xsi:type="model:Master" id="66" x="1504" y="346" height="34" measuredWidth="270" measuredHeight="34">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
     <overrides>
@@ -197,7 +197,7 @@
   <widgets xsi:type="model:Master" id="72" x="768" y="96" measuredWidth="158" measuredHeight="37">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
     <overrides>
-      <widgets ref="7" width="158" height="37" text="user.ratedMovies->size()"/>
+      <widgets ref="7" width="158" height="37" text="user.watchlist->size()"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="75" x="1024" y="201" width="121" height="40" measuredWidth="121" measuredHeight="40" foreground="#666666" lineStyle="dashed" direction="bottom"/>
@@ -215,7 +215,7 @@
       <widgets ref="7" width="128" height="37" text="movie.releaseDate"/>
     </overrides>
   </widgets>
-  <widgets xsi:type="model:Arrow" id="80" x="518" y="132" width="8" height="166" measuredWidth="8" measuredHeight="166" foreground="#666666" lineStyle="dashed" left="false" right="true"/>
+  <widgets xsi:type="model:Arrow" id="80" x="518" y="132" width="79" height="166" measuredWidth="79" measuredHeight="166" foreground="#666666" lineStyle="dashed" left="false" right="true"/>
   <widgets xsi:type="model:Master" id="81" x="146" y="104" measuredWidth="128" measuredHeight="37">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
     <overrides>

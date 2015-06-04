@@ -144,7 +144,7 @@
   <widgets xsi:type="model:Master" id="368" x="719" measuredWidth="158" measuredHeight="37">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
     <overrides>
-      <widgets ref="7" width="158" height="37" text="user.ratedMovies->size()"/>
+      <widgets ref="7" width="158" height="37" text="user.watchlist->size()"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="369" x="975" y="105" width="121" height="40" measuredWidth="121" measuredHeight="40" foreground="#666666" lineStyle="dashed" direction="bottom"/>
@@ -253,10 +253,10 @@
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="400" x="984" y="1388" width="8" height="53" measuredWidth="8" measuredHeight="53" foreground="#999999" lineStyle="dashed" left="false" right="true"/>
-  <widgets xsi:type="model:Master" id="401" x="967" y="1544" measuredWidth="97" measuredHeight="37">
+  <widgets xsi:type="model:Master" id="401" x="936" y="1544" width="1360" measuredWidth="1360" measuredHeight="113">
     <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
     <overrides>
-      <widgets ref="7" height="37" text="description"/>
+      <widgets ref="7" width="1360" height="113" text="'a list of '.concat(elements->size().toString()).concat(' ').concat(elementType.toString()).concat(' by ').concat(user.username).concat(' created ').concat(createdDate.toString())"/>
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="402" x="1000" y="1472" width="9" height="80" measuredWidth="9" measuredHeight="80" foreground="#999999" lineStyle="dashed" left="false" right="true" direction="bottom"/>

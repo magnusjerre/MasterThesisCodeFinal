@@ -53,11 +53,19 @@
   <eClassifiers xsi:type="ecore:EClass" name="StaffList">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="coverPhoto" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elements" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elementType" eType="#//StaffListType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="user" eType="#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="User">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ratedMovies" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="watchlist" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="StaffListType">
+    <eLiterals name="titles"/>
+    <eLiterals name="characters" value="1" literal="characters"/>
   </eClassifiers>
 </ecore:EPackage>
