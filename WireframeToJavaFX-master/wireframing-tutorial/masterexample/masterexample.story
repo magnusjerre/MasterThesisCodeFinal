@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <story:Storyboard xmlns:story="http://wireframesketcher.com/1.0/model/story">
+  <panels id="_i0ILNjBRx4PdG5SK-_vORh9F-k=" x="975" y="75">
+    <screen href="soundcloud.screen#/"/>
+  </panels>
   <panels id="TuZD1rbM7aMyEGUUGnWWrzmcYGU=" x="375" y="75">
     <screen href="moviedetail.screen#/"/>
   </panels>
