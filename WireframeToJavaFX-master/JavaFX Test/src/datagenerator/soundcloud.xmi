@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="ASCII"?>
+<jerre.soundcloud:db
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jerre.soundcloud="http://jerre.soundcloud"
+    xsi:schemaLocation="http://jerre.soundcloud soundcloud.ecore">
+  <allUsers
+      username="MagnusJerre"
+      name="Magnus Jerre"
+      followers="//@allUsers.1 //@allUsers.2 //@allUsers.3 //@allUsers.4 //@allUsers.5 //@allUsers.6 //@allUsers.7 //@allUsers.8 //@allUsers.9 //@allUsers.10"
+      likes="//@allTracks.11 //@allTracks.12 //@allTracks.13 //@allTracks.14 //@allTracks.15"
+      photo="soundcloud-profile-photo.png"
+      followings="//@allUsers.1 //@allUsers.2 //@allUsers.3 //@allUsers.4 //@allUsers.5 //@allUsers.6 //@allUsers.7 //@allUsers.8 //@allUsers.9 //@allUsers.10 //@allUsers.11 //@allUsers.12 //@allUsers.13 //@allUsers.14 //@allUsers.15 //@allUsers.16">
+    <location
+        country="Norway"
+        city="Trondheim"/>
+    <playlists
+        title="summer_list"
+        createdBy="//@allUsers.0"
+        createdDate="2015-02-01T00:00:00.000+0100"
+        tracks="//@allTracks.0 //@allTracks.2 //@allTracks.3"/>
+    <playlists
+        title="currently_playing"
+        createdBy="//@allUsers.0"
+        createdDate="2015-01-01T00:00:00.000+0100"
+        tracks="//@allTracks.4 //@allTracks.5"/>
+    <playlists
+        title="calm_music"
+        createdBy="//@allUsers.0"
+        createdDate="2015-01-01T00:00:00.000+0100"
+        tracks="//@allTracks.6 //@allTracks.7 //@allTracks.8 //@allTracks.9 //@allTracks.10 //@allTracks.0 //@allTracks.1 //@allTracks.2 //@allTracks.3 //@allTracks.4 //@allTracks.5 //@allTracks.11 //@allTracks.12 //@allTracks.13"/>
+  </allUsers>
+  <allUsers
+      username="Eternal Love Sessions"
+      name="Eternal Love Sessions"
+      photo=""/>
+  <allUsers
+      username="Oskar Schuster"
+      name="Oskar Schuster"/>
+  <allUsers
+      username="max richter"
+      name="Max Richter"
+      photo=""/>
+  <allUsers
+      username="Niklas Ibach"
+      name="Niklas Ibach"/>
+  <allUsers
+      username="Vijay and Sofia"
+      name="Vijay and Sofia"/>
+  <allUsers
+      username="LEEX"
+      name="LEEX"/>
+  <allUsers
+      username="Ten Walls"
+      name="Ten Walls"
+      photo=""/>
+  <allUsers
+      username="toddterje"
+      name="Todd Terje"/>
+  <allUsers
+      username="Vexare"
+      name="Vexare"/>
+  <allUsers
+      username="Insight Music"
+      name="Insight Music"/>
+  <allUsers
+      username="Sia"
+      name="Sia"/>
+  <allUsers
+      username="Claire Morgan"
+      name="Claire Morgan"
+      photo=""/>
+  <allUsers
+      username="MrSuicideSheep"
+      name="MrSuicideSheep"/>
+  <allUsers
+      username="Major Lazer"
+      name="Major Lazer"/>
+  <allUsers
+      username="Hiatus"
+      name="Hiatus"/>
+  <allUsers
+      username="AviciiOfficial"
+      name="AviciiOfficial"/>
+  <allTracks
+      title="Lesson of Harmony No.1"
+      owner="//@allUsers.4"
+      plays="786305"
+      coverArt="lesson-of-harmony-no-1.png"/>
+  <allTracks
+      title="Lean On"
+      owner="//@allUsers.14"
+      plays="2396214"
+      likes="47269"
+      comments="324"
+      coverArt="lean-on.png"/>
+  <allTracks
+      title="A$AP Rocky - Fuckin' Problems Ft Xavier"
+      owner="//@allUsers.5"
+      plays="2368604"
+      coverArt="fuckin-problems.png"/>
+  <allTracks
+      title="Mattafix - Big City Life (LEEX Remix)"
+      owner="//@allUsers.6"
+      plays="2073873"
+      coverArt="big-city-life.png"/>
+  <allTracks
+      title="Walking With Elephants"
+      owner="//@allUsers.7"
+      plays="6096951"
+      coverArt="walking-with-elephants.png"/>
+  <allTracks
+      title="TODD TERJE - Inspector Norse"
+      owner="//@allUsers.8"
+      plays="1474639"
+      coverArt="inspector-norse.png"/>
+  <allTracks
+      title="On The Near Horizon [Prelude to the Pond] *FREE DOWNLOAD"
+      owner="//@allUsers.9"
+      plays="168212"
+      coverArt="on-the-near-horizon.png"/>
+  <allTracks
+      title="Nyanara &amp; Fort Road - Pursuit Of A Dream"
+      owner="//@allUsers.10"
+      plays="2173"
+      coverArt="pursuit-of-a-dream.png"/>
+  <allTracks
+      title="Sia - Fire Meet Gasoline"
+      owner="//@allUsers.11"
+      plays="308228"
+      coverArt="sia.png"/>
+  <allTracks
+      title="Claire Morgan @ God Goes Deep, Vor Frue"
+      owner="//@allUsers.12"
+      plays="26608"
+      coverArt="god-goes-deep.png"/>
+  <allTracks
+      title="Whithe - Mistakes"
+      owner="//@allUsers.13"
+      plays="237231"
+      coverArt="whithe-mistakes.png"/>
+  <allTracks
+      title="03 - Luv(Sic) Part. 3"
+      owner="//@allUsers.1"
+      plays="358557"
+      likes="4972"
+      reposts="1000"
+      comments="161"
+      coverArt="luv-sic-part-3.png"/>
+  <allTracks
+      title="Caelum (feat. Cypix)"
+      owner="//@allUsers.2"
+      plays="14675"
+      likes="348"
+      reposts="94"
+      comments="12"
+      coverArt="caelum.png"/>
+  <allTracks
+      title="SHUTTER ISLAND / Martin Scorsese "
+      owner="//@allUsers.3"
+      plays="187074"
+      likes="3000"
+      reposts="797"
+      comments="161"
+      coverArt="shutter-island.png"/>
+  <allTracks
+      title="Precious Little"
+      owner="//@allUsers.15"
+      coverArt="precious-little.png"/>
+  <allTracks
+      title="AVICII - LEVELS (SKRILLEX REMIX)"
+      owner="//@allUsers.16"
+      coverArt="levels.png"/>
+</jerre.soundcloud:db>

@@ -57,6 +57,7 @@ public class AssignmentGenerator {
 	 */
 	private Widget getCorrectWidget(Assignment assignment, Pair<Arrow, Widget> pair) {
 		
+		System.out.println("Arrow for assignment: " + assignment.getStatement());
 		if (pair.getValue() instanceof WidgetGroup) {
 			WidgetGroup widgetGroup = (WidgetGroup) pair.getValue();
 			if ("list".equalsIgnoreCase(widgetGroup.getName())) {

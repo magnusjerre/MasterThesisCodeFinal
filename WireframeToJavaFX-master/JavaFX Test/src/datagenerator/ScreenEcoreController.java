@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import list.ListController;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -203,7 +204,14 @@ public class ScreenEcoreController {
 					EAnnotation iuccAnnotation = iuccFeature.getEAnnotation("wireframe");
 					String iuccOcl = iuccAnnotation.getDetails().get("ocl");
 					Object result = OCLHandler.parseOCLStatement(resourceSet, instanceFromFeature, iuccOcl);
-					componentInstance.eSet(iuccFeature, result);
+					if (result instanceof Collection<?>) {
+						EList<Object> featureList = (EList<Object>) componentInstance.eGet(iuccFeature);
+						for (Object element : (Collection<Object>) result) {
+							featureList.add(element);
+						}
+					} else {
+						componentInstance.eSet(iuccFeature, result);
+					}
 					
 				}
 				

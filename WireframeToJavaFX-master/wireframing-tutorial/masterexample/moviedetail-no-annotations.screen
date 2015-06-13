@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Image" id="103" x="282" y="291" measuredWidth="65" measuredHeight="57" src="images/imdb-star-rating.png"/>
+  <widgets xsi:type="model:Image" id="104" x="32" y="104" measuredWidth="1008" measuredHeight="84" src="images/imdb-header.png"/>
+  <widgets xsi:type="model:Image" id="105" x="721" y="207" measuredWidth="302" measuredHeight="198" src="images/imdb-quick-links.png"/>
+  <widgets xsi:type="model:Label" id="106" x="684" y="157" text="00" measuredWidth="22" measuredHeight="24" foreground="#ffffff">
+    <font size="13px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="107" x="906" y="157" width="95" text="Username" measuredWidth="95" measuredHeight="24" foreground="#ffffff">
+    <font size="13px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="108" x="282" y="214" width="198" text="Title" measuredWidth="198" measuredHeight="38">
+    <font size="26px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="109" x="282" y="251" text="00" measuredWidth="20" measuredHeight="21" foreground="#cccccc">
+    <font size="11px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="110" x="317" y="251" text="000" measuredWidth="26" measuredHeight="21" foreground="#cccccc">
+    <font size="11px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="111" x="342" y="251" text="mins" measuredWidth="32" measuredHeight="21" foreground="#cccccc">
+    <font size="11px"/>
+  </widgets>
+  <widgets xsi:type="model:VLine" id="112" x="369" y="256" height="12" measuredWidth="6" measuredHeight="12" foreground="#cccccc"/>
+  <widgets xsi:type="model:VLine" id="113" x="301" y="256" height="12" measuredWidth="6" measuredHeight="12" foreground="#cccccc"/>
+  <widgets xsi:type="model:VLine" id="114" x="485" y="256" height="12" measuredWidth="6" measuredHeight="12" foreground="#cccccc"/>
+  <widgets xsi:type="model:Image" id="115" x="54" y="210" width="212" height="316" measuredWidth="212" measuredHeight="316"/>
+  <widgets xsi:type="model:Label" id="116" x="282" y="376" width="390" text="The synopsis goes here" measuredWidth="390" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="117" x="282" y="420" width="62" text="Director:" measuredWidth="62" measuredHeight="25" foreground="#666666">
+    <font size="14px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="118" x="282" y="440" width="60" text="Writers:" measuredWidth="60" measuredHeight="25" foreground="#666666">
+    <font size="14px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="119" x="282" y="460" text="Stars:" measuredWidth="46" measuredHeight="25" foreground="#666666">
+    <font size="14px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="120" x="356" y="420" width="308" text="Directors name" measuredWidth="308" measuredHeight="25" foreground="#3d85c6">
+    <font size="14px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="121" x="350" y="440" width="308" text="Writers' name" measuredWidth="308" measuredHeight="25" foreground="#3d85c6">
+    <font size="14px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="122" x="336" y="460" width="308" text="Stars' name and others" measuredWidth="308" measuredHeight="25" foreground="#3d85c6">
+    <font size="14px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="123" x="74" y="530" width="308" text="Contact the Filmmakers on IMDbPro" measuredWidth="308" measuredHeight="19" foreground="#3d85c6">
+    <font size="9px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="124" x="496" y="250" width="176" text="Release date" measuredWidth="176" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="125" x="484" y="220" width="189" text="Release year" measuredWidth="189" measuredHeight="26" foreground="#3d85c6">
+    <font size="16px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="126" x="303" y="312" text="0.0" measuredWidth="29" measuredHeight="26">
+    <font size="16px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="127" x="352" y="310" width="48" text="Ratings:" measuredWidth="48" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="128" x="352" y="328" width="52" text="Reviews:" measuredWidth="52" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="129" x="423" y="310" width="48" text="/10 from" measuredWidth="48" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="130" x="404" y="310" width="18" text="0.0" measuredWidth="18" measuredHeight="23" foreground="#666666">
+    <font bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="131" x="475" y="310" width="46" text="many" measuredWidth="46" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="132" x="524" y="310" width="36" text="users" measuredWidth="36" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="133" x="564" y="310" width="66" text="Metascore:" measuredWidth="66" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="134" x="631" y="310" width="14" text="00" measuredWidth="14" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="135" x="646" y="310" width="28" text="/100" measuredWidth="28" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="136" x="591" y="328" width="94" text="Metacritic.com" measuredWidth="94" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="137" x="561" y="328" width="66" text="from" measuredWidth="66" measuredHeight="23" foreground="#666666">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="138" x="543" y="328" width="14" text="00" measuredWidth="14" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:VLine" id="139" x="470" y="334" height="12" measuredWidth="6" measuredHeight="12" foreground="#cccccc"/>
+  <widgets xsi:type="model:VLine" id="140" x="533" y="334" height="12" measuredWidth="6" measuredHeight="12" foreground="#cccccc"/>
+  <widgets xsi:type="model:Label" id="141" x="503" y="328" width="36" text="critic" measuredWidth="36" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="142" x="479" y="328" width="26" text="000" measuredWidth="26" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="143" x="442" y="328" width="28" text="user" measuredWidth="28" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="144" x="407" y="328" width="36" text="0000" measuredWidth="36" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="145" x="353" y="287" width="90" text="Your rating:" measuredWidth="90" measuredHeight="25" foreground="#666666">
+    <font size="14px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="146" x="444" y="517" width="120" text="Watch Trailer" measuredWidth="120" measuredHeight="27">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="147" x="572" y="517" width="76" text="Share..." measuredWidth="76" measuredHeight="27">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="148" x="280" y="517" width="120" text="+ Watchlist" measuredWidth="120" measuredHeight="27">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="149" x="399" y="517" height="27" text=">" measuredWidth="28" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="150" x="733" y="251" width="132" text="Full Cast and Crew" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="151" x="872" y="251" width="132" text="Plot Summary" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="152" x="872" y="270" width="132" text="Parents Guide" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="153" x="872" y="289" width="132" text="User Reviews" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="154" x="872" y="308" width="132" text="Release Dates" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="155" x="872" y="327" width="132" text="Company Credits" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="156" x="733" y="270" width="132" text="Trivia" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="157" x="733" y="289" width="132" text="Quotes" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="158" x="733" y="308" width="132" text="Awards" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="159" x="733" y="327" width="132" text="Message Board" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="160" x="733" y="218" width="132" text="Quick Links" measuredWidth="132" measuredHeight="29" foreground="#bf9000">
+    <font size="18px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="161" x="747" y="373" width="132" text="Explore More" measuredWidth="132" measuredHeight="24" foreground="#3d85c6">
+    <font size="13px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="162" x="381" y="251" width="104" text="genres" measuredWidth="104" measuredHeight="23" foreground="#3d85c6">
+    <font size="12px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Image" id="163" x="443" y="289" measuredWidth="144" measuredHeight="14" src="images/rating.png"/>
+  <hRuler>
+    <guides position="1230"/>
+  </hRuler>
+  <vRuler>
+    <guides position="647"/>
+  </vRuler>
+  <font size="12px"/>
+</model:Screen>

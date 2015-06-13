@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Image" id="2" x="106" y="175" width="193" height="196" measuredWidth="193" measuredHeight="196"/>
+  <widgets xsi:type="model:Label" id="3" x="100" y="391" width="205" text="Username" measuredWidth="205" measuredHeight="35">
+    <font size="23px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="4" x="100" y="424" width="205" text="Name for user" measuredWidth="205" measuredHeight="26" foreground="#999999">
+    <font size="16px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="6" x="100" y="444" width="205" text="City, Country" measuredWidth="205" measuredHeight="26" foreground="#999999">
+    <font size="16px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="8" x="128" y="479" text="10" measuredWidth="25" measuredHeight="26">
+    <font size="16px"/>
+  </widgets>
+  <widgets xsi:type="model:WidgetGroup" id="18" x="72" y="1218" measuredWidth="451" measuredHeight="33">
+    <widgets xsi:type="model:Panel" id="19" width="451" height="33" measuredWidth="451" measuredHeight="33" alpha="0"/>
+    <widgets xsi:type="model:Image" id="20" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+    <widgets xsi:type="model:Label" id="21" x="27" y="7" text="1" measuredWidth="14" measuredHeight="23">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="22" x="40" y="7" width="92" text="Track owner" measuredWidth="92" measuredHeight="23" foreground="#999999">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="23" x="131" y="7" width="256" text="Track title" measuredWidth="256" measuredHeight="23">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="24" x="403" y="9" width="44" text="plays" measuredWidth="44" measuredHeight="21" foreground="#999999">
+      <font size="11px"/>
+    </widgets>
+    <widgets xsi:type="model:Image" id="25" x="390" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="26" x="591" y="1225" measuredWidth="218" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
+    <overrides>
+      <widgets ref="9" width="218" height="33" text="TrackInPlaylist : Track"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="28" x="512" y="1250" width="80" height="8" measuredWidth="80" measuredHeight="8" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="29" x="344" y="1282" measuredWidth="97" measuredHeight="27">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="27" text="title"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="30" x="234" y="1234" width="135" height="49" measuredWidth="135" measuredHeight="49" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Arrow" id="31" x="144" y="1234" width="8" height="49" measuredWidth="8" measuredHeight="49" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="32" x="96" y="1282" measuredWidth="185" measuredHeight="27">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="185" height="27" text="owner.username.concat(' - ')"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="33" x="36" y="1169" measuredWidth="113" measuredHeight="27">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="113" height="27" text="coverArt"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="34" x="88" y="1195" width="8" height="39" measuredWidth="8" measuredHeight="39" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="35" x="424" y="1169" measuredWidth="113" measuredHeight="27">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="113" height="27" text="plays"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="36" x="488" y="1191" width="8" height="47" measuredWidth="8" measuredHeight="47" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:WidgetGroup" id="91" x="72" y="1416" measuredWidth="614" measuredHeight="342">
+    <widgets xsi:type="model:Image" id="133" x="135" y="126" measuredWidth="55" measuredHeight="22" src="images/soundcloud-like-share.png"/>
+    <widgets xsi:type="model:Image" id="134" x="136" y="11" measuredWidth="28" measuredHeight="28" src="images/soundcloud-play-orange.png"/>
+    <widgets xsi:type="model:Image" id="135" width="117" height="120" measuredWidth="117" measuredHeight="120"/>
+    <widgets xsi:type="model:Image" id="136" x="145" y="61" measuredWidth="453" measuredHeight="52" src="images/soundcloud-waves.png"/>
+    <widgets xsi:type="model:Label" id="137" x="167" y="3" width="349" text="Username" measuredWidth="349" measuredHeight="24" foreground="#999999">
+      <font size="13px"/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="138" x="167" y="20" width="349" text="Playlist title" measuredWidth="349" measuredHeight="25" foreground="#444444">
+      <font size="14px"/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="139" x="499" y="3" width="88" text="created date" measuredWidth="88" measuredHeight="21" foreground="#cccccc">
+      <font size="11px"/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="140" x="307" y="319" text="View all 00 tracks" measuredWidth="107" measuredHeight="23" foreground="#999999">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="714" x="136" y="160" width="478" measuredWidth="478" measuredHeight="161" name="list">
+      <widgets xsi:type="model:WidgetGroup" id="93" width="478" measuredWidth="478" measuredHeight="33">
+        <widgets xsi:type="model:Panel" id="94" width="478" height="33" measuredWidth="478" measuredHeight="33" alpha="0"/>
+        <widgets xsi:type="model:Image" id="95" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+        <widgets xsi:type="model:Label" id="96" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="97" x="41" y="7" width="96" text="Track owner" measuredWidth="96" measuredHeight="23" foreground="#999999">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="98" x="138" y="7" width="271" text="Track title" measuredWidth="271" measuredHeight="23">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="99" x="427" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+          <font size="11px"/>
+        </widgets>
+        <widgets xsi:type="model:Image" id="100" x="412" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="101" y="32" width="478" measuredWidth="478" measuredHeight="33">
+        <widgets xsi:type="model:Panel" id="102" width="478" height="33" measuredWidth="478" measuredHeight="33" alpha="0"/>
+        <widgets xsi:type="model:Image" id="103" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+        <widgets xsi:type="model:Label" id="104" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="105" x="41" y="7" width="96" text="Track owner" measuredWidth="96" measuredHeight="23" foreground="#999999">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="106" x="138" y="7" width="271" text="Track title" measuredWidth="271" measuredHeight="23">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="107" x="427" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+          <font size="11px"/>
+        </widgets>
+        <widgets xsi:type="model:Image" id="108" x="412" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="109" y="64" width="478" measuredWidth="478" measuredHeight="33">
+        <widgets xsi:type="model:Panel" id="110" width="478" height="33" measuredWidth="478" measuredHeight="33" alpha="0"/>
+        <widgets xsi:type="model:Image" id="111" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+        <widgets xsi:type="model:Label" id="112" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="113" x="41" y="7" width="96" text="Track owner" measuredWidth="96" measuredHeight="23" foreground="#999999">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="114" x="138" y="7" width="271" text="Track title" measuredWidth="271" measuredHeight="23">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="115" x="427" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+          <font size="11px"/>
+        </widgets>
+        <widgets xsi:type="model:Image" id="116" x="412" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="117" y="96" width="478" measuredWidth="478" measuredHeight="33">
+        <widgets xsi:type="model:Panel" id="118" width="478" height="33" measuredWidth="478" measuredHeight="33" alpha="0"/>
+        <widgets xsi:type="model:Image" id="119" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+        <widgets xsi:type="model:Label" id="120" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="121" x="41" y="7" width="96" text="Track owner" measuredWidth="96" measuredHeight="23" foreground="#999999">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="122" x="138" y="7" width="271" text="Track title" measuredWidth="271" measuredHeight="23">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="123" x="427" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+          <font size="11px"/>
+        </widgets>
+        <widgets xsi:type="model:Image" id="124" x="412" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="125" y="128" width="478" measuredWidth="478" measuredHeight="33">
+        <widgets xsi:type="model:Panel" id="126" width="478" height="33" measuredWidth="478" measuredHeight="33" alpha="0"/>
+        <widgets xsi:type="model:Image" id="127" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+        <widgets xsi:type="model:Label" id="128" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="129" x="41" y="7" width="96" text="Track owner" measuredWidth="96" measuredHeight="23" foreground="#999999">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="130" x="138" y="7" width="271" text="Track title" measuredWidth="271" measuredHeight="23">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:Label" id="131" x="427" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+          <font size="11px"/>
+        </widgets>
+        <widgets xsi:type="model:Image" id="132" x="412" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+      </widgets>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:Master" id="141" x="742" y="1448" measuredWidth="218" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
+    <overrides>
+      <widgets ref="9" width="218" height="33" text="PlaylistInformation : Playlist"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="142" x="638" y="1461" width="105" height="8" measuredWidth="105" measuredHeight="8" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="143" x="718" y="1360" measuredWidth="97" measuredHeight="27">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="27" text="createdDate"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="144" x="638" y="1387" width="81" height="37" measuredWidth="81" measuredHeight="37" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="145" x="214" y="1360" measuredWidth="147" measuredHeight="27">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="147" height="27" text="createdBy.username"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="146" x="262" y="1386" width="8" height="38" measuredWidth="8" measuredHeight="38" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="148" x="390" y="1360" measuredWidth="147" measuredHeight="27">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="147" height="27" text="title"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="149" x="310" y="1387" width="105" height="62" measuredWidth="105" measuredHeight="62" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="150" x="46" y="1373" measuredWidth="147" measuredHeight="27">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="147" height="27" text="tracks->at(1).coverArt"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="151" x="128" y="1399" width="8" height="38" measuredWidth="8" measuredHeight="38" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="152" x="728" y="1632" measuredWidth="119" measuredHeight="49">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="119" height="49" text="tracks&#xA;TrackInPlaylist"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="153" x="630" y="1642" width="105" height="8" measuredWidth="105" measuredHeight="8" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="154" x="278" y="1808" measuredWidth="369" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="369" height="33" text="'View all '.concat(tracks->size().toString()).concat(' tracks')"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="155" x="462" y="1750" width="8" height="59" measuredWidth="8" measuredHeight="59" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:WidgetGroup" id="576" x="1071" y="1242" measuredWidth="290" measuredHeight="73">
+    <widgets xsi:type="model:Panel" id="577" width="290" height="73" measuredWidth="290" measuredHeight="73" alpha="0"/>
+    <widgets xsi:type="model:Image" id="578" x="6" y="13" width="47" height="50" measuredWidth="47" measuredHeight="50"/>
+    <widgets xsi:type="model:Label" id="579" x="60" y="10" width="206" text="Playlist creator" measuredWidth="206" measuredHeight="23" foreground="#999999">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="580" x="60" y="25" width="206" text="playlist title" measuredWidth="206" measuredHeight="24" foreground="#444444">
+      <font size="13px"/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:Master" id="582" x="1422" y="1262" measuredWidth="233" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
+    <overrides>
+      <widgets ref="9" width="233" height="37" text="PlaylistSummary : Playlist"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="583" x="1343" y="1277" width="80" height="8" measuredWidth="80" measuredHeight="8" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Arrow" id="584" x="1191" y="1285" width="9" height="65" measuredWidth="9" measuredHeight="65" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="585" x="1159" y="1349" measuredWidth="97" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="33" text="title"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="586" x="1127" y="1189" measuredWidth="153" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="153" height="33" text="createdBy.username"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="587" x="1207" y="1222" width="8" height="40" measuredWidth="8" measuredHeight="40" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="588" x="959" y="1205" measuredWidth="147" measuredHeight="27">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="147" height="27" text="tracks->at(1).coverArt"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="589" x="1049" y="1231" width="38" height="39" measuredWidth="38" measuredHeight="39" foreground="#cccccc" lineStyle="dashed" left="false" right="true"/>
+  <widgets xsi:type="model:WidgetGroup" id="604" x="1077" y="1596" measuredWidth="290" measuredHeight="55">
+    <widgets xsi:type="model:Panel" id="592" width="290" height="52" measuredWidth="290" measuredHeight="52" alpha="0"/>
+    <widgets xsi:type="model:Image" id="593" width="50" height="51" measuredWidth="50" measuredHeight="51"/>
+    <widgets xsi:type="model:Label" id="594" x="57" width="225" text="Track owner" measuredWidth="225" measuredHeight="23" foreground="#999999">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="595" x="57" y="14" width="225" text="Track title" measuredWidth="225" measuredHeight="23" foreground="#444444">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="596" x="73" y="35" width="49" text="00000" measuredWidth="49" measuredHeight="20" foreground="#999999">
+      <font size="10px"/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="597" x="145" y="35" width="25" text="00" measuredWidth="25" measuredHeight="20" foreground="#999999">
+      <font size="10px"/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="598" x="185" y="35" width="25" text="00" measuredWidth="25" measuredHeight="20" foreground="#999999">
+      <font size="10px"/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="599" x="225" y="35" width="25" text="00" measuredWidth="25" measuredHeight="20" foreground="#999999">
+      <font size="10px"/>
+    </widgets>
+    <widgets xsi:type="model:Image" id="600" x="63" y="38" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+    <widgets xsi:type="model:Image" id="601" x="130" y="38" measuredWidth="13" measuredHeight="11" src="images/soundcloud-like.png"/>
+    <widgets xsi:type="model:Image" id="602" x="169" y="38" measuredWidth="16" measuredHeight="10" src="images/soundcloud-repost.png"/>
+    <widgets xsi:type="model:Image" id="603" x="211" y="38" measuredWidth="10" measuredHeight="10" src="images/soundcloud-comments.png"/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="605" x="1434" y="1601" measuredWidth="233" measuredHeight="37">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Type"/>
+    <overrides>
+      <widgets ref="9" width="233" height="37" text="TrackDetails : Track"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="606" x="1357" y="1619" width="80" height="8" measuredWidth="80" measuredHeight="8" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="607" x="1301" y="1660" measuredWidth="81" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="81" height="33" text="comments"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="608" x="1309" y="1637" width="9" height="24" measuredWidth="9" measuredHeight="24" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="609" x="1237" y="1692" measuredWidth="73" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="73" height="33" text="reposts"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="610" x="1269" y="1637" width="8" height="56" measuredWidth="8" measuredHeight="56" foreground="#cccccc" lineStyle="dashed" left="false" right="true" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="611" x="1205" y="1660" measuredWidth="48" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="48" height="33" text="likes"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="612" x="1229" y="1637" width="9" height="24" measuredWidth="9" measuredHeight="24" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="613" x="1141" y="1660" measuredWidth="48" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="48" height="33" text="plays"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="614" x="1165" y="1637" width="11" height="24" measuredWidth="11" measuredHeight="24" foreground="#cccccc" lineStyle="dashed"/>
+  <widgets xsi:type="model:Master" id="615" x="1029" y="1548" measuredWidth="72" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="72" height="33" text="coverArt"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="616" x="1090" y="1581" width="8" height="30" measuredWidth="8" measuredHeight="30" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="617" x="1119" y="1548" measuredWidth="97" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" height="33" text="owner.username"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="618" x="1149" y="1581" width="8" height="21" measuredWidth="8" measuredHeight="21" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Master" id="619" x="1252" y="1548" width="57" measuredWidth="57" measuredHeight="33">
+    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
+    <overrides>
+      <widgets ref="7" width="43" height="33" text="title"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="620" x="1188" y="1580" width="74" height="47" measuredWidth="74" measuredHeight="47" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
+  <widgets xsi:type="model:Image" id="677" x="986" y="481" measuredWidth="13" measuredHeight="11" src="images/soundcloud-like.png"/>
+  <widgets xsi:type="model:Label" id="678" x="1005" y="476" width="73" text="# likes" measuredWidth="73" measuredHeight="25" foreground="#999999">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="679" x="1232" y="475" text="View all" measuredWidth="56" measuredHeight="25" foreground="#999999">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Image" id="680" x="986" y="175" measuredWidth="14" measuredHeight="14" src="images/soundcloud-playlists.png"/>
+  <widgets xsi:type="model:Label" id="681" x="1005" y="172" width="73" text="# playlists" measuredWidth="73" measuredHeight="25" foreground="#999999">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="682" x="1232" y="171" text="View all" measuredWidth="56" measuredHeight="25" foreground="#999999">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Image" id="683" x="986" y="781" measuredWidth="20" measuredHeight="16" src="images/soundcloud-people.png"/>
+  <widgets xsi:type="model:Label" id="684" x="1005" y="779" width="164" text="# followings" measuredWidth="164" measuredHeight="25" foreground="#999999">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="685" x="1232" y="778" text="View all" measuredWidth="56" measuredHeight="25" foreground="#999999">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="686" x="981" y="832" width="164" text="Go mobile" measuredWidth="164" measuredHeight="25" foreground="#999999">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Image" id="687" x="981" y="881" measuredWidth="258" measuredHeight="40" src="images/soundcloud-get-on-mobile.png"/>
+  <widgets xsi:type="model:Button" id="688" x="106" y="520" width="63" text="Edit" measuredWidth="63" measuredHeight="27">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="689" x="176" y="520" width="63" text="Share" measuredWidth="63" measuredHeight="27">
+    <font size="14px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="690" x="981" y="952" text="Legal - Privacy - Cookies - Imprint" measuredWidth="188" measuredHeight="21" foreground="#999999">
+    <font size="11px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="691" x="1187" y="952" text="Porutgês (Brasil)" measuredWidth="94" measuredHeight="21" foreground="#3d85c6">
+    <font size="11px"/>
+  </widgets>
+  <widgets xsi:type="model:Image" id="692" x="72" y="96" measuredWidth="1240" measuredHeight="46" src="images/soundcloud-header.png"/>
+  <widgets xsi:type="model:Image" id="693" x="1026" y="106" width="26" height="26" measuredWidth="26" measuredHeight="26"/>
+  <widgets xsi:type="model:Label" id="694" x="1056" y="107" width="97" text="username" measuredWidth="97" measuredHeight="24" foreground="#999999">
+    <font size="13px"/>
+  </widgets>
+  <widgets xsi:type="model:Image" id="709" x="102" y="484" measuredWidth="20" measuredHeight="16" src="images/soundcloud-people.png"/>
+  <widgets xsi:type="model:WidgetGroup" id="898" x="320" y="170" width="635" measuredWidth="634" measuredHeight="890" name="list">
+    <widgets xsi:type="model:WidgetGroup" id="715" y="548" width="635" measuredWidth="634" measuredHeight="342">
+      <widgets xsi:type="model:Image" id="716" x="139" y="126" width="56" measuredWidth="56" measuredHeight="22" src="images/soundcloud-like-share.png"/>
+      <widgets xsi:type="model:Image" id="717" x="140" y="11" measuredWidth="28" measuredHeight="28" src="images/soundcloud-play-orange.png"/>
+      <widgets xsi:type="model:Image" id="718" width="120" height="120" measuredWidth="120" measuredHeight="120"/>
+      <widgets xsi:type="model:Image" id="719" x="149" y="61" width="468" measuredWidth="468" measuredHeight="52" src="images/soundcloud-waves.png"/>
+      <widgets xsi:type="model:Label" id="720" x="172" y="3" width="360" text="Username" measuredWidth="360" measuredHeight="24" foreground="#999999">
+        <font size="13px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="721" x="172" y="20" width="360" text="Playlist title" measuredWidth="360" measuredHeight="25" foreground="#444444">
+        <font size="14px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="722" x="516" y="3" width="90" text="created date" measuredWidth="90" measuredHeight="21" foreground="#cccccc">
+        <font size="11px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="723" x="318" y="319" width="110" text="View all 00 tracks" measuredWidth="110" measuredHeight="23" foreground="#999999">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="724" x="140" y="160" width="494" measuredWidth="494" measuredHeight="161" name="list">
+        <widgets xsi:type="model:WidgetGroup" id="725" width="494" measuredWidth="494" measuredHeight="33">
+          <widgets xsi:type="model:Panel" id="726" width="494" height="33" measuredWidth="494" measuredHeight="33" alpha="0"/>
+          <widgets xsi:type="model:Image" id="727" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+          <widgets xsi:type="model:Label" id="728" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="729" x="41" y="7" width="98" text="Track owner" measuredWidth="98" measuredHeight="23" foreground="#999999">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="730" x="142" y="7" width="279" text="Track title" measuredWidth="279" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="731" x="441" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+            <font size="11px"/>
+          </widgets>
+          <widgets xsi:type="model:Image" id="732" x="425" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="733" y="32" width="494" measuredWidth="494" measuredHeight="33">
+          <widgets xsi:type="model:Panel" id="734" width="494" height="33" measuredWidth="494" measuredHeight="33" alpha="0"/>
+          <widgets xsi:type="model:Image" id="735" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+          <widgets xsi:type="model:Label" id="736" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="737" x="41" y="7" width="98" text="Track owner" measuredWidth="98" measuredHeight="23" foreground="#999999">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="738" x="142" y="7" width="279" text="Track title" measuredWidth="279" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="739" x="441" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+            <font size="11px"/>
+          </widgets>
+          <widgets xsi:type="model:Image" id="740" x="425" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="741" y="64" width="494" measuredWidth="494" measuredHeight="33">
+          <widgets xsi:type="model:Panel" id="742" width="494" height="33" measuredWidth="494" measuredHeight="33" alpha="0"/>
+          <widgets xsi:type="model:Image" id="743" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+          <widgets xsi:type="model:Label" id="744" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="745" x="41" y="7" width="98" text="Track owner" measuredWidth="98" measuredHeight="23" foreground="#999999">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="746" x="142" y="7" width="279" text="Track title" measuredWidth="279" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="747" x="441" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+            <font size="11px"/>
+          </widgets>
+          <widgets xsi:type="model:Image" id="748" x="425" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="749" y="96" width="494" measuredWidth="494" measuredHeight="33">
+          <widgets xsi:type="model:Panel" id="750" width="494" height="33" measuredWidth="494" measuredHeight="33" alpha="0"/>
+          <widgets xsi:type="model:Image" id="751" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+          <widgets xsi:type="model:Label" id="752" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="753" x="41" y="7" width="98" text="Track owner" measuredWidth="98" measuredHeight="23" foreground="#999999">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="754" x="142" y="7" width="279" text="Track title" measuredWidth="279" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="755" x="441" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+            <font size="11px"/>
+          </widgets>
+          <widgets xsi:type="model:Image" id="756" x="425" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="757" y="128" width="494" measuredWidth="494" measuredHeight="33">
+          <widgets xsi:type="model:Panel" id="758" width="494" height="33" measuredWidth="494" measuredHeight="33" alpha="0"/>
+          <widgets xsi:type="model:Image" id="759" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+          <widgets xsi:type="model:Label" id="760" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="761" x="41" y="7" width="98" text="Track owner" measuredWidth="98" measuredHeight="23" foreground="#999999">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="762" x="142" y="7" width="279" text="Track title" measuredWidth="279" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="763" x="441" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+            <font size="11px"/>
+          </widgets>
+          <widgets xsi:type="model:Image" id="764" x="425" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+        </widgets>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="765" width="635" measuredWidth="634" measuredHeight="257">
+      <widgets xsi:type="model:Image" id="766" x="139" y="126" width="56" measuredWidth="56" measuredHeight="22" src="images/soundcloud-like-share.png"/>
+      <widgets xsi:type="model:Image" id="767" x="140" y="11" measuredWidth="28" measuredHeight="28" src="images/soundcloud-play-orange.png"/>
+      <widgets xsi:type="model:Image" id="768" width="120" height="120" measuredWidth="120" measuredHeight="120"/>
+      <widgets xsi:type="model:Image" id="769" x="149" y="61" width="468" measuredWidth="468" measuredHeight="52" src="images/soundcloud-waves.png"/>
+      <widgets xsi:type="model:Label" id="770" x="172" y="3" width="360" text="Username" measuredWidth="360" measuredHeight="24" foreground="#999999">
+        <font size="13px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="771" x="172" y="20" width="360" text="Playlist title" measuredWidth="360" measuredHeight="25" foreground="#444444">
+        <font size="14px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="772" x="516" y="3" width="90" text="created date" measuredWidth="90" measuredHeight="21" foreground="#cccccc">
+        <font size="11px"/>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="774" x="140" y="160" width="494" measuredWidth="494" measuredHeight="97" name="list">
+        <widgets xsi:type="model:WidgetGroup" id="775" width="494" measuredWidth="494" measuredHeight="33">
+          <widgets xsi:type="model:Panel" id="776" width="494" height="33" measuredWidth="494" measuredHeight="33" alpha="0"/>
+          <widgets xsi:type="model:Image" id="777" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+          <widgets xsi:type="model:Label" id="778" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="779" x="41" y="7" width="98" text="Track owner" measuredWidth="98" measuredHeight="23" foreground="#999999">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="780" x="142" y="7" width="279" text="Track title" measuredWidth="279" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="781" x="441" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+            <font size="11px"/>
+          </widgets>
+          <widgets xsi:type="model:Image" id="782" x="425" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="783" y="32" width="494" measuredWidth="494" measuredHeight="33">
+          <widgets xsi:type="model:Panel" id="784" width="494" height="33" measuredWidth="494" measuredHeight="33" alpha="0"/>
+          <widgets xsi:type="model:Image" id="785" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+          <widgets xsi:type="model:Label" id="786" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="787" x="41" y="7" width="98" text="Track owner" measuredWidth="98" measuredHeight="23" foreground="#999999">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="788" x="142" y="7" width="279" text="Track title" measuredWidth="279" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="789" x="441" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+            <font size="11px"/>
+          </widgets>
+          <widgets xsi:type="model:Image" id="790" x="425" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="791" y="64" width="494" measuredWidth="494" measuredHeight="33">
+          <widgets xsi:type="model:Panel" id="792" width="494" height="33" measuredWidth="494" measuredHeight="33" alpha="0"/>
+          <widgets xsi:type="model:Image" id="793" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+          <widgets xsi:type="model:Label" id="794" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="795" x="41" y="7" width="98" text="Track owner" measuredWidth="98" measuredHeight="23" foreground="#999999">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="796" x="142" y="7" width="279" text="Track title" measuredWidth="279" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="797" x="441" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+            <font size="11px"/>
+          </widgets>
+          <widgets xsi:type="model:Image" id="798" x="425" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+        </widgets>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="848" y="277" width="635" measuredWidth="634" measuredHeight="225">
+      <widgets xsi:type="model:Image" id="849" x="139" y="126" width="56" measuredWidth="56" measuredHeight="22" src="images/soundcloud-like-share.png"/>
+      <widgets xsi:type="model:Image" id="850" x="140" y="11" measuredWidth="28" measuredHeight="28" src="images/soundcloud-play-orange.png"/>
+      <widgets xsi:type="model:Image" id="851" width="120" height="120" measuredWidth="120" measuredHeight="120"/>
+      <widgets xsi:type="model:Image" id="852" x="149" y="61" width="468" measuredWidth="468" measuredHeight="52" src="images/soundcloud-waves.png"/>
+      <widgets xsi:type="model:Label" id="853" x="172" y="3" width="360" text="Username" measuredWidth="360" measuredHeight="24" foreground="#999999">
+        <font size="13px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="854" x="172" y="20" width="360" text="Playlist title" measuredWidth="360" measuredHeight="25" foreground="#444444">
+        <font size="14px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="855" x="516" y="3" width="90" text="created date" measuredWidth="90" measuredHeight="21" foreground="#cccccc">
+        <font size="11px"/>
+      </widgets>
+      <widgets xsi:type="model:WidgetGroup" id="857" x="140" y="160" width="494" measuredWidth="494" measuredHeight="65" name="list">
+        <widgets xsi:type="model:WidgetGroup" id="858" width="494" measuredWidth="494" measuredHeight="33">
+          <widgets xsi:type="model:Panel" id="859" width="494" height="33" measuredWidth="494" measuredHeight="33" alpha="0"/>
+          <widgets xsi:type="model:Image" id="860" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+          <widgets xsi:type="model:Label" id="861" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="862" x="41" y="7" width="98" text="Track owner" measuredWidth="98" measuredHeight="23" foreground="#999999">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="863" x="142" y="7" width="279" text="Track title" measuredWidth="279" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="864" x="441" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+            <font size="11px"/>
+          </widgets>
+          <widgets xsi:type="model:Image" id="865" x="425" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+        </widgets>
+        <widgets xsi:type="model:WidgetGroup" id="866" y="32" width="494" measuredWidth="494" measuredHeight="33">
+          <widgets xsi:type="model:Panel" id="867" width="494" height="33" measuredWidth="494" measuredHeight="33" alpha="0"/>
+          <widgets xsi:type="model:Image" id="868" x="6" y="8" width="19" height="19" measuredWidth="19" measuredHeight="19"/>
+          <widgets xsi:type="model:Label" id="869" x="28" y="7" text="1" measuredWidth="14" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="870" x="41" y="7" width="98" text="Track owner" measuredWidth="98" measuredHeight="23" foreground="#999999">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="871" x="142" y="7" width="279" text="Track title" measuredWidth="279" measuredHeight="23">
+            <font/>
+          </widgets>
+          <widgets xsi:type="model:Label" id="872" x="441" y="9" width="45" text="plays" measuredWidth="45" measuredHeight="21" foreground="#999999">
+            <font size="11px"/>
+          </widgets>
+          <widgets xsi:type="model:Image" id="873" x="425" y="12" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+        </widgets>
+      </widgets>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:WidgetGroup" id="938" x="976" y="504" measuredWidth="323" measuredHeight="205" name="list">
+    <widgets xsi:type="model:WidgetGroup" id="899" y="150" width="323" measuredWidth="323" measuredHeight="55">
+      <widgets xsi:type="model:Panel" id="900" width="323" height="52" measuredWidth="323" measuredHeight="52" alpha="0"/>
+      <widgets xsi:type="model:Image" id="901" width="54" height="51" measuredWidth="54" measuredHeight="51"/>
+      <widgets xsi:type="model:Label" id="902" x="63" width="250" text="Track owner" measuredWidth="250" measuredHeight="23" foreground="#999999">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="903" x="63" y="14" width="250" text="Track title" measuredWidth="250" measuredHeight="23" foreground="#444444">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="904" x="81" y="35" width="53" text="00000" measuredWidth="53" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="905" x="160" y="35" width="27" text="00" measuredWidth="27" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="906" x="205" y="35" width="27" text="00" measuredWidth="27" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="907" x="250" y="35" width="27" text="00" measuredWidth="27" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Image" id="908" x="69" y="39" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+      <widgets xsi:type="model:Image" id="909" x="144" y="39" measuredWidth="13" measuredHeight="11" src="images/soundcloud-like.png"/>
+      <widgets xsi:type="model:Image" id="910" x="187" y="39" measuredWidth="16" measuredHeight="10" src="images/soundcloud-repost.png"/>
+      <widgets xsi:type="model:Image" id="911" x="234" y="39" measuredWidth="10" measuredHeight="10" src="images/soundcloud-comments.png"/>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="912" y="75" width="323" measuredWidth="323" measuredHeight="55">
+      <widgets xsi:type="model:Panel" id="913" width="323" height="52" measuredWidth="323" measuredHeight="52" alpha="0"/>
+      <widgets xsi:type="model:Image" id="914" width="54" height="51" measuredWidth="54" measuredHeight="51"/>
+      <widgets xsi:type="model:Label" id="915" x="63" width="250" text="Track owner" measuredWidth="250" measuredHeight="23" foreground="#999999">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="916" x="63" y="14" width="250" text="Track title" measuredWidth="250" measuredHeight="23" foreground="#444444">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="917" x="81" y="35" width="53" text="00000" measuredWidth="53" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="918" x="160" y="35" width="27" text="00" measuredWidth="27" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="919" x="205" y="35" width="27" text="00" measuredWidth="27" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="920" x="250" y="35" width="27" text="00" measuredWidth="27" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Image" id="921" x="69" y="39" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+      <widgets xsi:type="model:Image" id="922" x="144" y="39" measuredWidth="13" measuredHeight="11" src="images/soundcloud-like.png"/>
+      <widgets xsi:type="model:Image" id="923" x="187" y="39" measuredWidth="16" measuredHeight="10" src="images/soundcloud-repost.png"/>
+      <widgets xsi:type="model:Image" id="924" x="234" y="39" measuredWidth="10" measuredHeight="10" src="images/soundcloud-comments.png"/>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="925" width="323" measuredWidth="323" measuredHeight="55">
+      <widgets xsi:type="model:Panel" id="926" width="323" height="52" measuredWidth="323" measuredHeight="52" alpha="0"/>
+      <widgets xsi:type="model:Image" id="927" width="54" height="51" measuredWidth="54" measuredHeight="51"/>
+      <widgets xsi:type="model:Label" id="928" x="63" width="250" text="Track owner" measuredWidth="250" measuredHeight="23" foreground="#999999">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="929" x="63" y="14" width="250" text="Track title" measuredWidth="250" measuredHeight="23" foreground="#444444">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="930" x="81" y="35" width="53" text="00000" measuredWidth="53" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="931" x="160" y="35" width="27" text="00" measuredWidth="27" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="932" x="205" y="35" width="27" text="00" measuredWidth="27" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="933" x="250" y="35" width="27" text="00" measuredWidth="27" measuredHeight="20" foreground="#999999">
+        <font size="10px"/>
+      </widgets>
+      <widgets xsi:type="model:Image" id="934" x="69" y="39" measuredWidth="10" measuredHeight="10" src="images/soundcloud-arrow.png"/>
+      <widgets xsi:type="model:Image" id="935" x="144" y="39" measuredWidth="13" measuredHeight="11" src="images/soundcloud-like.png"/>
+      <widgets xsi:type="model:Image" id="936" x="187" y="39" measuredWidth="16" measuredHeight="10" src="images/soundcloud-repost.png"/>
+      <widgets xsi:type="model:Image" id="937" x="234" y="39" measuredWidth="10" measuredHeight="10" src="images/soundcloud-comments.png"/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:WidgetGroup" id="954" x="976" y="204" width="319" measuredWidth="319" measuredHeight="217" name="list">
+    <widgets xsi:type="model:WidgetGroup" id="939" width="319" measuredWidth="319" measuredHeight="73">
+      <widgets xsi:type="model:Panel" id="940" width="319" height="73" measuredWidth="319" measuredHeight="73" alpha="0"/>
+      <widgets xsi:type="model:Image" id="941" x="6" y="13" width="51" height="50" measuredWidth="51" measuredHeight="50"/>
+      <widgets xsi:type="model:Label" id="942" x="65" y="10" width="225" text="Playlist creator" measuredWidth="225" measuredHeight="23" foreground="#999999">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="943" x="65" y="25" width="225" text="playlist title" measuredWidth="225" measuredHeight="24" foreground="#444444">
+        <font size="13px"/>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="944" y="72" width="319" measuredWidth="319" measuredHeight="73">
+      <widgets xsi:type="model:Panel" id="945" width="319" height="73" measuredWidth="319" measuredHeight="73" alpha="0"/>
+      <widgets xsi:type="model:Image" id="946" x="6" y="13" width="51" height="50" measuredWidth="51" measuredHeight="50"/>
+      <widgets xsi:type="model:Label" id="947" x="65" y="10" width="225" text="Playlist creator" measuredWidth="225" measuredHeight="23" foreground="#999999">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="948" x="65" y="25" width="225" text="playlist title" measuredWidth="225" measuredHeight="24" foreground="#444444">
+        <font size="13px"/>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" id="949" y="144" width="319" measuredWidth="319" measuredHeight="73">
+      <widgets xsi:type="model:Panel" id="950" width="319" height="73" measuredWidth="319" measuredHeight="73" alpha="0"/>
+      <widgets xsi:type="model:Image" id="951" x="6" y="13" width="51" height="50" measuredWidth="51" measuredHeight="50"/>
+      <widgets xsi:type="model:Label" id="952" x="65" y="10" width="225" text="Playlist creator" measuredWidth="225" measuredHeight="23" foreground="#999999">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:Label" id="953" x="65" y="25" width="225" text="playlist title" measuredWidth="225" measuredHeight="24" foreground="#444444">
+        <font size="13px"/>
+      </widgets>
+    </widgets>
+  </widgets>
+  <hRuler>
+    <guides position="1395"/>
+  </hRuler>
+  <vRuler>
+    <guides position="1112"/>
+  </vRuler>
+  <font size="12px"/>
+</model:Screen>
