@@ -65,19 +65,6 @@
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="36" x="488" y="1191" width="8" height="47" measuredWidth="8" measuredHeight="47" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Master" id="37" x="1416" y="334" measuredWidth="241" measuredHeight="37">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
-    <overrides>
-      <widgets ref="5" width="241" height="37" text="db = /datagenerator/soundcloud.xmi"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Master" id="39" x="1016" y="976" measuredWidth="285" measuredHeight="55">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="285" height="55" text="user.playlists&#xA;PlaylistInformation"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="40" x="864" y="1016" width="153" height="8" measuredWidth="153" measuredHeight="8" foreground="#cccccc" lineStyle="dashed"/>
   <widgets xsi:type="model:WidgetGroup" id="91" x="72" y="1416" measuredWidth="614" measuredHeight="342">
     <widgets xsi:type="model:Image" id="133" x="135" y="126" measuredWidth="55" measuredHeight="22" src="images/soundcloud-like-share.png"/>
     <widgets xsi:type="model:Image" id="134" x="136" y="11" measuredWidth="28" measuredHeight="28" src="images/soundcloud-play-orange.png"/>
@@ -270,13 +257,6 @@
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="589" x="1049" y="1231" width="38" height="39" measuredWidth="38" measuredHeight="39" foreground="#cccccc" lineStyle="dashed" left="false" right="true"/>
-  <widgets xsi:type="model:Master" id="590" x="1344" y="204" measuredWidth="117" measuredHeight="53">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="117" height="53" text="user.playlists&#xA;PlaylistSummary"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="591" x="1264" y="233" width="81" height="8" measuredWidth="81" measuredHeight="8" foreground="#cccccc" lineStyle="dashed"/>
   <widgets xsi:type="model:WidgetGroup" id="604" x="1077" y="1596" measuredWidth="290" measuredHeight="55">
     <widgets xsi:type="model:Panel" id="592" width="290" height="52" measuredWidth="290" measuredHeight="52" alpha="0"/>
     <widgets xsi:type="model:Image" id="593" width="50" height="51" measuredWidth="50" measuredHeight="51"/>
@@ -359,13 +339,6 @@
     </overrides>
   </widgets>
   <widgets xsi:type="model:Arrow" id="620" x="1188" y="1580" width="74" height="47" measuredWidth="74" measuredHeight="47" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Master" id="675" x="1344" y="575" measuredWidth="120" measuredHeight="46">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="120" height="46" text="user.likes&#xA;TrackDetails"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="676" x="1264" y="603" width="81" height="8" measuredWidth="81" measuredHeight="8" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
   <widgets xsi:type="model:Image" id="677" x="986" y="481" measuredWidth="13" measuredHeight="11" src="images/soundcloud-like.png"/>
   <widgets xsi:type="model:Label" id="678" x="1005" y="476" width="73" text="# likes" measuredWidth="73" measuredHeight="25" foreground="#999999">
     <font size="14px"/>
@@ -408,62 +381,7 @@
   <widgets xsi:type="model:Label" id="694" x="1056" y="107" width="97" text="username" measuredWidth="97" measuredHeight="24" foreground="#999999">
     <font size="13px"/>
   </widgets>
-  <widgets xsi:type="model:Master" id="696" x="1416" y="378" measuredWidth="241" measuredHeight="37">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Context"/>
-    <overrides>
-      <widgets ref="5" width="241" height="37" text="user = db.allUsers->at(1)"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Master" id="697" x="1119" y="48" measuredWidth="114" measuredHeight="33">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="114" height="33" text="user.username"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="698" x="1104" y="80" width="32" height="35" measuredWidth="32" measuredHeight="35" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Master" id="699" x="968" y="48" measuredWidth="114" measuredHeight="33">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="114" height="33" text="user.photo"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="700" x="1040" y="80" width="8" height="35" measuredWidth="8" measuredHeight="35" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Master" id="701" x="238" y="48" measuredWidth="114" measuredHeight="33">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="114" height="33" text="user.username"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Master" id="702" x="106" y="48" measuredWidth="114" measuredHeight="33">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="114" height="33" text="user.photo"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="703" x="184" y="80" width="105" height="329" measuredWidth="105" measuredHeight="329" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Arrow" id="704" x="192" y="80" width="8" height="109" measuredWidth="8" measuredHeight="109" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Master" id="705" x="392" y="48" measuredWidth="86" measuredHeight="33">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="86" height="33" text="user.name"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="706" x="199" y="80" width="194" height="361" measuredWidth="194" measuredHeight="361" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Master" id="707" x="80" y="632" width="361" measuredWidth="361" measuredHeight="33">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="361" height="33" text="user.location.city.concat(', ').concat(user.location.country)"/>
-    </overrides>
-  </widgets>
   <widgets xsi:type="model:Image" id="709" x="102" y="484" measuredWidth="20" measuredHeight="16" src="images/soundcloud-people.png"/>
-  <widgets xsi:type="model:Master" id="710" x="91" y="575" measuredWidth="230" measuredHeight="33">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="230" height="33" text="user.followers->size().toString()"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="708" x="160" y="456" width="9" height="176" measuredWidth="9" measuredHeight="176" foreground="#cccccc" lineStyle="dashed" left="false" right="true" direction="bottom"/>
-  <widgets xsi:type="model:Arrow" id="711" x="136" y="491" width="8" height="85" measuredWidth="8" measuredHeight="85" foreground="#cccccc" lineStyle="dashed" left="false" right="true" direction="bottom"/>
   <widgets xsi:type="model:WidgetGroup" id="898" x="320" y="170" width="635" measuredWidth="634" measuredHeight="890" name="list">
     <widgets xsi:type="model:WidgetGroup" id="715" y="548" width="635" measuredWidth="634" measuredHeight="342">
       <widgets xsi:type="model:Image" id="716" x="139" y="126" width="56" measuredWidth="56" measuredHeight="22" src="images/soundcloud-like-share.png"/>
@@ -802,28 +720,11 @@
       </widgets>
     </widgets>
   </widgets>
-  <widgets xsi:type="model:Master" id="955" x="1344" y="131" measuredWidth="325" measuredHeight="37">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="325" height="37" text="user.playlists->size().toString().concat(' playlists')"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="956" x="1026" y="152" width="319" height="28" measuredWidth="319" measuredHeight="28" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Master" id="957" x="1344" y="456" measuredWidth="277" measuredHeight="37">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="277" height="37" text="user.likes->size().toString().concat(' likes')"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="958" x="1026" y="464" width="319" height="20" measuredWidth="319" measuredHeight="20" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
-  <widgets xsi:type="model:Master" id="959" x="1344" y="726" measuredWidth="325" measuredHeight="37">
-    <screen xsi:type="model:WidgetGroup" href="../assets/JavaFX%20Generator/Models.screen#Assignment"/>
-    <overrides>
-      <widgets ref="7" width="325" height="37" text="user.followings->size().toString().concat(' followings')"/>
-    </overrides>
-  </widgets>
-  <widgets xsi:type="model:Arrow" id="960" x="1051" y="752" width="294" height="41" measuredWidth="294" measuredHeight="41" foreground="#cccccc" lineStyle="dashed" direction="bottom"/>
-  <hRuler/>
-  <vRuler/>
+  <hRuler>
+    <guides position="1395"/>
+  </hRuler>
+  <vRuler>
+    <guides position="1112"/>
+  </vRuler>
   <font size="12px"/>
 </model:Screen>
